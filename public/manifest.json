@@ -1,0 +1,20 @@
+{
+  "short_name": "앱 아이콘의 이름",
+  "name": "인스톨 배너와 시작화면에 뜨는 이름",
+  "icons": [
+    {
+      "src": "image/test192.png",
+      "type": "image/png",
+      "sizes": "192x192"
+    },
+    {
+      "src": "image/test512.png",
+      "type": "image/png",
+      "sizes": "512x512"
+    }
+  ],
+  "background_color": "#FDFDFD",
+  "start_url": "/",
+  "display": "standalone",
+  "orientation": "portrait"
+}
