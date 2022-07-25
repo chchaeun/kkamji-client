@@ -7,6 +7,8 @@ const nextConfig = {
   swcMinify: true,
 };
 
+const prod = process.env.NODE_ENV === "production";
+
 module.exports = withPlugins(
   [
     withImages,
@@ -15,6 +17,7 @@ module.exports = withPlugins(
       {
         pwa: {
           dest: "public",
+          disable: prod ? false : true,
         },
       },
     ],

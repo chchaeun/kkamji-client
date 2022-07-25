@@ -1,24 +1,15 @@
 import type { NextPage } from "next";
 import Image from "next/image";
+import { useRouter } from "next/router";
 import { useEffect } from "react";
 const Home: NextPage = () => {
+  const router = useRouter();
   useEffect(() => {
-    if ("serviceWorker" in navigator) {
-      navigator.serviceWorker
-        .register("sw.js")
-        .then((reg) => {
-          console.log(reg);
-        })
-        .catch((err) => {
-          console.log(err);
-        });
+    if (!sessionStorage.getItem("code")) {
+      router.push("/login");
     }
-  }, []);
-  return (
-    <div>
-      <Image src="/image/cat.jpeg" width={100} height={100} alt="테스트" />
-    </div>
-  );
+  }, [router]);
+  return <div></div>;
 };
 
 export default Home;
