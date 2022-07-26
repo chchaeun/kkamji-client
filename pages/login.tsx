@@ -2,14 +2,14 @@ import axios from "axios";
 import { useRouter } from "next/router";
 import React, { useEffect } from "react";
 import { useForm } from "react-hook-form";
-import api from "../utils/api/myApi";
+import api from "../api/my-api";
 
 interface IValidForm {
-  name: string;
+  username: string;
   code: string;
 }
 interface IInvalidForm {
-  name: {
+  username: {
     type: string;
     message: string;
   };
@@ -29,15 +29,14 @@ function Login() {
     }
   }, [router]);
 
-  const onValid = async ({ name, code }: IValidForm) => {
+  const onValid = async ({ username, code }: IValidForm) => {
     const loginBody = {
-      name,
+      username,
       code,
     };
     await api
       .post("/login", loginBody)
       .then((res) => {
-        sessionStorage.setItem("name", name);
         sessionStorage.setItem("code", code);
         router.reload();
       })
@@ -45,9 +44,9 @@ function Login() {
         console.log(err);
       });
   };
-  const onInvalid = ({ name, code }: IInvalidForm) => {
-    if (name) {
-      alert(name.message);
+  const onInvalid = ({ username, code }: IInvalidForm) => {
+    if (username) {
+      alert(username.message);
     } else if (code) {
       alert(code.message);
     }
@@ -60,7 +59,7 @@ function Login() {
           이름
           <input
             type="text"
-            {...register("name", {
+            {...register("username", {
               required: "이름을 입력해주세요.",
             })}
           />
