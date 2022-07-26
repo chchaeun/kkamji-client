@@ -1,0 +1,58 @@
+{
+  "login": {
+    "name": "test1@naver.com",
+    "code": "1234"
+  },
+  "quizbooks": {
+    "result": [
+      {
+        "quizPackageID": 1,
+        "quizPackageCost": 3,
+        "isOwned": true,
+        "quizNum": 10,
+        "choiceQuizNum": 5,
+        "shortQuizNum": 3,
+        "longQuizNum": 2,
+        "keywords": ["테스트1", "테스트2", "테스트3"]
+      },
+      {
+        "quizPackageID": 2,
+        "quizPackageCost": 3,
+        "isOwned": false,
+        "quizNum": 10,
+        "choiceQuizNum": 5,
+        "shortQuizNum": 3,
+        "longQuizNum": 2,
+        "keywords": ["테스트2", "테스트3"]
+      }
+    ],
+    "isSuccess": true,
+    "code": 200,
+    "message": "성공적으로 조회되었습니다."
+  },
+  "users": {
+    "result": {
+      "userName": "김철수",
+      "point": 4,
+      "period": 3
+    },
+    "isSuccess": true,
+    "code": 200,
+    "message": "성공적으로 조회되었습니다."
+  },
+  "quizzes-continuous-submission-period": {
+    "result": [
+      {
+        "userName": "테스트1",
+        "continuousSubmissionPeriod": 3
+      },
+      {
+        "userName": "테스트2",
+        "continuousSubmissionPeriod": 3
+      }
+    ],
+    "isSuccess": true,
+    "code": 200,
+    "message": "성공적으로 조회되었습니다."
+  }
+}
