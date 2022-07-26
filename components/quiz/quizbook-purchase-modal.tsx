@@ -1,7 +1,7 @@
 import { useQueryClient } from "@tanstack/react-query";
 import React from "react";
-import { IQuizbook } from "../../api/quiz/fetch-quizbooks";
-import { IUserInfo } from "../../api/user/fetch-user-info";
+import { IQuizbook } from "../../api/quiz/quizbooks";
+import { IUserInfo } from "../../api/user/user-info";
 
 function QuizBookPurchaseModal({ props }: { props: IQuizbook }) {
   const {

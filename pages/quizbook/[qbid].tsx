@@ -4,7 +4,7 @@ import React from "react";
 import {
   fetchQuizbookDetail,
   IQuizbookDetail,
-} from "../../api/quiz/fetch-quizbook-detail";
+} from "../../api/quiz/quizbook-detail";
 
 function QuizbookDetail() {
   const router = useRouter();

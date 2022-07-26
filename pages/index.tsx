@@ -3,12 +3,12 @@ import { useRouter } from "next/router";
 import { useEffect, useState } from "react";
 import Quizbook from "../components/quiz/quizbook";
 import { useQuery } from "@tanstack/react-query";
-import { fetchQuizbooks, IQuizbook } from "../api/quiz/fetch-quizbooks";
-import { fetchUserInfo, IUserInfo } from "../api/user/fetch-user-info";
+import { fetchQuizbooks, IQuizbook } from "../api/quiz/quizbooks";
+import { fetchUserInfo, IUserInfo } from "../api/user/user-info";
 import {
   fetchSubmitPeriods,
   ISubmitPeriod,
-} from "../api/submit/fetch-submit-periods";
+} from "../api/submit/submit-periods";
 import Overlay from "../components/layout/overlay";
 import QuizbookPurchaseModal from "../components/quiz/quizbook-purchase-modal";
 
