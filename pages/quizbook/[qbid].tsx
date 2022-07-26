@@ -4,7 +4,7 @@ import React from "react";
 import {
   fetchQuizbookDetail,
   IQuizbookDetail,
-} from "../../api/quiz/fetch-quizbook-detail";
+} from "../../api/quiz/quizbook-detail";
 
 function QuizbookDetail() {
   const router = useRouter();
@@ -17,7 +17,7 @@ function QuizbookDetail() {
   );
 
   const onQuizClick = (quizID: string) => {
-    router.push(`/quizbook/${quizID}`);
+    router.push(`/quiz/${quizID}`);
   };
 
   const getQuizType = (quizType: string) => {
@@ -38,15 +38,15 @@ function QuizbookDetail() {
       </div>
       <div>
         {quizbookDetail?.map((quiz) => (
-          <div
-            key={quiz.quizID}
-            onClick={() => onQuizClick(String(quiz.quizID))}
-          >
-            <div>
-              <span>Q{quiz?.quizID}</span>
-              <span>{quiz.quizContent}</span>
+          <div key={quiz.quizID}>
+            <div onClick={() => onQuizClick(String(quiz.quizID))}>
+              <div>
+                <span>Q{quiz?.quizID}</span>
+                <span>{quiz.quizContent}</span>
+              </div>
+              <span>{getQuizType(quiz.quizType)}</span>
             </div>
-            <span>{getQuizType(quiz.quizType)}</span>
+            {quiz.isSolved && <span>solve</span>}
           </div>
         ))}
       </div>

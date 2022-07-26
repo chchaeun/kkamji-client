@@ -1,5 +1,5 @@
 import React from "react";
-import { IQuizbook } from "../../api/quiz/fetch-quizbooks";
+import { IQuizbook } from "../../api/quiz/quizbooks";
 
 function Quizbook({
   props,
