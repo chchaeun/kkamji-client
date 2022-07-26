@@ -1,11 +1,11 @@
 import React from "react";
-import { IQuizBook } from "../../api/quiz/fetch-quizbooks";
+import { IQuizbook } from "../../api/quiz/fetch-quizbooks";
 
-function QuizBook({
+function Quizbook({
   props,
   onClick,
 }: {
-  props: IQuizBook;
+  props: IQuizbook;
   onClick: React.MouseEventHandler;
 }) {
   const {
@@ -63,4 +63,4 @@ function QuizBook({
   );
 }
 
-export default QuizBook;
+export default Quizbook;

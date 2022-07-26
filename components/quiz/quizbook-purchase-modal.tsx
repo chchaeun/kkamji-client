@@ -1,9 +1,9 @@
 import { useQueryClient } from "@tanstack/react-query";
 import React from "react";
-import { IQuizBook } from "../../api/quiz/fetch-quizbooks";
+import { IQuizbook } from "../../api/quiz/fetch-quizbooks";
 import { IUserInfo } from "../../api/user/fetch-user-info";
 
-function QuizBookPurchaseModal({ props }: { props: IQuizBook }) {
+function QuizBookPurchaseModal({ props }: { props: IQuizbook }) {
   const {
     quizPackageID,
     quizPackageCost,
