@@ -9,18 +9,21 @@
     "lint": "next lint"
   },
   "dependencies": {
+    "@tanstack/react-query": "^4.0.10",
     "axios": "^0.27.2",
     "next": "12.2.2",
     "next-images": "^1.8.4",
     "next-pwa": "^5.5.4",
     "react": "18.2.0",
     "react-dom": "18.2.0",
-    "react-hook-form": "^7.33.1"
+    "react-hook-form": "^7.33.1",
+    "react-query": "^4.0.0"
   },
   "devDependencies": {
     "@types/node": "18.0.3",
     "@types/react": "18.0.15",
     "@types/react-dom": "18.0.6",
+    "@types/react-query": "^1.2.9",
     "eslint": "8.19.0",
     "eslint-config-next": "12.2.2",
     "next-compose-plugins": "^2.2.1",
