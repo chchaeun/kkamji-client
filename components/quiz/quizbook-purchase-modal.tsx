@@ -1,17 +1,12 @@
+import { useQueryClient } from "@tanstack/react-query";
 import React from "react";
 import { IQuizBook } from "../../api/quiz/fetch-quizbooks";
+import { IUserInfo } from "../../api/user/fetch-user-info";
 
-function QuizBook({
-  props,
-  onClick,
-}: {
-  props: IQuizBook;
-  onClick: React.MouseEventHandler;
-}) {
+function QuizBookPurchaseModal({ props }: { props: IQuizBook }) {
   const {
     quizPackageID,
     quizPackageCost,
-    isOwned,
     quizNum,
     choiceQuizNum,
     shortQuizNum,
@@ -19,27 +14,26 @@ function QuizBook({
     keywords,
   } = props;
 
+  const queryClient = useQueryClient();
+  const userInfo = queryClient.getQueryData<IUserInfo>(["userInfo"]);
   const tag = (content: string) => {
     return <span>{content}</span>;
   };
-
   const quizTypes = [
     { type: "객관식", count: choiceQuizNum },
     { type: "주관식", count: shortQuizNum },
     { type: "서술형", count: longQuizNum },
   ];
-
   return (
-    <div onClick={onClick}>
+    <div>
       <div>
-        <h2>#{quizPackageID}</h2>
         <span>
-          {quizPackageCost
-            ? isOwned
-              ? "보유함"
-              : `${quizPackageCost} 샤프심`
-            : "무료"}
+          <h2>문제집 #{quizPackageID}</h2>
+          <span>
+            {quizPackageCost} 샤프심 (보유: {userInfo?.point})
+          </span>
         </span>
+        <button>X</button>
       </div>
       <div>
         <h4>문제 총 {quizNum}개</h4>
@@ -59,8 +53,9 @@ function QuizBook({
           ))}
         </div>
       </div>
+      <button>구매하기</button>
     </div>
   );
 }
 
-export default QuizBook;
+export default QuizBookPurchaseModal;
