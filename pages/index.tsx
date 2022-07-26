@@ -12,9 +12,15 @@ import {
   fetchSubmitPeriods,
   ISubmitPeriod,
 } from "../api/submit/fetch-submit-periods";
+import Overlay from "../components/layout/overlay";
+import QuizBookPurchaseModal from "../components/quiz/quizbook-purchase-modal";
 
 const Home: NextPage = () => {
   const router = useRouter();
+
+  const [modalOpen, setModalOpen] = useState(false);
+  const [modalQuizBook, setModalQuizBook] = useState<IQuizBook>();
+
   useEffect(() => {
     if (!sessionStorage.getItem("code")) {
       router.push("/login");
@@ -30,9 +36,21 @@ const Home: NextPage = () => {
     ["submitPeriods"],
     fetchSubmitPeriods
   );
+
+  const onQuizBookClick = (quizbook: IQuizBook) => {
+    if (quizbook.isOwned) {
+      router.push(`quizbook/${quizbook.quizPackageID}`);
+    } else {
+      setModalOpen(true);
+      setModalQuizBook(quizbook);
+    }
+  };
+  const onOverlayClick = () => {
+    setModalOpen(false);
+  };
   return (
     <>
-      <div>
+      <div className="">
         <div>
           <h2>
             {userInfo?.userName} 님,{" "}
@@ -45,7 +63,11 @@ const Home: NextPage = () => {
         </div>
         <div>
           {quizbooks?.map((quizbook) => (
-            <QuizBook key={quizbook.quizPackageID} {...quizbook} />
+            <QuizBook
+              key={quizbook.quizPackageID}
+              props={quizbook}
+              onClick={() => onQuizBookClick(quizbook)}
+            />
           ))}
         </div>
       </div>
@@ -59,6 +81,12 @@ const Home: NextPage = () => {
         ))}
         <a>문제 제출하기</a>
       </div>
+      {modalOpen && (
+        <>
+          <Overlay onClick={onOverlayClick} />
+          {modalQuizBook && <QuizBookPurchaseModal props={modalQuizBook} />}
+        </>
+      )}
     </>
   );
 };
