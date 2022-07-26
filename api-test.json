@@ -54,5 +54,26 @@
     "isSuccess": true,
     "code": 200,
     "message": "성공적으로 조회되었습니다."
+  },
+  "quizbook-detail": {
+    "result": [
+      {
+        "quizID": 1,
+        "quizType": "SINGLE_CHOICE",
+        "isSolved": false,
+        "quizContent": "사과는 영어로 무엇인가요?"
+      },
+      {
+        "quizID": 2,
+        "quizType": "SHORT_ANSWER",
+        "isSolved": true,
+        "quizContent": "바나나는 영어로 무엇인가요?"
+      }
+    ],
+    "isOwned": true,
+    "quizNum": 10,
+    "isSuccess": true,
+    "code": 200,
+    "message": "성공적으로 조회되었습니다."
   }
 }

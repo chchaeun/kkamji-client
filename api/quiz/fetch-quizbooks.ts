@@ -1,6 +1,6 @@
 import api from "../my-api";
 
-export interface IQuizBook {
+export interface IQuizbook {
   quizPackageID: number;
   quizPackageCost: number;
   isOwned: boolean;

@@ -1,25 +1,22 @@
-import axios from "axios";
 import type { NextPage } from "next";
-import Image from "next/image";
 import { useRouter } from "next/router";
 import { useEffect, useState } from "react";
-import QuizBook from "../components/quiz/quizbook";
-import api from "../api/my-api";
+import Quizbook from "../components/quiz/quizbook";
 import { useQuery } from "@tanstack/react-query";
-import { fetchQuizbooks, IQuizBook } from "../api/quiz/fetch-quizbooks";
+import { fetchQuizbooks, IQuizbook } from "../api/quiz/fetch-quizbooks";
 import { fetchUserInfo, IUserInfo } from "../api/user/fetch-user-info";
 import {
   fetchSubmitPeriods,
   ISubmitPeriod,
 } from "../api/submit/fetch-submit-periods";
 import Overlay from "../components/layout/overlay";
-import QuizBookPurchaseModal from "../components/quiz/quizbook-purchase-modal";
+import QuizbookPurchaseModal from "../components/quiz/quizbook-purchase-modal";
 
 const Home: NextPage = () => {
   const router = useRouter();
 
   const [modalOpen, setModalOpen] = useState(false);
-  const [modalQuizBook, setModalQuizBook] = useState<IQuizBook>();
+  const [modalQuizbook, setModalQuizbook] = useState<IQuizbook>();
 
   useEffect(() => {
     if (!sessionStorage.getItem("code")) {
@@ -28,7 +25,7 @@ const Home: NextPage = () => {
   }, [router]);
 
   const { data: userInfo } = useQuery<IUserInfo>(["userInfo"], fetchUserInfo);
-  const { data: quizbooks } = useQuery<IQuizBook[]>(
+  const { data: quizbooks } = useQuery<IQuizbook[]>(
     ["quizbooks"],
     fetchQuizbooks
   );
@@ -37,12 +34,12 @@ const Home: NextPage = () => {
     fetchSubmitPeriods
   );
 
-  const onQuizBookClick = (quizbook: IQuizBook) => {
+  const onQuizBookClick = (quizbook: IQuizbook) => {
     if (quizbook.isOwned) {
       router.push(`quizbook/${quizbook.quizPackageID}`);
     } else {
       setModalOpen(true);
-      setModalQuizBook(quizbook);
+      setModalQuizbook(quizbook);
     }
   };
   const onOverlayClick = () => {
@@ -63,7 +60,7 @@ const Home: NextPage = () => {
         </div>
         <div>
           {quizbooks?.map((quizbook) => (
-            <QuizBook
+            <Quizbook
               key={quizbook.quizPackageID}
               props={quizbook}
               onClick={() => onQuizBookClick(quizbook)}
@@ -84,7 +81,7 @@ const Home: NextPage = () => {
       {modalOpen && (
         <>
           <Overlay onClick={onOverlayClick} />
-          {modalQuizBook && <QuizBookPurchaseModal props={modalQuizBook} />}
+          {modalQuizbook && <QuizbookPurchaseModal props={modalQuizbook} />}
         </>
       )}
     </>
