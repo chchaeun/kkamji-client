@@ -4,7 +4,14 @@ module.exports = {
     "./components/**/*.{js,ts,jsx,tsx}",
   ],
   theme: {
-    extend: {},
+    fontFamily: {
+      summer: ["HSSummer"],
+    },
+    extend: {
+      colors: {
+        pblue: "#5c3cde",
+      },
+    },
   },
   plugins: [],
 };
