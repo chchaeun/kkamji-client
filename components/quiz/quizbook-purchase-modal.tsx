@@ -1,6 +1,8 @@
 import { Icon } from "@iconify/react";
-import { useQueryClient } from "@tanstack/react-query";
+import { useMutation, useQueryClient } from "@tanstack/react-query";
+import { useRouter } from "next/router";
 import React from "react";
+import { postQuizbookPurchase } from "../../api/quiz/quizbook-purchase";
 import { IQuizbook } from "../../api/quiz/quizbooks";
 import { IUserInfo } from "../../api/user/user-info";
 
@@ -22,7 +24,22 @@ function QuizBookPurchaseModal({
   } = props;
 
   const queryClient = useQueryClient();
+  const router = useRouter();
   const userInfo = queryClient.getQueryData<IUserInfo>(["userInfo"]);
+
+  const { mutate: buyQuizbook } = useMutation(
+    (quizbookId: number) => postQuizbookPurchase(quizbookId),
+    {
+      onSuccess: () => {
+        router.reload();
+      },
+    }
+  );
+
+  const onBuyClick = (quizbookId: number) => {
+    buyQuizbook(quizbookId);
+  };
+
   const tag = (content: string) => {
     return (
       <span className="p-1 px-2 rounded-2xl text-xs bg-indigo-200 cursor-pointer transition ease-in-out duration-200">
@@ -37,7 +54,7 @@ function QuizBookPurchaseModal({
   ];
 
   return (
-    <div className="fixed w-1/3 left-1/2 top-1/4 -translate-x-1/2 flex flex-col gap-5 bg-white py-6 px-8">
+    <div className="fixed w-1/3 sm:w-4/5 left-1/2 top-1/4 -translate-x-1/2 flex flex-col gap-5 bg-white py-6 px-8">
       <div className="flex justify-between">
         <span className="flex justify-around items-center gap-3">
           <h2 className="text-xl">문제집 #{quizPackageID}</h2>
@@ -65,7 +82,10 @@ function QuizBookPurchaseModal({
           ))}
         </div>
       </div>
-      <button className="bg-[#5c3cde] hover:bg-[#4026ab] text-white font-bold py-2 px-7 rounded focus:outline-none focus:shadow-outline cursor-pointer">
+      <button
+        onClick={() => onBuyClick(quizPackageID)}
+        className="bg-[#5c3cde] hover:bg-[#4026ab] text-white font-bold py-2 px-7 rounded focus:outline-none focus:shadow-outline cursor-pointer"
+      >
         구매하기
       </button>
     </div>

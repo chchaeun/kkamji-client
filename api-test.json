@@ -142,8 +142,6 @@
     "isCorrect": true
   },
   "quizbook-purchase": {
-    "isSuccess": true,
-    "code": 200,
-    "message": "문제집 구매가 완료되었습니다."
+    "quizPackageID": 2
   }
 }
