@@ -71,7 +71,12 @@ const Home: NextPage = () => {
       {modalOpen && (
         <>
           <Overlay onClick={onOverlayClick} />
-          {modalQuizbook && <QuizbookPurchaseModal props={modalQuizbook} />}
+          {modalQuizbook && (
+            <QuizbookPurchaseModal
+              props={modalQuizbook}
+              onClick={onOverlayClick}
+            />
+          )}
         </>
       )}
     </div>
