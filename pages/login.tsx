@@ -52,7 +52,7 @@ function Login() {
     }
   };
   return (
-    <div className="flex flex-col items-center mt-20 gap-10">
+    <div className="flex flex-col items-center pt-20 gap-10">
       <h1 className="font-summer text-4xl">깜지.</h1>
       <form
         onSubmit={handleSubmit(onValid, onInvalid)}
@@ -91,7 +91,7 @@ function Login() {
 
         <button
           type="submit"
-          className="bg-[#5c3cde] hover:bg-[#4026ab] text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
+          className="bg-[#5c3cde] hover:bg-[#4026ab] text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline cursor-pointer"
         >
           로그인
         </button>

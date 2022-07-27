@@ -1,7 +1,7 @@
 {
   "login": {
-    "name": "test1@naver.com",
-    "code": "1234"
+    "username": "test1@naver.com",
+    "code": "Aa12"
   },
   "quizbooks": {
     "result": [
@@ -16,11 +16,42 @@
         "keywords": [
           "테스트1",
           "테스트2",
-          "테스트3"
+          "테스트3",
+          "테스트4",
+          "테스트1",
+          "테스트2",
+          "테스트3",
+          "테스트4"
         ]
       },
       {
         "quizPackageID": 2,
+        "quizPackageCost": 3,
+        "isOwned": false,
+        "quizNum": 10,
+        "choiceQuizNum": 5,
+        "shortQuizNum": 3,
+        "longQuizNum": 2,
+        "keywords": [
+          "테스트2",
+          "테스트3"
+        ]
+      },
+      {
+        "quizPackageID": 3,
+        "quizPackageCost": 3,
+        "isOwned": false,
+        "quizNum": 10,
+        "choiceQuizNum": 5,
+        "shortQuizNum": 3,
+        "longQuizNum": 2,
+        "keywords": [
+          "테스트2",
+          "테스트3"
+        ]
+      },
+      {
+        "quizPackageID": 4,
         "quizPackageCost": 3,
         "isOwned": false,
         "quizNum": 10,

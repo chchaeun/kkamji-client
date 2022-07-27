@@ -20,7 +20,11 @@ function Quizbook({
   } = props;
 
   const tag = (content: string) => {
-    return <span>{content}</span>;
+    return (
+      <span className="p-1 px-2 rounded-2xl text-xs bg-indigo-200 cursor-pointer transition ease-in-out duration-200">
+        {content}
+      </span>
+    );
   };
 
   const quizTypes = [
@@ -30,10 +34,13 @@ function Quizbook({
   ];
 
   return (
-    <div onClick={onClick}>
-      <div>
-        <h2>#{quizPackageID}</h2>
-        <span>
+    <section
+      onClick={onClick}
+      className="flex flex-col gap-2 bg-white p-5 drop-shadow-md hover:drop-shadow-xl cursor-pointer"
+    >
+      <div className="flex justify-between">
+        <h2 className="text-xl">#{quizPackageID}</h2>
+        <span className="text-sm text-gray-700">
           {quizPackageCost
             ? isOwned
               ? "보유함"
@@ -43,7 +50,7 @@ function Quizbook({
       </div>
       <div>
         <h4>문제 총 {quizNum}개</h4>
-        <div>
+        <div className="flex gap-1">
           {quizTypes.map((quizType) => (
             <span key={quizType.type}>
               {tag(`${quizType.type} ${quizType.count}`)}
@@ -53,13 +60,13 @@ function Quizbook({
       </div>
       <div>
         <h4>키워드</h4>
-        <div>
+        <div className="flex flex-wrap gap-1">
           {keywords.map((keyword, idx) => (
             <span key={idx}>{tag(keyword)}</span>
           ))}
         </div>
       </div>
-    </div>
+    </section>
   );
 }
 
