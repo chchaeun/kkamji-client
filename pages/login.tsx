@@ -52,7 +52,7 @@ function Login() {
     }
   };
   return (
-    <div className="flex flex-col items-center mt-20 gap-10">
+    <div className="flex flex-col items-center pt-20 gap-10">
       <h1 className="font-summer text-4xl">깜지.</h1>
       <form
         onSubmit={handleSubmit(onValid, onInvalid)}
