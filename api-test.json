@@ -32,7 +32,10 @@
         "choiceQuizNum": 5,
         "shortQuizNum": 3,
         "longQuizNum": 2,
-        "keywords": ["테스트2", "테스트3"]
+        "keywords": [
+          "테스트2",
+          "테스트3"
+        ]
       },
       {
         "quizPackageID": 3,
@@ -42,7 +45,10 @@
         "choiceQuizNum": 5,
         "shortQuizNum": 3,
         "longQuizNum": 2,
-        "keywords": ["테스트2", "테스트3"]
+        "keywords": [
+          "테스트2",
+          "테스트3"
+        ]
       },
       {
         "quizPackageID": 4,
@@ -52,7 +58,10 @@
         "choiceQuizNum": 5,
         "shortQuizNum": 3,
         "longQuizNum": 2,
-        "keywords": ["테스트2", "테스트3"]
+        "keywords": [
+          "테스트2",
+          "테스트3"
+        ]
       }
     ],
     "isSuccess": true,
@@ -112,11 +121,20 @@
       "quizPackageID": 1,
       "quizID": 1,
       "quizContent": {
-        "example": ["20%", "30%", "25%", "20%", "50%"],
+        "example": [
+          "20%",
+          "30%",
+          "25%",
+          "20%",
+          "50%"
+        ],
         "problem": "이 문제를 찍었을 때 맞출 수 있는 확률은?"
       },
       "quizType": "SINGLE_CHOICE",
-      "quizAnswers": ["1", "2"],
+      "quizAnswers": [
+        "1",
+        "2"
+      ],
       "isSolved": false
     }
   },
