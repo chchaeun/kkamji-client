@@ -1,6 +1,6 @@
 import { atom } from "recoil";
 
-export const showRankingState = atom({
-  key: "showRankingState",
+export const showNavState = atom({
+  key: "showNavState",
   default: false,
 });
