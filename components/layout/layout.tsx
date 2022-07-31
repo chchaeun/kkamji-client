@@ -8,7 +8,7 @@ function Layout(props: IProps) {
   return (
     <Fragment>
       <Header />
-      <main className="h-screen bg-[#fafcff]">{props.children}</main>
+      <main className="h-screen">{props.children}</main>
     </Fragment>
   );
 }
