@@ -1,19 +1,19 @@
 import api from "../my-api";
 
 export interface IQuizbook {
-  quizPackageID: number;
-  quizPackageCost: number;
-  isOwned: boolean;
-  quizNum: number;
-  choiceQuizNum: number;
-  shortQuizNum: number;
-  longQuizNum: number;
-  keywords: string[];
+  quizbookId: number;
+  quizbookTitle: string;
+  quizbookDescription: string;
+  numOfQuizzes: number;
+  quizbookWeek: number;
+  submitUserName: string;
 }
 
-export const fetchQuizbooks = async () => {
-  const {
-    data: { result },
-  } = await api.get("/quizbooks");
-  return result;
+export const fetchQuizbooks = async (week: string) => {
+  let getWeek = "1";
+  if (week) {
+    getWeek = week;
+  }
+  const { data } = await api.get(`/quizbooks?week=${getWeek}`);
+  return data;
 };
