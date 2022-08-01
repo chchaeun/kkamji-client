@@ -38,7 +38,7 @@ function QuizbookDetail() {
   };
 
   return (
-    <div className="grid grid-cols-5 gap-4 w-full m-auto sm:flex sm:flex-col sm:px-10">
+    <div className="grid grid-cols-5 gap-4 w-full lg:mt-20 sm:mt-10 m-auto sm:flex sm:flex-col sm:px-10">
       <div className="col-start-1 flex justify-center mt-10 sm:mt-0">
         <SideNav title={navTitle} elements={navElements} />
       </div>
