@@ -123,27 +123,39 @@ function QuizDetail() {
         <SideNav title={navTitle} elements={navElements} />
       </div>
       <div className="col-start-2 col-span-3 flex flex-col gap-8 py-10 sm:h-screen sm:justify-between sm:py-20">
-        <h2 className="text-2xl">{quizDetail?.quizTitle}</h2>
-        <p className="flex items-center gap-5 justify-between bg-white p-5 drop-shadow-md hover:drop-shadow-lg cursor-pointer">
-          {quizDetail?.quizContent}
-        </p>
-        <button
-          onClick={onAnswerClick}
-          className="m-auto bg-[#5c3cde] hover:bg-[#4026ab] text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline cursor-pointer"
-        >
-          정답과 해설
-        </button>
+        <div className="flex flex-col gap-5">
+          <h2 className="text-2xl">{quizDetail?.quizTitle}</h2>
+          <p className="flex items-center gap-5 justify-between bg-white p-5 drop-shadow-md">
+            {quizDetail?.quizContent}
+          </p>
+          {!showAnswer && (
+            <button
+              onClick={onAnswerClick}
+              className="m-auto bg-[#5c3cde] hover:bg-[#4026ab] text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline cursor-pointer"
+            >
+              정답과 해설
+            </button>
+          )}
+        </div>
         {showAnswer && (
           <div className="flex flex-col gap-5">
-            <div>
-              <h2 className="text-2xl">정답</h2>
-              <p className="flex items-center gap-5 justify-between bg-white p-5 drop-shadow-md hover:drop-shadow-lg cursor-pointer">
+            <div className="flex flex-col gap-3">
+              <div className="flex justify-between">
+                <h2 className="text-2xl">정답</h2>
+                <button
+                  onClick={onAnswerClick}
+                  className="text-gray-700 underline"
+                >
+                  닫기
+                </button>
+              </div>
+              <p className="flex items-center gap-5 justify-between bg-white p-5 drop-shadow-md">
                 {quizAnswer?.quizAnswer}
               </p>
             </div>
-            <div>
+            <div className="flex flex-col gap-3">
               <h2 className="text-2xl">해설</h2>
-              <p className="flex flex-col gap-5 justify-between bg-white p-5 drop-shadow-md hover:drop-shadow-lg cursor-pointer">
+              <p className="flex flex-col gap-5 justify-between bg-white p-5 drop-shadow-md">
                 {quizAnswer?.quizExplanation}
                 <div className="px-3 bg-white border-l-4 border-indigo-400">
                   <h3 className="font-semibold">출처</h3>
