@@ -1,27 +1,27 @@
-import axios from "axios";
 import { useRouter } from "next/router";
-import React, { useEffect } from "react";
-import { useForm } from "react-hook-form";
+import React, { useEffect, useRef } from "react";
+import { SubmitHandler, useForm } from "react-hook-form";
 import api from "../api/my-api";
 
-interface IValidForm {
+type ValidForm = {
   username: string;
   code: string;
-}
-interface IInvalidForm {
-  username: {
-    type: string;
-    message: string;
-  };
-  code: {
-    type: string;
-    message: string;
-  };
-}
+};
 
 function Login() {
   const router = useRouter();
-  const { register, handleSubmit } = useForm();
+  const {
+    register,
+    handleSubmit,
+    watch,
+    formState: { errors },
+  } = useForm<ValidForm>();
+
+  const usernameRef = useRef<string | null>(null);
+  usernameRef.current = watch("username");
+
+  const codeRef = useRef<string | null>(null);
+  codeRef.current = watch("code");
 
   useEffect(() => {
     if (sessionStorage.getItem("code")) {
@@ -29,7 +29,8 @@ function Login() {
     }
   }, [router]);
 
-  const onValid = async ({ username, code }: IValidForm) => {
+  const onLoginValid: SubmitHandler<ValidForm> = async (data) => {
+    const { username, code } = data;
     const loginBody = {
       username,
       code,
@@ -44,18 +45,11 @@ function Login() {
         console.log(err);
       });
   };
-  const onInvalid = ({ username, code }: IInvalidForm) => {
-    if (username) {
-      alert(username.message);
-    } else if (code) {
-      alert(code.message);
-    }
-  };
   return (
     <div className="flex flex-col items-center pt-20 gap-10">
       <h1 className="font-summer text-4xl">깜지.</h1>
       <form
-        onSubmit={handleSubmit(onValid, onInvalid)}
+        onSubmit={handleSubmit(onLoginValid)}
         className="flex flex-col gap-8"
       >
         <div className="flex flex-col gap-2">
@@ -64,28 +58,35 @@ function Login() {
             <input
               type="text"
               {...register("username", {
-                required: "이름을 입력해주세요.",
+                required: true,
+                validate: (value) => value === usernameRef.current,
               })}
               className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
             />
           </label>
+          {errors.username && errors.username.type === "required" && (
+            <em>이름을 입력해주세요.</em>
+          )}
           <label className="flex flex-col">
             코드
             <input
               type="password"
               {...register("code", {
-                required: "코드를 입력해주세요.",
-                minLength: {
-                  value: 4,
-                  message: "코드는 4자여야 합니다.",
-                },
-                maxLength: {
-                  value: 4,
-                  message: "코드는 4자여야 합니다.",
-                },
+                required: true,
+                minLength: 4,
+                maxLength: 4,
+                validate: (value) => value === codeRef.current,
               })}
               className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
             />
+            {errors.code && errors.code.type === "required" && (
+              <em>코드를 입력해주세요.</em>
+            )}
+            {errors.code &&
+              (errors.code.type === "maxLength" ||
+                errors.code.type === "minLength") && (
+                <em>코드는 4자여야 합니다.</em>
+              )}
           </label>
         </div>
 
