@@ -1,7 +1,7 @@
 import { Icon } from "@iconify/react";
-import { useQuery } from "@tanstack/react-query";
+import { useMutation, useQuery } from "@tanstack/react-query";
 import { useRouter } from "next/router";
-import React from "react";
+import React, { useEffect } from "react";
 import {
   fetchQuizbookDetail,
   IQuizbookDetail,
@@ -27,7 +27,10 @@ function QuizbookDetail() {
 
   const { data: quizbookDetail } = useQuery<IQuizbookDetail>(
     ["quizbookDetail"],
-    () => fetchQuizbookDetail(quizbookId)
+    () => fetchQuizbookDetail(quizbookId),
+    {
+      enabled: !!router.query.qbid,
+    }
   );
 
   const onQuizClick = (quizID: string) => {

@@ -21,8 +21,12 @@ function QuizbooksPage() {
   const router = useRouter();
   const week = String(router.query.week);
 
-  const { data: quizbooks } = useQuery<IQuizbook[]>(["quizbooks"], () =>
-    fetchQuizbooks(week)
+  const { data: quizbooks } = useQuery<IQuizbook[]>(
+    ["quizbooks"],
+    () => fetchQuizbooks(week),
+    {
+      enabled: !!router.query.week,
+    }
   );
 
   const onQuizBookClick = (quizbook: IQuizbook) => {
