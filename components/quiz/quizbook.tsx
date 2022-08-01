@@ -17,13 +17,6 @@ function Quizbook({
     submitUserName,
   } = props;
 
-  const tag = (content: string) => {
-    return (
-      <span className="p-1 px-2 rounded-2xl text-xs bg-indigo-200">
-        {content}
-      </span>
-    );
-  };
   return (
     <section
       onClick={onClick}

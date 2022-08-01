@@ -42,7 +42,7 @@ function QuizBookPurchaseModal({
 
   const tag = (content: string) => {
     return (
-      <span className="p-1 px-2 rounded-2xl text-xs bg-indigo-200 cursor-pointer transition ease-in-out duration-200">
+      <span className="p-1 px-2 rounded-2xl text-xs bg-indigo-200">
         {content}
       </span>
     );

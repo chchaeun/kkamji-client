@@ -22,7 +22,7 @@ function SubmitPeriods() {
         showRanking
           ? "fixed visible w-screen h-screen p-10 bg-white bg-opacity-90"
           : "sm:hidden",
-        "col-start-4 flex flex-col gap-2 items-center p-20"
+        "col-start-5 flex flex-col gap-2 items-center p-10"
       )}
     >
       <span className="font-semibold">오늘의 꾸준 챌린저 👑</span>

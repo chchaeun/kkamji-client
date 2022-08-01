@@ -10,10 +10,6 @@ export interface IQuizbook {
 }
 
 export const fetchQuizbooks = async (week: string) => {
-  let getWeek = "1";
-  if (week) {
-    getWeek = week;
-  }
-  const { data } = await api.get(`/quizbooks?week=${getWeek}`);
+  const { data } = await api.get(`/quizbooks?week=${week}`);
   return data;
 };
