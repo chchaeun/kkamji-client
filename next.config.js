@@ -12,15 +12,15 @@ const prod = process.env.NODE_ENV === "production";
 module.exports = withPlugins(
   [
     withImages,
-    [
-      withPWA,
-      {
-        pwa: {
-          dest: "public",
-          disable: prod ? false : true,
-        },
-      },
-    ],
+    // [
+    //   withPWA,
+    //   {
+    //     pwa: {
+    //       dest: "public",
+    //       disable: prod ? false : true,
+    //     },
+    //   },
+    // ],
   ],
   nextConfig
 );
