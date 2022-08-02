@@ -3,6 +3,11 @@
   "name": "깜지.",
   "icons": [
     {
+      "src": "favicon.ico",
+      "type": "image/x-icon",
+      "sizes": "64x64 32x32 24x24 16x16"
+    },
+    {
       "src": "image/kkamji192.png",
       "type": "image/png",
       "sizes": "192x192"
@@ -13,7 +18,8 @@
       "sizes": "512x512"
     }
   ],
-  "background_color": "#FDFDFD",
+  "background_color": "#5c3cde",
+  "theme_color": "#5c3cde",
   "start_url": "/login",
   "display": "standalone",
   "orientation": "portrait"
