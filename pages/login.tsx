@@ -25,7 +25,7 @@ function Login() {
 
   useEffect(() => {
     if (sessionStorage.getItem("code")) {
-      router.push("/");
+      router.push("/quizbooks?week=1");
     }
   }, [router]);
 
