@@ -33,11 +33,11 @@ function QuizbooksPage() {
     router.push(`/quizbooks/${quizbook.quizbookId}`);
   };
   return (
-    <div className="grid grid-cols-5 gap-4 w-full lg:mt-20 sm:mt-10 m-auto sm:flex sm:flex-col">
+    <div className="grid grid-cols-5 gap-4 w-full lg:mt-20 m-auto sm:flex sm:flex-col">
       <div className="col-start-1 flex justify-center mt-10 sm:mt-0">
         <SideNav title={navTitle} elements={navElements} />
       </div>
-      <div className="col-start-2 col-span-3 flex flex-col gap-10  sm:gap-7 sm:w-4/5 h-screen bg-white py-10 px-20 sm:m-auto sm:px-0">
+      <div className="col-start-2 col-span-3 flex flex-col gap-10  sm:gap-7 sm:w-4/5 h-screen bg-white py-10 px-20 sm:m-auto sm:px-0 sm:py-20">
         <h1 className="text-2xl">{week}주차 문제집</h1>
         <div className="grid grid-cols-2 gap-8 sm:flex sm:flex-col">
           {quizbooks?.map((quizbook) => (
