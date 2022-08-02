@@ -1,7 +1,7 @@
 import Link from "next/link";
 import { useRouter } from "next/router";
-import React from "react";
-import { useRecoilValue } from "recoil";
+import React, { useEffect } from "react";
+import { useRecoilState } from "recoil";
 import { showNavState } from "../../stores/header";
 import { classNames } from "../../styles/classname-maker";
 interface INavProps {
@@ -12,13 +12,17 @@ function SideNav(props: INavProps) {
   const router = useRouter();
   const { title, elements } = props;
 
-  const showNav = useRecoilValue(showNavState);
+  const [showNav, setShowNav] = useRecoilState(showNavState);
+
+  useEffect(() => {
+    setShowNav(false);
+  }, [router.asPath, setShowNav]);
 
   return (
     <nav
       className={classNames(
         showNav
-          ? "sm:fixed sm:w-full sm:py-10 sm:px-10 sm:bg-white sm:bg-opacity-95 sm:z-10"
+          ? "sm:fixed sm:w-full sm:h-screen sm:mt-10 sm:py-20 sm:px-10 sm:bg-white sm:bg-opacity-95 sm:z-10"
           : "flex flex-col gap-3 px-10 py-5 h-fit sm:hidden"
       )}
     >
