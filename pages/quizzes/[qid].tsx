@@ -46,15 +46,9 @@ function QuizDetail() {
     () => fetchQuizIsSolved(quizId),
     {
       enabled: !!router.query.qid,
-      initialData: {
-        userId: 0,
-        userName: "",
-        quizId: 0,
-        quizIsSolved: true,
-      },
     }
   );
-
+  console.log(quizIsSolved);
   const { data: quizAnswer } = useQuery<IQuizAnswer>(
     ["quizAnswer", quizId],
     () => fetchQuizAnswer(quizId),
@@ -68,7 +62,7 @@ function QuizDetail() {
       updateQuizIsSolved(props),
     {
       onSuccess: () => {
-        queryClient.invalidateQueries(["quizIsSolved"]);
+        queryClient.invalidateQueries(["quizIsSolved", quizId]);
       },
     }
   );
@@ -155,17 +149,17 @@ function QuizDetail() {
             </div>
             <div className="flex flex-col gap-3">
               <h2 className="text-2xl">해설</h2>
-              <p className="flex flex-col gap-5 justify-between bg-white p-5 drop-shadow-md">
+              <div className="flex flex-col gap-5 justify-between bg-white p-5 drop-shadow-md">
                 {quizAnswer?.quizExplanation}
                 <div className="px-3 bg-white border-l-4 border-indigo-400">
                   <h3 className="font-semibold">출처</h3>
                   <p>{quizAnswer?.quizSource}</p>
                 </div>
-              </p>
+              </div>
             </div>
           </div>
         )}
-        {showAnswer && !quizIsSolved.quizIsSolved && (
+        {showAnswer && !quizIsSolved?.quizIsSolved && (
           <div className="flex flex-col gap-2 items-center m-auto">
             <span className="flex gap-1">
               나는 이 문제를{" "}
