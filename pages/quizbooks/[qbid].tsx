@@ -48,7 +48,7 @@ function QuizbookDetail() {
           <p className="text-gray-700">{quizbookDetail?.quizbookDescription}</p>
         </div>
         <div className="flex flex-col gap-3 ">
-          {quizbookDetail?.quizzes.map((quiz, index) => (
+          {quizbookDetail?.quizSummaries.map((quiz, index) => (
             <div
               key={quiz.quizId}
               onClick={() => onQuizClick(String(quiz.quizId))}

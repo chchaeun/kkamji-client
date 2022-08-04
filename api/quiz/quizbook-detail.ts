@@ -7,7 +7,7 @@ export interface IQuizbookDetail {
   quizbookWeek: number;
   numOfQuizzes: number;
   submitUserName: string;
-  quizzes: {
+  quizSummaries: {
     quizId: number;
     quizTitle: string;
     quizCategory: string;

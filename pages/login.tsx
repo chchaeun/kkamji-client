@@ -4,7 +4,7 @@ import { SubmitHandler, useForm } from "react-hook-form";
 import api from "../api/my-api";
 
 type ValidForm = {
-  username: string;
+  name: string;
   code: string;
 };
 
@@ -17,8 +17,8 @@ function Login() {
     formState: { errors },
   } = useForm<ValidForm>();
 
-  const usernameRef = useRef<string | null>(null);
-  usernameRef.current = watch("username");
+  const nameRef = useRef<string | null>(null);
+  nameRef.current = watch("name");
 
   const codeRef = useRef<string | null>(null);
   codeRef.current = watch("code");
@@ -30,9 +30,9 @@ function Login() {
   }, [router]);
 
   const onLoginValid: SubmitHandler<ValidForm> = async (data) => {
-    const { username, code } = data;
+    const { name, code } = data;
     const loginBody = {
-      username,
+      name,
       code,
     };
     await api
@@ -57,14 +57,14 @@ function Login() {
             이름
             <input
               type="text"
-              {...register("username", {
+              {...register("name", {
                 required: true,
-                validate: (value) => value === usernameRef.current,
+                validate: (value) => value === nameRef.current,
               })}
               className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
             />
           </label>
-          {errors.username && errors.username.type === "required" && (
+          {errors.name && errors.name.type === "required" && (
             <em>이름을 입력해주세요.</em>
           )}
           <label className="flex flex-col">
