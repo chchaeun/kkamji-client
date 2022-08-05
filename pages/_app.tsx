@@ -8,7 +8,13 @@ import {
 } from "@tanstack/react-query";
 import { RecoilRoot } from "recoil";
 function MyApp({ Component, pageProps }: AppProps) {
-  const queryClient = new QueryClient();
+  const queryClient = new QueryClient({
+    defaultOptions: {
+      queries: {
+        retry: false,
+      },
+    },
+  });
   return (
     <RecoilRoot>
       <QueryClientProvider client={queryClient}>

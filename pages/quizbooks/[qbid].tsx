@@ -1,5 +1,6 @@
 import { Icon } from "@iconify/react";
 import { useMutation, useQuery } from "@tanstack/react-query";
+import { AxiosError } from "axios";
 import { useRouter } from "next/router";
 import React, { useEffect } from "react";
 import {
@@ -19,14 +20,32 @@ const navElements = [
     link: "/quizbooks/2",
   },
 ];
+// interface IParams {
+//   params: {
+//     qbid: number;
+//   };
+// }
+// export async function getStaticPaths() {
+//   return {
+//     paths: [
+//       {
+//         params: { qbid: 1 },
+//       },
+//     ],
+//   };
+// }
+
+// export async function getStaticProps({ params }: IParams) {
+//   return { props: {} };
+// }
 
 function QuizbookDetail() {
   const router = useRouter();
 
   const quizbookId = String(router.query.qbid);
 
-  const { data: quizbookDetail } = useQuery<IQuizbookDetail>(
-    ["quizbookDetail"],
+  const { data: quizbookDetail, error } = useQuery<IQuizbookDetail, AxiosError>(
+    ["quizbookDetail", quizbookId],
     () => fetchQuizbookDetail(quizbookId),
     {
       enabled: !!router.query.qbid,
@@ -36,7 +55,15 @@ function QuizbookDetail() {
   const onQuizClick = (quizID: string) => {
     router.push(`/quizzes/${quizID}`);
   };
-
+  if (error) {
+    if (error?.response?.status === 404) {
+      return (
+        <div className="flex w-full h-screen items-center justify-center">
+          존재하지 않는 페이지입니다.
+        </div>
+      );
+    }
+  }
   return (
     <div className="grid grid-cols-5 gap-4 w-full lg:mt-20 m-auto sm:flex sm:flex-col sm:px-10">
       <div className="col-start-1 flex justify-center mt-10 sm:mt-0">
@@ -48,7 +75,7 @@ function QuizbookDetail() {
           <p className="text-gray-700">{quizbookDetail?.quizbookDescription}</p>
         </div>
         <div className="flex flex-col gap-3 ">
-          {quizbookDetail?.quizzes.map((quiz, index) => (
+          {quizbookDetail?.quizSummaries.map((quiz, index) => (
             <div
               key={quiz.quizId}
               onClick={() => onQuizClick(String(quiz.quizId))}
