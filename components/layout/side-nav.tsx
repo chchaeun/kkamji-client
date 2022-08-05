@@ -41,6 +41,14 @@ function SideNav(props: INavProps) {
           </li>
         ))}
       </ul>
+      <a
+        href="https://docs.google.com/forms/d/e/1FAIpQLSd57wjQ6NtLfeVM-IBfHIgTI3hw-YoCi03TBRFUwGhDK53urw/viewform?usp=sf_link"
+        target="_blank"
+        rel="noreferrer"
+        className="sm:fixed sm:bottom-10 z-10 bg-[#5c3cde] hover:bg-[#4026ab] text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline cursor-pointer"
+      >
+        이번주 문제 제출하기
+      </a>
     </nav>
   );
 }

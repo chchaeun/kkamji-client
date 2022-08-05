@@ -65,7 +65,7 @@ function QuizbooksPage() {
 
   return (
     <div className="grid grid-cols-5 gap-4 w-full lg:mt-20 m-auto sm:flex sm:flex-col">
-      <div className="col-start-1 flex justify-center mt-10 sm:mt-0">
+      <div className="col-start-1 flex flex-col items-center mt-10 sm:mt-0">
         <SideNav title={navTitle} elements={navElements} />
       </div>
       <div className="col-start-2 col-span-3 flex flex-col gap-10  sm:gap-7 sm:w-4/5 h-screen bg-white py-10 px-20 sm:m-auto sm:px-0 sm:py-20">
