@@ -1,4 +1,5 @@
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
+import { AxiosError } from "axios";
 import { useRouter } from "next/router";
 import React, { useState } from "react";
 import { fetchQuizAnswer, IQuizAnswer } from "../../api/quiz/quiz-answer";
@@ -26,6 +27,13 @@ const navElements = [
   },
 ];
 
+// export async function getStaticPaths(){
+
+// }
+// export async function getStaticProps(){
+
+// }
+
 function QuizDetail() {
   const [showAnswer, setShowAnswer] = useState(false);
 
@@ -35,7 +43,7 @@ function QuizDetail() {
 
   const quizId = String(router.query.qid);
 
-  const { data: quizDetail } = useQuery<IQuizDetail>(
+  const { data: quizDetail, error } = useQuery<IQuizDetail, AxiosError>(
     ["quizDetail", quizId],
     () => fetchQuizDetail(quizId),
     { enabled: !!router.query.qid }
@@ -48,7 +56,7 @@ function QuizDetail() {
       enabled: !!router.query.qid,
     }
   );
-  console.log(quizIsSolved);
+
   const { data: quizAnswer } = useQuery<IQuizAnswer>(
     ["quizAnswer", quizId],
     () => fetchQuizAnswer(quizId),
@@ -66,6 +74,15 @@ function QuizDetail() {
       },
     }
   );
+  if (error) {
+    if (error?.response?.status === 404) {
+      return (
+        <div className="flex w-full h-screen items-center justify-center">
+          존재하지 않는 페이지입니다.
+        </div>
+      );
+    }
+  }
 
   const onAnswerClick = () => {
     setShowAnswer((prev) => !prev);
@@ -151,10 +168,14 @@ function QuizDetail() {
               <h2 className="text-2xl">해설</h2>
               <div className="flex flex-col gap-5 justify-between bg-white p-5 drop-shadow-md">
                 {quizAnswer?.quizExplanation}
-                <div className="px-3 bg-white border-l-4 border-indigo-400">
-                  <h3 className="font-semibold">출처</h3>
-                  <p>{quizAnswer?.quizSource}</p>
-                </div>
+                {
+                  <div className="px-3 bg-white border-l-4 border-indigo-400">
+                    <h3 className="font-semibold">출처</h3>
+                    <p>
+                      {quizAnswer?.quizSource ? quizAnswer?.quizSource : "없음"}
+                    </p>
+                  </div>
+                }
               </div>
             </div>
           </div>
@@ -186,8 +207,9 @@ function QuizDetail() {
             onClick={() => onMoveQuizClick("prev")}
             className={classNames(
               isDisabled("prev")
-                ? "py-2 px-4 bg-[#5c3cde] hover:bg-[#4026ab] text-white font-bold rounded focus:outline-none focus:shadow-outline cursor-pointer"
-                : "py-2 px-4 rounded bg-gray-200 text-gray-700 cursor-default"
+                ? "bg-[#5c3cde] hover:bg-[#4026ab] text-white font-bold focus:outline-none focus:shadow-outline cursor-pointer"
+                : "bg-gray-200 text-gray-700 cursor-default",
+              "py-2 px-4 mb-4 rounded"
             )}
           >
             이전
@@ -196,8 +218,9 @@ function QuizDetail() {
             onClick={() => onMoveQuizClick("next")}
             className={classNames(
               isDisabled("next")
-                ? "py-2 px-4 bg-[#5c3cde] hover:bg-[#4026ab] text-white font-bold  rounded focus:outline-none focus:shadow-outline cursor-pointer"
-                : "py-2 px-4 rounded bg-gray-200 text-gray-700 cursor-default"
+                ? "bg-[#5c3cde] hover:bg-[#4026ab] text-white font-bold focus:outline-none focus:shadow-outline cursor-pointer"
+                : "bg-gray-200 text-gray-700 cursor-default",
+              "py-2 px-4 mb-4 rounded"
             )}
           >
             다음

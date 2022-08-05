@@ -1,4 +1,5 @@
-import { useQuery } from "@tanstack/react-query";
+import { dehydrate, QueryClient, useQuery } from "@tanstack/react-query";
+import { AxiosError } from "axios";
 import { useRouter } from "next/router";
 import React from "react";
 import { fetchQuizbooks, IQuizbook } from "../../api/quiz/quizbooks";
@@ -17,21 +18,51 @@ const navElements = [
   },
 ];
 
+// export async function getStaticProps() {
+//   const queryClient = new QueryClient();
+
+//   const weeks = ["1", "2", "3"];
+//   for (let i = 0; i < weeks.length; i++) {
+//     await queryClient.prefetchQuery(["quizbooks", weeks[i]], () =>
+//       fetchQuizbooks(weeks[i])
+//     );
+//   }
+//   return {
+//     props: {
+//       dehydratedState: dehydrate(queryClient),
+//     },
+//   };
+// }
+
 function QuizbooksPage() {
   const router = useRouter();
   const week = String(router.query.week);
 
-  const { data: quizbooks } = useQuery<IQuizbook[]>(
-    ["quizbooks"],
+  const { data: quizbooks, error } = useQuery<IQuizbook[], AxiosError>(
+    ["quizbooks", week],
     () => fetchQuizbooks(week),
     {
       enabled: !!router.query.week,
+      onError: (err) => {
+        console.log(err);
+      },
     }
   );
+
+  if (error) {
+    if (error?.response?.status === 404) {
+      return (
+        <div className="flex w-full h-screen items-center justify-center">
+          존재하지 않는 페이지입니다.
+        </div>
+      );
+    }
+  }
 
   const onQuizBookClick = (quizbook: IQuizbook) => {
     router.push(`/quizbooks/${quizbook.quizbookId}`);
   };
+
   return (
     <div className="grid grid-cols-5 gap-4 w-full lg:mt-20 m-auto sm:flex sm:flex-col">
       <div className="col-start-1 flex justify-center mt-10 sm:mt-0">
