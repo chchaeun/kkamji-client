@@ -5,7 +5,7 @@ import { useEffect } from "react";
 const Home: NextPage = () => {
   const router = useRouter();
   useEffect(() => {
-    router.push("/quizbooks?week=1");
+    router.push("/quizbooks?week=3");
   }, [router]);
   return <div></div>;
 };
