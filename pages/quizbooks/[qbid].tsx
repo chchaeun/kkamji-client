@@ -9,7 +9,7 @@ import {
 } from "../../api/quiz/quizbook-detail";
 import SideNav from "../../components/layout/side-nav";
 
-const navTitle = "1주차 문제집 모음";
+const navTitle = "3주차 문제집 모음";
 const navElements = [
   {
     name: "3주차 문제집 A",
@@ -63,6 +63,7 @@ function QuizbookDetail() {
   const onQuizClick = (quizID: string) => {
     router.push(`/quizzes/${quizID}`);
   };
+
   if (error) {
     if (error?.response?.status === 404) {
       return (
