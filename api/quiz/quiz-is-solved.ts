@@ -1,4 +1,5 @@
 import api from "../my-api";
+import { getCode } from "../session-code";
 export interface IQuizIsSolved {
   userId: number;
   userName: string;
@@ -13,6 +14,8 @@ export const updateQuizIsSolved = async (props: {
   quizId: string;
   isCorrect: boolean;
 }) => {
+  api.defaults.headers.common["code"] = getCode() || "";
+
   const { quizId, isCorrect } = props;
   return await api.post(`/quizzes/${quizId}/solve`, { isCorrect });
 };
