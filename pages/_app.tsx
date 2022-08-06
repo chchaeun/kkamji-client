@@ -7,6 +7,7 @@ import {
   QueryClientProvider,
 } from "@tanstack/react-query";
 import { RecoilRoot } from "recoil";
+import { ReactQueryDevtools } from "@tanstack/react-query-devtools";
 function MyApp({ Component, pageProps }: AppProps) {
   const queryClient = new QueryClient({
     defaultOptions: {
@@ -18,6 +19,7 @@ function MyApp({ Component, pageProps }: AppProps) {
   return (
     <RecoilRoot>
       <QueryClientProvider client={queryClient}>
+        <ReactQueryDevtools initialIsOpen={false} />
         <Hydrate state={pageProps.dehydratedState}>
           <Layout>
             <Component {...pageProps} />
