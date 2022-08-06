@@ -101,8 +101,6 @@ function QuizDetail() {
     { enabled: !!router.query.qid }
   );
 
-  console.log(quizDetail?.quizbookId);
-
   const { data: quizIsSolved } = useQuery<IQuizIsSolved>(
     ["quizIsSolved", quizId],
     () => fetchQuizIsSolved(quizId),
@@ -223,8 +221,6 @@ function QuizDetail() {
     }
     return true;
   };
-
-  console.log(navTitle, navElements);
 
   return (
     <div className="grid grid-cols-5 gap-4 w-full lg:mt-20 m-auto sm:flex sm:flex-col sm:px-10">
