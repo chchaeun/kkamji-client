@@ -3,10 +3,6 @@ import { useRouter } from "next/router";
 import { useEffect } from "react";
 
 const Home: NextPage = () => {
-  const router = useRouter();
-  useEffect(() => {
-    router.push("/quizbooks?week=3");
-  }, [router]);
   return <div></div>;
 };
 
