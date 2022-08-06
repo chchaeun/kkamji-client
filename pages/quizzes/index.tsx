@@ -87,7 +87,7 @@ function QuizDetail() {
   const [showAnswer, setShowAnswer] = useState(false);
   const router = useRouter();
 
-  const [quizId, setQuizId] = useState(String(router.query.qid));
+  const [quizId, setQuizId] = useState(String(router.query.id));
 
   const queryClient = useQueryClient();
 
@@ -127,7 +127,7 @@ function QuizDetail() {
   );
 
   useEffect(() => {
-    setQuizId(String(router.query.qid));
+    setQuizId(String(router.query.id));
   }, [router]);
 
   useEffect(() => {
@@ -137,7 +137,7 @@ function QuizDetail() {
       for (let i = 0; i < navElementsNameA.length; i++) {
         temp.push({
           name: navElementsNameA[i],
-          link: `/quizzes/${navElementsIdA[i]}`,
+          link: `/quizzes?id=${navElementsIdA[i]}`,
         });
       }
     } else if (quizDetail?.quizbookId === 14) {
@@ -145,7 +145,7 @@ function QuizDetail() {
       for (let i = 0; i < navElementsNameB.length; i++) {
         temp.push({
           name: navElementsNameB[i],
-          link: `/quizzes/${navElementsIdB[i]}`,
+          link: `/quizzes?id=${navElementsIdB[i]}`,
         });
       }
     } else if (quizDetail?.quizbookId === 15) {
@@ -153,7 +153,7 @@ function QuizDetail() {
       for (let i = 0; i < navElementsNameC.length; i++) {
         temp.push({
           name: navElementsNameC[i],
-          link: `/quizzes/${navElementsIdC[i]}`,
+          link: `/quizzes?id=${navElementsIdC[i]}`,
         });
       }
     } else if (quizDetail?.quizbookId === 16) {
@@ -161,7 +161,7 @@ function QuizDetail() {
       for (let i = 0; i < navElementsNameD.length; i++) {
         temp.push({
           name: navElementsNameD[i],
-          link: `/quizzes/${navElementsIdD[i]}`,
+          link: `/quizzes?id=${navElementsIdD[i]}`,
         });
       }
     }

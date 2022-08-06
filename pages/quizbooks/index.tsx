@@ -1,54 +1,72 @@
-import { dehydrate, QueryClient, useQuery } from "@tanstack/react-query";
+import { Icon } from "@iconify/react";
+import { useMutation, useQuery } from "@tanstack/react-query";
 import { AxiosError } from "axios";
 import { useRouter } from "next/router";
 import React, { useEffect, useState } from "react";
-import { fetchQuizbooks, IQuizbook } from "../../api/quiz/quizbooks";
+import {
+  fetchQuizbookDetail,
+  IQuizbookDetail,
+} from "../../api/quiz/quizbook-detail";
 import SideNav from "../../components/layout/side-nav";
-import Quizbook from "../../components/quiz/quizbook";
 
-const navTitle = "주차 문제집 모음";
+const navTitle = "3주차 문제집 모음";
 const navElements = [
   {
-    name: "3주차",
-    link: "/quizbooks?week=3",
+    name: "3주차 문제집 A",
+    link: "/quizbooks?id=13",
+  },
+  {
+    name: "3주차 문제집 B",
+    link: "/quizbooks?id=14",
+  },
+  {
+    name: "3주차 문제집 C",
+    link: "/quizbooks?id=15",
+  },
+  {
+    name: "3주차 문제집 D",
+    link: "/quizbooks?id=16",
   },
 ];
-
-// export async function getStaticProps() {
-//   const queryClient = new QueryClient();
-
-//   const weeks = ["1", "2", "3"];
-//   for (let i = 0; i < weeks.length; i++) {
-//     await queryClient.prefetchQuery(["quizbooks", weeks[i]], () =>
-//       fetchQuizbooks(weeks[i])
-//     );
-//   }
+// interface IParams {
+//   params: {
+//     qbid: number;
+//   };
+// }
+// export async function getStaticPaths() {
 //   return {
-//     props: {
-//       dehydratedState: dehydrate(queryClient),
-//     },
+//     paths: [
+//       {
+//         params: { qbid: 1 },
+//       },
+//     ],
 //   };
 // }
 
-function QuizbooksPage() {
+// export async function getStaticProps({ params }: IParams) {
+//   return { props: {} };
+// }
+
+function QuizbookDetail() {
   const router = useRouter();
 
-  const [week, setWeek] = useState(String(router.query.week));
+  const [quizbookId, setQuizbookId] = useState(String(router.query.id));
 
-  const { data: quizbooks, error } = useQuery<IQuizbook[], AxiosError>(
-    ["quizbooks", week],
-    () => fetchQuizbooks(week),
+  const { data: quizbookDetail, error } = useQuery<IQuizbookDetail, AxiosError>(
+    ["quizbookDetail", quizbookId],
+    () => fetchQuizbookDetail(quizbookId),
     {
-      enabled: !!router.query.week,
-      onError: (err) => {
-        console.log(err);
-      },
+      enabled: !!quizbookId,
     }
   );
 
   useEffect(() => {
-    setWeek(String(router.query.week));
+    setQuizbookId(String(router.query.id));
   }, [router]);
+
+  const onQuizClick = (quizID: string) => {
+    router.push(`/quizzes?id=${quizID}`);
+  };
 
   if (error) {
     if (error?.response?.status === 404) {
@@ -59,25 +77,31 @@ function QuizbooksPage() {
       );
     }
   }
-
-  const onQuizBookClick = (quizbook: IQuizbook) => {
-    router.push(`/quizbooks/${quizbook.quizbookId}`);
-  };
-
   return (
-    <div className="grid grid-cols-5 gap-4 w-full lg:mt-20 m-auto sm:flex sm:flex-col sm:pb-20">
-      <div className="col-start-1 flex flex-col items-center mt-10 sm:mt-0">
+    <div className="grid grid-cols-5 gap-4 w-full lg:mt-20 m-auto sm:flex sm:flex-col sm:px-10">
+      <div className="col-start-1 flex justify-center mt-10 sm:mt-0">
         <SideNav title={navTitle} elements={navElements} />
       </div>
-      <div className="col-start-2 col-span-3 flex flex-col gap-10  sm:gap-7 sm:w-4/5 h-screen bg-white py-10 px-20 sm:m-auto sm:px-0 sm:py-20">
-        <h1 className="text-2xl">{week}주차 문제집</h1>
-        <div className="grid grid-cols-2 gap-8 sm:flex sm:flex-col">
-          {quizbooks?.map((quizbook) => (
-            <Quizbook
-              key={quizbook.quizbookId}
-              props={quizbook}
-              onClick={() => onQuizBookClick(quizbook)}
-            />
+      <div className="col-start-2 col-span-3 sm:py-10">
+        <div className="flex flex-col gap-2 py-10">
+          <h1 className="text-2xl">{quizbookDetail?.quizbookTitle}</h1>
+          <p className="text-gray-700">{quizbookDetail?.quizbookDescription}</p>
+        </div>
+        <div className="flex flex-col gap-3 ">
+          {quizbookDetail?.quizSummaries.map((quiz, index) => (
+            <div
+              key={quiz.quizId}
+              onClick={() => onQuizClick(String(quiz.quizId))}
+              className="flex items-center gap-5 justify-between bg-white p-5 drop-shadow-md hover:drop-shadow-lg cursor-pointer"
+            >
+              <div className="flex gap-4">
+                <span className="font-semibold">{index + 1}</span>
+                {quiz.quizTitle}
+              </div>
+              {quiz.quizIsSolved && (
+                <Icon icon="bi:patch-check-fill" color="#5c3cde" height={24} />
+              )}
+            </div>
           ))}
         </div>
       </div>
@@ -85,4 +109,4 @@ function QuizbooksPage() {
   );
 }
 
-export default QuizbooksPage;
+export default QuizbookDetail;

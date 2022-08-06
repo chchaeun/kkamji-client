@@ -31,8 +31,6 @@ const Home: NextPage = () => {
     }
   );
 
-  console.log(getCode());
-
   if (error) {
     if (error?.response?.status === 404) {
       return (
@@ -44,7 +42,7 @@ const Home: NextPage = () => {
   }
 
   const onQuizBookClick = (quizbook: IQuizbook) => {
-    router.push(`/quizbooks/${quizbook.quizbookId}`);
+    router.push(`/quizbooks?id=${quizbook.quizbookId}`);
   };
 
   return (
