@@ -2,7 +2,7 @@ import { Icon } from "@iconify/react";
 import { useMutation, useQuery } from "@tanstack/react-query";
 import { AxiosError } from "axios";
 import { useRouter } from "next/router";
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import {
   fetchQuizbookDetail,
   IQuizbookDetail,
@@ -50,7 +50,7 @@ const navElements = [
 function QuizbookDetail() {
   const router = useRouter();
 
-  const quizbookId = String(router.query.qbid);
+  const [quizbookId, setQuizbookId] = useState(String(router.query.qbid));
 
   const { data: quizbookDetail, error } = useQuery<IQuizbookDetail, AxiosError>(
     ["quizbookDetail", quizbookId],
@@ -59,6 +59,10 @@ function QuizbookDetail() {
       enabled: !!router.query.qbid,
     }
   );
+
+  useEffect(() => {
+    setQuizbookId(String(router.query.qbid));
+  }, [router]);
 
   const onQuizClick = (quizID: string) => {
     router.push(`/quizzes/${quizID}`);
