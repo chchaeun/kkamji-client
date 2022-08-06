@@ -1,7 +1,7 @@
 import { dehydrate, QueryClient, useQuery } from "@tanstack/react-query";
 import { AxiosError } from "axios";
 import { useRouter } from "next/router";
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { fetchQuizbooks, IQuizbook } from "../../api/quiz/quizbooks";
 import SideNav from "../../components/layout/side-nav";
 import Quizbook from "../../components/quiz/quizbook";
@@ -32,7 +32,8 @@ const navElements = [
 
 function QuizbooksPage() {
   const router = useRouter();
-  const week = String(router.query.week);
+
+  const [week, setWeek] = useState(String(router.query.week));
 
   const { data: quizbooks, error } = useQuery<IQuizbook[], AxiosError>(
     ["quizbooks", week],
@@ -44,6 +45,10 @@ function QuizbooksPage() {
       },
     }
   );
+
+  useEffect(() => {
+    setWeek(String(router.query.week));
+  }, [router]);
 
   if (error) {
     if (error?.response?.status === 404) {
