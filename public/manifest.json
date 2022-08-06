@@ -20,7 +20,7 @@
   ],
   "background_color": "#5c3cde",
   "theme_color": "#ffffff",
-  "start_url": "/login",
+  "start_url": "/quizbooks?week=3",
   "display": "standalone",
   "orientation": "portrait"
 }
