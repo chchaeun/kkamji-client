@@ -1,3 +1,4 @@
+import { useMutation } from "@tanstack/react-query";
 import { useRouter } from "next/router";
 import React, { useEffect, useRef } from "react";
 import { SubmitHandler, useForm } from "react-hook-form";
@@ -29,21 +30,25 @@ function Login() {
     }
   }, [router]);
 
+  const { mutate: mutateLogin } = useMutation(
+    async (loginBody: ValidForm) => {
+      return await api.post("/login", loginBody);
+    },
+    {
+      onSuccess: () => {
+        router.reload();
+      },
+    }
+  );
+
   const onLoginValid: SubmitHandler<ValidForm> = async (data) => {
     const { name, code } = data;
     const loginBody = {
       name,
       code,
     };
-    sessionStorage.setItem("code", code);
-    await api
-      .post("/login", loginBody)
-      .then((res) => {
-        router.reload();
-      })
-      .catch((err) => {
-        console.log(err);
-      });
+    sessionStorage.setItem("code", loginBody.code);
+    mutateLogin(loginBody);
   };
   return (
     <div className="flex flex-col items-center pt-20 gap-10">
