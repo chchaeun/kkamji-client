@@ -12,12 +12,20 @@ import SideNav from "../../components/layout/side-nav";
 const navTitle = "1주차 문제집 모음";
 const navElements = [
   {
-    name: "문제집 1 제목",
-    link: "/quizbooks/1",
+    name: "3주차 문제집 A",
+    link: "/quizbooks/13",
   },
   {
-    name: "문제집 2 제목",
-    link: "/quizbooks/2",
+    name: "3주차 문제집 B",
+    link: "/quizbooks/14",
+  },
+  {
+    name: "3주차 문제집 C",
+    link: "/quizbooks/15",
+  },
+  {
+    name: "3주차 문제집 D",
+    link: "/quizbooks/16",
   },
 ];
 // interface IParams {

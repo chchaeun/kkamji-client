@@ -9,12 +9,8 @@ import Quizbook from "../../components/quiz/quizbook";
 const navTitle = "주차 문제집 모음";
 const navElements = [
   {
-    name: "1주차",
-    link: "/quizbooks?week=1",
-  },
-  {
-    name: "2주차",
-    link: "/quizbooks?week=2",
+    name: "3주차",
+    link: "/quizbooks?week=3",
   },
 ];
 
@@ -64,7 +60,7 @@ function QuizbooksPage() {
   };
 
   return (
-    <div className="grid grid-cols-5 gap-4 w-full lg:mt-20 m-auto sm:flex sm:flex-col">
+    <div className="grid grid-cols-5 gap-4 w-full lg:mt-20 m-auto sm:flex sm:flex-col sm:pb-20">
       <div className="col-start-1 flex flex-col items-center mt-10 sm:mt-0">
         <SideNav title={navTitle} elements={navElements} />
       </div>
