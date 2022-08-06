@@ -35,10 +35,10 @@ function Login() {
       name,
       code,
     };
+    sessionStorage.setItem("code", code);
     await api
       .post("/login", loginBody)
       .then((res) => {
-        sessionStorage.setItem("code", code);
         router.reload();
       })
       .catch((err) => {
