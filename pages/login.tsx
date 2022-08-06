@@ -36,7 +36,7 @@ function Login() {
     },
     {
       onSuccess: () => {
-        router.replace("/?week=3");
+        router.push("/?week=3");
       },
     }
   );

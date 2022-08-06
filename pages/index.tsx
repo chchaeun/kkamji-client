@@ -7,6 +7,7 @@ import React from "react";
 import { fetchQuizbooks, IQuizbook } from "../api/quiz/quizbooks";
 import SideNav from "../components/layout/side-nav";
 import Quizbook from "../components/quiz/quizbook";
+import { getCode } from "../api/session-code";
 
 const navTitle = "주차 문제집 모음";
 const navElements = [
@@ -23,12 +24,14 @@ const Home: NextPage = () => {
     ["quizbooks", week],
     () => fetchQuizbooks(week),
     {
-      enabled: !!router.query.week,
+      enabled: !!router.query.week && !!getCode(),
       onError: (err) => {
         console.log(err);
       },
     }
   );
+
+  console.log(getCode());
 
   if (error) {
     if (error?.response?.status === 404) {
