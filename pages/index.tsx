@@ -42,7 +42,7 @@ const Home: NextPage = () => {
   }
 
   const onQuizBookClick = (quizbook: IQuizbook) => {
-    router.push(`/quizbooks?id=${quizbook.quizbookId}`);
+    router.push(`/quizbooks/${quizbook.quizbookId}`);
   };
 
   return (
