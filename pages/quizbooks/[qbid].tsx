@@ -50,7 +50,7 @@ const navElements = [
 function QuizbookDetail() {
   const router = useRouter();
 
-  const [quizbookId, setQuizbookId] = useState(String(router.query.id));
+  const [quizbookId, setQuizbookId] = useState(String(router.query.qbid));
 
   const { data: quizbookDetail, error } = useQuery<IQuizbookDetail, AxiosError>(
     ["quizbookDetail", quizbookId],
@@ -61,11 +61,11 @@ function QuizbookDetail() {
   );
 
   useEffect(() => {
-    setQuizbookId(String(router.query.id));
+    setQuizbookId(String(router.query.qbid));
   }, [router]);
 
   const onQuizClick = (quizID: string) => {
-    router.push(`/quizzes?id=${quizID}`);
+    router.push(`/quizzes/${quizID}`);
   };
 
   if (error) {
