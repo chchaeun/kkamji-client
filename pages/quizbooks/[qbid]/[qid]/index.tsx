@@ -2,15 +2,15 @@ import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { AxiosError } from "axios";
 import { useRouter } from "next/router";
 import React, { useEffect, useState } from "react";
-import { fetchQuizAnswer, IQuizAnswer } from "../../../api/quiz/quiz-answer";
-import { fetchQuizDetail, IQuizDetail } from "../../../api/quiz/quiz-detail";
+import { fetchQuizAnswer, IQuizAnswer } from "../../../../api/quiz/quiz-answer";
+import { fetchQuizDetail, IQuizDetail } from "../../../../api/quiz/quiz-detail";
 import {
   fetchQuizIsSolved,
   IQuizIsSolved,
   updateQuizIsSolved,
-} from "../../../api/quiz/quiz-is-solved";
-import SideNav from "../../../components/layout/side-nav";
-import { classNames } from "../../../styles/classname-maker";
+} from "../../../../api/quiz/quiz-is-solved";
+import SideNav from "../../../../components/layout/side-nav";
+import { classNames } from "../../../../styles/classname-maker";
 
 interface INavElements {
   link: string;
@@ -127,7 +127,7 @@ function QuizDetail() {
   );
 
   useEffect(() => {
-    setQuizId(String(router.query.id));
+    setQuizId(String(router.query.qid));
   }, [router]);
 
   useEffect(() => {
@@ -137,7 +137,7 @@ function QuizDetail() {
       for (let i = 0; i < navElementsNameA.length; i++) {
         temp.push({
           name: navElementsNameA[i],
-          link: `/quizzes/${navElementsIdA[i]}`,
+          link: `/quizbooks/${router.query.qbid}/${navElementsIdA[i]}`,
         });
       }
     } else if (quizDetail?.quizbookId === 14) {
@@ -145,7 +145,7 @@ function QuizDetail() {
       for (let i = 0; i < navElementsNameB.length; i++) {
         temp.push({
           name: navElementsNameB[i],
-          link: `/quizzes/${navElementsIdB[i]}`,
+          link: `/quizbooks/${router.query.qbid}/${navElementsIdB[i]}`,
         });
       }
     } else if (quizDetail?.quizbookId === 15) {
@@ -153,7 +153,7 @@ function QuizDetail() {
       for (let i = 0; i < navElementsNameC.length; i++) {
         temp.push({
           name: navElementsNameC[i],
-          link: `/quizzes/${navElementsIdC[i]}`,
+          link: `/quizbooks/${router.query.qbid}/${navElementsIdC[i]}`,
         });
       }
     } else if (quizDetail?.quizbookId === 16) {
@@ -161,7 +161,7 @@ function QuizDetail() {
       for (let i = 0; i < navElementsNameD.length; i++) {
         temp.push({
           name: navElementsNameD[i],
-          link: `/quizzes/${navElementsIdD[i]}`,
+          link: `/quizbooks/${router.query.qbid}/${navElementsIdD[i]}`,
         });
       }
     }
