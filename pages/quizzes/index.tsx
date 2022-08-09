@@ -85,12 +85,11 @@ const navElementsIdD = [26, 27, 28, 29, 30, 31, 32, 33, 34, 35];
 
 function QuizDetail() {
   const [showAnswer, setShowAnswer] = useState(false);
-
-  const queryClient = useQueryClient();
-
   const router = useRouter();
 
-  const quizId = String(router.query.qid);
+  const [quizId, setQuizId] = useState(String(router.query.id));
+
+  const queryClient = useQueryClient();
 
   const [navTitle, setNavTitle] = useState<string>();
   const [navElements, setNavElements] = useState<INavElements[]>();
@@ -98,16 +97,14 @@ function QuizDetail() {
   const { data: quizDetail, error } = useQuery<IQuizDetail, AxiosError>(
     ["quizDetail", quizId],
     () => fetchQuizDetail(quizId),
-    { enabled: !!router.query.qid }
+    { enabled: !!quizId }
   );
-
-  console.log(quizDetail?.quizbookId);
 
   const { data: quizIsSolved } = useQuery<IQuizIsSolved>(
     ["quizIsSolved", quizId],
     () => fetchQuizIsSolved(quizId),
     {
-      enabled: !!router.query.qid,
+      enabled: !!quizId,
     }
   );
 
@@ -115,7 +112,7 @@ function QuizDetail() {
     ["quizAnswer", quizId],
     () => fetchQuizAnswer(quizId),
     {
-      enabled: !!router.query.qid,
+      enabled: !!quizId,
     }
   );
 
@@ -130,13 +127,17 @@ function QuizDetail() {
   );
 
   useEffect(() => {
+    setQuizId(String(router.query.id));
+  }, [router]);
+
+  useEffect(() => {
     let temp = [];
     if (quizDetail?.quizbookId === 13) {
       setNavTitle(navTitleA);
       for (let i = 0; i < navElementsNameA.length; i++) {
         temp.push({
           name: navElementsNameA[i],
-          link: `/quizzes/${navElementsIdA[i]}`,
+          link: `/quizzes?id=${navElementsIdA[i]}`,
         });
       }
     } else if (quizDetail?.quizbookId === 14) {
@@ -144,7 +145,7 @@ function QuizDetail() {
       for (let i = 0; i < navElementsNameB.length; i++) {
         temp.push({
           name: navElementsNameB[i],
-          link: `/quizzes/${navElementsIdB[i]}`,
+          link: `/quizzes?id=${navElementsIdB[i]}`,
         });
       }
     } else if (quizDetail?.quizbookId === 15) {
@@ -152,7 +153,7 @@ function QuizDetail() {
       for (let i = 0; i < navElementsNameC.length; i++) {
         temp.push({
           name: navElementsNameC[i],
-          link: `/quizzes/${navElementsIdC[i]}`,
+          link: `/quizzes?id=${navElementsIdC[i]}`,
         });
       }
     } else if (quizDetail?.quizbookId === 16) {
@@ -160,7 +161,7 @@ function QuizDetail() {
       for (let i = 0; i < navElementsNameD.length; i++) {
         temp.push({
           name: navElementsNameD[i],
-          link: `/quizzes/${navElementsIdD[i]}`,
+          link: `/quizzes?id=${navElementsIdD[i]}`,
         });
       }
     }
@@ -223,8 +224,6 @@ function QuizDetail() {
     }
     return true;
   };
-
-  console.log(navTitle, navElements);
 
   return (
     <div className="grid grid-cols-5 gap-4 w-full lg:mt-20 m-auto sm:flex sm:flex-col sm:px-10">

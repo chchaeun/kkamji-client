@@ -10,6 +10,7 @@
   },
   "dependencies": {
     "@tanstack/react-query": "^4.0.10",
+    "@tanstack/react-query-devtools": "^4.0.10",
     "@types/recoil": "^0.0.9",
     "aws": "^0.0.3-2",
     "axios": "^0.27.2",

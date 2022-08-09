@@ -1,4 +1,5 @@
 import api from "../my-api";
+import { getCode } from "../session-code";
 
 export interface IQuizbookDetail {
   quizbookId: number;
@@ -16,6 +17,8 @@ export interface IQuizbookDetail {
 }
 
 export const fetchQuizbookDetail = async (quizbookId: string) => {
+  api.defaults.headers.common["code"] = getCode() || "";
+
   const { data } = await api.get(`/quizbooks/${quizbookId}`);
   return data;
 };
