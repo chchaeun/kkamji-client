@@ -170,7 +170,7 @@ function QuizDetailPage() {
   const [showAnswer, setShowAnswer] = useState(false);
   const router = useRouter();
 
-  const [quizId, setQuizId] = useState(String(router.query.qid));
+  const quizId = String(router.query.qid);
 
   const queryClient = useQueryClient();
 
@@ -208,10 +208,6 @@ function QuizDetailPage() {
       },
     }
   );
-
-  useEffect(() => {
-    setQuizId(String(router.query.qid));
-  }, [router]);
 
   useEffect(() => {
     let temp = [];

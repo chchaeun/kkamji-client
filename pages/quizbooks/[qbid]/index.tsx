@@ -72,7 +72,7 @@ const navElements4 = [
 function QuizbookDetailPage() {
   const router = useRouter();
 
-  const [quizbookId, setQuizbookId] = useState(String(router.query.qbid));
+  const quizbookId = String(router.query.qbid);
 
   const [navTitle, setNavTitle] = useState<INavElements>();
   const [navElements, setNavElements] = useState<INavElements[]>();
@@ -84,10 +84,6 @@ function QuizbookDetailPage() {
       enabled: !!quizbookId,
     }
   );
-
-  useEffect(() => {
-    setQuizbookId(String(router.query.qbid));
-  }, [router]);
 
   useEffect(() => {
     if (quizbookDetail?.quizbookWeek === 3) {
