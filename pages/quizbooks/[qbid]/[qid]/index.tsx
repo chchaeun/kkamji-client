@@ -17,7 +17,10 @@ interface INavElements {
   name: string;
 }
 
-const navTitleA = "3주차 문제집 A";
+const navTitleA = {
+  name: "3주차 문제집 A",
+  link: "/quizbooks/13",
+};
 const navElementsNameA = [
   "데이터의 신뢰성",
   "FitIm",
@@ -32,7 +35,10 @@ const navElementsNameA = [
 ];
 const navElementsIdA = [10, 11, 12, 13, 14, 15, 16, 17, 18, 19];
 
-const navTitleB = "3주차 문제집 B";
+const navTitleB = {
+  name: "3주차 문제집 B",
+  link: "/quizbooks/14",
+};
 const navElementsNameB = [
   "Normality test",
   "Equality Variance test",
@@ -47,7 +53,10 @@ const navElementsNameB = [
 ];
 const navElementsIdB = [20, 21, 22, 23, 24, 25, 36, 37, 38, 39];
 
-const navTitleC = "3주차 문제집 C";
+const navTitleC = {
+  name: "3주차 문제집 C",
+  link: "/quizbooks/15",
+};
 const navElementsNameC = [
   "ANOVA",
   "ANOVA-treatment",
@@ -61,7 +70,10 @@ const navElementsNameC = [
 ];
 const navElementsIdC = [1, 2, 3, 4, 5, 6, 7, 8, 9];
 
-const navTitleD = "3주차 문제집 D";
+const navTitleD = {
+  name: "3주차 문제집 D",
+  link: "/quizbooks/16",
+};
 const navElementsNameD = [
   "factor",
   "interaction",
@@ -76,6 +88,77 @@ const navElementsNameD = [
 ];
 const navElementsIdD = [26, 27, 28, 29, 30, 31, 32, 33, 34, 35];
 
+const navTitle4A = {
+  name: "4주차 문제집 A",
+  link: "/quizbooks/17",
+};
+const navElementsName4A = [
+  "Table Size",
+  "배열에서 데이터 수정",
+  "간단한 함수 계산하기",
+  "원하는 데이터 배열 가공하기",
+  "외부데이터",
+  "NaN",
+  "Table Size",
+  "함수 reshape",
+  "매트랩에서 윗 방향키의 역할",
+  "함수 repmat",
+];
+const navElementsId4A = [40, 41, 42, 43, 44, 45, 46, 47, 48, 49];
+
+const navTitle4B = {
+  name: "4주차 문제집 B",
+  link: "/quizbooks/18",
+};
+const navElementsName4B = [
+  "MATLAB 기본 조작",
+  "MATLAB 기본 조작",
+  "MATLAB 외부파일 가져오기",
+  "ttest",
+  "MATLAB 기본 조작",
+  "MATLAB 기본 조작",
+  "MATLAB 기본 조작",
+  "MATLAB 기본 조작",
+  "MATLAB 기본 조작",
+  "MATLAB 기본 조작",
+];
+const navElementsId4B = [60, 61, 66, 70, 71, 72, 75, 76, 77, 78];
+
+const navTitle4C = {
+  name: "4주차 문제집 C",
+  link: "/quizbooks/19",
+};
+const navElementsName4C = [
+  "행벡터",
+  "MATLAB 작업공간변수",
+  "MATLAB함수 호출",
+  "매트랩 표현 방식",
+  "MATLAB 기본언어",
+  "루프와 조건문",
+  "plot함수",
+  "행렬연산언어",
+  "집합 함수",
+  "명령함수",
+];
+const navElementsId4C = [50, 51, 52, 53, 54, 55, 56, 57, 58, 59];
+
+const navTitle4D = {
+  name: "4주차 문제집 D",
+  link: "/quizbooks/20",
+};
+const navElementsName4D = [
+  "MATLAB 기본 이용",
+  "식의 작성",
+  "식의 작성 2",
+  "배열의 저장",
+  "index 이용",
+  "반복된 Table",
+  "엑셀 불러오기",
+  "table 변형",
+  "ad_test",
+];
+const navElementsId4D = [62, 63, 64, 65, 67, 68, 69, 73, 74];
+
 // export async function getStaticPaths(){
 
 // }
@@ -83,15 +166,15 @@ const navElementsIdD = [26, 27, 28, 29, 30, 31, 32, 33, 34, 35];
 
 // }
 
-function QuizDetail() {
+function QuizDetailPage() {
   const [showAnswer, setShowAnswer] = useState(false);
   const router = useRouter();
 
-  const [quizId, setQuizId] = useState(String(router.query.qid));
+  const quizId = String(router.query.qid);
 
   const queryClient = useQueryClient();
 
-  const [navTitle, setNavTitle] = useState<string>();
+  const [navTitle, setNavTitle] = useState<INavElements>();
   const [navElements, setNavElements] = useState<INavElements[]>();
 
   const { data: quizDetail, error } = useQuery<IQuizDetail, AxiosError>(
@@ -127,10 +210,6 @@ function QuizDetail() {
   );
 
   useEffect(() => {
-    setQuizId(String(router.query.qid));
-  }, [router]);
-
-  useEffect(() => {
     let temp = [];
     if (quizDetail?.quizbookId === 13) {
       setNavTitle(navTitleA);
@@ -162,6 +241,41 @@ function QuizDetail() {
         temp.push({
           name: navElementsNameD[i],
           link: `/quizbooks/${router.query.qbid}/${navElementsIdD[i]}`,
+<<<<<<< HEAD:pages/quizbooks/[qbid]/[qid]/index.tsx
+=======
+        });
+      }
+    } else if (quizDetail?.quizbookId === 17) {
+      setNavTitle(navTitle4A);
+      for (let i = 0; i < navElementsName4A.length; i++) {
+        temp.push({
+          name: navElementsName4A[i],
+          link: `/quizbooks/${router.query.qbid}/${navElementsId4A[i]}`,
+        });
+      }
+    } else if (quizDetail?.quizbookId === 18) {
+      setNavTitle(navTitle4B);
+      for (let i = 0; i < navElementsId4B.length; i++) {
+        temp.push({
+          name: navElementsName4B[i],
+          link: `/quizbooks/${router.query.qbid}/${navElementsId4B[i]}`,
+        });
+      }
+    } else if (quizDetail?.quizbookId === 19) {
+      setNavTitle(navTitle4C);
+      for (let i = 0; i < navElementsId4C.length; i++) {
+        temp.push({
+          name: navElementsName4C[i],
+          link: `/quizbooks/${router.query.qbid}/${navElementsId4C[i]}`,
+        });
+      }
+    } else if (quizDetail?.quizbookId === 20) {
+      setNavTitle(navTitle4D);
+      for (let i = 0; i < navElementsId4D.length; i++) {
+        temp.push({
+          name: navElementsName4D[i],
+          link: `/quizbooks/${router.query.qbid}/${navElementsId4D[i]}`,
+>>>>>>> 1da02192512b52698bb9797857a7e992d69488e0:pages/quizbooks/quizzes/[qid].tsx
         });
       }
     }
@@ -238,8 +352,17 @@ function QuizDetail() {
       <div className="col-start-2 col-span-3 flex flex-col gap-8 py-10 sm:h-screen sm:justify-between sm:py-20">
         <div className="flex flex-col gap-5">
           <h2 className="text-2xl">{quizDetail?.quizTitle}</h2>
-          <p className="flex items-center gap-5 justify-between bg-white p-5 drop-shadow-md">
-            {quizDetail?.quizContent}
+          <p className="flex flex-col gap-5 justify-between bg-white p-5 drop-shadow-md">
+            {quizDetail?.quizContent.split("[img]")[0]}
+            {quizDetail?.quizContent.split("[img]")[1] && (
+              <img
+                src={`http://drive.google.com/uc?export=download&id=${
+                  quizDetail?.quizContent.split("[img]")[1].split("?id=")[1]
+                }`}
+                width="300"
+                alt="문제 이미지"
+              />
+            )}
           </p>
           {!showAnswer && (
             <button
@@ -273,7 +396,7 @@ function QuizDetail() {
                 {
                   <div className="px-3 bg-white border-l-4 border-indigo-400">
                     <h3 className="font-semibold">출처</h3>
-                    <div className="overflow-scroll">
+                    <div className="overflow-scroll scrollbar-hide">
                       {quizAnswer?.quizSource ? quizAnswer?.quizSource : "없음"}
                     </div>
                   </div>
@@ -333,4 +456,4 @@ function QuizDetail() {
   );
 }
 
-export default QuizDetail;
+export default QuizDetailPage;

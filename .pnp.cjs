@@ -61,6 +61,7 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["react-query", "virtual:1ca3d45661282aa6e2c01a90bb2bde2c1af70673e4a578116428a2af70aff6d82b1728295f748f195ecea8e57b31ba96a8112edcc0dc7d20b416549af71a1795#npm:4.0.0"],\
             ["recoil", "virtual:1ca3d45661282aa6e2c01a90bb2bde2c1af70673e4a578116428a2af70aff6d82b1728295f748f195ecea8e57b31ba96a8112edcc0dc7d20b416549af71a1795#npm:0.7.4"],\
             ["sw-precache-webpack-plugin", "virtual:1ca3d45661282aa6e2c01a90bb2bde2c1af70673e4a578116428a2af70aff6d82b1728295f748f195ecea8e57b31ba96a8112edcc0dc7d20b416549af71a1795#npm:1.0.0"],\
+            ["tailwind-scrollbar-hide", "npm:1.1.7"],\
             ["tailwindcss", "virtual:1ca3d45661282aa6e2c01a90bb2bde2c1af70673e4a578116428a2af70aff6d82b1728295f748f195ecea8e57b31ba96a8112edcc0dc7d20b416549af71a1795#npm:3.1.6"],\
             ["typescript", "patch:typescript@npm%3A4.7.4#~builtin<compat/typescript>::version=4.7.4&hash=f456af"]\
           ],\
@@ -11513,6 +11514,7 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["react-query", "virtual:1ca3d45661282aa6e2c01a90bb2bde2c1af70673e4a578116428a2af70aff6d82b1728295f748f195ecea8e57b31ba96a8112edcc0dc7d20b416549af71a1795#npm:4.0.0"],\
             ["recoil", "virtual:1ca3d45661282aa6e2c01a90bb2bde2c1af70673e4a578116428a2af70aff6d82b1728295f748f195ecea8e57b31ba96a8112edcc0dc7d20b416549af71a1795#npm:0.7.4"],\
             ["sw-precache-webpack-plugin", "virtual:1ca3d45661282aa6e2c01a90bb2bde2c1af70673e4a578116428a2af70aff6d82b1728295f748f195ecea8e57b31ba96a8112edcc0dc7d20b416549af71a1795#npm:1.0.0"],\
+            ["tailwind-scrollbar-hide", "npm:1.1.7"],\
             ["tailwindcss", "virtual:1ca3d45661282aa6e2c01a90bb2bde2c1af70673e4a578116428a2af70aff6d82b1728295f748f195ecea8e57b31ba96a8112edcc0dc7d20b416549af71a1795#npm:3.1.6"],\
             ["typescript", "patch:typescript@npm%3A4.7.4#~builtin<compat/typescript>::version=4.7.4&hash=f456af"]\
           ],\
@@ -11922,6 +11924,15 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["sw-toolbox", "npm:3.6.0"],\
             ["path-to-regexp", "npm:1.8.0"],\
             ["serviceworker-cache-polyfill", "npm:4.0.0"]\
+          ],\
+          "linkType": "HARD"\
+        }]\
+      ]],\
+      ["tailwind-scrollbar-hide", [\
+        ["npm:1.1.7", {\
+          "packageLocation": "./.yarn/cache/tailwind-scrollbar-hide-npm-1.1.7-537baa5b75-2434a1db7a.zip/node_modules/tailwind-scrollbar-hide/",\
+          "packageDependencies": [\
+            ["tailwind-scrollbar-hide", "npm:1.1.7"]\
           ],\
           "linkType": "HARD"\
         }]\

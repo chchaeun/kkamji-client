@@ -4,7 +4,7 @@ import React, { useEffect, useRef } from "react";
 import { SubmitHandler, useForm } from "react-hook-form";
 import api from "../api/my-api";
 
-type ValidForm = {
+type LoginValidForm = {
   name: string;
   code: string;
 };
@@ -16,7 +16,7 @@ function Login() {
     handleSubmit,
     watch,
     formState: { errors },
-  } = useForm<ValidForm>();
+  } = useForm<LoginValidForm>();
 
   const nameRef = useRef<string | null>(null);
   nameRef.current = watch("name");
@@ -26,22 +26,22 @@ function Login() {
 
   useEffect(() => {
     if (sessionStorage.getItem("code")) {
-      router.push("/?week=3");
+      router.push("/?week=4");
     }
   }, [router]);
 
   const { mutate: mutateLogin } = useMutation(
-    async (loginBody: ValidForm) => {
+    async (loginBody: LoginValidForm) => {
       return await api.post("/login", loginBody);
     },
     {
       onSuccess: () => {
-        router.push("/?week=3");
+        router.push("/?week=4");
       },
     }
   );
 
-  const onLoginValid: SubmitHandler<ValidForm> = async (data) => {
+  const onLoginValid: SubmitHandler<LoginValidForm> = async (data) => {
     const { name, code } = data;
     const loginBody = {
       name,
