@@ -180,7 +180,9 @@ function QuizDetailPage() {
   const { data: quizDetail, error } = useQuery<IQuizDetail, AxiosError>(
     ["quizDetail", quizId],
     () => fetchQuizDetail(quizId),
-    { enabled: !!quizId }
+    {
+      enabled: !!quizId,
+    }
   );
 
   const { data: quizIsSolved } = useQuery<IQuizIsSolved>(
