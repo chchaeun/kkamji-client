@@ -6,8 +6,8 @@ import React, { useEffect, useState } from "react";
 import {
   fetchQuizbookDetail,
   IQuizbookDetail,
-} from "../../api/quiz/quizbook-detail";
-import SideNav from "../../components/layout/side-nav";
+} from "../../../api/quiz/quizbook-detail";
+import SideNav from "../../../components/layout/side-nav";
 
 const navTitle = "3주차 문제집 모음";
 const navElements = [
@@ -64,8 +64,8 @@ function QuizbookDetail() {
     setQuizbookId(String(router.query.qbid));
   }, [router]);
 
-  const onQuizClick = (quizID: string) => {
-    router.push(`/quizzes/${quizID}`);
+  const onQuizClick = (quizId: string) => {
+    router.push(`/quizbooks/${quizbookId}/${quizId}`);
   };
 
   if (error) {
