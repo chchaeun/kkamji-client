@@ -9,11 +9,15 @@ import SideNav from "../components/layout/side-nav";
 import Quizbook from "../components/quiz/quizbook";
 import { getCode } from "../api/session-code";
 
-const navTitle = "주차 문제집 모음";
+const navTitle = { name: "주차 문제집 모음", link: "" };
 const navElements = [
   {
     name: "3주차",
     link: "/?week=3",
+  },
+  {
+    name: "4주차",
+    link: "/?week=4",
   },
 ];
 const Home: NextPage = () => {

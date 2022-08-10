@@ -5,7 +5,7 @@ import { useRecoilState } from "recoil";
 import { showNavState } from "../../stores/header";
 import { classNames } from "../../styles/classname-maker";
 interface INavProps {
-  title: string;
+  title: { name: string; link?: string };
   elements: { name: string; link: string }[];
 }
 function SideNav(props: INavProps) {
@@ -26,7 +26,9 @@ function SideNav(props: INavProps) {
           : "flex flex-col gap-3 px-10 py-5 h-fit sm:hidden"
       )}
     >
-      <h3 className="text-xl">{title}</h3>
+      <h3 className="text-xl">
+        {title.link ? <Link href={title.link}>{title.name}</Link> : title.name}
+      </h3>
       <ul>
         {elements.map((element, index) => (
           <li
@@ -41,14 +43,14 @@ function SideNav(props: INavProps) {
           </li>
         ))}
       </ul>
-      <a
+      {/* <a
         href="https://docs.google.com/forms/d/e/1FAIpQLSd57wjQ6NtLfeVM-IBfHIgTI3hw-YoCi03TBRFUwGhDK53urw/viewform?usp=sf_link"
         target="_blank"
         rel="noreferrer"
         className="sm:fixed sm:bottom-10 z-10 bg-[#5c3cde] hover:bg-[#4026ab] text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline cursor-pointer"
       >
         이번주 문제 제출하기
-      </a>
+      </a> */}
     </nav>
   );
 }
