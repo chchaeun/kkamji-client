@@ -1,6 +1,12 @@
-import React, { useRef } from "react";
+import React, { Fragment, useRef, useState } from "react";
 import { SubmitHandler, useForm } from "react-hook-form";
 import { Icon } from "@iconify/react";
+import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
+import axios from "axios";
+import { getCode } from "../../api/session-code";
+import SubmitSuccessModal from "../../components/quiz/submit-success-modal";
+import Overlay from "../../components/layout/overlay";
+import { useRouter } from "next/router";
 type QuizValidForm = {
   title: string;
   content: string;
@@ -10,14 +16,17 @@ type QuizValidForm = {
   source: string;
 };
 function QuizWritePage() {
+  const router = useRouter();
+  const queryClient = useQueryClient();
+
+  const [submitSuccessModalOpen, setSubmitSuccessModalOpen] = useState(false);
+
   const {
     register,
     handleSubmit,
     watch,
     formState: { errors },
   } = useForm<QuizValidForm>();
-
-  
 
   const titleRef = useRef<string | null>(null);
   titleRef.current = watch("title");
@@ -34,18 +43,67 @@ function QuizWritePage() {
   const explanationRef = useRef<string | null>(null);
   explanationRef.current = watch("explanation");
 
+  const { mutate: mutateQuizSubmit } = useMutation(
+    async (quizSubmitBody: FormData) => {
+      return await axios.post(
+        "https://a61e9270-0366-4013-a651-fbc3d46384ab.mock.pstmn.io/v1/quizzes",
+        quizSubmitBody,
+        {
+          headers: {
+            "Content-type": "multipart/form-data",
+          },
+        }
+      );
+    },
+    {
+      onSuccess: () => {
+        setSubmitSuccessModalOpen(true);
+        queryClient.invalidateQueries(["quizCurrentSubmit"]);
+      },
+    }
+  );
+
+  const { data: quizCurrentSubmit } = useQuery<{ currentSubmit: number }>(
+    ["quizCurrentSubmit"],
+    async () => {
+      const { data } = await axios.get(
+        "https://a61e9270-0366-4013-a651-fbc3d46384ab.mock.pstmn.io/v1/quizzes/current-submit",
+        {
+          headers: {
+            code: String(getCode()),
+          },
+        }
+      );
+      return data;
+    }
+  );
+
   const onQuizSubmitValid: SubmitHandler<QuizValidForm> = async (data) => {
     const { title, content, image, answer, explanation, source } = data;
+    const quizSubmitFormData = new FormData();
+
+    quizSubmitFormData.append("quizTitle", title);
+    quizSubmitFormData.append("quizContent", content);
+    quizSubmitFormData.append("quizAnswer", answer);
+    quizSubmitFormData.append("quizExplanation", explanation);
+    quizSubmitFormData.append("quizSource", source);
+    quizSubmitFormData.append("files", image[0]);
+    mutateQuizSubmit(quizSubmitFormData);
+  };
+
+  const onCloseClick = () => {
+    router.push("/?week=4");
   };
 
   return (
     <div className="grid grid-cols-5 gap-4 w-full lg:mt-20 m-auto sm:flex sm:flex-col">
       <div className="col-start-1 flex flex-col items-center gap-2 mt-10 sm:mt-0">
         <span className="text-lg">이번주 문제 제출 현황</span>
-        <span className="grid grid-cols-5">
-          {[1, 2, 3, 4, 5, 6, 7, 8, 9, 10].map((element, index) => (
+        <span className="grid grid-cols-4">
+          {[1, 2, 3, 4, 5, 6, 7, 8].map((element, index) => (
             <span key={index}>
-              {element < 3 ? (
+              {quizCurrentSubmit?.currentSubmit &&
+              element <= quizCurrentSubmit?.currentSubmit ? (
                 <Icon icon="clarity:pencil-solid" color="#000000" height="30" />
               ) : (
                 <Icon icon="clarity:pencil-line" color="#000000" height="30" />
@@ -141,7 +199,6 @@ function QuizWritePage() {
               />
             </label>
           </div>
-
           <button
             type="submit"
             className="w-fit bg-[#5c3cde] hover:bg-[#4026ab] text-white font-bold py-2 px-8 rounded focus:outline-none focus:shadow-outline cursor-pointer"
@@ -150,6 +207,14 @@ function QuizWritePage() {
           </button>
         </form>
       </div>
+      {submitSuccessModalOpen && quizCurrentSubmit?.currentSubmit && (
+        <Fragment>
+          <SubmitSuccessModal
+            quizCurrentSubmit={quizCurrentSubmit?.currentSubmit}
+          />
+          <Overlay onClick={onCloseClick} />
+        </Fragment>
+      )}
     </div>
   );
 }
