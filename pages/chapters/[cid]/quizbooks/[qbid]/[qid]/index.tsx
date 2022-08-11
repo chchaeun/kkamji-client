@@ -2,174 +2,41 @@ import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { AxiosError } from "axios";
 import { useRouter } from "next/router";
 import React, { useEffect, useState } from "react";
-import { fetchQuizAnswer, IQuizAnswer } from "../../../../api/quiz/quiz-answer";
-import { fetchQuizDetail, IQuizDetail } from "../../../../api/quiz/quiz-detail";
 import {
-  fetchQuizIsSolved,
+  fetchQuizAnswer,
+  IQuizAnswer,
+} from "../../../../../../api/quizzes/quiz-answer";
+import {
+  fetchQuizDetail,
+  IQuizDetail,
+} from "../../../../../../api/quizzes/quiz-detail";
+import {
   IQuizIsSolved,
   updateQuizIsSolved,
-} from "../../../../api/quiz/quiz-is-solved";
-import SideNav from "../../../../components/layout/side-nav";
-import { classNames } from "../../../../styles/classname-maker";
+} from "../../../../../../api/quizzes/quiz-solve";
+import { IFetchQuiz } from "../../../../../../api/fetch-types";
+import SideNav from "../../../../../../components/layout/side-nav";
+import CommentContainer from "../../../../../../components/quiz/comment/comment-container";
+import { classNames } from "../../../../../../styles/classname-maker";
+import {
+  fetchQuizzes,
+  IQuizSummary,
+} from "../../../../../../api/quizzes/quizzes";
+import {
+  fetchQuizbookDetail,
+  IQuizbookDetail,
+} from "../../../../../../api/quizbooks/quizbook-detail";
 
 interface INavElements {
   link: string;
   name: string;
 }
-
-const navTitleA = {
-  name: "3주차 문제집 A",
-  link: "/quizbooks/13",
-};
-const navElementsNameA = [
-  "데이터의 신뢰성",
-  "FitIm",
-  "ANOVA",
-  "데이터의 신뢰성",
-  "ANOVA",
-  "Box plot",
-  "Box plot",
-  "Box plot",
-  "Box plot",
-  "선형 회귀",
-];
-const navElementsIdA = [10, 11, 12, 13, 14, 15, 16, 17, 18, 19];
-
-const navTitleB = {
-  name: "3주차 문제집 B",
-  link: "/quizbooks/14",
-};
-const navElementsNameB = [
-  "Normality test",
-  "Equality Variance test",
-  "선형 회귀 모델 작성",
-  "선형 회귀식",
-  "ANOVA",
-  "선형회귀식",
-  "ANOVA",
-  "ANOVA",
-  "Box Plot",
-  "ANOVA",
-];
-const navElementsIdB = [20, 21, 22, 23, 24, 25, 36, 37, 38, 39];
-
-const navTitleC = {
-  name: "3주차 문제집 C",
-  link: "/quizbooks/15",
-};
-const navElementsNameC = [
-  "ANOVA",
-  "ANOVA-treatment",
-  "two way ANOVA",
-  "one way ANOVA(일원분산분석)",
-  "ANOVA-effect에 관한 이론",
-  "two way ANOVA",
-  "ANOVA 기본개념 체크",
-  "회기분석과 분산분석 차이",
-  "분산의 동질성 검정",
-];
-const navElementsIdC = [1, 2, 3, 4, 5, 6, 7, 8, 9];
-
-const navTitleD = {
-  name: "3주차 문제집 D",
-  link: "/quizbooks/16",
-};
-const navElementsNameD = [
-  "factor",
-  "interaction",
-  "영향을 주는 factor",
-  "측정에서의 반복, 재현성",
-  "ANOVA 하기 위한 조건",
-  "equal variance test",
-  "ANOVA의 조건",
-  "데이터 신뢰성",
-  "factor 간의 상관관계",
-  "선형식",
-];
-const navElementsIdD = [26, 27, 28, 29, 30, 31, 32, 33, 34, 35];
-
-const navTitle4A = {
-  name: "4주차 문제집 A",
-  link: "/quizbooks/17",
-};
-const navElementsName4A = [
-  "Table Size",
-  "배열에서 데이터 수정",
-  "간단한 함수 계산하기",
-  "원하는 데이터 배열 가공하기",
-  "외부데이터",
-  "NaN",
-  "Table Size",
-  "함수 reshape",
-  "매트랩에서 윗 방향키의 역할",
-  "함수 repmat",
-];
-const navElementsId4A = [40, 41, 42, 43, 44, 45, 46, 47, 48, 49];
-
-const navTitle4B = {
-  name: "4주차 문제집 B",
-  link: "/quizbooks/18",
-};
-const navElementsName4B = [
-  "MATLAB 기본 조작",
-  "MATLAB 기본 조작",
-  "MATLAB 외부파일 가져오기",
-  "ttest",
-  "MATLAB 기본 조작",
-  "MATLAB 기본 조작",
-  "MATLAB 기본 조작",
-  "MATLAB 기본 조작",
-  "MATLAB 기본 조작",
-  "MATLAB 기본 조작",
-];
-const navElementsId4B = [60, 61, 66, 70, 71, 72, 75, 76, 77, 78];
-
-const navTitle4C = {
-  name: "4주차 문제집 C",
-  link: "/quizbooks/19",
-};
-const navElementsName4C = [
-  "행벡터",
-  "MATLAB 작업공간변수",
-  "MATLAB함수 호출",
-  "매트랩 표현 방식",
-  "MATLAB 기본언어",
-  "루프와 조건문",
-  "plot함수",
-  "행렬연산언어",
-  "집합 함수",
-  "명령함수",
-];
-const navElementsId4C = [50, 51, 52, 53, 54, 55, 56, 57, 58, 59];
-
-const navTitle4D = {
-  name: "4주차 문제집 D",
-  link: "/quizbooks/20",
-};
-const navElementsName4D = [
-  "MATLAB 기본 이용",
-  "식의 작성",
-  "식의 작성 2",
-  "배열의 저장",
-  "index 이용",
-  "반복된 Table",
-  "엑셀 불러오기",
-  "table 변형",
-  "ad_test",
-];
-const navElementsId4D = [62, 63, 64, 65, 67, 68, 69, 73, 74];
-
-// export async function getStaticPaths(){
-
-// }
-// export async function getStaticProps(){
-
-// }
-
 function QuizDetailPage() {
   const [showAnswer, setShowAnswer] = useState(false);
   const router = useRouter();
 
+  const chapterId = String(router.query.cid);
+  const quizbookId = String(router.query.qbid);
   const quizId = String(router.query.qid);
 
   const queryClient = useQueryClient();
@@ -177,17 +44,38 @@ function QuizDetailPage() {
   const [navTitle, setNavTitle] = useState<INavElements>();
   const [navElements, setNavElements] = useState<INavElements[]>();
 
-  const { data: quizDetail, error } = useQuery<IQuizDetail, AxiosError>(
-    ["quizDetail", quizId],
-    () => fetchQuizDetail(quizId),
+  const { data: quizbookDetail } = useQuery<IQuizbookDetail, AxiosError>(
+    ["quizbookDetail", quizbookId],
+    () => fetchQuizbookDetail({ chapterId, quizbookId }),
     {
-      enabled: !!quizId,
+      enabled: !!quizbookId,
+      onSuccess: (quizbookDetail) => {
+        setNavTitle({
+          name: quizbookDetail.quizbookTitle,
+          link: `/chapters/${chapterId}/quizbooks/${quizbookId}`,
+        });
+      },
+    }
+  );
+  const { data: quizzes } = useQuery<IQuizSummary[]>(
+    ["quizzes", chapterId, quizbookId],
+    () => fetchQuizzes({ chapterId, quizbookId }),
+    {
+      onSuccess: (quizzes) => {
+        const tempElements = quizzes.map((quiz) => {
+          return {
+            name: quiz.quizTitle,
+            link: `/chapters/${chapterId}/quizbooks/${quizbookId}/${quiz.quizId}`,
+          };
+        });
+        setNavElements(tempElements);
+      },
     }
   );
 
-  const { data: quizIsSolved } = useQuery<IQuizIsSolved>(
-    ["quizIsSolved", quizId],
-    () => fetchQuizIsSolved(quizId),
+  const { data: quizDetail, error } = useQuery<IQuizDetail, AxiosError>(
+    ["quizDetail", quizId],
+    () => fetchQuizDetail({ chapterId, quizbookId, quizId }),
     {
       enabled: !!quizId,
     }
@@ -195,14 +83,14 @@ function QuizDetailPage() {
 
   const { data: quizAnswer } = useQuery<IQuizAnswer>(
     ["quizAnswer", quizId],
-    () => fetchQuizAnswer(quizId),
+    () => fetchQuizAnswer({ chapterId, quizbookId, quizId }),
     {
       enabled: !!quizId,
     }
   );
 
   const { mutate: mutateQuizIsSolved } = useMutation(
-    (props: { quizId: string; isCorrect: boolean }) =>
+    (props: { idData: IFetchQuiz; solveIsCorrect: boolean }) =>
       updateQuizIsSolved(props),
     {
       onSuccess: () => {
@@ -210,76 +98,6 @@ function QuizDetailPage() {
       },
     }
   );
-
-  useEffect(() => {
-    let temp = [];
-    if (quizDetail?.quizbookId === 13) {
-      setNavTitle(navTitleA);
-      for (let i = 0; i < navElementsNameA.length; i++) {
-        temp.push({
-          name: navElementsNameA[i],
-          link: `/quizbooks/${router.query.qbid}/${navElementsIdA[i]}`,
-        });
-      }
-    } else if (quizDetail?.quizbookId === 14) {
-      setNavTitle(navTitleB);
-      for (let i = 0; i < navElementsNameB.length; i++) {
-        temp.push({
-          name: navElementsNameB[i],
-          link: `/quizbooks/${router.query.qbid}/${navElementsIdB[i]}`,
-        });
-      }
-    } else if (quizDetail?.quizbookId === 15) {
-      setNavTitle(navTitleC);
-      for (let i = 0; i < navElementsNameC.length; i++) {
-        temp.push({
-          name: navElementsNameC[i],
-          link: `/quizbooks/${router.query.qbid}/${navElementsIdC[i]}`,
-        });
-      }
-    } else if (quizDetail?.quizbookId === 16) {
-      setNavTitle(navTitleD);
-      for (let i = 0; i < navElementsNameD.length; i++) {
-        temp.push({
-          name: navElementsNameD[i],
-          link: `/quizbooks/${router.query.qbid}/${navElementsIdD[i]}`,
-        });
-      }
-    } else if (quizDetail?.quizbookId === 17) {
-      setNavTitle(navTitle4A);
-      for (let i = 0; i < navElementsName4A.length; i++) {
-        temp.push({
-          name: navElementsName4A[i],
-          link: `/quizbooks/${router.query.qbid}/${navElementsId4A[i]}`,
-        });
-      }
-    } else if (quizDetail?.quizbookId === 18) {
-      setNavTitle(navTitle4B);
-      for (let i = 0; i < navElementsId4B.length; i++) {
-        temp.push({
-          name: navElementsName4B[i],
-          link: `/quizbooks/${router.query.qbid}/${navElementsId4B[i]}`,
-        });
-      }
-    } else if (quizDetail?.quizbookId === 19) {
-      setNavTitle(navTitle4C);
-      for (let i = 0; i < navElementsId4C.length; i++) {
-        temp.push({
-          name: navElementsName4C[i],
-          link: `/quizbooks/${router.query.qbid}/${navElementsId4C[i]}`,
-        });
-      }
-    } else if (quizDetail?.quizbookId === 20) {
-      setNavTitle(navTitle4D);
-      for (let i = 0; i < navElementsId4D.length; i++) {
-        temp.push({
-          name: navElementsName4D[i],
-          link: `/quizbooks/${router.query.qbid}/${navElementsId4D[i]}`,
-        });
-      }
-    }
-    setNavElements(temp);
-  }, [quizDetail?.quizbookId]);
 
   if (error) {
     if (error?.response?.status === 404) {
@@ -295,10 +113,10 @@ function QuizDetailPage() {
     setShowAnswer((prev) => !prev);
   };
 
-  const onSolvedClick = (isCorrect: boolean) => {
+  const onSolvedClick = (solveIsCorrect: boolean) => {
     const props = {
-      quizId,
-      isCorrect,
+      idData: { chapterId, quizbookId, quizId },
+      solveIsCorrect,
     };
     mutateQuizIsSolved(props);
   };
@@ -345,7 +163,7 @@ function QuizDetailPage() {
         className="col-start-1 flex justify-center mt-10 sm:mt-0"
       >
         {navTitle && navElements && (
-          <SideNav title={navTitle} elements={navElements} />
+          <SideNav props={{ navTitle, navElements }} />
         )}
       </div>
       <div className="col-start-2 col-span-3 flex flex-col gap-8 py-10 sm:h-screen sm:justify-between sm:py-20">
@@ -404,7 +222,7 @@ function QuizDetailPage() {
             </div>
           </div>
         )}
-        {showAnswer && !quizIsSolved?.quizIsSolved && (
+        {/* {showAnswer && !quizIsSolved?.quizIsSolved && (
           <div className="flex flex-col gap-2 items-center m-auto">
             <span className="flex gap-1">
               나는 이 문제를{" "}
@@ -425,7 +243,8 @@ function QuizDetailPage() {
               * 추후 오답노트 기능을 제공합니다
             </span>
           </div>
-        )}
+        )} */}
+        {showAnswer && <CommentContainer />}
         <div className="flex justify-between sm:justify-end sm:gap-3">
           <button
             onClick={() => onMoveQuizClick("prev")}

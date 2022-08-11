@@ -2,11 +2,13 @@ import React, { Fragment, useRef, useState } from "react";
 import { SubmitHandler, useForm } from "react-hook-form";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import axios from "axios";
-import { getCode } from "../../api/session-code";
-import SubmitSuccessModal from "../../components/quiz/submit-success-modal";
-import Overlay from "../../components/layout/overlay";
 import { useRouter } from "next/router";
-import CurrentSubmit from "../../components/quiz/current-submit";
+import { getCode } from "../../../api/session-code";
+import CurrentSubmit from "../../../components/quiz/submit/current-submit";
+import SubmitSuccessModal from "../../../components/quiz/submit/submit-success-modal";
+import Overlay from "../../../components/layout/overlay";
+import { updateQuiz } from "../../../api/submit-quiz/update-quiz";
+
 type QuizValidForm = {
   title: string;
   content: string;
@@ -18,6 +20,8 @@ type QuizValidForm = {
 function QuizWritePage() {
   const router = useRouter();
   const queryClient = useQueryClient();
+
+  const chapterId = String(router.query.cid);
 
   const [submitSuccessModalOpen, setSubmitSuccessModalOpen] = useState(false);
 
@@ -44,17 +48,7 @@ function QuizWritePage() {
   explanationRef.current = watch("explanation");
 
   const { mutate: mutateQuizSubmit } = useMutation(
-    async (quizSubmitBody: FormData) => {
-      return await axios.post(
-        "https://a61e9270-0366-4013-a651-fbc3d46384ab.mock.pstmn.io/v1/quizzes",
-        quizSubmitBody,
-        {
-          headers: {
-            "Content-type": "multipart/form-data",
-          },
-        }
-      );
-    },
+    (quizSubmitBody: FormData) => updateQuiz({ chapterId, quizSubmitBody }),
     {
       onSuccess: () => {
         setSubmitSuccessModalOpen(true);

@@ -1,24 +1,21 @@
 import api from "../my-api";
 import { getCode } from "../session-code";
+import { IFetchQuizbook } from "../fetch-types";
 
 export interface IQuizbookDetail {
   quizbookId: number;
   quizbookTitle: string;
   quizbookDescription: string;
-  quizbookWeek: number;
   numOfQuizzes: number;
   submitUserName: string;
-  quizSummaries: {
-    quizId: number;
-    quizTitle: string;
-    quizCategory: string;
-    quizIsSolved: boolean;
-  }[];
 }
 
-export const fetchQuizbookDetail = async (quizbookId: string) => {
+export const fetchQuizbookDetail = async (idData: IFetchQuizbook) => {
   api.defaults.headers.common["code"] = getCode() || "";
 
-  const { data } = await api.get(`/quizbooks/${quizbookId}`);
+  const { chapterId, quizbookId } = idData;
+  const { data } = await api.get(
+    `/chapters/${chapterId}/quizbooks/${quizbookId}`
+  );
   return data;
 };
