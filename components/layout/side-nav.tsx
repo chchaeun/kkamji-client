@@ -40,12 +40,18 @@ function SideNav({ props }: INavProps) {
           <li
             key={index}
             className={classNames(
-              router.asPath === element.link
+              !element.isReadable
+                ? "text-gray-500 line-through"
+                : router.asPath === element.link
                 ? "font-semibold text-[#5c3cde]"
                 : "text-gray-700"
             )}
           >
-            <Link href={element.link}>{element.name}</Link>
+            {element.isReadable ? (
+              <Link href={element.link}>{element.name}</Link>
+            ) : (
+              <span>{element.name}</span>
+            )}
           </li>
         ))}
       </ul>

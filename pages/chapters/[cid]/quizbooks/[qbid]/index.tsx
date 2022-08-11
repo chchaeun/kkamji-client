@@ -18,6 +18,7 @@ import SideNav from "../../../../../components/layout/side-nav";
 interface INavElements {
   link: string;
   name: string;
+  isReadable?: boolean;
 }
 function QuizbookDetailPage() {
   const router = useRouter();
@@ -32,6 +33,7 @@ function QuizbookDetailPage() {
     ["chapterDetail", chapterId],
     () => fetchChapterDetail({ chapterId }),
     {
+      enabled: !!chapterId,
       onSuccess: (chapterDetail) => {
         setNavTitle({
           name: chapterDetail.chapterName,
@@ -50,6 +52,7 @@ function QuizbookDetailPage() {
           return {
             name: quizbook.quizbookTitle,
             link: `/chapters/${chapterId}/quizbooks/${quizbook.quizbookId}`,
+            isReadable: true,
           };
         });
         setNavElements(tempElements);
@@ -71,7 +74,7 @@ function QuizbookDetailPage() {
   );
 
   const onQuizClick = (quizId: string) => {
-    router.push(`/quizbooks/${quizbookId}/${quizId}`);
+    router.push(`/chapters/${chapterId}/quizbooks/${quizbookId}/${quizId}`);
   };
 
   if (error) {

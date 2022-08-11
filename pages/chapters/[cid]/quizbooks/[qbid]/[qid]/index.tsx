@@ -10,10 +10,7 @@ import {
   fetchQuizDetail,
   IQuizDetail,
 } from "../../../../../../api/quizzes/quiz-detail";
-import {
-  IQuizIsSolved,
-  updateQuizIsSolved,
-} from "../../../../../../api/quizzes/quiz-solve";
+import { updateQuizIsSolved } from "../../../../../../api/quizzes/quiz-solve";
 import { IFetchQuiz } from "../../../../../../api/fetch-types";
 import SideNav from "../../../../../../components/layout/side-nav";
 import CommentContainer from "../../../../../../components/quiz/comment/comment-container";
@@ -30,6 +27,7 @@ import {
 interface INavElements {
   link: string;
   name: string;
+  isReadable?: boolean;
 }
 function QuizDetailPage() {
   const [showAnswer, setShowAnswer] = useState(false);
@@ -66,6 +64,7 @@ function QuizDetailPage() {
           return {
             name: quiz.quizTitle,
             link: `/chapters/${chapterId}/quizbooks/${quizbookId}/${quiz.quizId}`,
+            isReadable: true,
           };
         });
         setNavElements(tempElements);
@@ -94,7 +93,7 @@ function QuizDetailPage() {
       updateQuizIsSolved(props),
     {
       onSuccess: () => {
-        queryClient.invalidateQueries(["quizIsSolved", quizId]);
+        queryClient.invalidateQueries(["quizDetail", quizId]);
       },
     }
   );
@@ -119,6 +118,12 @@ function QuizDetailPage() {
       solveIsCorrect,
     };
     mutateQuizIsSolved(props);
+  };
+
+  const onEditClick = () => {
+    router.push(
+      `/chapters/${chapterId}/quizbooks/${quizbookId}/${quizId}/edit`
+    );
   };
 
   const onMoveQuizClick = (move: string) => {
@@ -170,16 +175,17 @@ function QuizDetailPage() {
         <div className="flex flex-col gap-5">
           <h2 className="text-2xl">{quizDetail?.quizTitle}</h2>
           <p className="flex flex-col gap-5 justify-between bg-white p-5 drop-shadow-md">
-            {quizDetail?.quizContent.split("[img]")[0]}
-            {quizDetail?.quizContent.split("[img]")[1] && (
+            {quizDetail?.quizContent}
+            {quizDetail?.files.map((file, index) => (
               <img
+                key={index}
                 src={`http://drive.google.com/uc?export=download&id=${
-                  quizDetail?.quizContent.split("[img]")[1].split("?id=")[1]
+                  file.filePath.split("?id=")[1]
                 }`}
                 width="300"
-                alt="문제 이미지"
+                alt={file.fileName}
               />
-            )}
+            ))}
           </p>
           {!showAnswer && (
             <button
@@ -206,8 +212,8 @@ function QuizDetailPage() {
                 {quizAnswer?.quizAnswer}
               </p>
             </div>
-            <div className="flex flex-col gap-3">
-              <h2 className="text-2xl">해설</h2>
+            <div className="flex flex-col items-end gap-3">
+              <h2 className="w-full text-2xl">해설</h2>
               <div className="flex flex-col gap-5 justify-between bg-white p-5 drop-shadow-md">
                 {quizAnswer?.quizExplanation}
                 {
@@ -219,10 +225,18 @@ function QuizDetailPage() {
                   </div>
                 }
               </div>
+              {quizDetail?.isMine && (
+                <button
+                  onClick={onEditClick}
+                  className="w-fit bg-[#5c3cde] hover:bg-[#4026ab] text-white font-bold py-2 px-6 rounded focus:outline-none focus:shadow-outline cursor-pointer"
+                >
+                  수정
+                </button>
+              )}
             </div>
           </div>
         )}
-        {/* {showAnswer && !quizIsSolved?.quizIsSolved && (
+        {showAnswer && !quizDetail?.isQuizSolved && (
           <div className="flex flex-col gap-2 items-center m-auto">
             <span className="flex gap-1">
               나는 이 문제를{" "}
@@ -243,7 +257,7 @@ function QuizDetailPage() {
               * 추후 오답노트 기능을 제공합니다
             </span>
           </div>
-        )} */}
+        )}
         {showAnswer && <CommentContainer />}
         <div className="flex justify-between sm:justify-end sm:gap-3">
           <button

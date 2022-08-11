@@ -34,14 +34,20 @@ const Home: NextPage = () => {
 
   const { data: chapterDetail } = useQuery<IChapter>(
     ["chapterDetail", chapterId],
-    () => fetchChapterDetail({ chapterId })
+    () => fetchChapterDetail({ chapterId }),
+    {
+      enabled: !!router.query.cid,
+      onError: (err) => {},
+    }
   );
+
+  console.log(chapterDetail);
 
   const { data: quizbooks, error } = useQuery<IQuizbook[], AxiosError>(
     ["quizbooks", chapterId],
     () => fetchQuizbooks({ chapterId }),
     {
-      enabled: !!router.query.week && !!getCode(),
+      enabled: !!router.query.cid,
       onError: (err) => {
         console.log(err);
       },
@@ -58,8 +64,8 @@ const Home: NextPage = () => {
     }
   }
 
-  const onQuizBookClick = (quizbook: IQuizbook) => {
-    router.push(`/quizbooks/${quizbook.quizbookId}`);
+  const onQuizBookClick = (quizbookId: number) => {
+    router.push(`/chapters/${chapterId}/quizbooks/${quizbookId}`);
   };
 
   return (
@@ -74,7 +80,7 @@ const Home: NextPage = () => {
             <Quizbook
               key={quizbook.quizbookId}
               props={quizbook}
-              onClick={() => onQuizBookClick(quizbook)}
+              onClick={() => onQuizBookClick(quizbook.quizbookId)}
             />
           ))}
         </div>
