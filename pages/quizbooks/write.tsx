@@ -1,12 +1,12 @@
 import React, { Fragment, useRef, useState } from "react";
 import { SubmitHandler, useForm } from "react-hook-form";
-import { Icon } from "@iconify/react";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import axios from "axios";
 import { getCode } from "../../api/session-code";
 import SubmitSuccessModal from "../../components/quiz/submit-success-modal";
 import Overlay from "../../components/layout/overlay";
 import { useRouter } from "next/router";
+import CurrentSubmit from "../../components/quiz/current-submit";
 type QuizValidForm = {
   title: string;
   content: string;
@@ -97,21 +97,9 @@ function QuizWritePage() {
 
   return (
     <div className="grid grid-cols-5 gap-4 w-full lg:mt-20 m-auto sm:flex sm:flex-col">
-      <div className="col-start-1 flex flex-col items-center gap-2 mt-10 sm:mt-0">
-        <span className="text-lg">이번주 문제 제출 현황</span>
-        <span className="grid grid-cols-4">
-          {[1, 2, 3, 4, 5, 6, 7, 8].map((element, index) => (
-            <span key={index}>
-              {quizCurrentSubmit?.currentSubmit &&
-              element <= quizCurrentSubmit?.currentSubmit ? (
-                <Icon icon="clarity:pencil-solid" color="#000000" height="30" />
-              ) : (
-                <Icon icon="clarity:pencil-line" color="#000000" height="30" />
-              )}
-            </span>
-          ))}
-        </span>
-      </div>
+      {quizCurrentSubmit?.currentSubmit && (
+        <CurrentSubmit quizCurrentSubmit={quizCurrentSubmit?.currentSubmit} />
+      )}
       <div className="col-start-2 col-span-3 flex flex-col gap-10 sm:gap-7 sm:w-4/5 h-screen bg-white py-10 px-20 sm:m-auto sm:px-0 sm:py-20">
         <h1 className="text-2xl">문제 제출</h1>
         <form
