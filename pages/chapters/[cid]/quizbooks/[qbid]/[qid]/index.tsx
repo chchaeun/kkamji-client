@@ -202,6 +202,7 @@ function QuizDetailPage() {
               <div className="flex justify-between">
                 <h2 className="text-2xl">정답</h2>
                 <button
+                  type="button"
                   onClick={onAnswerClick}
                   className="text-gray-700 underline"
                 >
