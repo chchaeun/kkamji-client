@@ -1,8 +1,8 @@
 import React from "react";
 import { Icon } from "@iconify/react";
 import { useRecoilState } from "recoil";
-import { showNavState } from "../../stores/header";
-import { classNames } from "../../styles/classname-maker";
+import { showNavState } from "../../../stores/header";
+import { classNames } from "../../../styles/classname-maker";
 
 function CurrentSubmit({ quizCurrentSubmit }: { quizCurrentSubmit: number }) {
   const [showCurrentSubmit, setShowCurrentSubmit] =

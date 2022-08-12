@@ -5,12 +5,14 @@ import { useRecoilState } from "recoil";
 import { showNavState } from "../../stores/header";
 import { classNames } from "../../styles/classname-maker";
 interface INavProps {
-  title: { name: string; link?: string };
-  elements: { name: string; link: string }[];
+  props: {
+    navTitle: { name: string; link?: string };
+    navElements: { name: string; link: string; isReadable?: boolean }[];
+  };
 }
-function SideNav(props: INavProps) {
+function SideNav({ props }: INavProps) {
   const router = useRouter();
-  const { title, elements } = props;
+  const { navTitle, navElements } = props;
 
   const [showNav, setShowNav] = useRecoilState(showNavState);
 
@@ -27,19 +29,29 @@ function SideNav(props: INavProps) {
       )}
     >
       <h3 className="text-xl">
-        {title.link ? <Link href={title.link}>{title.name}</Link> : title.name}
+        {navTitle.link ? (
+          <Link href={navTitle.link}>{navTitle.name}</Link>
+        ) : (
+          navTitle.name
+        )}
       </h3>
       <ul>
-        {elements.map((element, index) => (
+        {navElements.map((element, index) => (
           <li
             key={index}
             className={classNames(
-              router.asPath === element.link
+              !element.isReadable
+                ? "text-gray-500 line-through"
+                : router.asPath === element.link
                 ? "font-semibold text-[#5c3cde]"
                 : "text-gray-700"
             )}
           >
-            <Link href={element.link}>{element.name}</Link>
+            {element.isReadable ? (
+              <Link href={element.link}>{element.name}</Link>
+            ) : (
+              <span>{element.name}</span>
+            )}
           </li>
         ))}
       </ul>
