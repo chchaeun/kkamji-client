@@ -8,6 +8,7 @@ import {
 } from "@tanstack/react-query";
 import { RecoilRoot } from "recoil";
 import { ReactQueryDevtools } from "@tanstack/react-query-devtools";
+
 function MyApp({ Component, pageProps }: AppProps) {
   const queryClient = new QueryClient({
     defaultOptions: {
@@ -16,6 +17,11 @@ function MyApp({ Component, pageProps }: AppProps) {
       },
     },
   });
+
+  if (process.env.NEXT_PUBLIC_API_MOCKING === "enabled") {
+    require("../mocks");
+  }
+
   return (
     <RecoilRoot>
       <QueryClientProvider client={queryClient}>
