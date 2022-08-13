@@ -3,6 +3,7 @@ import axios from "axios";
 import { useRouter } from "next/router";
 import React from "react";
 import { useForm } from "react-hook-form";
+import api from "../../../api/my-api";
 import { getCode } from "../../../api/session-code";
 type CommentValidForm = {
   comment: string;
@@ -22,27 +23,34 @@ function CommentContainer() {
   const router = useRouter();
   const queryClient = useQueryClient();
 
+  const chapterId = String(router.query.cid);
   const quizbookId = String(router.query.qbid);
   const quizId = String(router.query.qid);
 
   const { register, handleSubmit } = useForm<CommentValidForm>();
 
-  const { data: comments } = useQuery<IComment[]>(["comments"], async () => {
-    const { data } = await axios.get(
-      `https://a61e9270-0366-4013-a651-fbc3d46384ab.mock.pstmn.io/v1/quizbooks/${quizbookId}/quizzes/${quizId}/comments`,
-      {
-        headers: {
-          code: String(getCode()),
-        },
-      }
-    );
-    return data;
-  });
+  const { data: comments } = useQuery<IComment[]>(
+    ["comments", quizId],
+    async () => {
+      const { data } = await api.get(
+        `/chapters/${chapterId}/quizbooks/${quizbookId}/quizzes/${quizId}/comments`,
+        {
+          headers: {
+            code: String(getCode()),
+          },
+        }
+      );
+      return data;
+    },
+    {
+      enabled: !!(chapterId && quizbookId && quizId),
+    }
+  );
 
   const { mutate: mutateCommentSubmit } = useMutation(
     async (commentBody: { commentContent: string }) => {
-      return await axios.post(
-        `https://a61e9270-0366-4013-a651-fbc3d46384ab.mock.pstmn.io/v1/quizbooks/${quizbookId}/quizzes/${quizId}/comments`,
+      return await api.post(
+        `/chapters/${chapterId}/quizbooks/${quizbookId}/quizzes/${quizId}/comments`,
         commentBody,
         {
           headers: {
@@ -53,19 +61,27 @@ function CommentContainer() {
     },
     {
       onSuccess: () => {
-        queryClient.invalidateQueries([""]);
+        queryClient.invalidateQueries(["comments"]);
       },
     }
   );
 
   const onCommentValid = ({ comment }: CommentValidForm) => {
-    const commentBody = { commentContent: comment };
+    const commentBody = {
+      commentId: 10,
+      commentUserName: "유저1",
+      commentContent: comment,
+      createdDate: "Thu, 11 Aug 2022 14:24:19 GMT",
+      modifiedDate: "",
+      isMine: false,
+      isWriter: false,
+    };
     mutateCommentSubmit(commentBody);
   };
 
   const onDeleteClick = async (commentId: number) => {
-    await axios.delete(
-      `https://a61e9270-0366-4013-a651-fbc3d46384ab.mock.pstmn.io/v1/quizbooks/{quizbookId}/quizzes/{quizId}/comments/{commentId}`
+    await api.delete(
+      `/chapters/${chapterId}/quizbooks/${quizbookId}/quizzes/${quizId}/comments/${commentId}`
     );
   };
 
@@ -137,7 +153,7 @@ function CommentContainer() {
             </div>
 
             <p>
-              {comment.commentContent.split("\n").map((content, index) => (
+              {comment.commentContent?.split("\n").map((content, index) => (
                 <span key={index}>
                   {content}
                   <br />

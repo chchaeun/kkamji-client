@@ -46,7 +46,8 @@ function QuizDetailPage() {
     ["quizbookDetail", quizbookId],
     () => fetchQuizbookDetail({ chapterId, quizbookId }),
     {
-      enabled: !!quizbookId,
+      enabled: !!(chapterId && quizbookId),
+
       onSuccess: (quizbookDetail) => {
         setNavTitle({
           name: quizbookDetail.quizbookTitle,
@@ -59,6 +60,8 @@ function QuizDetailPage() {
     ["quizzes", chapterId, quizbookId],
     () => fetchQuizzes({ chapterId, quizbookId }),
     {
+      enabled: !!(chapterId && quizbookId),
+
       onSuccess: (quizzes) => {
         const tempElements = quizzes.map((quiz) => {
           return {
@@ -76,7 +79,7 @@ function QuizDetailPage() {
     ["quizDetail", quizId],
     () => fetchQuizDetail({ chapterId, quizbookId, quizId }),
     {
-      enabled: !!quizId,
+      enabled: !!(chapterId && quizbookId && quizId),
     }
   );
 
@@ -84,7 +87,7 @@ function QuizDetailPage() {
     ["quizAnswer", quizId],
     () => fetchQuizAnswer({ chapterId, quizbookId, quizId }),
     {
-      enabled: !!quizId,
+      enabled: !!(chapterId && quizbookId && quizId),
     }
   );
 
@@ -175,7 +178,7 @@ function QuizDetailPage() {
         <div className="flex flex-col gap-5">
           <h2 className="text-2xl">{quizDetail?.quizTitle}</h2>
           <p className="flex flex-col gap-5 justify-between bg-white p-5 drop-shadow-md">
-            {quizDetail?.quizContent}
+            {quizDetail?.quizContent}{" "}
             {quizDetail?.files.map((file, index) => (
               <img
                 key={index}
