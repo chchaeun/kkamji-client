@@ -3,6 +3,7 @@ import axios, { AxiosError } from "axios";
 import { useRouter } from "next/router";
 import React from "react";
 import { SubmitHandler, useForm } from "react-hook-form";
+import api from "../../../../../../api/my-api";
 import {
   fetchQuizAnswer,
   IQuizAnswer,
@@ -57,10 +58,7 @@ function QuizAnswerEdit() {
 
   const { mutate: mutateAnswerEdit } = useMutation(
     async (editBody: QuizEdit) => {
-      return await axios.patch(
-        "https://a61e9270-0366-4013-a651-fbc3d46384ab.mock.pstmn.io/v1/chapters/1/quizbooks/1/quizzes/1/answer",
-        editBody
-      );
+      return await api.patch(`/quizzes/${quizId}/answer`, editBody);
     },
     {
       onSuccess: () => {
@@ -79,15 +77,15 @@ function QuizAnswerEdit() {
     mutateAnswerEdit(editBody);
   };
 
-  // if (isLoading) {
-  //   return <div>Loading...</div>;
-  // } else if (!quizDetail?.isMine) {
-  //   return (
-  //     <div className="flex justify-center items-center w-screen h-screen">
-  //       접근 권한이 없습니다.
-  //     </div>
-  //   );
-  // }
+  if (isLoading) {
+    return <div>Loading...</div>;
+  } else if (!quizDetail?.isMine) {
+    return (
+      <div className="flex justify-center items-center w-screen h-screen">
+        접근 권한이 없습니다.
+      </div>
+    );
+  }
   return (
     <div className="grid grid-cols-5 gap-4 w-full lg:mt-20 m-auto sm:flex sm:flex-col sm:px-10">
       <div className="col-start-2 col-span-3 flex flex-col gap-8 py-10 sm:h-screen sm:justify-between sm:py-20">

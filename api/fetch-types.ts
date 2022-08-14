@@ -1,9 +1,9 @@
 export interface IFetchChapter {
-  chapterId: string;
+  chapterId?: string;
 }
 
 export interface IFetchQuizbook extends IFetchChapter {
-  quizbookId: string;
+  quizbookId?: string;
 }
 export interface IFetchQuiz extends IFetchQuizbook {
   quizId: string;

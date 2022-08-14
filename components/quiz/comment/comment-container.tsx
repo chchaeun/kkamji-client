@@ -3,6 +3,8 @@ import axios from "axios";
 import { useRouter } from "next/router";
 import React from "react";
 import { useForm } from "react-hook-form";
+import { fetchComments } from "../../../api/comments/comments";
+import { updateComment } from "../../../api/comments/update-comment";
 import api from "../../../api/my-api";
 import { getCode } from "../../../api/session-code";
 type CommentValidForm = {
@@ -31,34 +33,16 @@ function CommentContainer() {
 
   const { data: comments } = useQuery<IComment[]>(
     ["comments", quizId],
-    async () => {
-      const { data } = await api.get(
-        `/chapters/${chapterId}/quizbooks/${quizbookId}/quizzes/${quizId}/comments`,
-        {
-          headers: {
-            code: String(getCode()),
-          },
-        }
-      );
-      return data;
-    },
+    () => fetchComments({ quizId }),
     {
       enabled: !!(chapterId && quizbookId && quizId),
     }
   );
 
   const { mutate: mutateCommentSubmit } = useMutation(
-    async (commentBody: { commentContent: string }) => {
-      return await api.post(
-        `/chapters/${chapterId}/quizbooks/${quizbookId}/quizzes/${quizId}/comments`,
-        commentBody,
-        {
-          headers: {
-            code: String(getCode()),
-          },
-        }
-      );
-    },
+    (commentBody: { commentContent: string }) =>
+      updateComment({ requestData: { commentBody, quizId } }),
+
     {
       onSuccess: () => {
         queryClient.invalidateQueries(["comments"]);
@@ -80,9 +64,7 @@ function CommentContainer() {
   };
 
   const onDeleteClick = async (commentId: number) => {
-    await api.delete(
-      `/chapters/${chapterId}/quizbooks/${quizbookId}/quizzes/${quizId}/comments/${commentId}`
-    );
+    await api.delete(`/comments/${commentId}`);
   };
 
   const getDateFormat = (date: string) => {
