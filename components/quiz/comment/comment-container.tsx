@@ -55,6 +55,15 @@ function CommentContainer() {
     }
   );
 
+  const { mutate: mutateCommentDelete } = useMutation(
+    async (commentId: number) => await api.delete(`/comments/${commentId}`),
+    {
+      onSettled: () => {
+        queryClient.invalidateQueries(["comments", quizId]);
+      },
+    }
+  );
+
   const onCommentValid = ({ comment }: CommentValidForm) => {
     const commentBody = {
       commentContent: comment,
@@ -63,7 +72,7 @@ function CommentContainer() {
   };
 
   const onDeleteClick = async (commentId: number) => {
-    await api.delete(`/comments/${commentId}`);
+    mutateCommentDelete(commentId);
   };
 
   const getDateFormat = (date: string) => {
@@ -144,11 +153,6 @@ function CommentContainer() {
                 </span>
               ))}
             </p>
-            <span className="text-sm text-gray-600">
-              {comment.modifiedDate
-                ? `${getDateFormat(comment.modifiedDate)} • 수정됨`
-                : getDateFormat(comment.createdDate)}
-            </span>
           </div>
         ))}
       </div>
