@@ -2414,10 +2414,30 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@tanstack/match-sorter-utils@npm:^8.0.0-alpha.82":
+  version: 8.1.1
+  resolution: "@tanstack/match-sorter-utils@npm:8.1.1"
+  dependencies:
+    remove-accents: 0.4.2
+  checksum: bf1458b7ca08cf79750ebd46fddef9c9b845ef55b5b69c0f7f69d48d6cbd73dbfd98763509f655298033b93cfc92b21d54f9f13a4d631cc68ca9191913967205
+  languageName: node
+  linkType: hard
+
 "@tanstack/query-core@npm:^4.0.0-beta.1":
   version: 4.0.10
   resolution: "@tanstack/query-core@npm:4.0.10"
   checksum: 581d4506c5edbe91cdb35a2c4fe273aadb51a64ddaf73be63f92088202bda8495a909e286370357740291962149dabb5dd24fe7c048d71c29e702a1c61df5fc4
+  languageName: node
+  linkType: hard
+
+"@tanstack/react-query-devtools@npm:^4.0.10":
+  version: 4.0.10
+  resolution: "@tanstack/react-query-devtools@npm:4.0.10"
+  dependencies:
+    "@tanstack/match-sorter-utils": ^8.0.0-alpha.82
+    "@types/use-sync-external-store": ^0.0.3
+    use-sync-external-store: ^1.2.0
+  checksum: a337609b5576ecc6c5f044c7374500413e72b16ac11d4a7b365a7f4eb5bb99537341f72c77781846bca0f8f98c7e73a5ced0bc0dc699cbd1bc8dcdaea0b99cbc
   languageName: node
   linkType: hard
 
@@ -7584,6 +7604,13 @@ __metadata:
   languageName: node
   linkType: hard
 
+"remove-accents@npm:0.4.2":
+  version: 0.4.2
+  resolution: "remove-accents@npm:0.4.2"
+  checksum: 84a6988555dea24115e2d1954db99509588d43fe55a1590f0b5894802776f7b488b3151c37ceb9e4f4b646f26b80b7325dcea2fae58bc3865df146e1fa606711
+  languageName: node
+  linkType: hard
+
 "repeat-string@npm:^1.6.1":
   version: 1.6.1
   resolution: "repeat-string@npm:1.6.1"
@@ -7977,6 +8004,7 @@ __metadata:
   dependencies:
     "@iconify/react": ^3.2.2
     "@tanstack/react-query": ^4.0.10
+    "@tanstack/react-query-devtools": ^4.0.10
     "@types/node": 18.0.3
     "@types/react": 18.0.15
     "@types/react-dom": 18.0.6
@@ -8002,6 +8030,7 @@ __metadata:
     react-query: ^4.0.0
     recoil: ^0.7.4
     sw-precache-webpack-plugin: ^1.0.0
+    tailwind-scrollbar-hide: ^1.1.7
     tailwindcss: ^3.1.6
     typescript: 4.7.4
   languageName: unknown
@@ -8352,6 +8381,13 @@ __metadata:
     path-to-regexp: ^1.0.1
     serviceworker-cache-polyfill: ^4.0.0
   checksum: 97af4f7dd3ec3ecdb219114b4a7ec689efaf05689cd8e3f7afefb0ef0835a7a4a81ffa2818471a5759c71625dd662e299a5c342f8e6b4649756815b3eaea9a24
+  languageName: node
+  linkType: hard
+
+"tailwind-scrollbar-hide@npm:^1.1.7":
+  version: 1.1.7
+  resolution: "tailwind-scrollbar-hide@npm:1.1.7"
+  checksum: 2434a1db7a92fa91952ce4fbef7f80b83f121fa2fae27453cefc6030c06d368768e3172d3640ae6836fe4f813ed89b40c2f44b1f17756593ab4625259ef22a75
   languageName: node
   linkType: hard
 
