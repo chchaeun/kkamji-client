@@ -45,14 +45,14 @@ function QuizAnswerEdit() {
     ["quizDetail", quizId],
     () => fetchQuizDetail({ chapterId, quizbookId, quizId }),
     {
-      enabled: !!quizId,
+      enabled: !!router.query.qid,
     }
   );
   const { data: quizAnswer } = useQuery<IQuizAnswer>(
     ["quizAnswer", quizId],
     () => fetchQuizAnswer({ chapterId, quizbookId, quizId }),
     {
-      enabled: !!quizId,
+      enabled: !!router.query.qid,
     }
   );
 

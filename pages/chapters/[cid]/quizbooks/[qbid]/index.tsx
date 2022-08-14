@@ -33,7 +33,7 @@ function QuizbookDetailPage() {
     ["chapterDetail", chapterId],
     () => fetchChapterDetail({ chapterId }),
     {
-      enabled: !!chapterId,
+      enabled: !!router.query.cid,
       onSuccess: (chapterDetail) => {
         setNavTitle({
           name: chapterDetail.chapterName,
@@ -47,6 +47,7 @@ function QuizbookDetailPage() {
     ["quizbooks", chapterId],
     () => fetchQuizbooks({ chapterId }),
     {
+      enabled: !!router.query.cid,
       onSuccess: (quizbooks) => {
         const tempElements = quizbooks.map((quizbook) => {
           return {
@@ -64,13 +65,16 @@ function QuizbookDetailPage() {
     ["quizbookDetail", quizbookId],
     () => fetchQuizbookDetail({ chapterId, quizbookId }),
     {
-      enabled: !!quizbookId,
+      enabled: !!router.query.qbid,
     }
   );
 
   const { data: quizzes } = useQuery<IQuizSummary[]>(
     ["quizzes", chapterId, quizbookId],
-    () => fetchQuizzes({ chapterId, quizbookId })
+    () => fetchQuizzes({ chapterId, quizbookId }),
+    {
+      enabled: !!(router.query.cid && router.query.qbid),
+    }
   );
 
   const onQuizClick = (quizId: string) => {

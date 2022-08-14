@@ -70,9 +70,6 @@ function Login() {
             />
           </label>
           <em>{errors?.name?.message}</em>
-          {/* {errors.name && errors.name.type === "required" && (
-            <em>이름을 입력해주세요.</em>
-          )} */}
           <label className="flex flex-col">
             코드
             <input

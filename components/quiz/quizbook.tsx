@@ -13,7 +13,6 @@ function Quizbook({
     quizbookTitle,
     quizbookDescription,
     numOfQuizzes,
-    quizbookWeek,
     submitUserName,
   } = props;
 

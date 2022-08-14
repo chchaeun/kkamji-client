@@ -1,7 +1,7 @@
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import axios from "axios";
 import { useRouter } from "next/router";
-import React from "react";
+import React, { useRef } from "react";
 import { useForm } from "react-hook-form";
 import { fetchComments } from "../../../api/comments/comments";
 import { updateComment } from "../../../api/comments/update-comment";
@@ -29,7 +29,7 @@ function CommentContainer() {
   const quizbookId = String(router.query.qbid);
   const quizId = String(router.query.qid);
 
-  const { register, handleSubmit } = useForm<CommentValidForm>();
+  const { register, handleSubmit, resetField } = useForm<CommentValidForm>();
 
   const { data: comments } = useQuery<IComment[]>(
     ["comments", quizId],
@@ -45,20 +45,19 @@ function CommentContainer() {
 
     {
       onSuccess: () => {
-        queryClient.invalidateQueries(["comments"]);
+        queryClient.invalidateQueries(["comments", quizId]);
+        resetField("comment");
+      },
+      onError: (err) => {
+        queryClient.invalidateQueries(["comments", quizId]);
+        resetField("comment");
       },
     }
   );
 
   const onCommentValid = ({ comment }: CommentValidForm) => {
     const commentBody = {
-      commentId: 10,
-      commentUserName: "유저1",
       commentContent: comment,
-      createdDate: "Thu, 11 Aug 2022 14:24:19 GMT",
-      modifiedDate: "",
-      isMine: false,
-      isWriter: false,
     };
     mutateCommentSubmit(commentBody);
   };
@@ -75,7 +74,10 @@ function CommentContainer() {
     const oneDaytoMs = 1000 * 60 * 60 * 24;
     const threeDaytoMs = oneDaytoMs * 3;
     if (timeGap < oneDaytoMs) {
-      return `${dateFormat.getHours()}:${dateFormat.getMinutes()}`;
+      return `${dateFormat.getHours().toString().padStart(2, "0")}:${dateFormat
+        .getMinutes()
+        .toString()
+        .padStart(2, "0")}`;
     } else if (timeGap >= oneDaytoMs && timeGap < threeDaytoMs) {
       return `${Math.floor(timeGap / oneDaytoMs)}일 전`;
     } else {
