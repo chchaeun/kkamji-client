@@ -47,18 +47,15 @@ function CommentContainer() {
       onSuccess: () => {
         queryClient.invalidateQueries(["comments"]);
       },
+      onError: (err) => {
+        console.log(err);
+      },
     }
   );
 
   const onCommentValid = ({ comment }: CommentValidForm) => {
     const commentBody = {
-      commentId: 10,
-      commentUserName: "유저1",
       commentContent: comment,
-      createdDate: "Thu, 11 Aug 2022 14:24:19 GMT",
-      modifiedDate: "",
-      isMine: false,
-      isWriter: false,
     };
     mutateCommentSubmit(commentBody);
   };
@@ -75,7 +72,10 @@ function CommentContainer() {
     const oneDaytoMs = 1000 * 60 * 60 * 24;
     const threeDaytoMs = oneDaytoMs * 3;
     if (timeGap < oneDaytoMs) {
-      return `${dateFormat.getHours()}:${dateFormat.getMinutes()}`;
+      return `${dateFormat.getHours().toString().padStart(2, "0")}:${dateFormat
+        .getMinutes()
+        .toString()
+        .padStart(2, "0")}`;
     } else if (timeGap >= oneDaytoMs && timeGap < threeDaytoMs) {
       return `${Math.floor(timeGap / oneDaytoMs)}일 전`;
     } else {
