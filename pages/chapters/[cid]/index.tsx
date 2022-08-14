@@ -30,6 +30,9 @@ const Home: NextPage = () => {
       });
       setNavElements(tempElements);
     },
+    onError: (err) => {
+      console.log(err);
+    },
   });
 
   const { data: chapterDetail } = useQuery<IChapter>(
@@ -37,11 +40,11 @@ const Home: NextPage = () => {
     () => fetchChapterDetail({ chapterId }),
     {
       enabled: !!router.query.cid,
-      onError: (err) => {},
+      onError: (err) => {
+        console.log(err);
+      },
     }
   );
-
-  console.log(chapterDetail);
 
   const { data: quizbooks, error } = useQuery<IQuizbook[], AxiosError>(
     ["quizbooks", chapterId],

@@ -15,11 +15,6 @@
     "jsx": "preserve",
     "incremental": true
   },
-  "include": [
-    "next-env.d.ts",
-    "**/*.ts",
-    "**/*.tsx",
-    "mocks/comment-handlers.js"
-  ],
+  "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx", "mocks/handlers.js"],
   "exclude": ["node_modules"]
 }
