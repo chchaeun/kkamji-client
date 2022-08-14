@@ -1,8 +1,10 @@
-import { useMutation } from "@tanstack/react-query";
+import { useMutation, useQuery } from "@tanstack/react-query";
+import axios from "axios";
 import { useRouter } from "next/router";
 import React, { useEffect, useRef } from "react";
 import { SubmitHandler, useForm } from "react-hook-form";
 import api from "../api/my-api";
+import { getCode } from "../api/session-code";
 
 type LoginValidForm = {
   name: string;
@@ -11,35 +13,34 @@ type LoginValidForm = {
 
 function Login() {
   const router = useRouter();
-  const {
-    register,
-    handleSubmit,
-    watch,
-    formState: { errors },
-  } = useForm<LoginValidForm>();
 
-  const nameRef = useRef<string | null>(null);
-  nameRef.current = watch("name");
-
-  const codeRef = useRef<string | null>(null);
-  codeRef.current = watch("code");
-
-  useEffect(() => {
-    if (sessionStorage.getItem("code")) {
-      router.push("/?week=4");
+  const { data: currentChapter } = useQuery<{ currentChapterId: number }>(
+    ["currentChapter"],
+    async () => {
+      const { data } = await axios.get(
+        "https://a61e9270-0366-4013-a651-fbc3d46384ab.mock.pstmn.io/v1/current-chapter"
+      );
+      return data;
+    },
+    {
+      enabled: !!getCode(),
+      onSuccess: (currentChapter) => {
+        router.push(`/chapters/${currentChapter.currentChapterId}`);
+      },
     }
-  }, [router]);
+  );
 
   const { mutate: mutateLogin } = useMutation(
     async (loginBody: LoginValidForm) => {
       return await api.post("/login", loginBody);
-    },
-    {
-      onSuccess: () => {
-        router.push("/?week=4");
-      },
     }
   );
+
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+  } = useForm<LoginValidForm>();
 
   const onLoginValid: SubmitHandler<LoginValidForm> = async (data) => {
     const { name, code } = data;
@@ -63,35 +64,24 @@ function Login() {
             <input
               type="text"
               {...register("name", {
-                required: true,
-                validate: (value) => value === nameRef.current,
+                required: "이름을 입력해주세요.",
               })}
               className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
             />
           </label>
-          {errors.name && errors.name.type === "required" && (
-            <em>이름을 입력해주세요.</em>
-          )}
+          <em>{errors?.name?.message}</em>
           <label className="flex flex-col">
             코드
             <input
               type="password"
               {...register("code", {
-                required: true,
-                minLength: 4,
-                maxLength: 4,
-                validate: (value) => value === codeRef.current,
+                required: "코드를 입력해주세요.",
+                minLength: { value: 4, message: "코드는 4자여야 합니다." },
+                maxLength: { value: 4, message: "코드는 4자여야 합니다." },
               })}
               className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
             />
-            {errors.code && errors.code.type === "required" && (
-              <em>코드를 입력해주세요.</em>
-            )}
-            {errors.code &&
-              (errors.code.type === "maxLength" ||
-                errors.code.type === "minLength") && (
-                <em>코드는 4자여야 합니다.</em>
-              )}
+            <em>{errors.code?.message}</em>
           </label>
         </div>
 
