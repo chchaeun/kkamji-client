@@ -43,19 +43,13 @@ const comments = [
 ];
 
 export const handlers = [
-  rest.get(
-    `${BASE_URL}/chapters/:cid/quizbooks/:qbid/quizzes/:qid/comments`,
-    (req, res, ctx) => {
-      console.log(comments);
-      return res(ctx.status(200), ctx.json(comments));
-    }
-  ),
+  rest.get(`${BASE_URL}/quizzes/:qid/comments`, (req, res, ctx) => {
+    console.log(comments);
+    return res(ctx.status(200), ctx.json(comments));
+  }),
 
-  rest.post(
-    `${BASE_URL}/chapters/:cid/quizbooks/:qbid/quizzes/:qid/comments`,
-    (req, res, ctx) => {
-      comments.push(req.body);
-      return res(ctx.status(201));
-    }
-  ),
+  rest.post(`${BASE_URL}/quizzes/:qid/comments`, (req, res, ctx) => {
+    comments.push(req.body);
+    return res(ctx.status(201));
+  }),
 ];
