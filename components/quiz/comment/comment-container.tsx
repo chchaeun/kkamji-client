@@ -1,7 +1,7 @@
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import axios from "axios";
 import { useRouter } from "next/router";
-import React from "react";
+import React, { useRef } from "react";
 import { useForm } from "react-hook-form";
 import { fetchComments } from "../../../api/comments/comments";
 import { updateComment } from "../../../api/comments/update-comment";
@@ -29,7 +29,7 @@ function CommentContainer() {
   const quizbookId = String(router.query.qbid);
   const quizId = String(router.query.qid);
 
-  const { register, handleSubmit } = useForm<CommentValidForm>();
+  const { register, handleSubmit, resetField } = useForm<CommentValidForm>();
 
   const { data: comments } = useQuery<IComment[]>(
     ["comments", quizId],
@@ -45,10 +45,12 @@ function CommentContainer() {
 
     {
       onSuccess: () => {
-        queryClient.invalidateQueries(["comments"]);
+        queryClient.invalidateQueries(["comments", quizId]);
+        resetField("comment");
       },
       onError: (err) => {
-        console.log(err);
+        queryClient.invalidateQueries(["comments", quizId]);
+        resetField("comment");
       },
     }
   );

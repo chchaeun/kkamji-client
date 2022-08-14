@@ -95,7 +95,11 @@ function QuizDetailPage() {
     (props: { idData: IFetchQuiz; solveIsCorrect: boolean }) =>
       updateQuizIsSolved(props),
     {
+      mutationKey: ["quizIsSolved", quizId],
       onSuccess: () => {
+        queryClient.invalidateQueries(["quizDetail", quizId]);
+      },
+      onError: () => {
         queryClient.invalidateQueries(["quizDetail", quizId]);
       },
     }
@@ -218,7 +222,7 @@ function QuizDetailPage() {
             </div>
             <div className="flex flex-col items-end gap-3">
               <h2 className="w-full text-2xl">해설</h2>
-              <div className="flex flex-col gap-5 justify-between bg-white p-5 drop-shadow-md">
+              <div className="w-full flex flex-col gap-5 justify-between bg-white p-5 drop-shadow-md">
                 {quizAnswer?.quizExplanation}
                 {
                   <div className="px-3 bg-white border-l-4 border-indigo-400">
