@@ -90,7 +90,7 @@ function QuizWritePage() {
   };
 
   return (
-    <div className="grid grid-cols-5 gap-4 w-full lg:mt-20 m-auto sm:flex sm:flex-col">
+    <div className="grid grid-cols-5 gap-4 w-full m-auto sm:flex sm:flex-col">
       {quizCurrentSubmit?.currentSubmit && (
         <CurrentSubmit quizCurrentSubmit={quizCurrentSubmit?.currentSubmit} />
       )}

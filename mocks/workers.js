@@ -1,4 +1,5 @@
 import { setupWorker } from "msw";
-import { handlers } from "./handlers";
+import { challengesHandlers } from "./challenges-handlers";
+import { commentsHandlers } from "./comments-handlers";
 
-export const worker = setupWorker(...handlers);
+export const worker = setupWorker(...commentsHandlers, ...challengesHandlers);

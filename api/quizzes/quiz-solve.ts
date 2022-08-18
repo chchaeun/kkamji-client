@@ -1,12 +1,7 @@
 import api from "../my-api";
 import { getCode } from "../session-code";
 import { IFetchQuiz } from "../fetch-types";
-export interface IQuizIsSolved {
-  userId: number;
-  userName: string;
-  quizId: number;
-  quizIsSolved: boolean;
-}
+
 export const updateQuizIsSolved = async (props: {
   idData: IFetchQuiz;
   solveIsCorrect: boolean;

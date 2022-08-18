@@ -1,7 +1,6 @@
 export interface IFetchChapter {
   chapterId?: string;
 }
-
 export interface IFetchQuizbook extends IFetchChapter {
   quizbookId?: string;
 }

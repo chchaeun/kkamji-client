@@ -4,7 +4,6 @@ import { AxiosError } from "axios";
 import { useRouter } from "next/router";
 import React, { useEffect, useState } from "react";
 import { fetchChapterDetail } from "../../../../../api/chapters/chapter-detail";
-import { IChapter } from "../../../../../api/chapters/chapters";
 import {
   fetchQuizbookDetail,
   IQuizbookDetail,
@@ -13,8 +12,10 @@ import {
   fetchQuizbooks,
   IQuizbook,
 } from "../../../../../api/quizbooks/quizbooks";
-import { fetchQuizzes, IQuizSummary } from "../../../../../api/quizzes/quizzes";
+import { fetchQuizzes } from "../../../../../api/quizzes/quizzes";
 import SideNav from "../../../../../components/layout/side-nav";
+import { Chapter } from "../../../../../types/Chapter";
+import { QuizSummary } from "../../../../../types/Quiz";
 interface INavElements {
   link: string;
   name: string;
@@ -29,7 +30,7 @@ function QuizbookDetailPage() {
   const [navTitle, setNavTitle] = useState<INavElements>();
   const [navElements, setNavElements] = useState<INavElements[]>();
 
-  const { data: chapterDetail } = useQuery<IChapter>(
+  const { data: chapterDetail } = useQuery<Chapter>(
     ["chapterDetail", chapterId],
     () => fetchChapterDetail({ chapterId }),
     {
@@ -69,7 +70,7 @@ function QuizbookDetailPage() {
     }
   );
 
-  const { data: quizzes } = useQuery<IQuizSummary[]>(
+  const { data: quizzes } = useQuery<QuizSummary[]>(
     ["quizzes", chapterId, quizbookId],
     () => fetchQuizzes({ chapterId, quizbookId }),
     {

@@ -5,12 +5,6 @@ interface IProps {
   children: ReactNode;
 }
 function Layout(props: IProps) {
-  const router = useRouter();
-  useEffect(() => {
-    if (router.asPath !== "/login" && !sessionStorage.getItem("code")) {
-      router.push("/login");
-    }
-  }, [router]);
   return (
     <Fragment>
       <Header />
