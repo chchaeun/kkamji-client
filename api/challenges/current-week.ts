@@ -3,14 +3,11 @@ import { getCode } from "../session-code";
 
 interface Props {
   challengeId: string;
-  week: number;
 }
 
-export const fetchQuizzes = async ({ challengeId, week }: Props) => {
+export const fetchCurrentWeek = async ({ challengeId }: Props) => {
   api.defaults.headers.common["code"] = getCode();
 
-  const { data } = await api.get(`/challenges/${challengeId}/quizzes`, {
-    params: { week },
-  });
+  const { data } = await api.get(`/challenges/${challengeId}/now`);
   return data;
 };

@@ -1,14 +1,13 @@
 import api from "../my-api";
 import { getCode } from "../session-code";
-import { IFetchQuiz } from "../fetch-types";
 
-export const fetchQuizDetail = async (idData: IFetchQuiz) => {
-  const { chapterId, quizbookId, quizId } = idData;
+interface Props {
+  quizId: string;
+}
 
+export const fetchQuizDetail = async ({ quizId }: Props) => {
   api.defaults.headers.common["code"] = getCode() || "";
 
-  const { data } = await api.get(
-    `/chapters/${chapterId}/quizbooks/${quizbookId}/quizzes/${quizId}`
-  );
+  const { data } = await api.get(`/quizzes/${quizId}`);
   return data;
 };

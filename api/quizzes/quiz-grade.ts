@@ -2,10 +2,10 @@ import api from "../my-api";
 import { getCode } from "../session-code";
 interface Props {
   quizId: string;
-  answer: string;
+  score: number;
 }
-export const updateQuizIsSolved = async ({ quizId, answer }: Props) => {
+export const updateQuizScore = async ({ quizId, score }: Props) => {
   api.defaults.headers.common["code"] = getCode();
 
-  return await api.post(`/quizzes/${quizId}/solve`, { answer });
+  return await api.post(`/quizzes/${quizId}/solve`, { score });
 };
