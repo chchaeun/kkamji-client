@@ -79,7 +79,7 @@ const myChallenges = [
     challengeId: 74866388,
     title: "sint",
     description: "dolor cillum labo",
-    totalWeeks: -80448097,
+    totalWeeks: 15,
     minNumOfQuizzesByWeek: 19264340,
     cost: 91859804,
     university: "cupidatat ut occaecat enim",
@@ -102,7 +102,7 @@ const myChallenges = [
     challengeId: 11386479,
     title: "challenge",
     description: "ut officia elit ipsum cupidatat",
-    totalWeeks: 97660394,
+    totalWeeks: 16,
     minNumOfQuizzesByWeek: 85942490,
     cost: 93805265,
     university: "occaecat aliqua commodo tempor nisi",
@@ -124,7 +124,7 @@ const myChallenges = [
 ];
 
 const currentWeek = {
-  week: 1,
+  week: 4,
   now: "string",
 };
 
@@ -152,20 +152,11 @@ const challengeDetail = {
   isParticipated: true,
 };
 
-const challengesOpenWeeks = [
-  {
-    week: 1,
-    isReadable: true,
-  },
-  {
-    week: 2,
-    isReadable: true,
-  },
-  {
-    week: 3,
-    isReadable: false,
-  },
-];
+const challengesOpenWeeks = {
+  challengeId: 0,
+  totalWeeks: 15,
+  weeks: [true, false, true, true],
+};
 
 export const challengesHandlers = [
   rest.get(formattingUrl("/challenges"), (req, res, ctx) => {
@@ -184,9 +175,7 @@ export const challengesHandlers = [
     return res(ctx.status(200), ctx.json(currentWeek));
   }),
 
-  rest.get(
-    formattingUrl("/challenges/:cid/weeks", (req, res, ctx) => {
-      return res(ctx.status(200), ctx.json(challengesOpenWeeks));
-    })
-  ),
+  rest.get(formattingUrl("/challenges/:cid/weeks"), (req, res, ctx) => {
+    return res(ctx.status(200), ctx.json(challengesOpenWeeks));
+  }),
 ];

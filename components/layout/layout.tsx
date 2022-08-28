@@ -8,7 +8,7 @@ function Layout(props: IProps) {
   return (
     <Fragment>
       <Header />
-      <main className="h-screen">{props.children}</main>
+      <main className="h-full">{props.children}</main>
     </Fragment>
   );
 }

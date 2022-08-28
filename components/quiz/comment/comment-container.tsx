@@ -7,6 +7,7 @@ import { fetchComments } from "../../../api/comments/comments";
 import { updateComment } from "../../../api/comments/update-comment";
 import api from "../../../api/my-api";
 import { getCode } from "../../../api/session-code";
+import { getDateFormat } from "../../../utils/date-fotmat";
 type CommentValidForm = {
   comment: string;
 };
@@ -75,27 +76,6 @@ function CommentContainer() {
     mutateCommentDelete(commentId);
   };
 
-  const getDateFormat = (date: string) => {
-    const nowTime = new Date().getTime();
-    const dateFormat = new Date(date);
-    const timeGap = nowTime - dateFormat.getTime();
-
-    const oneDaytoMs = 1000 * 60 * 60 * 24;
-    const threeDaytoMs = oneDaytoMs * 3;
-    if (timeGap < oneDaytoMs) {
-      return `${dateFormat.getHours().toString().padStart(2, "0")}:${dateFormat
-        .getMinutes()
-        .toString()
-        .padStart(2, "0")}`;
-    } else if (timeGap >= oneDaytoMs && timeGap < threeDaytoMs) {
-      return `${Math.floor(timeGap / oneDaytoMs)}일 전`;
-    } else {
-      return `${dateFormat.getFullYear()}년 ${
-        dateFormat.getMonth() + 1
-      }월 ${dateFormat.getDate()}일`;
-    }
-  };
-
   return (
     <div className="flex flex-col gap-5">
       <div className="flex flex-col gap-3">
@@ -138,7 +118,7 @@ function CommentContainer() {
                 <button
                   type="button"
                   onClick={() => onDeleteClick(comment.commentId)}
-                  className="text-sm text-gray-700"
+                  className="text-sm text-gray-700 hover:underline"
                 >
                   삭제
                 </button>

@@ -92,7 +92,7 @@ function QuizbookDetailPage() {
     }
   }
   return (
-    <div className="grid grid-cols-5 gap-4 w-full lg:mt-20 m-auto sm:flex sm:flex-col sm:px-10">
+    <div className="grid grid-cols-5 gap-4 w-full lg:mt-10 m-auto sm:flex sm:flex-col sm:px-10">
       <div className="col-start-1 flex justify-center mt-10 sm:mt-0">
         {navTitle && navElements && (
           <SideNav props={{ navTitle, navElements }} />
@@ -114,7 +114,7 @@ function QuizbookDetailPage() {
                 <span className="font-semibold">{index + 1}</span>
                 {quiz.quizTitle}
               </div>
-              {quiz.isQuizSolved && (
+              {quiz.isSolved && (
                 <Icon icon="bi:patch-check-fill" color="#5c3cde" height={24} />
               )}
             </div>

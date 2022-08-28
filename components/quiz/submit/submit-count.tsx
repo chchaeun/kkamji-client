@@ -4,13 +4,12 @@ import { useRecoilState } from "recoil";
 import { showNavState } from "../../../stores/header";
 import { classNames } from "../../../styles/classname-maker";
 
-function CurrentSubmit({ quizCurrentSubmit }: { quizCurrentSubmit: number }) {
-  const [showCurrentSubmit, setShowCurrentSubmit] =
-    useRecoilState(showNavState);
+function SubmitCount({ quizSubmitCount }: { quizSubmitCount: number }) {
+  const [showSubmitCount, setShowSubmitCount] = useRecoilState(showNavState);
   return (
     <div
       className={classNames(
-        showCurrentSubmit
+        showSubmitCount
           ? "flex flex-col gap-3 fixed w-full h-screen mt-10 py-20 px-10 bg-white bg-opacity-95 z-10"
           : "col-start-1 flex flex-col items-center gap-2 mt-10 sm:mt-0 sm:hidden"
       )}
@@ -19,7 +18,7 @@ function CurrentSubmit({ quizCurrentSubmit }: { quizCurrentSubmit: number }) {
       <span className="grid grid-cols-4">
         {[1, 2, 3, 4, 5, 6, 7, 8].map((element, index) => (
           <span key={index}>
-            {quizCurrentSubmit && element <= quizCurrentSubmit ? (
+            {quizSubmitCount && element <= quizSubmitCount ? (
               <Icon icon="clarity:pencil-solid" color="#000000" height="30" />
             ) : (
               <Icon icon="clarity:pencil-line" color="#000000" height="30" />
@@ -31,4 +30,4 @@ function CurrentSubmit({ quizCurrentSubmit }: { quizCurrentSubmit: number }) {
   );
 }
 
-export default CurrentSubmit;
+export default SubmitCount;

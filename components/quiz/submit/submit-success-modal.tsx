@@ -2,11 +2,7 @@ import Link from "next/link";
 import { useRouter } from "next/router";
 import React from "react";
 import { Icon } from "@iconify/react";
-function SubmitSuccessModal({
-  quizCurrentSubmit,
-}: {
-  quizCurrentSubmit: number;
-}) {
+function SubmitSuccessModal({ quizSubmitCount }: { quizSubmitCount: number }) {
   const router = useRouter();
 
   const onAgainClick = () => {
@@ -28,7 +24,7 @@ function SubmitSuccessModal({
       />
       <p className="row-start-3 col-start-3 col-span-6 sm:col-start-2 sm:col-span-8 flex flex-col items-center sm:items-start text-lg sm:text-base">
         <span>문제가 제출되었습니다.</span>
-        {quizCurrentSubmit === 8 ? (
+        {quizSubmitCount === 8 ? (
           <span>
             이번주 미션을 모두 완료했습니다.
             <br />
@@ -36,11 +32,11 @@ function SubmitSuccessModal({
           </span>
         ) : (
           <span>
-            이번주 미션 완료까지 {8 - quizCurrentSubmit} 문제 남았습니다!
+            이번주 미션 완료까지 {8 - quizSubmitCount} 문제 남았습니다!
           </span>
         )}
       </p>
-      {quizCurrentSubmit === 8 ? (
+      {quizSubmitCount === 8 ? (
         <Link
           href="/?week=4"
           className="row-start-5 col-start-4 col-span-4 bg-[#5c3cde] hover:bg-[#4026ab] text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline cursor-pointer"

@@ -1,10 +1,10 @@
-import React, { useEffect, useState } from "react";
+import React from "react";
 import Link from "next/link";
 import { useRouter } from "next/router";
 import { Icon } from "@iconify/react";
 import { useRecoilState } from "recoil";
 import { showNavState } from "../../stores/header";
-import { useQuery, useQueryClient } from "@tanstack/react-query";
+import { useQuery } from "@tanstack/react-query";
 import axios from "axios";
 import { classNames } from "../../styles/classname-maker";
 import { getCode } from "../../api/session-code";
@@ -51,37 +51,26 @@ function Header() {
             <ul className="flex items-center gap-10 text-lg sm:hidden">
               <li
                 className={classNames(
-                  isSameRoute("/introduce")
-                    ? "text-black font-bold"
-                    : "text-gray-500"
+                  isSameRoute("/introduce") ? "text-black" : "text-gray-500"
                 )}
               >
                 <Link href="/introduce">깜지 소개</Link>
               </li>
               <li
                 className={classNames(
-                  isSameRoute("/challenges")
-                    ? "text-black font-bold"
-                    : "text-gray-500"
+                  isSameRoute("/challenges") ? "text-black" : "text-gray-500"
                 )}
               >
-                <Link href="/challenges">챌린지</Link>
+                <Link href="/challenges">깜지 챌린지</Link>
               </li>
             </ul>
           </nav>
           {isUser ? (
-            <ul className="flex gap-8 sm:hidden">
-              <Link
-                href={`/chapters/${currentChapter?.currentChapterId}/write`}
-              >
-                <button className="py-1 px-4 text-base border-[1px] rounded-3xl border-gray-700 hover:bg-black hover:text-white transition ease-in-out duration-200">
-                  문제 작성
-                </button>
-              </Link>
-              <Link href={`/chapters/${currentChapter?.currentChapterId}`}>
-                <button className="text-lg">MY</button>
-              </Link>
-            </ul>
+            <Link href={`/dashboard`}>
+              <button className="text-3xl sm:hidden">
+                <Icon icon="bi:person-circle" />
+              </button>
+            </Link>
           ) : (
             <Link href="/login">
               <button className="py-1 px-4 text-base border-[1px] rounded-3xl bg-black text-white sm:hidden">
