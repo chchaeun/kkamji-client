@@ -1,14 +1,27 @@
 export interface QuizDetail {
   quizId: number;
   quizTitle: string;
-  quizContent: string;
+  quizWeek: number;
   quizCategory: string;
-  quizNumber: number;
-  isQuizSolved: boolean;
+  quizContent: string;
+  quizAnswer: string;
+  quizExplanation: string;
+  quizRubric: string;
+  quizSource: string;
+  quizCreatedDate: string;
+  quizModifiedDate: string;
   isMine: boolean;
-  files: {
-    fileName: string;
-    filePath: string;
+  solveAnswer: string | null;
+  solveScore: number | null;
+  writerName: string;
+  challengeId: number;
+  quizFiles: {
+    id: number;
+    qfName: string;
+    qfType: string;
+    qfPath: string;
+    qfCreatedDate: string;
+    qfModifiedDate: string;
   }[];
 }
 export interface QuizAnswer {
@@ -28,9 +41,15 @@ export interface QuizIsSolved {
 export interface QuizSummary {
   quizId: number;
   quizTitle: string;
+  quizWeek: number;
   quizCategory: string;
-  isQuizSolved: boolean;
-  quizNumber: number;
+  quizCreatedDate: string;
+  quizModifiedDate: string;
+  isMine: boolean;
+  isSolved: boolean;
+  isGraded: boolean;
+  writerName: string;
+  challengeId: number;
 }
 
 export interface QuizEdit {
