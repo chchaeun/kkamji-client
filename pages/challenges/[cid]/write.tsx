@@ -1,18 +1,15 @@
 import React, { Fragment, useRef, useState } from "react";
-import { SubmitHandler, useForm } from "react-hook-form";
+import { SubmitHandler, useFieldArray, useForm } from "react-hook-form";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
-import axios from "axios";
 import { useRouter } from "next/router";
-import { getCode } from "../../../api/session-code";
-import CurrentSubmit from "../../../components/quiz/submit/submit-count";
 import SubmitSuccessModal from "../../../components/quiz/submit/submit-success-modal";
 import Overlay from "../../../components/layout/overlay";
 import { updateQuiz } from "../../../api/submit-quiz/update-quiz";
 import { fetchSubmitCount } from "../../../api/submit-quiz/submit-count";
 import SubmitCount from "../../../components/quiz/submit/submit-count";
-import { fetchCurrentWeek } from "../../../api/challenges/current-week";
-import { CurrentWeek } from "../../../types/Challenge";
 import useCurrentWeekQuery from "../../../hooks/current-week-query";
+import { Icon } from "@iconify/react";
+import useSubmitCountQuery from "../../../hooks/submit-count-query";
 
 type QuizValidForm = {
   title: string;
@@ -20,7 +17,10 @@ type QuizValidForm = {
   image: FileList;
   answer: string;
   explanation: string;
-  rubric: string;
+  rubric: {
+    score: string;
+    content: string;
+  }[];
 };
 function QuizWritePage() {
   const router = useRouter();
@@ -32,10 +32,25 @@ function QuizWritePage() {
 
   const {
     register,
+    control,
     handleSubmit,
     watch,
     formState: { errors },
-  } = useForm<QuizValidForm>();
+  } = useForm<QuizValidForm>({
+    defaultValues: {
+      rubric: [
+        {
+          score: "",
+          content: "",
+        },
+      ],
+    },
+  });
+
+  const { fields, append, remove } = useFieldArray<QuizValidForm>({
+    control,
+    name: "rubric",
+  });
 
   const imageRef = useRef<FileList | null>(null);
   imageRef.current = watch("image");
@@ -51,10 +66,11 @@ function QuizWritePage() {
   );
 
   const { data: currentWeek } = useCurrentWeekQuery();
-
+  const { data: submitCount } = useSubmitCountQuery();
+  console.log(submitCount);
   const { data: quizSubmitCount } = useQuery<{ currentSubmit: number }>(
     ["quizSubmitCount"],
-    () => fetchSubmitCount({ challengeId, week: currentWeek?.week || 0 }),
+    () => fetchSubmitCount({ challengeId, week: currentWeek || 0 }),
     {
       enabled: !!(challengeId && currentWeek),
     }
@@ -90,11 +106,8 @@ function QuizWritePage() {
   };
 
   return (
-    <div className="grid grid-cols-5 gap-4 w-full m-auto sm:flex sm:flex-col">
-      {quizSubmitCount?.currentSubmit && (
-        <SubmitCount quizSubmitCount={quizSubmitCount?.currentSubmit} />
-      )}
-      <div className="col-start-2 col-span-3 flex flex-col gap-10 sm:gap-7 sm:w-4/5 h-screen bg-white py-10 px-20 sm:m-auto sm:px-0 sm:py-20">
+    <div className="grid grid-cols-5 gap-4 w-full h-full m-auto sm:flex sm:flex-col sm:py-10">
+      <div className="col-start-2 col-span-3 flex flex-col gap-10 sm:gap-7 sm:w-4/5 h-full bg-white py-10 px-20 sm:m-auto sm:px-0 sm:pt-0">
         <h1 className="text-2xl">문제 제출</h1>
         <form
           onSubmit={handleSubmit(onQuizSubmitValid)}
@@ -172,19 +185,55 @@ function QuizWritePage() {
 
             <em>{errors.explanation?.message}</em>
           </div>
-          <div className="flex flex-col w-full gap-2">
-            <label>
-              채점 기준 (10점 만점)
-              <span>* 예: </span>
-              <textarea
-                {...register("rubric", {
-                  required: "채점 기준은 필수 입력값입니다.",
-                })}
-                className="shadow appearance-none border rounded w-full mt-2 py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
-              />
-            </label>
-            <em>{errors.rubric?.message}</em>
+          <div className="w-full">
+            <div className="grid grid-cols-12 gap-2 w-full sm:grid-cols-6">
+              <label>점수</label>
+              <label className="col-span-2">채점 기준</label>
+            </div>
+            {fields.map((item, index) => (
+              <div
+                key={item.id}
+                className="grid grid-cols-12 gap-x-2 w-full sm:grid-cols-6"
+              >
+                <input
+                  {...register(`rubric.${index}.score`, {
+                    required: "점수는 필수 입력값입니다.",
+                  })}
+                  className="shadow appearance-none border rounded mt-2 py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+                />
+                <input
+                  {...register(`rubric.${index}.content`, {
+                    required: "채점 기준은 필수 입력값입니다.",
+                  })}
+                  className="col-span-10 shadow appearance-none border rounded mt-2 py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline sm:col-span-4"
+                />
+                <button
+                  type="button"
+                  onClick={() => remove(index)}
+                  className="flex items-center text-3xl px-1"
+                >
+                  <Icon icon="akar-icons:circle-minus-fill" color={"#9686dc"} />
+                </button>
+              </div>
+            ))}
+            <em className="block py-3">
+              {errors.rubric && errors.rubric[0]?.score?.message}
+            </em>
+            <em className="block">
+              {errors.rubric && errors.rubric[0]?.content?.message}
+            </em>
+            <div className="flex justify-center w-full p-5 text-3xl sm:pt-0">
+              <button
+                type="button"
+                onClick={() => {
+                  append({});
+                }}
+              >
+                <Icon icon="akar-icons:circle-plus-fill" color={"#9686dc"} />
+              </button>
+            </div>
           </div>
+
           <button
             type="submit"
             className="w-fit bg-[#5c3cde] hover:bg-[#4026ab] text-white font-bold py-2 px-8 rounded focus:outline-none focus:shadow-outline cursor-pointer"
@@ -201,6 +250,7 @@ function QuizWritePage() {
           <Overlay onClick={onCloseClick} />
         </Fragment>
       )}
+      <SubmitCount />
     </div>
   );
 }

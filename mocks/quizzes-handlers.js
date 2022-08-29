@@ -66,7 +66,10 @@ let quizDetail = {
   quizContent: "string",
   quizAnswer: "string",
   quizExplanation: "string",
-  quizRubric: "string",
+  quizRubric: JSON.stringify([
+    { score: 10, content: "string" },
+    { score: 5, content: "string" },
+  ]),
   quizSource: "string",
   quizCreatedDate: "2022-08-24T11:58:39.828Z",
   quizModifiedDate: "2022-08-24T11:58:39.828Z",
@@ -104,7 +107,10 @@ export const quizzesHandlers = [
       quizContent: "string",
       quizAnswer: "string",
       quizExplanation: "string",
-      quizRubric: "string",
+      quizRubric: JSON.stringify([
+        { score: 10, content: "string" },
+        { score: 5, content: "string" },
+      ]),
       quizSource: "string",
       quizCreatedDate: "2022-08-24T11:58:39.828Z",
       quizModifiedDate: "2022-08-24T11:58:39.828Z",
@@ -134,5 +140,41 @@ export const quizzesHandlers = [
 
   rest.get(formattingUrl("/challenges/:cid/my/quizzes"), (req, res, ctx) => {
     return res(ctx.status(200), ctx.json(myQuizzes));
+  }),
+
+  rest.post(formattingUrl("quizzes/:qid/grade"), (req, res, ctx) => {
+    quizDetail = {
+      quizId: 0,
+      quizTitle: "string",
+      quizWeek: 0,
+      quizCategory: "string",
+      quizContent: "string",
+      quizAnswer: "string",
+      quizExplanation: "string",
+      quizRubric: JSON.stringify([
+        { score: 10, content: "string" },
+        { score: 5, content: "string" },
+      ]),
+      quizSource: "string",
+      quizCreatedDate: "2022-08-24T11:58:39.828Z",
+      quizModifiedDate: "2022-08-24T11:58:39.828Z",
+      isMine: true,
+      solveAnswer: req.body.answer,
+      solveScore: req.body.score,
+      writerName: "string",
+      challengeId: 0,
+      quizFiles: [
+        {
+          id: 0,
+          qfName: "string",
+          qfType: "string",
+          qfPath:
+            "https://images.unsplash.com/photo-1543852786-1cf6624b9987?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=774&q=80",
+          qfCreatedDate: "2022-08-24T11:58:39.828Z",
+          qfModifiedDate: "2022-08-24T11:58:39.828Z",
+        },
+      ],
+    };
+    return res(ctx.status(201));
   }),
 ];

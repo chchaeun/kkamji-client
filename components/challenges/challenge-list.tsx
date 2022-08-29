@@ -14,8 +14,7 @@ function ChallengeList({ challenges }: Props) {
     if (!currentWeek) {
       return;
     }
-    console.log(currentWeek.week, totalWeeks);
-    return Math.floor((currentWeek?.week / totalWeeks) * 100);
+    return Math.floor((currentWeek / totalWeeks) * 100);
   };
 
   return (

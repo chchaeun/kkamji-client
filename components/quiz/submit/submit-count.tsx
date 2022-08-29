@@ -1,31 +1,26 @@
+import ProgressBar from "@ramonak/react-progress-bar";
 import React from "react";
-import { Icon } from "@iconify/react";
-import { useRecoilState } from "recoil";
-import { showNavState } from "../../../stores/header";
-import { classNames } from "../../../styles/classname-maker";
+import useCurrentWeekQuery from "../../../hooks/current-week-query";
+import useSubmitCountQuery from "../../../hooks/submit-count-query";
 
-function SubmitCount({ quizSubmitCount }: { quizSubmitCount: number }) {
-  const [showSubmitCount, setShowSubmitCount] = useRecoilState(showNavState);
+function SubmitCount() {
+  const { data: submitCount } = useSubmitCountQuery();
+  const { data: currentWeek } = useCurrentWeekQuery();
+
   return (
-    <div
-      className={classNames(
-        showSubmitCount
-          ? "flex flex-col gap-3 fixed w-full h-screen mt-10 py-20 px-10 bg-white bg-opacity-95 z-10"
-          : "col-start-1 flex flex-col items-center gap-2 mt-10 sm:mt-0 sm:hidden"
-      )}
-    >
-      <span className="text-lg">이번주 문제 제출 현황</span>
-      <span className="grid grid-cols-4">
-        {[1, 2, 3, 4, 5, 6, 7, 8].map((element, index) => (
-          <span key={index}>
-            {quizSubmitCount && element <= quizSubmitCount ? (
-              <Icon icon="clarity:pencil-solid" color="#000000" height="30" />
-            ) : (
-              <Icon icon="clarity:pencil-line" color="#000000" height="30" />
-            )}
-          </span>
-        ))}
-      </span>
+    <div className="flex flex-col gap-5 h-fit mt-10 ml-10 py-5 px-8 bg-white rounded-lg shadow-sm border-[1px] border-gray-300 sm:mx-10 sm:my-0">
+      <span className="">{currentWeek}주차 제출 현황</span>
+      <ProgressBar
+        completed={submitCount || 0}
+        maxCompleted={2}
+        bgColor={"#5c3cde"}
+        baseBgColor={"#f7f6fc"}
+        animateOnRender={true}
+        labelAlignment={"outside"}
+        customLabel={`${submitCount}/2`}
+        labelColor={"#000000"}
+        labelClassName={"w-1/12 text-sm px-3 sm:w-1/5"}
+      />
     </div>
   );
 }

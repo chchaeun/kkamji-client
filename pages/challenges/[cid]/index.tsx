@@ -8,11 +8,14 @@ import { fetchQuizzes } from "../../../api/quizzes/quizzes";
 import ProgressBar from "@ramonak/react-progress-bar";
 import useCurrentWeekQuery from "../../../hooks/current-week-query";
 import { Challenge, OpenWeek } from "../../../types/Challenge";
-import { QuizSummary } from "../../../types/Quiz";
+import { QuizSubmitCount, QuizSummary } from "../../../types/Quiz";
 import { Icon } from "@iconify/react";
 import { getDateFormat } from "../../../utils/date-fotmat";
 import { classNames } from "../../../styles/classname-maker";
 import { fetchOpenWeek } from "../../../api/challenges/open-weeks";
+import { fetchSubmitCount } from "../../../api/submit-quiz/submit-count";
+import { AxiosError } from "axios";
+import useSubmitCountQuery from "../../../hooks/submit-count-query";
 
 interface QuizSummaryCard {
   title: string;
@@ -27,7 +30,7 @@ function ChallengePage() {
 
   const { data: quizzes } = useQuery<QuizSummary[]>(
     ["quizzes", challengeId],
-    () => fetchQuizzes({ challengeId, week: currentWeek?.week || 0 }),
+    () => fetchQuizzes({ challengeId, week: currentWeek || 0 }),
     {
       enabled: !!(challengeId && currentWeek),
     }
@@ -52,6 +55,8 @@ function ChallengePage() {
     () => fetchOpenWeek({ challengeId }),
     { enabled: !!challengeId }
   );
+
+  const { data: submitCount } = useSubmitCountQuery();
 
   const tabMenu = () => {
     const tabMenuList = [
@@ -138,7 +143,7 @@ function ChallengePage() {
   };
 
   return (
-    <div className="flex flex-col gap-10 w-2/3 py-10 m-auto sm:w-5/6">
+    <div className="flex flex-col gap-10 w-2/3 py-10 m-auto sm:w-5/6 sm:pb-10">
       <div className="flex justify-between sm:flex-col sm:gap-5">
         <div className="flex gap-5">
           <img
@@ -158,20 +163,25 @@ function ChallengePage() {
             </div>
           </div>
         </div>
-
-        <Link href={`/challenges/${challengeId}/write`}>
-          <button className="w-fit h-fit bg-[#5c3cde] hover:bg-[#4026ab] text-white font-bold py-2 px-4 rounded-lg focus:outline-none focus:shadow-outline cursor-pointer sm:w-full">
-            문제 작성
-          </button>
-        </Link>
+        <div className="flex flex-col gap-2 items-center">
+          <Link href={`/challenges/${challengeId}/write`}>
+            <button className="w-fit h-fit bg-[#5c3cde] hover:bg-[#4026ab] text-white font-bold py-2 px-4 rounded-lg focus:outline-none focus:shadow-outline cursor-pointer sm:w-full">
+              문제 작성
+            </button>
+          </Link>
+          <div className="flex items-center">
+            이번주{" "}
+            <Icon icon={`carbon:number-${submitCount}`} className="text-3xl" />
+          </div>
+        </div>
       </div>
       <div className="flex flex-col gap-5">
         <span className="flex items-center gap-2 text-lg">
-          현재 {currentWeek?.week} 주차 <Icon icon="mdi:run-fast" />
+          현재 {currentWeek} 주차 <Icon icon="mdi:run-fast" />
         </span>
         {currentWeek && (
           <ProgressBar
-            completed={currentWeek?.week}
+            completed={currentWeek}
             maxCompleted={challengeDetail?.totalWeeks}
             bgColor={"#5c3cde"}
             baseBgColor={"#f7f6fc"}
@@ -194,7 +204,7 @@ function ChallengePage() {
               {Math.floor(
                 ((missionCount("success") +
                   openWeek?.totalWeeks -
-                  currentWeek?.week) /
+                  currentWeek) /
                   openWeek.totalWeeks) *
                   100
               )}
@@ -215,7 +225,7 @@ function ChallengePage() {
             />
           </div>
 
-          <div className="flex flex-col gap-5  py-5 px-10 bg-white rounded-lg shadow-sm border-[1px] border-gray-300 ">
+          <div className="flex flex-col gap-5 py-5 px-10 bg-white rounded-lg shadow-sm border-[1px] border-gray-300">
             <div className="flex gap-10 w-1/3 text-gray-700 text-sm sm:w-full sm:gap-5">
               <div className="flex flex-col">
                 <span>미션 성공</span>
@@ -232,7 +242,7 @@ function ChallengePage() {
               <div className="flex flex-col">
                 <span>남은 미션</span>
                 <span className="text-lg font-semibold">
-                  {openWeek.totalWeeks - currentWeek.week}
+                  {openWeek.totalWeeks - currentWeek}
                 </span>{" "}
               </div>
             </div>
