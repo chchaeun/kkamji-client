@@ -86,7 +86,7 @@ function CommentContainer() {
     <div className="flex flex-col gap-5">
       <div className="flex flex-col gap-3">
         <div className="flex justify-between">
-          <h2 className="text-2xl">의견</h2>
+          <h2 className="text-xl">의견</h2>
           <button
             type="button"
             onClick={onCommentOpenClick}

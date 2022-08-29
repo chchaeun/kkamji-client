@@ -17,5 +17,9 @@ module.exports = {
       lg: { min: "1000px" },
     },
   },
-  plugins: [require("tailwind-scrollbar-hide"), require("tailwindcss-animate")],
+  plugins: [
+    require("tailwind-scrollbar-hide"),
+    require("tailwindcss-animate"),
+    require("tailwind-scrollbar"),
+  ],
 };

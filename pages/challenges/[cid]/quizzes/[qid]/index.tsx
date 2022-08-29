@@ -1,5 +1,7 @@
+import { Icon } from "@iconify/react";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { AxiosError } from "axios";
+import Link from "next/link";
 import { useRouter } from "next/router";
 import React, { useState } from "react";
 import { SubmitHandler, useForm } from "react-hook-form";
@@ -7,7 +9,7 @@ import { fetchQuizDetail } from "../../../../../api/quizzes/quiz-detail";
 import { updateQuizScore } from "../../../../../api/quizzes/quiz-grade";
 import { updateQuizIsSolved } from "../../../../../api/quizzes/quiz-solve";
 import { fetchQuizzes } from "../../../../../api/quizzes/quizzes";
-import CommentContainer from "../../../../../components/quiz/comment/comment-container";
+import CommentContainer from "../../../../../components/quizzes/comment/comment-container";
 import { classNames } from "../../../../../styles/classname-maker";
 import {
   QuizDetail,
@@ -26,6 +28,7 @@ function QuizDetailPage() {
   const queryClient = useQueryClient();
 
   const [rubricScore, setRubricScore] = useState<number>();
+  const [showToc, setShowToc] = useState(false);
 
   const {
     register: solveRegister,
@@ -141,15 +144,19 @@ function QuizDetailPage() {
     mutateQuizGrade(rubricScore);
   };
 
+  const onTocClick = () => {
+    setShowToc((prev) => !prev);
+  };
+
   return (
-    <div className="absolute top-0 w-full h-screen pt-32 px-20 sm:h-full sm:px-10 sm:mt-16 sm:pt-10">
-      <div className="grid grid-cols-2 gap-10 h-5/6 sm:flex sm:flex-col sm:h-fit">
-        <div className="h-full pr-4 pb-2 overflow-y-scroll">
+    <div className="absolute top-0 w-full h-screen pt-20 sm:h-full sm:mt-16 sm:pt-2">
+      <div className="flex gap-5 items-center py-5 px-20 text-gray-700 text-sm sm:px-10">
+        <h2 className="font-semibold text-2xl">{quizDetail?.quizTitle}</h2>
+        <span>작성자: {quizDetail?.writerName}</span>
+      </div>
+      <div className="grid grid-cols-2 gap-10 px-20 h-[79%] sm:flex sm:flex-col sm:h-fit sm:px-10">
+        <div className="h-full pr-10 pb-2 overflow-y-scroll scrollbar-thin scrollbar-thumb-gray-200 scrollbar-track-gray-100 sm:pr-0">
           <div className="flex flex-col gap-10">
-            <div className="flex justify-between items-center text-gray-700 text-sm">
-              <h2 className="text-2xl">{quizDetail?.quizTitle}</h2>
-              <span>작성자: {quizDetail?.writerName}</span>
-            </div>
             <p className="flex flex-col gap-5 justify-between p-5 bg-white rounded-lg shadow-sm border-[1px] border-gray-300">
               {quizDetail?.quizContent}{" "}
               {quizDetail?.quizFiles.map((quizFile) => (
@@ -157,13 +164,25 @@ function QuizDetailPage() {
               ))}
             </p>
 
-            {!quizDetail?.solveAnswer ? (
+            {quizDetail?.solveAnswer && (
+              <div className="flex flex-col gap-3">
+                <h2 className="text-xl">내 정답</h2>
+                <div className="p-5 bg-white rounded-lg shadow-sm border-[1px] border-gray-300">
+                  {quizDetail?.solveAnswer}
+                </div>
+              </div>
+            )}
+          </div>
+        </div>
+        <div className="h-full pr-10 overflow-y-scroll scrollbar-thin scrollbar-thumb-gray-200 scrollbar-track-gray-100 sm:pr-0 sm:pb-10">
+          <div className="flex flex-col gap-5">
+            {!quizDetail?.solveAnswer && (
               <form
                 onSubmit={handleSolveSubmit(onSolveValid)}
                 className="flex flex-col gap-8 pb-10 items-end"
               >
                 <div className="flex flex-col w-full gap-2">
-                  <label>
+                  <label className="text-xl">
                     정답 입력
                     <textarea
                       {...solveRegister("solve", { required: true })}
@@ -183,20 +202,9 @@ function QuizDetailPage() {
                   제출
                 </button>
               </form>
-            ) : (
-              <div className="flex flex-col gap-3">
-                <h2 className="text-2xl">내 정답</h2>
-                <div className="p-5 bg-white rounded-lg shadow-sm border-[1px] border-gray-300">
-                  {quizDetail?.solveAnswer}
-                </div>
-              </div>
             )}
-          </div>
-        </div>
-        <div className="h-full pr-4 overflow-y-scroll">
-          <div className="flex flex-col gap-5">
             <div className="flex justify-between">
-              <h2 className="text-2xl">정답</h2>
+              <h2 className="text-xl">정답</h2>
               <div className="flex gap-2">
                 {quizDetail?.isMine && (
                   <button
@@ -221,14 +229,14 @@ function QuizDetailPage() {
                   {quizDetail?.quizAnswer}
                 </p>
                 <div className="flex flex-col items-end gap-5">
-                  <div className="w-full flex flex-col gap-3 ">
-                    <h2 className="text-2xl">해설</h2>
+                  <div className="w-full flex flex-col gap-3">
+                    <h2 className="text-xl">해설</h2>
                     <div className="p-5 bg-white rounded-lg shadow-sm border-[1px] border-gray-300">
                       {quizDetail?.quizExplanation}
                     </div>
                   </div>
                   <div className="w-full flex flex-col gap-3 items-end">
-                    <h2 className="w-full text-2xl">채점</h2>
+                    <h2 className="w-full text-xl">채점</h2>
                     {quizDetail?.quizRubric?.map((rubric, index) => (
                       <div
                         key={index}
@@ -265,30 +273,65 @@ function QuizDetailPage() {
           </div>
         </div>
       </div>
-      <div className="flex justify-between pt-5 sm:justify-end sm:gap-3 sm:pr-5 sm:w-full sm:bg-white sm:fixed sm:bottom-0 sm:right-0">
+      <div className="sticky flex items-center justify-between gap-3 w-full left-0 bottom-0 p-3 border-t-[1px] bg-white z-10">
         <button
-          onClick={() => onMoveQuizClick("prev")}
-          className={classNames(
-            isDisabled("prev")
-              ? "bg-gray-200 text-gray-700 cursor-default"
-              : "bg-[#5c3cde] hover:bg-[#4026ab] text-white font-bold focus:outline-none focus:shadow-outline cursor-pointer",
-            "py-2 px-4 mb-4 rounded"
-          )}
+          type="button"
+          onClick={onTocClick}
+          className="py-2 px-4 rounded bg-gray-100 text-gray-700 cursor-pointer"
         >
-          이전
+          문제 목록
         </button>
-        <button
-          onClick={() => onMoveQuizClick("next")}
-          className={classNames(
-            isDisabled("next")
-              ? "bg-gray-200 text-gray-700 cursor-default"
-              : "bg-[#5c3cde] hover:bg-[#4026ab] text-white font-bold focus:outline-none focus:shadow-outline cursor-pointer",
-            "py-2 px-4 mb-4 rounded"
-          )}
-        >
-          다음
-        </button>
+        <div className="flex gap-2">
+          <button
+            onClick={() => onMoveQuizClick("prev")}
+            className={classNames(
+              isDisabled("prev")
+                ? "bg-gray-100 text-gray-700 cursor-default"
+                : "bg-[#5c3cde] hover:bg-[#4026ab] text-white font-bold focus:outline-none focus:shadow-outline cursor-pointer",
+              "py-2 px-4 rounded"
+            )}
+          >
+            이전
+          </button>
+          <button
+            onClick={() => onMoveQuizClick("next")}
+            className={classNames(
+              isDisabled("next")
+                ? "bg-gray-200 text-gray-700 cursor-default"
+                : "bg-[#5c3cde] hover:bg-[#4026ab] text-white font-bold focus:outline-none focus:shadow-outline cursor-pointer",
+              "py-2 px-4 rounded"
+            )}
+          >
+            다음
+          </button>
+        </div>
       </div>
+      {showToc && (
+        <div className="absolute left-0 top-0 flex flex-col gap-5 w-1/4 h-full py-32 px-10 bg-white shadow-sm border-[1px] border-gray-300 sm:w-[80%] sm:py-10 animate-in slide-in-from-left-10 duration-200">
+          <h2 className="font-semibold text-xl">
+            {quizDetail?.quizWeek}주차 문제 목록
+          </h2>
+          <ul className="flex flex-col gap-1">
+            {quizzes?.map((quiz) => (
+              <li
+                key={quiz.quizId}
+                className={classNames(
+                  String(quiz.quizId) === quizId
+                    ? "text-lg font-semibold text-[#5c3cde]"
+                    : ""
+                )}
+                onClick={() => setShowToc(false)}
+              >
+                <Link
+                  href={`/challenges/${challengeId}/quizzes/${quiz.quizId}`}
+                >
+                  {quiz.quizTitle}
+                </Link>
+              </li>
+            ))}
+          </ul>
+        </div>
+      )}
     </div>
   );
 }

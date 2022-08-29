@@ -5,7 +5,7 @@ interface Props {
   challengeId: string;
 }
 
-export const fetchOpenWeek = async ({ challengeId }: Props) => {
+export const fetchOpenWeeks = async ({ challengeId }: Props) => {
   api.defaults.headers.common["code"] = getCode();
 
   const { data } = await api.get(`/challenges/${challengeId}/weeks`);

@@ -26,7 +26,7 @@ export interface CurrentWeek {
   now: string;
 }
 
-export interface OpenWeek {
+export interface OpenWeeks {
   challengeId: number;
   totalWeeks: number;
   weeks: boolean[];

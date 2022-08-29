@@ -6,7 +6,7 @@ import { useRouter } from "next/router";
 import React from "react";
 import { fetchQuizbooks, IQuizbook } from "../../../api/quizbooks/quizbooks";
 import SideNav from "../../../components/layout/side-nav";
-import Quizbook from "../../../components/quiz/quizbook";
+import Quizbook from "../../../components/quizzes/quizbook";
 import { getCode } from "../../../api/session-code";
 import { fetchChapters } from "../../../api/chapters/chapters";
 import { fetchChapterDetail } from "../../../api/chapters/chapter-detail";
