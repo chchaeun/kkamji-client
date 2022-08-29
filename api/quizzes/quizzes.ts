@@ -2,14 +2,6 @@ import api from "../my-api";
 import { getCode } from "../session-code";
 import { IFetchQuizbook } from "../fetch-types";
 
-export interface IQuizSummary {
-  quizId: number;
-  quizTitle: string;
-  quizCategory: string;
-  isQuizSolved: boolean;
-  quizNumber: number;
-}
-
 export const fetchQuizzes = async (idData: IFetchQuizbook) => {
   const { chapterId, quizbookId } = idData;
 

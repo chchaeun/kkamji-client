@@ -8,7 +8,14 @@
   font-weight: normal;
   font-style: normal;
 }
-
+@font-face {
+  font-family: "NanumSquareRound";
+  src: url("https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_two@1.0/NanumSquareRound.woff")
+    format("woff");
+  font-weight: normal;
+  font-style: normal;
+}
+@import url("https://fonts.googleapis.com/css2?family=Nanum+Gothic:wght@400;700;800&display=swap");
 html,
 body {
   padding: 0;
@@ -22,6 +29,57 @@ a {
   text-decoration: none;
 }
 
-* {
+div,
+h1,
+h2,
+h3,
+h4,
+h5,
+h6,
+p,
+span,
+li,
+ul,
+a,
+button {
   box-sizing: border-box;
+  font-family: "Nanum Gothic", sans-serif;
+}
+
+.logo {
+  font-family: "HSSummer" !important;
+}
+
+.swiper {
+  height: 100%;
+}
+
+.swiper-button-next {
+  background: url("https://api.iconify.design/ant-design/right-circle-filled.svg?color=white")
+    no-repeat center center / contain;
+  background-position: center;
+}
+
+.swiper-button-prev {
+  background: url("https://api.iconify.design/ant-design/left-circle-filled.svg?color=white")
+    no-repeat center center / contain;
+  background-position: center;
+}
+
+.swiper-button-next::after,
+.swiper-button-prev::after {
+  display: none;
+}
+.swiper-pagination-bullet {
+  background: #ffffff !important;
+}
+
+.notion-page-header,
+.notion-page-cover,
+.notion-emoji,
+.notion-title {
+  display: none !important;
+}
+.notion-quote {
+  font-size: medium !important;
 }

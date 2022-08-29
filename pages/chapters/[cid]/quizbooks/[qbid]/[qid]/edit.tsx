@@ -4,26 +4,15 @@ import { useRouter } from "next/router";
 import React from "react";
 import { SubmitHandler, useForm } from "react-hook-form";
 import api from "../../../../../../api/my-api";
-import {
-  fetchQuizAnswer,
-  IQuizAnswer,
-} from "../../../../../../api/quizzes/quiz-answer";
-import {
-  fetchQuizDetail,
-  IQuizDetail,
-} from "../../../../../../api/quizzes/quiz-detail";
+import { fetchQuizAnswer } from "../../../../../../api/quizzes/quiz-answer";
+import { fetchQuizDetail } from "../../../../../../api/quizzes/quiz-detail";
+import { QuizAnswer, QuizDetail, QuizEdit } from "../../../../../../types/Quiz";
 
 type EditValidForm = {
   answer: string;
   explanation: string;
   source: string;
 };
-
-interface QuizEdit {
-  quizAnswer: string;
-  quizExplanation: string;
-  quizSource: string;
-}
 
 function QuizAnswerEdit() {
   const router = useRouter();
@@ -41,14 +30,14 @@ function QuizAnswerEdit() {
     data: quizDetail,
     error,
     isLoading,
-  } = useQuery<IQuizDetail, AxiosError>(
+  } = useQuery<QuizDetail, AxiosError>(
     ["quizDetail", quizId],
     () => fetchQuizDetail({ chapterId, quizbookId, quizId }),
     {
       enabled: !!router.query.qid,
     }
   );
-  const { data: quizAnswer } = useQuery<IQuizAnswer>(
+  const { data: quizAnswer } = useQuery<QuizAnswer>(
     ["quizAnswer", quizId],
     () => fetchQuizAnswer({ chapterId, quizbookId, quizId }),
     {
@@ -87,7 +76,7 @@ function QuizAnswerEdit() {
     );
   }
   return (
-    <div className="grid grid-cols-5 gap-4 w-full lg:mt-20 m-auto sm:flex sm:flex-col sm:px-10">
+    <div className="grid grid-cols-5 gap-4 w-full lg:mt-10 m-auto sm:flex sm:flex-col sm:px-10">
       <div className="col-start-2 col-span-3 flex flex-col gap-8 py-10 sm:h-screen sm:justify-between sm:py-20">
         <div className="flex flex-col gap-5">
           <h2 className="text-2xl">{quizDetail?.quizTitle}</h2>

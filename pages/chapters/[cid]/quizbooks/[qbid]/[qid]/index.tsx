@@ -2,27 +2,23 @@ import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { AxiosError } from "axios";
 import { useRouter } from "next/router";
 import React, { useEffect, useState } from "react";
-import {
-  fetchQuizAnswer,
-  IQuizAnswer,
-} from "../../../../../../api/quizzes/quiz-answer";
-import {
-  fetchQuizDetail,
-  IQuizDetail,
-} from "../../../../../../api/quizzes/quiz-detail";
+import { fetchQuizAnswer } from "../../../../../../api/quizzes/quiz-answer";
+import { fetchQuizDetail } from "../../../../../../api/quizzes/quiz-detail";
 import { updateQuizIsSolved } from "../../../../../../api/quizzes/quiz-solve";
 import { IFetchQuiz } from "../../../../../../api/fetch-types";
 import SideNav from "../../../../../../components/layout/side-nav";
 import CommentContainer from "../../../../../../components/quiz/comment/comment-container";
 import { classNames } from "../../../../../../styles/classname-maker";
-import {
-  fetchQuizzes,
-  IQuizSummary,
-} from "../../../../../../api/quizzes/quizzes";
+import { fetchQuizzes } from "../../../../../../api/quizzes/quizzes";
 import {
   fetchQuizbookDetail,
   IQuizbookDetail,
 } from "../../../../../../api/quizbooks/quizbook-detail";
+import {
+  QuizAnswer,
+  QuizDetail,
+  QuizSummary,
+} from "../../../../../../types/Quiz";
 
 interface INavElements {
   link: string;
@@ -56,7 +52,7 @@ function QuizDetailPage() {
       },
     }
   );
-  const { data: quizzes } = useQuery<IQuizSummary[]>(
+  const { data: quizzes } = useQuery<QuizSummary[]>(
     ["quizzes", chapterId, quizbookId],
     () => fetchQuizzes({ chapterId, quizbookId }),
     {
@@ -75,7 +71,7 @@ function QuizDetailPage() {
     }
   );
 
-  const { data: quizDetail, error } = useQuery<IQuizDetail, AxiosError>(
+  const { data: quizDetail, error } = useQuery<QuizDetail, AxiosError>(
     ["quizDetail", quizId],
     () => fetchQuizDetail({ chapterId, quizbookId, quizId }),
     {
@@ -83,7 +79,7 @@ function QuizDetailPage() {
     }
   );
 
-  const { data: quizAnswer } = useQuery<IQuizAnswer>(
+  const { data: quizAnswer } = useQuery<QuizAnswer>(
     ["quizAnswer", quizId],
     () => fetchQuizAnswer({ chapterId, quizbookId, quizId }),
     {
@@ -169,7 +165,7 @@ function QuizDetailPage() {
   };
 
   return (
-    <div className="grid grid-cols-5 gap-4 w-full lg:mt-20 m-auto sm:flex sm:flex-col sm:px-10">
+    <div className="grid grid-cols-5 gap-4 w-full lg:mt-10 m-auto sm:flex sm:flex-col sm:px-10">
       <div
         onClick={() => setShowAnswer(false)}
         className="col-start-1 flex justify-center mt-10 sm:mt-0"

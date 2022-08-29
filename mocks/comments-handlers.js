@@ -42,7 +42,7 @@ const comments = [
   },
 ];
 
-export const handlers = [
+export const commentsHandlers = [
   rest.get(`${BASE_URL}/quizzes/:qid/comments`, (req, res, ctx) => {
     console.log(comments);
     return res(ctx.status(200), ctx.json(comments));

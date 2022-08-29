@@ -153,6 +153,9 @@ function CommentContainer() {
                 </span>
               ))}
             </p>
+            <span className="text-sm text-gray-600">
+              {getDateFormat(comment.createdDate)}
+            </span>
           </div>
         ))}
       </div>

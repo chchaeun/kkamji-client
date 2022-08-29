@@ -8,10 +8,11 @@ import { fetchQuizbooks, IQuizbook } from "../../../api/quizbooks/quizbooks";
 import SideNav from "../../../components/layout/side-nav";
 import Quizbook from "../../../components/quiz/quizbook";
 import { getCode } from "../../../api/session-code";
-import { fetchChapters, IChapter } from "../../../api/chapters/chapters";
+import { fetchChapters } from "../../../api/chapters/chapters";
 import { fetchChapterDetail } from "../../../api/chapters/chapter-detail";
+import { Chapter } from "../../../types/Chapter";
 
-const Home: NextPage = () => {
+const ChapterPage: NextPage = () => {
   const router = useRouter();
   const chapterId = String(router.query.cid);
 
@@ -19,7 +20,7 @@ const Home: NextPage = () => {
   const [navElements, setNavElements] =
     useState<{ name: string; link: string; isReadable: boolean }[]>();
 
-  const { data: chapters } = useQuery<IChapter[]>(["chapters"], fetchChapters, {
+  const { data: chapters } = useQuery<Chapter[]>(["chapters"], fetchChapters, {
     onSuccess: (chapters) => {
       const tempElements = chapters.map((chapter) => {
         return {
@@ -35,7 +36,7 @@ const Home: NextPage = () => {
     },
   });
 
-  const { data: chapterDetail } = useQuery<IChapter>(
+  const { data: chapterDetail } = useQuery<Chapter>(
     ["chapterDetail", chapterId],
     () => fetchChapterDetail({ chapterId }),
     {
@@ -92,4 +93,4 @@ const Home: NextPage = () => {
   );
 };
 
-export default Home;
+export default ChapterPage;
