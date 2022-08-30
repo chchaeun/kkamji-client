@@ -2,11 +2,11 @@ import React, { Fragment, useRef, useState } from "react";
 import { SubmitHandler, useFieldArray, useForm } from "react-hook-form";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { useRouter } from "next/router";
-import SubmitSuccessModal from "../../../components/quiz/submit/submit-success-modal";
+import SubmitSuccessModal from "../../../components/quizzes/submit/submit-success-modal";
 import Overlay from "../../../components/layout/overlay";
 import { updateQuiz } from "../../../api/submit-quiz/update-quiz";
 import { fetchSubmitCount } from "../../../api/submit-quiz/submit-count";
-import SubmitCount from "../../../components/quiz/submit/submit-count";
+import SubmitCount from "../../../components/quizzes/submit/submit-count";
 import useCurrentWeekQuery from "../../../hooks/current-week-query";
 import { Icon } from "@iconify/react";
 import useSubmitCountQuery from "../../../hooks/submit-count-query";
@@ -67,7 +67,7 @@ function QuizWritePage() {
 
   const { data: currentWeek } = useCurrentWeekQuery();
   const { data: submitCount } = useSubmitCountQuery();
-  console.log(submitCount);
+
   const { data: quizSubmitCount } = useQuery<{ currentSubmit: number }>(
     ["quizSubmitCount"],
     () => fetchSubmitCount({ challengeId, week: currentWeek || 0 }),
@@ -250,7 +250,9 @@ function QuizWritePage() {
           <Overlay onClick={onCloseClick} />
         </Fragment>
       )}
-      <SubmitCount />
+      {submitCount && currentWeek && (
+        <SubmitCount submitCount={submitCount} currentWeek={currentWeek} />
+      )}
     </div>
   );
 }
