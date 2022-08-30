@@ -48,7 +48,7 @@ function MobileNav() {
             },
             {
               name: "MY",
-              link: `/chapters/${currentChapter.currentChapterId}`,
+              link: `/dashboard`,
             }
           );
         }
@@ -75,7 +75,7 @@ function MobileNav() {
             key={index}
             className={classNames(
               router.pathname === element.link
-                ? "font-bold text-black"
+                ? "font-semibold text-black"
                 : "text-gray-500"
             )}
           >

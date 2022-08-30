@@ -3,10 +3,9 @@ import axios, { AxiosError } from "axios";
 import { useRouter } from "next/router";
 import React from "react";
 import { SubmitHandler, useForm } from "react-hook-form";
-import api from "../../../../../../api/my-api";
-import { fetchQuizAnswer } from "../../../../../../api/quizzes/quiz-answer";
-import { fetchQuizDetail } from "../../../../../../api/quizzes/quiz-detail";
-import { QuizAnswer, QuizDetail, QuizEdit } from "../../../../../../types/Quiz";
+import api from "../../../../../api/my-api";
+import { fetchQuizDetail } from "../../../../../api/quizzes/quiz-detail";
+import { QuizDetail, QuizEdit } from "../../../../../types/Quiz";
 
 type EditValidForm = {
   answer: string;
@@ -23,25 +22,18 @@ function QuizAnswerEdit() {
   const {
     register,
     handleSubmit,
-    watch,
     formState: { errors },
   } = useForm<EditValidForm>();
+
   const {
     data: quizDetail,
     error,
     isLoading,
   } = useQuery<QuizDetail, AxiosError>(
     ["quizDetail", quizId],
-    () => fetchQuizDetail({ chapterId, quizbookId, quizId }),
+    () => fetchQuizDetail({ quizId }),
     {
-      enabled: !!router.query.qid,
-    }
-  );
-  const { data: quizAnswer } = useQuery<QuizAnswer>(
-    ["quizAnswer", quizId],
-    () => fetchQuizAnswer({ chapterId, quizbookId, quizId }),
-    {
-      enabled: !!router.query.qid,
+      enabled: !!quizId,
     }
   );
 
@@ -56,8 +48,11 @@ function QuizAnswerEdit() {
     }
   );
 
-  const onEditValid: SubmitHandler<EditValidForm> = (data) => {
-    const { answer, explanation, source } = data;
+  const onEditValid: SubmitHandler<EditValidForm> = ({
+    answer,
+    explanation,
+    source,
+  }) => {
     const editBody = {
       quizAnswer: answer,
       quizExplanation: explanation,
@@ -82,16 +77,6 @@ function QuizAnswerEdit() {
           <h2 className="text-2xl">{quizDetail?.quizTitle}</h2>
           <p className="flex flex-col gap-5 justify-between bg-white p-5 drop-shadow-md">
             {quizDetail?.quizContent}
-            {quizDetail?.files.map((file, index) => (
-              <img
-                key={index}
-                src={`http://drive.google.com/uc?export=download&id=${
-                  file.filePath.split("?id=")[1]
-                }`}
-                width="300"
-                alt={file.fileName}
-              />
-            ))}
           </p>
         </div>
 
@@ -104,7 +89,7 @@ function QuizAnswerEdit() {
               정답을 입력하세요.
               <textarea
                 {...register("answer", { required: true })}
-                defaultValue={quizAnswer?.quizAnswer}
+                defaultValue={quizDetail?.quizAnswer}
                 className="shadow appearance-none border rounded w-full mt-2 py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
               />
             </label>
@@ -118,7 +103,7 @@ function QuizAnswerEdit() {
               <textarea
                 rows={5}
                 {...register("explanation", { required: true })}
-                defaultValue={quizAnswer?.quizExplanation}
+                defaultValue={quizDetail?.quizExplanation}
                 className="shadow appearance-none border rounded w-full mt-2 py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
               />
             </label>
@@ -132,7 +117,7 @@ function QuizAnswerEdit() {
               <span>* 예: 공학과컴퓨터2 교재 10p 3번째 줄</span>
               <textarea
                 {...register("source")}
-                defaultValue={quizAnswer?.quizSource}
+                defaultValue={quizDetail?.quizSource}
                 className="shadow appearance-none border rounded w-full mt-2 py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
               />
             </label>

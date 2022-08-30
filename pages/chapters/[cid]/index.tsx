@@ -73,7 +73,7 @@ const ChapterPage: NextPage = () => {
   };
 
   return (
-    <div className="grid grid-cols-5 gap-4 w-full lg:mt-20 m-auto sm:flex sm:flex-col">
+    <div className="grid grid-cols-5 gap-4 w-full lg:mt-10 m-auto sm:flex sm:flex-col">
       <div className="col-start-1 flex flex-col items-center mt-10 sm:mt-0">
         {navElements && <SideNav props={{ navTitle, navElements }} />}
       </div>

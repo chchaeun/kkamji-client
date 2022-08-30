@@ -27,6 +27,7 @@ export interface CurrentWeek {
 }
 
 export interface OpenWeek {
-  week: number;
-  isReadable: boolean;
+  challengeId: number;
+  totalWeeks: number;
+  weeks: boolean[];
 }

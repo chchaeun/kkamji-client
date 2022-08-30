@@ -20,7 +20,8 @@
     "**/*.ts",
     "**/*.tsx",
     "mocks/comment-handlers.js",
-    "mocks/challenges-handlers.js"
+    "mocks/challenges-handlers.js",
+    "mocks/quizzes-handlers.js"
   ],
   "exclude": ["node_modules"]
 }

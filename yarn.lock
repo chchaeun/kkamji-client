@@ -2345,6 +2345,16 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@ramonak/react-progress-bar@npm:^5.0.2":
+  version: 5.0.2
+  resolution: "@ramonak/react-progress-bar@npm:5.0.2"
+  peerDependencies:
+    react: ^16.0.0 || ^17 || ^18
+    react-dom: ^16.0.0 || ^17 || ^18
+  checksum: cfc9b0f0b3beabb00e1ef24342ffca95b16a8cb33203a0fcef86c2122cd7f2bac1d70b235264ff151c087f480b998944fbac0ed997de62d21eda79cf57293a81
+  languageName: node
+  linkType: hard
+
 "@rollup/plugin-babel@npm:^5.2.0":
   version: 5.3.1
   resolution: "@rollup/plugin-babel@npm:5.3.1"
@@ -8566,6 +8576,7 @@ __metadata:
   resolution: "soma-project@workspace:."
   dependencies:
     "@iconify/react": ^3.2.2
+    "@ramonak/react-progress-bar": ^5.0.2
     "@tanstack/react-query": ^4.0.10
     "@tanstack/react-query-devtools": ^4.0.10
     "@types/gtag.js": ^0.0.10
@@ -8589,6 +8600,7 @@ __metadata:
     next-images: ^1.8.4
     next-pwa: ^5.5.4
     postcss: ^8.4.14
+    prop-types: ^15.8.1
     react: ^18.2.0
     react-dom: 18.2.0
     react-hook-form: ^7.33.1

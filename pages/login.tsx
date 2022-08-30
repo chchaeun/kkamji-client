@@ -16,7 +16,7 @@ function Login() {
 
   const { mutate: mutateLogin } = useMutation(
     async (loginBody: LoginValidForm) => {
-      return await api.post("/login", loginBody);
+      return await api.post("/user/login", loginBody);
     },
     {
       onSuccess: () => {
