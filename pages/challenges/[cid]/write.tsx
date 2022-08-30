@@ -68,13 +68,6 @@ function QuizWritePage() {
   const { data: currentWeek } = useCurrentWeekQuery();
   const { data: submitCount } = useSubmitCountQuery();
 
-  const { data: quizSubmitCount } = useQuery<{ currentSubmit: number }>(
-    ["quizSubmitCount"],
-    () => fetchSubmitCount({ challengeId, week: currentWeek || 0 }),
-    {
-      enabled: !!(challengeId && currentWeek),
-    }
-  );
   const onQuizSubmitValid: SubmitHandler<QuizValidForm> = async ({
     title,
     content,
@@ -106,7 +99,8 @@ function QuizWritePage() {
   };
 
   return (
-    <div className="grid grid-cols-5 gap-4 w-full h-full m-auto sm:flex sm:flex-col sm:py-10">
+    <div className="grid grid-cols-5 gap-4 w-full h-full m-auto sm:flex sm:flex-col-reverse sm:py-10">
+      {currentWeek && <SubmitCount currentWeek={currentWeek} />}
       <div className="col-start-2 col-span-3 flex flex-col gap-10 sm:gap-7 sm:w-4/5 h-full bg-white py-10 px-20 sm:m-auto sm:px-0 sm:pt-0">
         <h1 className="text-2xl">문제 제출</h1>
         <form
@@ -242,16 +236,11 @@ function QuizWritePage() {
           </button>
         </form>
       </div>
-      {submitSuccessModalOpen && quizSubmitCount?.currentSubmit && (
+      {submitSuccessModalOpen && submitCount && (
         <Fragment>
-          <SubmitSuccessModal
-            quizSubmitCount={quizSubmitCount?.currentSubmit}
-          />
+          {currentWeek && <SubmitSuccessModal week={currentWeek} />}
           <Overlay onClick={onCloseClick} />
         </Fragment>
-      )}
-      {submitCount && currentWeek && (
-        <SubmitCount submitCount={submitCount} currentWeek={currentWeek} />
       )}
     </div>
   );
