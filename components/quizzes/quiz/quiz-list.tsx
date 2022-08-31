@@ -22,7 +22,9 @@ function QuizList({ quizzes }: Props) {
       <div className="flex flex-col gap-3">
         {quizzes?.map((quiz) => (
           <Link
-            href={`/challenges/${challengeId}/quizzes/${quiz.quizId}`}
+            href={`${router.asPath.split("?week=")[0]}/${quiz.quizId}/?week=${
+              router.asPath.split("?week=")[1]
+            }`}
             key={quiz.quizId}
           >
             <div className="grid grid-cols-7 sm:grid-cols-4">

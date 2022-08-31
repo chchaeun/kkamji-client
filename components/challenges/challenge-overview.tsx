@@ -1,24 +1,34 @@
 import React from "react";
-import { Challenge } from "../../types/Challenge";
+import useChallengeDetailQuery from "../../hooks/challenge-detail-query";
 interface Props {
-  challengeDetail: Challenge;
+  challengeId: string;
 }
-function ChallengeOverview({ challengeDetail }: Props) {
-  const { imageUrl, title, university, department, professorName } =
-    challengeDetail;
+function ChallengeOverview({ challengeId }: Props) {
+  const { data: challengeDetail } = useChallengeDetailQuery({ challengeId });
+
   return (
-    <div className="flex gap-5">
-      <img src={imageUrl} width={200} className="rounded-xl sm:w-1/3" />
-      <div className="flex flex-col gap-3">
-        <h1 className="text-2xl">{title}</h1>
-        <div className="flex flex-col">
-          <span className="text-gray-700">
-            {university} {department}
-          </span>
-          <span className="text-gray-700">{professorName} 교수님</span>
+    <>
+      {challengeDetail && (
+        <div className="flex gap-5">
+          <img
+            src={challengeDetail.imageUrl}
+            width={200}
+            className="rounded-xl sm:w-1/3"
+          />
+          <div className="flex flex-col gap-3">
+            <h1 className="text-2xl">{challengeDetail.title}</h1>
+            <div className="flex flex-col">
+              <span className="text-gray-700">
+                {challengeDetail.university} {challengeDetail.department}
+              </span>
+              <span className="text-gray-700">
+                {challengeDetail.professorName} 교수님
+              </span>
+            </div>
+          </div>
         </div>
-      </div>
-    </div>
+      )}
+    </>
   );
 }
 

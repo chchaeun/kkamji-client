@@ -29,5 +29,5 @@ export interface CurrentWeek {
 export interface OpenWeeks {
   challengeId: number;
   totalWeeks: number;
-  weeks: boolean[];
+  weeks: { week: number; status: string }[];
 }
