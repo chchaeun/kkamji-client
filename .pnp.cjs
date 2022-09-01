@@ -62,6 +62,7 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["prop-types", "npm:15.8.1"],\
             ["react", "npm:18.2.0"],\
             ["react-dom", "virtual:1ca3d45661282aa6e2c01a90bb2bde2c1af70673e4a578116428a2af70aff6d82b1728295f748f195ecea8e57b31ba96a8112edcc0dc7d20b416549af71a1795#npm:18.2.0"],\
+            ["react-error-boundary", "virtual:1ca3d45661282aa6e2c01a90bb2bde2c1af70673e4a578116428a2af70aff6d82b1728295f748f195ecea8e57b31ba96a8112edcc0dc7d20b416549af71a1795#npm:3.1.4"],\
             ["react-hook-form", "virtual:1ca3d45661282aa6e2c01a90bb2bde2c1af70673e4a578116428a2af70aff6d82b1728295f748f195ecea8e57b31ba96a8112edcc0dc7d20b416549af71a1795#npm:7.33.1"],\
             ["react-icons", "virtual:1ca3d45661282aa6e2c01a90bb2bde2c1af70673e4a578116428a2af70aff6d82b1728295f748f195ecea8e57b31ba96a8112edcc0dc7d20b416549af71a1795#npm:4.4.0"],\
             ["react-notion", "virtual:1ca3d45661282aa6e2c01a90bb2bde2c1af70673e4a578116428a2af70aff6d82b1728295f748f195ecea8e57b31ba96a8112edcc0dc7d20b416549af71a1795#npm:0.10.0"],\
@@ -11459,6 +11460,29 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
           "linkType": "HARD"\
         }]\
       ]],\
+      ["react-error-boundary", [\
+        ["npm:3.1.4", {\
+          "packageLocation": "./.yarn/cache/react-error-boundary-npm-3.1.4-2310dba89e-f36270a5d7.zip/node_modules/react-error-boundary/",\
+          "packageDependencies": [\
+            ["react-error-boundary", "npm:3.1.4"]\
+          ],\
+          "linkType": "SOFT"\
+        }],\
+        ["virtual:1ca3d45661282aa6e2c01a90bb2bde2c1af70673e4a578116428a2af70aff6d82b1728295f748f195ecea8e57b31ba96a8112edcc0dc7d20b416549af71a1795#npm:3.1.4", {\
+          "packageLocation": "./.yarn/__virtual__/react-error-boundary-virtual-eb9510dada/0/cache/react-error-boundary-npm-3.1.4-2310dba89e-f36270a5d7.zip/node_modules/react-error-boundary/",\
+          "packageDependencies": [\
+            ["react-error-boundary", "virtual:1ca3d45661282aa6e2c01a90bb2bde2c1af70673e4a578116428a2af70aff6d82b1728295f748f195ecea8e57b31ba96a8112edcc0dc7d20b416549af71a1795#npm:3.1.4"],\
+            ["@babel/runtime", "npm:7.18.9"],\
+            ["@types/react", "npm:18.0.15"],\
+            ["react", "npm:18.2.0"]\
+          ],\
+          "packagePeers": [\
+            "@types/react",\
+            "react"\
+          ],\
+          "linkType": "HARD"\
+        }]\
+      ]],\
       ["react-hook-form", [\
         ["npm:7.33.1", {\
           "packageLocation": "./.yarn/cache/react-hook-form-npm-7.33.1-f1c46322f4-ec8f938b5a.zip/node_modules/react-hook-form/",\
@@ -12316,6 +12340,7 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["prop-types", "npm:15.8.1"],\
             ["react", "npm:18.2.0"],\
             ["react-dom", "virtual:1ca3d45661282aa6e2c01a90bb2bde2c1af70673e4a578116428a2af70aff6d82b1728295f748f195ecea8e57b31ba96a8112edcc0dc7d20b416549af71a1795#npm:18.2.0"],\
+            ["react-error-boundary", "virtual:1ca3d45661282aa6e2c01a90bb2bde2c1af70673e4a578116428a2af70aff6d82b1728295f748f195ecea8e57b31ba96a8112edcc0dc7d20b416549af71a1795#npm:3.1.4"],\
             ["react-hook-form", "virtual:1ca3d45661282aa6e2c01a90bb2bde2c1af70673e4a578116428a2af70aff6d82b1728295f748f195ecea8e57b31ba96a8112edcc0dc7d20b416549af71a1795#npm:7.33.1"],\
             ["react-icons", "virtual:1ca3d45661282aa6e2c01a90bb2bde2c1af70673e4a578116428a2af70aff6d82b1728295f748f195ecea8e57b31ba96a8112edcc0dc7d20b416549af71a1795#npm:4.4.0"],\
             ["react-notion", "virtual:1ca3d45661282aa6e2c01a90bb2bde2c1af70673e4a578116428a2af70aff6d82b1728295f748f195ecea8e57b31ba96a8112edcc0dc7d20b416549af71a1795#npm:0.10.0"],\
