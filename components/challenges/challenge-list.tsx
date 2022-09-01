@@ -1,6 +1,5 @@
 import Link from "next/link";
 import React from "react";
-import useCurrentWeekQuery from "../../hooks/current-week-query";
 import { Challenge } from "../../types/Challenge";
 
 interface Props {
@@ -8,15 +7,6 @@ interface Props {
 }
 
 function ChallengeList({ challenges }: Props) {
-  const { data: currentWeek } = useCurrentWeekQuery();
-
-  const getPercentage = (totalWeeks: number) => {
-    if (!currentWeek) {
-      return;
-    }
-    return Math.floor((currentWeek / totalWeeks) * 100);
-  };
-
   return (
     <div className="grid grid-cols-3 gap-10 sm:flex sm:flex-col">
       {challenges?.map((challenge) => (
@@ -35,9 +25,6 @@ function ChallengeList({ challenges }: Props) {
                 <div className="text-gray-700">
                   {challenge.professorName} 교수님
                 </div>
-              </div>
-              <div className="text-sm text-gray-700">
-                진행률 {getPercentage(challenge.totalWeeks)}%
               </div>
             </div>
           </div>

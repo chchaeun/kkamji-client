@@ -21,5 +21,16 @@ module.exports = {
     require("tailwind-scrollbar-hide"),
     require("tailwindcss-animate"),
     require("tailwind-scrollbar"),
+    require("daisyui"),
   ],
+  daisyui: {
+    themes: [
+      {
+        mytheme: {
+          primary: "#5c3cde",
+          secondary: "#ebebeb",
+        },
+      },
+    ],
+  },
 };

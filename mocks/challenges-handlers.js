@@ -155,7 +155,23 @@ const challengeDetail = {
 const challengesOpenWeeks = {
   challengeId: 0,
   totalWeeks: 15,
-  weeks: [true, false, true, true],
+  weeks: [
+    { week: 1, status: "success" },
+    { week: 2, status: "fail" },
+    { week: 3, status: "success" },
+    { week: 4, status: "success" },
+    { week: 5, status: "close" },
+    { week: 6, status: "close" },
+    { week: 7, status: "close" },
+    { week: 8, status: "close" },
+    { week: 9, status: "close" },
+    { week: 10, status: "close" },
+    { week: 11, status: "close" },
+    { week: 12, status: "close" },
+    { week: 13, status: "close" },
+    { week: 14, status: "close" },
+    { week: 15, status: "close" },
+  ],
 };
 
 export const challengesHandlers = [

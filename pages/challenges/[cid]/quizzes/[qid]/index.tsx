@@ -24,7 +24,7 @@ function QuizDetailPage() {
   const router = useRouter();
   const challengeId = String(router.query.cid);
   const quizId = String(router.query.qid);
-
+  const week = String(router.query.week);
   const queryClient = useQueryClient();
 
   const [rubricScore, setRubricScore] = useState<number>();
@@ -48,7 +48,7 @@ function QuizDetailPage() {
   });
   const { data: quizzes } = useQuery<QuizSummary[]>(
     ["quizzes", challengeId],
-    () => fetchQuizzes({ challengeId, week: quizDetail?.quizWeek || 0 }),
+    () => fetchQuizzes({ challengeId, week }),
     {
       enabled: !!(challengeId && quizDetail),
     }
@@ -308,9 +308,7 @@ function QuizDetailPage() {
       </div>
       {showToc && (
         <div className="absolute left-0 top-0 flex flex-col gap-5 w-1/4 h-full py-32 px-10 bg-white shadow-sm border-[1px] border-gray-300 sm:w-[80%] sm:py-10 animate-in slide-in-from-left-10 duration-200">
-          <h2 className="font-semibold text-xl">
-            {quizDetail?.quizWeek}주차 문제 목록
-          </h2>
+          <h2 className="font-semibold text-xl">문제 목록</h2>
           <ul className="flex flex-col gap-1">
             {quizzes?.map((quiz) => (
               <li
@@ -318,7 +316,8 @@ function QuizDetailPage() {
                 className={classNames(
                   String(quiz.quizId) === quizId
                     ? "text-lg font-semibold text-[#5c3cde]"
-                    : ""
+                    : "",
+                  "flex items-center gap-2"
                 )}
                 onClick={() => setShowToc(false)}
               >
@@ -327,6 +326,9 @@ function QuizDetailPage() {
                 >
                   {quiz.quizTitle}
                 </Link>
+                <span className="badge badge-secondary font-normal">
+                  {quiz.quizWeek}주차
+                </span>
               </li>
             ))}
           </ul>

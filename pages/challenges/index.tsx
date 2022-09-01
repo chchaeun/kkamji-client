@@ -13,7 +13,12 @@ function ChallengeListPage() {
     }
   );
 
-  return <div>{challenges && <ChallengeList challenges={challenges} />}</div>;
+  return (
+    <div className="flex flex-col gap-5 w-2/3 m-auto pt-10">
+      <h2 className="text-2xl">깜지 챌린지</h2>
+      {challenges && <ChallengeList challenges={challenges} />}
+    </div>
+  );
 }
 
 export default ChallengeListPage;

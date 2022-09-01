@@ -3,7 +3,7 @@ import { getCode } from "../session-code";
 
 interface Props {
   challengeId: string;
-  week: number;
+  week: string;
 }
 
 export const fetchQuizzes = async ({ challengeId, week }: Props) => {
