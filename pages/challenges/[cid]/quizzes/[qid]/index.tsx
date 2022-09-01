@@ -10,6 +10,7 @@ import { updateQuizScore } from "../../../../../api/quizzes/quiz-grade";
 import { updateQuizIsSolved } from "../../../../../api/quizzes/quiz-solve";
 import { fetchQuizzes } from "../../../../../api/quizzes/quizzes";
 import CommentContainer from "../../../../../components/quizzes/comment/comment-container";
+import useChallengeDetailQuery from "../../../../../hooks/challenge-detail-query";
 import { classNames } from "../../../../../styles/classname-maker";
 import {
   QuizDetail,
@@ -67,6 +68,8 @@ function QuizDetailPage() {
   const { mutate: mutateQuizGrade } = useMutation((score: number) =>
     updateQuizScore({ quizId, score })
   );
+
+  const { data: challengeDetail } = useChallengeDetailQuery({ challengeId });
 
   if (error) {
     if (error?.response?.status === 404) {
@@ -281,6 +284,14 @@ function QuizDetailPage() {
         >
           문제 목록
         </button>
+        <Link href={`/challenges/${challengeId}/quizzes`}>
+          <button
+            type="button"
+            className="text-gray-700 cursor-pointer hover:drop-shadow"
+          >
+            {challengeDetail?.title} 챌린지
+          </button>
+        </Link>
         <div className="flex gap-2">
           <button
             onClick={() => onMoveQuizClick("prev")}
@@ -308,8 +319,9 @@ function QuizDetailPage() {
       </div>
       {showToc && (
         <div className="absolute left-0 top-0 flex flex-col gap-5 w-1/4 h-full py-32 px-10 bg-white shadow-sm border-[1px] border-gray-300 sm:w-[80%] sm:py-10 animate-in slide-in-from-left-10 duration-200">
-          <h2 className="font-semibold text-xl">문제 목록</h2>
-          <ul className="flex flex-col gap-1">
+          <h2 className="font-semibold text-xl cursor-pointer">문제 목록</h2>
+
+          <ul className="flex flex-col gap-1 overflow-y-scroll scrollbar-thin">
             {quizzes?.map((quiz) => (
               <li
                 key={quiz.quizId}
