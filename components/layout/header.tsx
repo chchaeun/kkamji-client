@@ -56,13 +56,13 @@ function Header() {
               >
                 <Link href="/introduce">깜지 소개</Link>
               </li>
-              <li
+              {/* <li
                 className={classNames(
                   isSameRoute("/challenges") ? "text-black" : "text-gray-500"
                 )}
               >
                 <Link href="/challenges">깜지 챌린지</Link>
-              </li>
+              </li> */}
             </ul>
           </nav>
           {isUser ? (
