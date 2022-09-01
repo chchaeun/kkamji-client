@@ -2,6 +2,7 @@ import "../styles/globals.css";
 import type { AppProps } from "next/app";
 import Layout from "../components/layout/layout";
 import {
+  dehydrate,
   Hydrate,
   QueryClient,
   QueryClientProvider,
@@ -22,6 +23,8 @@ function MyApp({ Component, pageProps }: AppProps) {
       },
     },
   });
+
+  const dehydratedState = dehydrate(queryClient);
 
   if (process.env.NEXT_PUBLIC_API_MOCKING === "enabled") {
     require("../mocks");
@@ -45,7 +48,7 @@ function MyApp({ Component, pageProps }: AppProps) {
     <RecoilRoot>
       <QueryClientProvider client={queryClient}>
         {/* <ReactQueryDevtools initialIsOpen={false} /> */}
-        <Hydrate state={pageProps.dehydratedState}>
+        <Hydrate state={dehydratedState}>
           <Layout>
             <Script
               strategy="afterInteractive"
