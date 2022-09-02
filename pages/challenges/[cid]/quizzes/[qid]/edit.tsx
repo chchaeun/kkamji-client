@@ -33,7 +33,7 @@ function QuizAnswerEdit() {
     ["quizDetail", quizId],
     () => fetchQuizDetail({ quizId }),
     {
-      enabled: !!quizId,
+      enabled: !!router.query.qid,
     }
   );
 

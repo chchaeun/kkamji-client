@@ -1,4 +1,3 @@
-import { Icon } from "@iconify/react";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { AxiosError } from "axios";
 import Link from "next/link";
@@ -17,9 +16,11 @@ import {
   QuizDetailSelect,
   QuizSummary,
 } from "../../../../../types/Quiz";
+
 type SolveValidForm = {
   solve: string;
 };
+
 function QuizDetailPage() {
   const [showAnswer, setShowAnswer] = useState(false);
   const router = useRouter();
@@ -45,8 +46,9 @@ function QuizDetailPage() {
     select: (quizDetail) => {
       return { ...quizDetail, quizRubric: JSON.parse(quizDetail.quizRubric) };
     },
-    enabled: !!quizId,
+    enabled: !!router.query.qid,
   });
+
   const { data: quizzes } = useQuery<QuizSummary[]>(
     ["quizzes", challengeId],
     () => fetchQuizzes({ challengeId, week }),
