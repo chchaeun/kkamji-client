@@ -10,6 +10,11 @@ function QuizList({ quizzes }: Props) {
   const router = useRouter();
   const challengeId = String(router.query.cid);
 
+  const isMyQuizPage = router.asPath
+    .split("/")
+    .find((element) => element === "my")
+    ? true
+    : false;
   return (
     <div className="w-full sm:overflow-x-scroll">
       <table className="table w-full">
@@ -25,9 +30,13 @@ function QuizList({ quizzes }: Props) {
         <tbody className="">
           {quizzes?.map((quiz) => (
             <Link
-              href={`/challenges/${challengeId}/quizzes/${quiz.quizId}/?week=${
-                router.asPath.split("?week=")[1]
-              }`}
+              href={
+                isMyQuizPage
+                  ? `/challenges/${challengeId}/quizzes/${quiz.quizId}/my`
+                  : `/challenges/${challengeId}/quizzes/${quiz.quizId}?week=${
+                      router.asPath.split("?week=")[1]
+                    }`
+              }
               key={quiz.quizId}
             >
               <tr className="cursor-pointer sm:text-sm">

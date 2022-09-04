@@ -121,7 +121,11 @@ function ChallengePage() {
     }
   );
 
-  const { data: challengeDetail, isLoading } = useChallengeDetailQuery({
+  const {
+    data: challengeDetail,
+    isLoading,
+    error,
+  } = useChallengeDetailQuery({
     challengeId,
   });
 
@@ -148,6 +152,10 @@ function ChallengePage() {
       return challengeDetail!.totalWeeks - successCount - failCount;
     }
   };
+
+  if (error) {
+    return <div>없는 페이지입니다.</div>;
+  }
 
   return (
     <div className="flex flex-col gap-10 w-2/3 py-10 m-auto sm:w-5/6 sm:pb-10">

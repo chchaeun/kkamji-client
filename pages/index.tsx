@@ -1,12 +1,6 @@
-import { dehydrate, QueryClient, useQuery } from "@tanstack/react-query";
 import React from "react";
-import api from "../api/my-api";
-import ChallengeList from "../components/challenges/challenge-list";
 import Banner from "../components/home/banner";
 import MobileBanner from "../components/home/mobile-banner";
-import MobileNav from "../components/layout/mobile-nav";
-import { Challenge } from "../types/Challenge";
-
 function HomePage() {
   return (
     <>

@@ -5,6 +5,7 @@ import { useRouter } from "next/router";
 import React from "react";
 import { SubmitHandler, useFieldArray, useForm } from "react-hook-form";
 import api from "../../../../../api/my-api";
+import useChallengeDetailQuery from "../../../../../hooks/challenge-detail-query";
 import useOpenWeeksQuery from "../../../../../hooks/open-weeks";
 import {
   MyQuizDetail,
@@ -24,7 +25,7 @@ type EditValidForm = {
 function QuizAnswerEdit() {
   const router = useRouter();
   const quizId = String(router.query.qid);
-
+  const challengeId = String(router.query.cid);
   const { data: openWeeks } = useOpenWeeksQuery();
 
   const {
@@ -65,6 +66,8 @@ function QuizAnswerEdit() {
     }
   );
 
+  const { data: challengeDetail, error: challengeError } =
+    useChallengeDetailQuery({ challengeId });
   const { fields, append, remove } = useFieldArray<EditValidForm>({
     control,
     name: "rubric",
@@ -98,6 +101,10 @@ function QuizAnswerEdit() {
     };
     mutateAnswerEdit(editBody);
   };
+
+  if (challengeError || challengeDetail?.applicationStatus !== "ACCEPTED") {
+    return <div>없는 페이지입니다.</div>;
+  }
 
   if (isLoading) {
     return <div>Loading...</div>;

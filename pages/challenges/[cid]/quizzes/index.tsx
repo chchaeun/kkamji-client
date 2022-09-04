@@ -5,6 +5,7 @@ import { fetchQuizzes } from "../../../../api/quizzes/quizzes";
 import ChallengeOverview from "../../../../components/challenges/challenge-overview";
 import QuizList from "../../../../components/quizzes/quiz/quiz-list";
 import WeekFilter from "../../../../components/quizzes/week/week-filter";
+import useChallengeDetailQuery from "../../../../hooks/challenge-detail-query";
 function QuizListPage() {
   const router = useRouter();
   const challengeId = String(router.query.cid);
@@ -17,6 +18,14 @@ function QuizListPage() {
       enabled: !!router.query.week,
     }
   );
+
+  const { data: challengeDetail, error } = useChallengeDetailQuery({
+    challengeId,
+  });
+
+  if (error || challengeDetail?.applicationStatus !== "ACCEPTED") {
+    return <div>없는 페이지입니다.</div>;
+  }
 
   return (
     <div className="flex flex-col w-5/6 m-auto py-10 gap-10">
