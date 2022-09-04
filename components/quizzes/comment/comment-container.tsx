@@ -40,7 +40,6 @@ function CommentContainer() {
         resetField("comment");
       },
       onError: (err) => {
-        console.log(err);
         queryClient.invalidateQueries(["comments", quizId]);
         resetField("comment");
       },

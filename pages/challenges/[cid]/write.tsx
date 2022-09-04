@@ -62,9 +62,7 @@ function QuizWritePage() {
         setSubmitSuccessModalOpen(true);
         queryClient.invalidateQueries(["quizCurrentSubmit"]);
       },
-      onError: (err) => {
-        console.log(err);
-      },
+      onError: (err) => {},
     }
   );
 

@@ -20,10 +20,7 @@ class ErrorBoundary extends Component<Props, State> {
     return { hasError: true, errorCode: error?.response?.status || null };
   }
 
-  public componentDidCatch(error: Error, errorInfo: ErrorInfo) {
-    console.log("error: ", error);
-    console.log("errorInfo: ", errorInfo);
-  }
+  public componentDidCatch(error: Error, errorInfo: ErrorInfo) {}
 
   public render() {
     const Alert = ({ message }: { message: string }) => {
