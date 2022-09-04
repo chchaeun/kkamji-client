@@ -258,7 +258,7 @@ function QuizDetailPage() {
                   <div className="w-full flex flex-col gap-3">
                     <h2 className="text-xl">해설</h2>
                     <div className="p-5 bg-white rounded-lg shadow-sm border-[1px] border-gray-300">
-                      {quizDetail?.quizAnswer}
+                      {quizDetail?.quizExplanation}
                     </div>
                   </div>
                   <div className="w-full flex flex-col gap-3 items-end mb-10">
