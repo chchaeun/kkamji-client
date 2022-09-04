@@ -34,7 +34,7 @@ function MobileBanner() {
       {bannerContents.map((bannerContent, index) => (
         <SwiperSlide key={index} className="cursor-pointer">
           <Link href={bannerContent.link}>
-            <img src={bannerContent.image} className="h-full object-cover" />
+            <img src={bannerContent.image} className="w-screen object-cover" />
           </Link>
         </SwiperSlide>
       ))}
