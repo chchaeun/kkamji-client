@@ -75,6 +75,9 @@ button {
   background: #ffffff !important;
 }
 
+.notion-page {
+  margin-top: 52px !important;
+}
 .notion-page-header,
 .notion-page-cover,
 .notion-emoji,

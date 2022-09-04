@@ -24,7 +24,7 @@ function QuizListPage() {
       <div className="flex flex-col gap-3 py-5 px-10 bg-white rounded-lg shadow-sm border-[1px] border-gray-300 sm:px-5">
         <WeekFilter />
       </div>
-      <div className="flex flex-col gap-6 py-5 px-10 bg-white rounded-lg shadow-sm border-[1px] border-gray-300 sm:px-5">
+      <div className="flex flex-col gap-6 py-5 px-10 w-full bg-white rounded-lg shadow-sm border-[1px] border-gray-300 sm:px-5">
         <div className="font-semibold">문제 목록</div>
         <QuizList quizzes={quizzes} />
       </div>

@@ -108,7 +108,7 @@ function ChallengePage() {
         // week: String(currentWeek)
       }),
     {
-      enabled: !!(router.query.cid && openWeeks),
+      enabled: !!(router.query.cid && openWeeks?.weeks?.length! > 0),
       //enabled: !!(router.query.cid && currentWeek)
     }
   );
@@ -246,14 +246,14 @@ function ChallengePage() {
           <TabMenu />
           {(!router.query.tab || router.query.tab === "activity") && (
             <div className="flex justify-center gap-5 sm:flex-col">
-              {quizzes && openWeeks?.weeks && (
+              {openWeeks?.weeks && (
                 <QuizSummaryCard
                   link={`?week=${openWeeks.weeks
                     .filter((week) => week.status === "READABLE")
                     .map((week) => week.week)
                     .join(",")}`}
-                  title={"전체 문제"}
-                  quizzes={quizzes}
+                  title={"열람 가능 문제"}
+                  quizzes={quizzes ? quizzes : []}
                 />
               )}
               {myQuizzes && (
