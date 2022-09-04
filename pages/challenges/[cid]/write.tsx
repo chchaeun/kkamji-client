@@ -132,7 +132,6 @@ function QuizWritePage() {
           <div className="flex flex-col w-full gap-2">
             <label>
               문제 내용을 입력하세요.
-              <span>* 객관식의 경우 보기도 같이 입력해주세요.</span>
               <textarea
                 rows={5}
                 {...register("content", {
