@@ -5,6 +5,7 @@ import { useRouter } from "next/router";
 import React from "react";
 import { SubmitHandler, useFieldArray, useForm } from "react-hook-form";
 import api from "../../../../../api/my-api";
+import useOpenWeeksQuery from "../../../../../hooks/open-weeks";
 import {
   MyQuizDetail,
   MyQuizDetailSelect,
@@ -23,6 +24,8 @@ type EditValidForm = {
 function QuizAnswerEdit() {
   const router = useRouter();
   const quizId = String(router.query.qid);
+
+  const { data: openWeeks } = useOpenWeeksQuery();
 
   const {
     register,
@@ -69,11 +72,16 @@ function QuizAnswerEdit() {
 
   const { mutate: mutateAnswerEdit } = useMutation(
     async (editBody: QuizEdit) => {
-      return await api.patch(`/quizzes/${quizId}/answer`, editBody);
+      return await api.patch(`/quizzes/${quizId}`, editBody);
     },
     {
       onSuccess: () => {
-        router.push(`${router.asPath.split("/edit")[0]}`);
+        router.push(
+          `${router.asPath.split("/edit")[0]}?week=${openWeeks!.weeks
+            .filter((week) => week.status === "READABLE")
+            .map((week) => week.week)
+            .join(",")}`
+        );
       },
     }
   );
@@ -86,7 +94,7 @@ function QuizAnswerEdit() {
     const editBody = {
       quizAnswer: answer,
       quizExplanation: explanation,
-      quizRubric: rubric,
+      quizRubric: JSON.stringify(rubric),
     };
     mutateAnswerEdit(editBody);
   };

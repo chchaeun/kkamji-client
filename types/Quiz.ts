@@ -130,7 +130,7 @@ export interface QuizSummary {
 export interface QuizEdit {
   quizAnswer: string;
   quizExplanation: string;
-  quizRubric: { score: number; content: string }[];
+  quizRubric: string;
 }
 
 export interface QuizSubmitCount {
