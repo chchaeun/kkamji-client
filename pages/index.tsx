@@ -42,7 +42,7 @@ function HomePage() {
       </div>
       <footer className="relative w-full h-48 left-0 bottom-0 border-t-[1px] p-10">
         <div>
-          <p>Copyright © 2022 - All right reserved by LaG</p>
+          <p>Copyright © 2022 - All right reserved by 배워서 남주는 개발자들</p>
         </div>
       </footer>
     </>
