@@ -4,17 +4,14 @@ import Link from "next/link";
 import { useRouter } from "next/router";
 import React, { useState } from "react";
 import { SubmitHandler, useForm } from "react-hook-form";
-import api from "../../../../../api/my-api";
 import { fetchQuizDetail } from "../../../../../api/quizzes/quiz-detail";
 import { updateQuizScore } from "../../../../../api/quizzes/quiz-grade";
 import { updateQuizIsSolved } from "../../../../../api/quizzes/quiz-solve";
 import { fetchQuizzes } from "../../../../../api/quizzes/quizzes";
-import { getCode } from "../../../../../api/session-code";
 import CommentContainer from "../../../../../components/quizzes/comment/comment-container";
 import useChallengeDetailQuery from "../../../../../hooks/challenge-detail-query";
 import { classNames } from "../../../../../styles/classname-maker";
 import {
-  QuizAnswer,
   QuizDetail,
   QuizDetailSelect,
   QuizSummary,
@@ -88,7 +85,12 @@ function QuizDetailPage() {
     }
   );
 
-  const { data: challengeDetail } = useChallengeDetailQuery({ challengeId });
+  const { data: challengeDetail, error: challengeError } =
+    useChallengeDetailQuery({ challengeId });
+
+  if (challengeError || challengeDetail?.applicationStatus !== "ACCEPTED") {
+    return <div>없는 페이지입니다.</div>;
+  }
 
   if (error) {
     if (error?.response?.status === 404) {
@@ -319,7 +321,7 @@ function QuizDetailPage() {
         >
           문제 목록
         </button>
-        <Link href={`/challenges/${challengeId}/quizzes`}>
+        <Link href={`/challenges/${challengeId}`}>
           <button
             type="button"
             className="text-gray-700 cursor-pointer hover:drop-shadow"

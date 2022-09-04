@@ -9,6 +9,7 @@ import SubmitCount from "../../../components/quizzes/submit/submit-count";
 import useCurrentWeekQuery from "../../../hooks/current-week-query";
 import useSubmitCountQuery from "../../../hooks/submit-count-query";
 import { Icon } from "@iconify/react";
+import useChallengeDetailQuery from "../../../hooks/challenge-detail-query";
 
 type QuizValidForm = {
   title: string;
@@ -103,6 +104,13 @@ function QuizWritePage() {
     router.push(`/challenges/${challengeId}`);
   };
 
+  const { data: challengeDetail, error } = useChallengeDetailQuery({
+    challengeId,
+  });
+
+  if (error || challengeDetail?.applicationStatus !== "ACCEPTED") {
+    return <div>없는 페이지입니다.</div>;
+  }
   return (
     <div className="grid grid-cols-5 gap-4 w-full h-full m-auto sm:flex sm:flex-col-reverse sm:py-10">
       {currentWeek && <SubmitCount currentWeek={currentWeek} />}
