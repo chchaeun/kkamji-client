@@ -10,11 +10,14 @@ import Link from "next/link";
 const bannerContents = [
   {
     image: "image/kkamji-mobile-banner-1.png",
-    link: "/introce",
+    link: "/introduce",
   },
   {
-    image: "image/kkamji-mobile-banner-1.png",
-
+    image: "image/kkamji-mobile-banner-2.png",
+    link: "",
+  },
+  {
+    image: "image/kkamji-mobile-banner-3.png",
     link: "",
   },
 ];
