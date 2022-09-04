@@ -5,23 +5,16 @@ import { fetchQuizzes } from "../../../../api/quizzes/quizzes";
 import ChallengeOverview from "../../../../components/challenges/challenge-overview";
 import QuizList from "../../../../components/quizzes/quiz/quiz-list";
 import WeekFilter from "../../../../components/quizzes/week/week-filter";
-import useChallengeDetailQuery from "../../../../hooks/challenge-detail-query";
-import useOpenWeeksQuery from "../../../../hooks/open-weeks";
-
 function QuizListPage() {
   const router = useRouter();
   const challengeId = String(router.query.cid);
   const week = String(router.query.week);
-  console.log(week);
-  const { data: challengeDetail } = useChallengeDetailQuery({ challengeId });
-
-  const { data: openWeeks } = useOpenWeeksQuery();
 
   const { data: quizzes } = useQuery(
-    ["quizzes"],
+    ["quizzes", week],
     () => fetchQuizzes({ challengeId, week }),
     {
-      enabled: !!challengeId,
+      enabled: !!router.query.week,
     }
   );
 

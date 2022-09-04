@@ -3,13 +3,10 @@ import React from "react";
 import ChallengeOverview from "../../../../components/challenges/challenge-overview";
 import QuizList from "../../../../components/quizzes/quiz/quiz-list";
 import useMyQuizzesQuery from "../../../../hooks/my-quizzes-query";
-import useOpenWeeksQuery from "../../../../hooks/open-weeks";
 
 function MyQuizListPage() {
   const router = useRouter();
-  const week = router.query.week ? String(router.query.week) : "ALL";
   const challengeId = String(router.query.cid) || "";
-  const { data: openWeeks } = useOpenWeeksQuery();
   const { data: myQuizzes } = useMyQuizzesQuery({ challengeId });
 
   return (
