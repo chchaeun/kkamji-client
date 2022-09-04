@@ -18,7 +18,7 @@ export interface Challenge {
   imageUrl: string;
   createdDate: string;
   modifiedDate: string;
-  isParticipated: boolean;
+  applicationStatus: "ACCEPTED" | "APPLIED" | "REJECTED" | "CANCLED";
 }
 
 export interface CurrentWeek {
@@ -29,5 +29,15 @@ export interface CurrentWeek {
 export interface OpenWeeks {
   challengeId: number;
   totalWeeks: number;
-  weeks: { week: number; status: string }[];
+  weeks: {
+    [week: string]: "READABLE" | "READABLE_CLOSED" | "UNREADABLE" | "CLOSED";
+  };
+}
+
+export interface OpenWeeksSelect {
+  totalWeeks: number;
+  weeks: {
+    week: number;
+    status: "READABLE" | "READABLE_CLOSED" | "UNREADABLE" | "CLOSED";
+  }[];
 }
