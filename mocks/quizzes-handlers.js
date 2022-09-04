@@ -83,7 +83,8 @@ let quizDetail = {
       id: 0,
       qfName: "string",
       qfType: "string",
-      qfPath: "string",
+      qfPath:
+        "https://images.unsplash.com/photo-1635070041078-e363dbe005cb?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=2940&q=80",
       qfCreatedDate: "2022-08-24T11:58:39.828Z",
       qfModifiedDate: "2022-08-24T11:58:39.828Z",
     },
@@ -96,6 +97,7 @@ export const quizzesHandlers = [
   }),
   rest.get(formattingUrl("/quizzes/:qid"), (req, res, ctx) => {
     return res(ctx.status(200), ctx.json(quizDetail));
+    // return res(ctx.status(403, "권한이 없는 페이지입니다."));
   }),
 
   rest.post(formattingUrl("/quizzes/:qid/solve"), (req, res, ctx) => {
@@ -125,7 +127,7 @@ export const quizzesHandlers = [
           qfName: "string",
           qfType: "string",
           qfPath:
-            "https://images.unsplash.com/photo-1543852786-1cf6624b9987?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=774&q=80",
+            "https://images.unsplash.com/photo-1635070041078-e363dbe005cb?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=2940&q=80",
           qfCreatedDate: "2022-08-24T11:58:39.828Z",
           qfModifiedDate: "2022-08-24T11:58:39.828Z",
         },
@@ -169,7 +171,7 @@ export const quizzesHandlers = [
           qfName: "string",
           qfType: "string",
           qfPath:
-            "https://images.unsplash.com/photo-1543852786-1cf6624b9987?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=774&q=80",
+            "https://images.unsplash.com/photo-1635070041078-e363dbe005cb?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=2940&q=80",
           qfCreatedDate: "2022-08-24T11:58:39.828Z",
           qfModifiedDate: "2022-08-24T11:58:39.828Z",
         },
