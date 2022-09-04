@@ -29,9 +29,7 @@ function QuizDetailPage() {
     },
     {
       enabled: !!router.query.qid,
-      onError: (err) => {
-        console.log(err);
-      },
+      onError: (err) => {},
       select: (data) => {
         return { ...data, quizRubric: JSON.parse(data.quizRubric) };
       },
@@ -154,7 +152,7 @@ function QuizDetailPage() {
         >
           문제 목록
         </button>
-        <Link href={`/challenges/${challengeId}/quizzes`}>
+        <Link href={`/challenges/${challengeId}`}>
           <button
             type="button"
             className="text-gray-700 cursor-pointer hover:drop-shadow"

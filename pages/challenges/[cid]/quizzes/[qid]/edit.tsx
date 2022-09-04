@@ -60,9 +60,7 @@ function QuizAnswerEdit() {
           rubric: data.quizRubric,
         });
       },
-      onError: (err) => {
-        console.log(err);
-      },
+      onError: (err) => {},
     }
   );
 

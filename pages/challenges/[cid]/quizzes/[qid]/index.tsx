@@ -44,9 +44,7 @@ function QuizDetailPage() {
     QuizDetailSelect
   >(["quizDetail", quizId], () => fetchQuizDetail({ quizId }), {
     enabled: !!router.query.qid,
-    onError: (err) => {
-      console.log(err);
-    },
+    onError: (err) => {},
     select: (data) => {
       return { ...data, quizRubric: JSON.parse(data.quizRubric) };
     },
@@ -67,9 +65,7 @@ function QuizDetailPage() {
       onSuccess: () => {
         queryClient.invalidateQueries(["quizDetail", quizId]);
       },
-      onError: (err) => {
-        console.log(err);
-      },
+      onError: (err) => {},
     }
   );
 
@@ -79,9 +75,7 @@ function QuizDetailPage() {
       onSuccess: () => {
         queryClient.invalidateQueries(["quizDetail", quizId]);
       },
-      onError: (err) => {
-        console.log(err);
-      },
+      onError: (err) => {},
     }
   );
 
@@ -182,7 +176,7 @@ function QuizDetailPage() {
         <h2 className="font-semibold text-2xl">{quizDetail?.quizTitle}</h2>
         <span>작성자: {quizDetail?.writerName}</span>
       </div>
-      <div className="grid grid-cols-2 gap-10 px-20 pb-20 h-[79%] sm:flex sm:flex-col sm:h-fit sm:px-10">
+      <div className="grid grid-cols-2 gap-10 px-20 h-[79%] sm:flex sm:flex-col sm:h-fit sm:px-10 sm:pb-20">
         <div className="h-full pr-10 pb-2 overflow-y-scroll scrollbar-thin scrollbar-thumb-gray-200 scrollbar-track-gray-100 sm:pr-0">
           <div className="flex flex-col gap-10">
             <p className="flex flex-col gap-5 justify-between p-5 bg-white rounded-lg shadow-sm border-[1px] border-gray-300">
