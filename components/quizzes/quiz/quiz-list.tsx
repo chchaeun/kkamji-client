@@ -10,16 +10,16 @@ function QuizList({ quizzes }: Props) {
   const router = useRouter();
   const challengeId = String(router.query.cid);
   return (
-    <div className="cursor-pointer">
-      <div className="grid grid-cols-7 border-b-[1px] pb-2 mb-3 sm:grid-cols-4">
-        <span className="flex flex-col items-center">번호</span>
-        <span className="col-span-4 flex flex-col items-center sm:col-span-2">
-          제목
-        </span>
-        <span className="flex flex-col items-center sm:hidden">작성자</span>
-        <span className="flex flex-col items-center">해결</span>
-      </div>
-      <div className="flex flex-col gap-3">
+    <table className="table w-full">
+      <thead>
+        <tr>
+          <th className="bg-gray-200">번호</th>
+          <th className="bg-gray-200">제목</th>
+          <th className="bg-gray-200">작성자</th>
+          <th className="bg-gray-200">해결</th>
+        </tr>
+      </thead>
+      <tbody>
         {quizzes?.map((quiz) => (
           <Link
             href={`${router.asPath.split("?week=")[0]}/${quiz.quizId}/?week=${
@@ -27,26 +27,24 @@ function QuizList({ quizzes }: Props) {
             }`}
             key={quiz.quizId}
           >
-            <div className="grid grid-cols-7 sm:grid-cols-4">
-              <span className="flex flex-col items-center">{quiz.quizId}</span>
-              <span className="col-span-4 sm:col-span-2">{quiz.quizTitle}</span>
-              <span className="flex flex-col items-center sm:hidden">
-                {quiz.writerName}
-              </span>
+            <tr className="cursor-pointer">
+              <td>{quiz.quizId}</td>
+              <td>{quiz.quizTitle}</td>
+              <td>{quiz.writerName}</td>
               {quiz.isSolved && (
-                <span className="flex flex-col items-center">
+                <td>
                   <Icon
                     icon="bi:patch-check-fill"
                     color="#5c3cde"
                     height={24}
                   />
-                </span>
+                </td>
               )}
-            </div>
+            </tr>
           </Link>
         ))}
-      </div>
-    </div>
+      </tbody>
+    </table>
   );
 }
 
