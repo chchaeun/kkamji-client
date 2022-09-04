@@ -1,11 +1,10 @@
-import { IFetchChapter } from "../fetch-types";
 import api from "../my-api";
 import { getCode } from "../session-code";
 
 interface RequestData {
   requestData: {
     commentBody: {
-      commentContent: string;
+      content: string;
     };
     quizId: string;
   };
@@ -13,6 +12,6 @@ interface RequestData {
 
 export const updateComment = async ({ requestData }: RequestData) => {
   const { commentBody, quizId } = requestData;
-  api.defaults.headers.common["code"] = getCode() || "";
+  api.defaults.headers.common["code"] = getCode();
   return await api.post(`/quizzes/${quizId}/comments`, commentBody);
 };

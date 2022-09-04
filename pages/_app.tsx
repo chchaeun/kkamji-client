@@ -2,17 +2,18 @@ import "../styles/globals.css";
 import type { AppProps } from "next/app";
 import Layout from "../components/layout/layout";
 import {
+  dehydrate,
   Hydrate,
   QueryClient,
   QueryClientProvider,
 } from "@tanstack/react-query";
 import { RecoilRoot } from "recoil";
-import { ReactQueryDevtools } from "@tanstack/react-query-devtools";
 import { useRouter } from "next/router";
 import { useEffect } from "react";
 
 import Script from "next/script";
 import { pageview, GA_TRACKING_ID } from "../utils/gtag";
+import ErrorBoundary from "../components/error-boundary";
 
 function MyApp({ Component, pageProps }: AppProps) {
   const queryClient = new QueryClient({
@@ -22,6 +23,8 @@ function MyApp({ Component, pageProps }: AppProps) {
       },
     },
   });
+
+  const dehydratedState = dehydrate(queryClient);
 
   if (process.env.NEXT_PUBLIC_API_MOCKING === "enabled") {
     require("../mocks");
@@ -44,8 +47,8 @@ function MyApp({ Component, pageProps }: AppProps) {
   return (
     <RecoilRoot>
       <QueryClientProvider client={queryClient}>
-        <ReactQueryDevtools initialIsOpen={false} />
-        <Hydrate state={pageProps.dehydratedState}>
+        {/* <ReactQueryDevtools initialIsOpen={false} /> */}
+        <Hydrate state={dehydratedState}>
           <Layout>
             <Script
               strategy="afterInteractive"

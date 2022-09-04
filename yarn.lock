@@ -2345,6 +2345,16 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@ramonak/react-progress-bar@npm:^5.0.2":
+  version: 5.0.2
+  resolution: "@ramonak/react-progress-bar@npm:5.0.2"
+  peerDependencies:
+    react: ^16.0.0 || ^17 || ^18
+    react-dom: ^16.0.0 || ^17 || ^18
+  checksum: cfc9b0f0b3beabb00e1ef24342ffca95b16a8cb33203a0fcef86c2122cd7f2bac1d70b235264ff151c087f480b998944fbac0ed997de62d21eda79cf57293a81
+  languageName: node
+  linkType: hard
+
 "@rollup/plugin-babel@npm:^5.2.0":
   version: 5.3.1
   resolution: "@rollup/plugin-babel@npm:5.3.1"
@@ -2715,6 +2725,15 @@ __metadata:
   dependencies:
     "@types/node": "*"
   checksum: c31bf04eb9620829dc3c91bced74ac934ad039d20d20893fb5acac0f08769cbd4eef3bf7502a0289c7be59c3e9cfa456147b4e88bff47dd1b9efb4995ba5d5a3
+  languageName: node
+  linkType: hard
+
+"@types/styled-jsx@npm:^3.4.4":
+  version: 3.4.4
+  resolution: "@types/styled-jsx@npm:3.4.4"
+  dependencies:
+    styled-jsx: "*"
+  checksum: 7d9e52a8860379d7d10652b5528b68bb3c471dff0b0669eb6cf7232cd6658718e44e608b2efebdb49da10b160adab182f23786d9ef7ab45fed120f6c139405a6
   languageName: node
   linkType: hard
 
@@ -4019,10 +4038,20 @@ __metadata:
   languageName: node
   linkType: hard
 
-"color-name@npm:^1.1.4, color-name@npm:~1.1.4":
+"color-name@npm:^1.0.0, color-name@npm:^1.1.4, color-name@npm:~1.1.4":
   version: 1.1.4
   resolution: "color-name@npm:1.1.4"
   checksum: b0445859521eb4021cd0fb0cc1a75cecf67fceecae89b63f62b201cca8d345baf8b952c966862a9d9a2632987d4f6581f0ec8d957dfacece86f0a7919316f610
+  languageName: node
+  linkType: hard
+
+"color-string@npm:^1.9.0":
+  version: 1.9.1
+  resolution: "color-string@npm:1.9.1"
+  dependencies:
+    color-name: ^1.0.0
+    simple-swizzle: ^0.2.2
+  checksum: c13fe7cff7885f603f49105827d621ce87f4571d78ba28ef4a3f1a104304748f620615e6bf065ecd2145d0d9dad83a3553f52bb25ede7239d18e9f81622f1cc5
   languageName: node
   linkType: hard
 
@@ -4032,6 +4061,16 @@ __metadata:
   bin:
     color-support: bin.js
   checksum: 9b7356817670b9a13a26ca5af1c21615463b500783b739b7634a0c2047c16cef4b2865d7576875c31c3cddf9dd621fa19285e628f20198b233a5cfdda6d0793b
+  languageName: node
+  linkType: hard
+
+"color@npm:^4.2":
+  version: 4.2.3
+  resolution: "color@npm:4.2.3"
+  dependencies:
+    color-convert: ^2.0.1
+    color-string: ^1.9.0
+  checksum: 0579629c02c631b426780038da929cca8e8d80a40158b09811a0112a107c62e10e4aad719843b791b1e658ab4e800558f2e87ca4522c8b32349d497ecb6adeb4
   languageName: node
   linkType: hard
 
@@ -4227,6 +4266,16 @@ __metadata:
   languageName: node
   linkType: hard
 
+"css-selector-tokenizer@npm:^0.8.0":
+  version: 0.8.0
+  resolution: "css-selector-tokenizer@npm:0.8.0"
+  dependencies:
+    cssesc: ^3.0.0
+    fastparse: ^1.1.2
+  checksum: 1eb7ca7d2c21ede700a0fab7df4547198431c30ba62663d81a566a8abe6ab7524f627ce6c0bde63f34917e199b73be4081e449bd8faf107d155766204082aa0a
+  languageName: node
+  linkType: hard
+
 "cssesc@npm:^3.0.0":
   version: 3.0.0
   resolution: "cssesc@npm:3.0.0"
@@ -4249,6 +4298,21 @@ __metadata:
   dependencies:
     array-find-index: ^1.0.1
   checksum: 1f59fe10b5339b54b1a1eee110022f663f3495cf7cf2f480686e89edc7fa8bfe42dbab4b54f85034bc8b092a76cc7becbc2dad4f9adad332ab5831bec39ad540
+  languageName: node
+  linkType: hard
+
+"daisyui@npm:^2.24.0":
+  version: 2.24.0
+  resolution: "daisyui@npm:2.24.0"
+  dependencies:
+    color: ^4.2
+    css-selector-tokenizer: ^0.8.0
+    postcss-js: ^4.0.0
+    tailwindcss: ^3
+  peerDependencies:
+    autoprefixer: ^10.0.2
+    postcss: ^8.1.6
+  checksum: 3fdccfe11b3275849d98f0701872af092aa563c2a2f554e6ecab09f4c7e29ae1df6afd7db4f8e7c6d1e868120be0f90bb92fcc9e63937d55cf8fb4435878e744
   languageName: node
   linkType: hard
 
@@ -4483,6 +4547,15 @@ __metadata:
   dependencies:
     urijs: ^1.16.1
   checksum: 78bc97f1f8c052c11d11ed50d505b6307422d64c65b947fca8e0f57f7befcbc6148d58fac917c63e5cbf9c74b43f511e243a9272c5736339497def1e5a9a1842
+  languageName: node
+  linkType: hard
+
+"dom7@npm:^4.0.4":
+  version: 4.0.4
+  resolution: "dom7@npm:4.0.4"
+  dependencies:
+    ssr-window: ^4.0.0
+  checksum: b38604f74e915b4d05b6634f9ff239a708c468180f498a28ff67f2a61233697d9bd7192703b788a24541c3591e7f1a6e83a2cbf70bc871a85e033f82e19abc31
   languageName: node
   linkType: hard
 
@@ -5093,6 +5166,13 @@ __metadata:
   version: 2.0.6
   resolution: "fast-levenshtein@npm:2.0.6"
   checksum: 92cfec0a8dfafd9c7a15fba8f2cc29cd0b62b85f056d99ce448bbcd9f708e18ab2764bda4dd5158364f4145a7c72788538994f0d1787b956ef0d1062b0f7c24c
+  languageName: node
+  linkType: hard
+
+"fastparse@npm:^1.1.2":
+  version: 1.1.2
+  resolution: "fastparse@npm:1.1.2"
+  checksum: c4d199809dc4e8acafeb786be49481cc9144de296e2d54df4540ccfd868d0df73afc649aba70a748925eb32bbc4208b723d6288adf92382275031a8c7e10c0aa
   languageName: node
   linkType: hard
 
@@ -5883,6 +5963,13 @@ __metadata:
   languageName: node
   linkType: hard
 
+"is-arrayish@npm:^0.3.1":
+  version: 0.3.2
+  resolution: "is-arrayish@npm:0.3.2"
+  checksum: 977e64f54d91c8f169b59afcd80ff19227e9f5c791fa28fa2e5bce355cbaf6c2c356711b734656e80c9dd4a854dd7efcf7894402f1031dfc5de5d620775b4d5f
+  languageName: node
+  linkType: hard
+
 "is-bigint@npm:^1.0.1":
   version: 1.0.4
   resolution: "is-bigint@npm:1.0.4"
@@ -6475,7 +6562,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"lilconfig@npm:^2.0.5":
+"lilconfig@npm:^2.0.5, lilconfig@npm:^2.0.6":
   version: 2.0.6
   resolution: "lilconfig@npm:2.0.6"
   checksum: 40a3cd72f103b1be5975f2ac1850810b61d4053e20ab09be8d3aeddfe042187e1ba70b4651a7e70f95efa1642e7dc8b2ae395b317b7d7753b241b43cef7c0f7d
@@ -7759,6 +7846,13 @@ __metadata:
   languageName: node
   linkType: hard
 
+"prismjs@npm:^1.21.0":
+  version: 1.28.0
+  resolution: "prismjs@npm:1.28.0"
+  checksum: bde93fb2beb45b7243219fc53855f59ee54b3fa179f315e8f9d66244d756ef984462e10561bbdc6713d3d7e051852472d7c284f5794a8791eeaefea2fb910b16
+  languageName: node
+  linkType: hard
+
 "promise-inflight@npm:^1.0.1":
   version: 1.0.1
   resolution: "promise-inflight@npm:1.0.1"
@@ -7860,6 +7954,17 @@ __metadata:
   languageName: node
   linkType: hard
 
+"react-error-boundary@npm:^3.1.4":
+  version: 3.1.4
+  resolution: "react-error-boundary@npm:3.1.4"
+  dependencies:
+    "@babel/runtime": ^7.12.5
+  peerDependencies:
+    react: ">=16.13.1"
+  checksum: f36270a5d775a25c8920f854c0d91649ceea417b15b5bc51e270a959b0476647bb79abb4da3be7dd9a4597b029214e8fe43ea914a7f16fa7543c91f784977f1b
+  languageName: node
+  linkType: hard
+
 "react-hook-form@npm:^7.33.1":
   version: 7.33.1
   resolution: "react-hook-form@npm:7.33.1"
@@ -7882,6 +7987,17 @@ __metadata:
   version: 16.13.1
   resolution: "react-is@npm:16.13.1"
   checksum: f7a19ac3496de32ca9ae12aa030f00f14a3d45374f1ceca0af707c831b2a6098ef0d6bdae51bd437b0a306d7f01d4677fcc8de7c0d331eb47ad0f46130e53c5f
+  languageName: node
+  linkType: hard
+
+"react-notion@npm:^0.10.0":
+  version: 0.10.0
+  resolution: "react-notion@npm:0.10.0"
+  dependencies:
+    prismjs: ^1.21.0
+  peerDependencies:
+    react: ">=16"
+  checksum: cc5f0b051957a0b54b0661ec810b5eef6c057ebd1d4e51ce26d40a93583b366511fdb2689ff86c030eb6e78d9679d4cc6947e9bc323162b4db1efeee6a8a29ab
   languageName: node
   linkType: hard
 
@@ -8490,6 +8606,15 @@ __metadata:
   languageName: node
   linkType: hard
 
+"simple-swizzle@npm:^0.2.2":
+  version: 0.2.2
+  resolution: "simple-swizzle@npm:0.2.2"
+  dependencies:
+    is-arrayish: ^0.3.1
+  checksum: a7f3f2ab5c76c4472d5c578df892e857323e452d9f392e1b5cf74b74db66e6294a1e1b8b390b519fa1b96b5b613f2a37db6cffef52c3f1f8f3c5ea64eb2d54c0
+  languageName: node
+  linkType: hard
+
 "slash@npm:^3.0.0":
   version: 3.0.0
   resolution: "slash@npm:3.0.0"
@@ -8530,6 +8655,7 @@ __metadata:
   resolution: "soma-project@workspace:."
   dependencies:
     "@iconify/react": ^3.2.2
+    "@ramonak/react-progress-bar": ^5.0.2
     "@tanstack/react-query": ^4.0.10
     "@tanstack/react-query-devtools": ^4.0.10
     "@types/gtag.js": ^0.0.10
@@ -8538,11 +8664,13 @@ __metadata:
     "@types/react-dom": 18.0.6
     "@types/react-query": ^1.2.9
     "@types/recoil": ^0.0.9
+    "@types/styled-jsx": ^3.4.4
     "@yarnpkg/pnpify": ^4.0.0-rc.14
     "@yarnpkg/sdks": ^3.0.0-rc.14
     autoprefixer: ^10.4.7
     aws: ^0.0.3-2
     axios: ^0.27.2
+    daisyui: ^2.24.0
     eslint: 8.19.0
     eslint-config-next: 12.2.2
     eslint-config-react-app: ^7.0.1
@@ -8552,15 +8680,22 @@ __metadata:
     next-images: ^1.8.4
     next-pwa: ^5.5.4
     postcss: ^8.4.14
+    prop-types: ^15.8.1
     react: ^18.2.0
     react-dom: 18.2.0
+    react-error-boundary: ^3.1.4
     react-hook-form: ^7.33.1
     react-icons: ^4.4.0
+    react-notion: ^0.10.0
     react-query: ^4.0.0
     recoil: ^0.7.4
+    styled-jsx: ^5.0.4
     sw-precache-webpack-plugin: ^1.0.0
+    swiper: ^8.3.2
+    tailwind-scrollbar: ^1.3.1
     tailwind-scrollbar-hide: ^1.1.7
     tailwindcss: ^3.1.6
+    tailwindcss-animate: ^1.0.5
     typescript: 4.7.4
   languageName: unknown
   linkType: soft
@@ -8650,6 +8785,13 @@ __metadata:
   version: 1.0.3
   resolution: "sprintf-js@npm:1.0.3"
   checksum: 19d79aec211f09b99ec3099b5b2ae2f6e9cdefe50bc91ac4c69144b6d3928a640bb6ae5b3def70c2e85a2c3d9f5ec2719921e3a59d3ca3ef4b2fd1a4656a0df3
+  languageName: node
+  linkType: hard
+
+"ssr-window@npm:^4.0.0, ssr-window@npm:^4.0.2":
+  version: 4.0.2
+  resolution: "ssr-window@npm:4.0.2"
+  checksum: df182600927f4f3225224cf8c02338ea637c9750519505bbfb9a9236741a2a7ec088386fb948bca7b447b8303d9109e7dc7672e3de041c79ac2a0e03665af7d2
   languageName: node
   linkType: hard
 
@@ -8837,6 +8979,20 @@ __metadata:
   languageName: node
   linkType: hard
 
+"styled-jsx@npm:*, styled-jsx@npm:^5.0.4":
+  version: 5.0.4
+  resolution: "styled-jsx@npm:5.0.4"
+  peerDependencies:
+    react: ">= 16.8.0 || 17.x.x || ^18.0.0-0"
+  peerDependenciesMeta:
+    "@babel/core":
+      optional: true
+    babel-plugin-macros:
+      optional: true
+  checksum: db7530155626e5eebc9d80ca117ea5aed6219b0a65469196b0b5727550fbe743117d7eea1499d80511ccb312d31f4a1027a58d1f94a83f0986c9acfdcce8bdd1
+  languageName: node
+  linkType: hard
+
 "styled-jsx@npm:5.0.2":
   version: 5.0.2
   resolution: "styled-jsx@npm:5.0.2"
@@ -8929,10 +9085,73 @@ __metadata:
   languageName: node
   linkType: hard
 
+"swiper@npm:^8.3.2":
+  version: 8.3.2
+  resolution: "swiper@npm:8.3.2"
+  dependencies:
+    dom7: ^4.0.4
+    ssr-window: ^4.0.2
+  checksum: 881d8e4fdedc391593c9ecee1ca0fddaebd16b2f6be493f80869fbaf848761cf7e41a7d7ba4b9fe4c4d61e9bef87ba33154d22bb6a8a8503c22c49f793bef1c1
+  languageName: node
+  linkType: hard
+
 "tailwind-scrollbar-hide@npm:^1.1.7":
   version: 1.1.7
   resolution: "tailwind-scrollbar-hide@npm:1.1.7"
   checksum: 2434a1db7a92fa91952ce4fbef7f80b83f121fa2fae27453cefc6030c06d368768e3172d3640ae6836fe4f813ed89b40c2f44b1f17756593ab4625259ef22a75
+  languageName: node
+  linkType: hard
+
+"tailwind-scrollbar@npm:^1.3.1":
+  version: 1.3.1
+  resolution: "tailwind-scrollbar@npm:1.3.1"
+  dependencies:
+    tailwindcss: ">1.9.6"
+  checksum: d67b5d27dea7ddc31bd9022094509c57a28f48368a92c515733794d55124b52450f1c5f093fb03dbc07afa7bab052b3535d85af2783eb83b9a630ee006ee3c1a
+  languageName: node
+  linkType: hard
+
+"tailwindcss-animate@npm:^1.0.5":
+  version: 1.0.5
+  resolution: "tailwindcss-animate@npm:1.0.5"
+  peerDependencies:
+    tailwindcss: "*"
+  checksum: 6b558f85a6af0780f018e1d23736d56dd59795f051df413bc2cf2fc2a021d6b1a3b78066f93e1045f3a39c11ee191c728db79e606d9a1def07fdf6a10f045312
+  languageName: node
+  linkType: hard
+
+"tailwindcss@npm:>1.9.6, tailwindcss@npm:^3":
+  version: 3.1.8
+  resolution: "tailwindcss@npm:3.1.8"
+  dependencies:
+    arg: ^5.0.2
+    chokidar: ^3.5.3
+    color-name: ^1.1.4
+    detective: ^5.2.1
+    didyoumean: ^1.2.2
+    dlv: ^1.1.3
+    fast-glob: ^3.2.11
+    glob-parent: ^6.0.2
+    is-glob: ^4.0.3
+    lilconfig: ^2.0.6
+    normalize-path: ^3.0.0
+    object-hash: ^3.0.0
+    picocolors: ^1.0.0
+    postcss: ^8.4.14
+    postcss-import: ^14.1.0
+    postcss-js: ^4.0.0
+    postcss-load-config: ^3.1.4
+    postcss-nested: 5.0.6
+    postcss-selector-parser: ^6.0.10
+    postcss-value-parser: ^4.2.0
+    quick-lru: ^5.1.1
+    resolve: ^1.22.1
+  peerDependencies:
+    postcss: ^8.0.9
+  bin:
+    tailwind: lib/cli.js
+    tailwindcss: lib/cli.js
+  checksum: 86480301fc6ae1e392c2aba8264ab425bd919078176b010fda724518a7c265e950da5f4120c69c9041509c318207985fa9d680b6f5021e23f8214135a61a54b6
   languageName: node
   linkType: hard
 

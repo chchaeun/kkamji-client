@@ -10,6 +10,9 @@ const nextConfig = {
     path: "",
     domains: ["drive.google.com"],
   },
+  experimental: {
+    reactMode: "concurrent",
+  },
 };
 
 const prod = process.env.NODE_ENV === "production";

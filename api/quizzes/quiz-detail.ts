@@ -1,28 +1,13 @@
 import api from "../my-api";
 import { getCode } from "../session-code";
-import { IFetchQuiz } from "../fetch-types";
 
-export interface IQuizDetail {
-  quizId: number;
-  quizTitle: string;
-  quizContent: string;
-  quizCategory: string;
-  quizNumber: number;
-  isQuizSolved: boolean;
-  isMine: boolean;
-  files: {
-    fileName: string;
-    filePath: string;
-  }[];
+interface Props {
+  quizId: string;
 }
 
-export const fetchQuizDetail = async (idData: IFetchQuiz) => {
-  const { chapterId, quizbookId, quizId } = idData;
-
+export const fetchQuizDetail = async ({ quizId }: Props) => {
   api.defaults.headers.common["code"] = getCode() || "";
 
-  const { data } = await api.get(
-    `/chapters/${chapterId}/quizbooks/${quizbookId}/quizzes/${quizId}`
-  );
+  const { data } = await api.get(`/quizzes/${quizId}`);
   return data;
 };

@@ -17,5 +17,23 @@ module.exports = {
       lg: { min: "1000px" },
     },
   },
-  plugins: [require("tailwind-scrollbar-hide")],
+  plugins: [
+    require("tailwind-scrollbar-hide"),
+    require("tailwindcss-animate"),
+    require("tailwind-scrollbar"),
+    require("daisyui"),
+  ],
+  daisyui: {
+    themes: [
+      {
+        mytheme: {
+          primary: "#5c3cde",
+          secondary: "#ebebeb",
+          info: "#000000",
+          "base-100": "#ffffff",
+        },
+      },
+      "light",
+    ],
+  },
 };

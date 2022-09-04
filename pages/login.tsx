@@ -14,25 +14,14 @@ type LoginValidForm = {
 function Login() {
   const router = useRouter();
 
-  const { data: currentChapter } = useQuery<{ currentChapterId: number }>(
-    ["currentChapter"],
-    async () => {
-      const { data } = await axios.get(
-        "https://a61e9270-0366-4013-a651-fbc3d46384ab.mock.pstmn.io/v1/current-chapter"
-      );
-      return data;
-    },
-    {
-      enabled: !!getCode(),
-      onSuccess: (currentChapter) => {
-        router.push(`/chapters/${currentChapter.currentChapterId}`);
-      },
-    }
-  );
-
   const { mutate: mutateLogin } = useMutation(
     async (loginBody: LoginValidForm) => {
-      return await api.post("/login", loginBody);
+      return await api.post("/user/login", loginBody);
+    },
+    {
+      onSuccess: () => {
+        router.push("/");
+      },
     }
   );
 
@@ -53,7 +42,7 @@ function Login() {
   };
   return (
     <div className="flex flex-col items-center pt-20 gap-10">
-      <h1 className="font-summer text-4xl">깜지.</h1>
+      <h1 className="logo text-4xl">깜지.</h1>
       <form
         onSubmit={handleSubmit(onLoginValid)}
         className="flex flex-col gap-8"
