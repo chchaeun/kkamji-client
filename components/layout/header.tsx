@@ -27,7 +27,6 @@ function Header() {
 
   return (
     <>
-      <MobileNav />
       {!isSameRoute("/login") && (
         <div className="flex sticky w-full top-0 left-0 bg-white z-50 justify-between items-center border-b-2 border-gray-100 text-3xl py-3 px-5">
           <nav className="flex gap-20 sm:w-full sm:justify-between">
@@ -53,8 +52,8 @@ function Header() {
           </nav>
           {isUser ? (
             <Link href={`/dashboard`}>
-              <button className="text-3xl sm:hidden">
-                <Icon icon="bi:person-circle" />
+              <button className="btn btn-info text-white sm:hidden">
+                내 챌린지
               </button>
             </Link>
           ) : (
