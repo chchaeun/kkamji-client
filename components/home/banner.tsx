@@ -16,6 +16,10 @@ const bannerContents = [
     image: "image/kkamji-banner-2.png",
     link: "",
   },
+  {
+    image: "image/kkamji-banner-3.png",
+    link: "",
+  },
 ];
 function Banner() {
   return (

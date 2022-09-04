@@ -153,7 +153,6 @@ const challengeDetail = {
 };
 
 const challengesOpenWeeks = {
-  challengeId: 0,
   totalWeeks: 15,
   weeks: [
     { week: 1, status: "success" },

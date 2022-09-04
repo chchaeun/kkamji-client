@@ -2,13 +2,13 @@ import React, { Fragment, useRef, useState } from "react";
 import { SubmitHandler, useFieldArray, useForm } from "react-hook-form";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { useRouter } from "next/router";
+import { updateQuiz } from "../../../api/submit-quiz/update-quiz";
 import SubmitSuccessModal from "../../../components/quizzes/submit/submit-success-modal";
 import Overlay from "../../../components/layout/overlay";
-import { updateQuiz } from "../../../api/submit-quiz/update-quiz";
 import SubmitCount from "../../../components/quizzes/submit/submit-count";
 import useCurrentWeekQuery from "../../../hooks/current-week-query";
-import { Icon } from "@iconify/react";
 import useSubmitCountQuery from "../../../hooks/submit-count-query";
+import { Icon } from "@iconify/react";
 
 type QuizValidForm = {
   title: string;
@@ -61,6 +61,9 @@ function QuizWritePage() {
         setSubmitSuccessModalOpen(true);
         queryClient.invalidateQueries(["quizCurrentSubmit"]);
       },
+      onError: (err) => {
+        console.log(err);
+      },
     }
   );
 
@@ -82,14 +85,17 @@ function QuizWritePage() {
       quizContent: content,
       quizAnswer: answer,
       quizExplanation: explanation,
-      quizRubric: rubric,
+      quizRubric: JSON.stringify(rubric),
     };
 
     quizSubmitFormData.append(
       "createQuizRequest",
-      JSON.stringify(createQuizRequest)
+      new Blob([JSON.stringify(createQuizRequest)], {
+        type: "application/json",
+      })
     );
     quizSubmitFormData.append("quizFiles", image[0]);
+
     mutateQuizSubmit(quizSubmitFormData);
   };
 
@@ -113,6 +119,10 @@ function QuizWritePage() {
                 type="text"
                 {...register("title", {
                   required: "제목은 필수 입력값입니다.",
+                  maxLength: {
+                    value: 50,
+                    message: "제목은 50자 이하여야 합니다.",
+                  },
                 })}
                 className="shadow appearance-none border rounded w-full mt-2 py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
               />
@@ -127,6 +137,10 @@ function QuizWritePage() {
                 rows={5}
                 {...register("content", {
                   required: "문제 내용은 필수 입력값입니다.",
+                  maxLength: {
+                    value: 3500,
+                    message: "내용은 3500자 이하여야 합니다.",
+                  },
                 })}
                 className="shadow appearance-none border rounded w-full mt-2 py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
               />
@@ -158,6 +172,10 @@ function QuizWritePage() {
               <textarea
                 {...register("answer", {
                   required: "정답은 필수 입력값입니다.",
+                  maxLength: {
+                    value: 3500,
+                    message: "정답은 3500자 이하여야 합니다.",
+                  },
                 })}
                 className="shadow appearance-none border rounded w-full mt-2 py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
               />
@@ -171,6 +189,10 @@ function QuizWritePage() {
                 rows={5}
                 {...register("explanation", {
                   required: "해설은 필수 입력값입니다.",
+                  maxLength: {
+                    value: 3500,
+                    message: "해설은 3500자 이하여야 합니다.",
+                  },
                 })}
                 className="shadow appearance-none border rounded w-full mt-2 py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
               />

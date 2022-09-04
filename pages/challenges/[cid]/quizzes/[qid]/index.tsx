@@ -4,14 +4,17 @@ import Link from "next/link";
 import { useRouter } from "next/router";
 import React, { useState } from "react";
 import { SubmitHandler, useForm } from "react-hook-form";
+import api from "../../../../../api/my-api";
 import { fetchQuizDetail } from "../../../../../api/quizzes/quiz-detail";
 import { updateQuizScore } from "../../../../../api/quizzes/quiz-grade";
 import { updateQuizIsSolved } from "../../../../../api/quizzes/quiz-solve";
 import { fetchQuizzes } from "../../../../../api/quizzes/quizzes";
+import { getCode } from "../../../../../api/session-code";
 import CommentContainer from "../../../../../components/quizzes/comment/comment-container";
 import useChallengeDetailQuery from "../../../../../hooks/challenge-detail-query";
 import { classNames } from "../../../../../styles/classname-maker";
 import {
+  QuizAnswer,
   QuizDetail,
   QuizDetailSelect,
   QuizSummary,
@@ -43,17 +46,20 @@ function QuizDetailPage() {
     AxiosError,
     QuizDetailSelect
   >(["quizDetail", quizId], () => fetchQuizDetail({ quizId }), {
-    select: (quizDetail) => {
-      return { ...quizDetail, quizRubric: JSON.parse(quizDetail.quizRubric) };
-    },
     enabled: !!router.query.qid,
+    onError: (err) => {
+      console.log(err);
+    },
+    select: (data) => {
+      return { ...data, quizRubric: JSON.parse(data.quizRubric) };
+    },
   });
 
   const { data: quizzes } = useQuery<QuizSummary[]>(
     ["quizzes", challengeId],
     () => fetchQuizzes({ challengeId, week }),
     {
-      enabled: !!(challengeId && quizDetail),
+      enabled: !!(router.query.cid && quizDetail),
     }
   );
 
@@ -64,11 +70,22 @@ function QuizDetailPage() {
       onMutate: () => {
         queryClient.invalidateQueries(["quizDetail", quizId]);
       },
+      onError: (err) => {
+        console.log(err);
+      },
     }
   );
 
-  const { mutate: mutateQuizGrade } = useMutation((score: number) =>
-    updateQuizScore({ quizId, score })
+  const { mutate: mutateQuizGrade } = useMutation(
+    (score: number) => updateQuizScore({ quizId, score }),
+    {
+      onSuccess: () => {
+        queryClient.invalidateQueries(["quizDetail", quizId]);
+      },
+      onError: (err) => {
+        console.log(err);
+      },
+    }
   );
 
   const { data: challengeDetail } = useChallengeDetailQuery({ challengeId });
@@ -107,11 +124,15 @@ function QuizDetailPage() {
       if (String(quizzes[i].quizId) === quizId) {
         if (move === "prev" && i - 1 >= 0) {
           router.push(
-            `/challenges/${challengeId}/quizzes/${quizzes[i - 1].quizId}`
+            `/challenges/${challengeId}/quizzes/${
+              quizzes[i - 1].quizId
+            }?week=${week}`
           );
         } else if (move === "next" && i + 1 < quizzes.length) {
           router.push(
-            `/challenges/${challengeId}/quizzes/${quizzes[i + 1].quizId}`
+            `/challenges/${challengeId}/quizzes/${
+              quizzes[i + 1].quizId
+            }?week=${week}`
           );
         }
       }
@@ -159,7 +180,7 @@ function QuizDetailPage() {
         <h2 className="font-semibold text-2xl">{quizDetail?.quizTitle}</h2>
         <span>작성자: {quizDetail?.writerName}</span>
       </div>
-      <div className="grid grid-cols-2 gap-10 px-20 h-[79%] sm:flex sm:flex-col sm:h-fit sm:px-10">
+      <div className="grid grid-cols-2 gap-10 px-20 pb-20 h-[79%] sm:flex sm:flex-col sm:h-fit sm:px-10">
         <div className="h-full pr-10 pb-2 overflow-y-scroll scrollbar-thin scrollbar-thumb-gray-200 scrollbar-track-gray-100 sm:pr-0">
           <div className="flex flex-col gap-10">
             <p className="flex flex-col gap-5 justify-between p-5 bg-white rounded-lg shadow-sm border-[1px] border-gray-300">
@@ -237,39 +258,51 @@ function QuizDetailPage() {
                   <div className="w-full flex flex-col gap-3">
                     <h2 className="text-xl">해설</h2>
                     <div className="p-5 bg-white rounded-lg shadow-sm border-[1px] border-gray-300">
-                      {quizDetail?.quizExplanation}
+                      {quizDetail?.quizAnswer}
                     </div>
                   </div>
-                  <div className="w-full flex flex-col gap-3 items-end">
-                    <h2 className="w-full text-xl">채점</h2>
-                    {quizDetail?.quizRubric?.map((rubric, index) => (
-                      <div
-                        key={index}
-                        className="flex items-center w-full pl-4 bg-white rounded-lg shadow-sm border-[1px] border-gray-300"
-                      >
-                        <input
-                          id={`bordered-radio-${index}`}
-                          type="radio"
-                          value={rubric.score}
-                          name="bordered-radio"
-                          className="w-4 h-4 text-[#5c3cde] bg-gray-100 border-gray-700"
-                          onChange={onRubricChange}
-                        />
-                        <label
-                          htmlFor={`bordered-radio-${index}`}
-                          className="flex justify-between pr-3 py-4 ml-2 w-full text-sm font-medium text-gray-900"
-                        >
-                          <span>{rubric.content}</span>
-                          <span>{rubric.score}점</span>
-                        </label>
-                      </div>
-                    ))}
-                    <button
-                      onClick={onGradeClick}
-                      className="bg-[#5c3cde] hover:bg-[#4026ab] text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline cursor-pointer"
-                    >
-                      등록
-                    </button>
+                  <div className="w-full flex flex-col gap-3 items-end mb-10">
+                    <h2 className="w-full text-xl">
+                      {!quizDetail?.solveScore ? "채점하기" : "채점 결과"}
+                    </h2>
+                    <>
+                      {quizDetail?.solveScore ? (
+                        <div className="w-full p-5 bg-white rounded-lg shadow-sm border-[1px] border-gray-300">
+                          {quizDetail.solveScore} 점
+                        </div>
+                      ) : (
+                        <>
+                          {quizDetail?.quizRubric?.map((rubric, index) => (
+                            <div
+                              key={index}
+                              className="flex items-center w-full pl-4 bg-white rounded-lg shadow-sm border-[1px] border-gray-300"
+                            >
+                              <input
+                                id={`bordered-radio-${index}`}
+                                type="radio"
+                                value={rubric.score}
+                                name="bordered-radio"
+                                className="w-4 h-4 text-[#5c3cde] bg-gray-100 border-gray-700"
+                                onChange={onRubricChange}
+                              />
+                              <label
+                                htmlFor={`bordered-radio-${index}`}
+                                className="flex justify-between pr-3 py-4 ml-2 w-full text-sm font-medium text-gray-900"
+                              >
+                                <span>{rubric.content}</span>
+                                <span>{rubric.score}점</span>
+                              </label>
+                            </div>
+                          ))}
+                          <button
+                            onClick={onGradeClick}
+                            className="bg-[#5c3cde] hover:bg-[#4026ab] text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline cursor-pointer"
+                          >
+                            등록
+                          </button>
+                        </>
+                      )}
+                    </>
                   </div>
                 </div>
               </>
@@ -278,7 +311,7 @@ function QuizDetailPage() {
           </div>
         </div>
       </div>
-      <div className="sticky flex items-center justify-between gap-3 w-full left-0 bottom-0 p-3 border-t-[1px] bg-white z-10">
+      <div className="fixed flex items-center justify-between gap-3 w-full left-0 bottom-0 p-3 border-t-[1px] bg-white z-10">
         <button
           type="button"
           onClick={onTocClick}
@@ -336,7 +369,9 @@ function QuizDetailPage() {
                 onClick={() => setShowToc(false)}
               >
                 <Link
-                  href={`/challenges/${challengeId}/quizzes/${quiz.quizId}`}
+                  href={`/challenges/${challengeId}/quizzes/${quiz.quizId}?${
+                    router.asPath.split("?")[1]
+                  }`}
                 >
                   {quiz.quizTitle}
                 </Link>

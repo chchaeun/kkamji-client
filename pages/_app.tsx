@@ -68,9 +68,7 @@ function MyApp({ Component, pageProps }: AppProps) {
           `,
               }}
             />
-            <ErrorBoundary>
-              <Component {...pageProps} />
-            </ErrorBoundary>
+            <Component {...pageProps} />
           </Layout>
         </Hydrate>
       </QueryClientProvider>

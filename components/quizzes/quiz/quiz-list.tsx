@@ -16,13 +16,14 @@ function QuizList({ quizzes }: Props) {
           <th className="bg-gray-200">번호</th>
           <th className="bg-gray-200">제목</th>
           <th className="bg-gray-200">작성자</th>
+          <th className="bg-gray-200">주차</th>
           <th className="bg-gray-200">해결</th>
         </tr>
       </thead>
       <tbody>
         {quizzes?.map((quiz) => (
           <Link
-            href={`${router.asPath.split("?week=")[0]}/${quiz.quizId}/?week=${
+            href={`/challenges/${challengeId}/quizzes/${quiz.quizId}/?week=${
               router.asPath.split("?week=")[1]
             }`}
             key={quiz.quizId}
@@ -31,7 +32,8 @@ function QuizList({ quizzes }: Props) {
               <td>{quiz.quizId}</td>
               <td>{quiz.quizTitle}</td>
               <td>{quiz.writerName}</td>
-              {quiz.isSolved && (
+              <td>{quiz.quizWeek}</td>
+              {quiz.isSolved ? (
                 <td>
                   <Icon
                     icon="bi:patch-check-fill"
@@ -39,6 +41,8 @@ function QuizList({ quizzes }: Props) {
                     height={24}
                   />
                 </td>
+              ) : (
+                <td></td>
               )}
             </tr>
           </Link>

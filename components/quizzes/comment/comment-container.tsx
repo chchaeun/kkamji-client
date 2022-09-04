@@ -6,21 +6,11 @@ import { useForm } from "react-hook-form";
 import { fetchComments } from "../../../api/comments/comments";
 import { updateComment } from "../../../api/comments/update-comment";
 import api from "../../../api/my-api";
-import { getCode } from "../../../api/session-code";
+import { Comment } from "../../../types/Comment";
 import { getDateFormat } from "../../../utils/date-fotmat";
 type CommentValidForm = {
   comment: string;
 };
-
-interface IComment {
-  commentId: number;
-  commentUserName: string;
-  commentContent: string;
-  createdDate: string;
-  modifiedDate: string;
-  isMine: boolean;
-  isWriter: boolean;
-}
 
 function CommentContainer() {
   const router = useRouter();
@@ -28,22 +18,20 @@ function CommentContainer() {
 
   const [showComment, setShowComment] = useState(false);
 
-  const chapterId = String(router.query.cid);
-  const quizbookId = String(router.query.qbid);
   const quizId = String(router.query.qid);
 
   const { register, handleSubmit, resetField } = useForm<CommentValidForm>();
 
-  const { data: comments } = useQuery<IComment[]>(
+  const { data: comments } = useQuery<Comment[]>(
     ["comments", quizId],
     () => fetchComments({ quizId }),
     {
-      enabled: !!(chapterId && quizbookId && quizId),
+      enabled: !!router.query.qid,
     }
   );
 
   const { mutate: mutateCommentSubmit } = useMutation(
-    (commentBody: { commentContent: string }) =>
+    (commentBody: { content: string }) =>
       updateComment({ requestData: { commentBody, quizId } }),
 
     {
@@ -52,6 +40,7 @@ function CommentContainer() {
         resetField("comment");
       },
       onError: (err) => {
+        console.log(err);
         queryClient.invalidateQueries(["comments", quizId]);
         resetField("comment");
       },
@@ -73,7 +62,7 @@ function CommentContainer() {
 
   const onCommentValid = ({ comment }: CommentValidForm) => {
     const commentBody = {
-      commentContent: comment,
+      content: comment,
     };
     mutateCommentSubmit(commentBody);
   };
@@ -122,10 +111,9 @@ function CommentContainer() {
                 <div className="flex justify-between items-center">
                   <div className="flex gap-2 items-center">
                     <span className="text-base font-semibold">
-                      {comment.commentUserName}
+                      {comment.writerName}
                     </span>
-
-                    {comment.isWriter && (
+                    {comment.isQuizWriter && (
                       <span className="text-sm text-[#5c3cde]">작성자</span>
                     )}
                   </div>
@@ -149,7 +137,7 @@ function CommentContainer() {
                   ))}
                 </p>
                 <span className="text-sm text-gray-600">
-                  {getDateFormat(comment.createdDate)}
+                  {getDateFormat(comment.commentCreatedDate)}
                 </span>
               </div>
             ))}

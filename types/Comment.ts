@@ -1,8 +1,10 @@
 export interface Comment {
   commentId: number;
-  commentUserName: string;
   commentContent: string;
-  createdDate: string;
-  modifiedDate: string;
+  commentCreatedDate: string;
+  commentModifiedDate: string;
   isMine: boolean;
+  isQuizWriter: boolean;
+  writerName: string;
+  quizId: number;
 }

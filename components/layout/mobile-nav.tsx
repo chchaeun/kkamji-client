@@ -1,79 +1,51 @@
-import { useQuery } from "@tanstack/react-query";
-import axios from "axios";
 import Link from "next/link";
 import { useRouter } from "next/router";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useRecoilState } from "recoil";
 import { getCode } from "../../api/session-code";
 import { showNavState } from "../../stores/header";
 import { classNames } from "../../styles/classname-maker";
-
-interface Navigation {
-  name: string;
-  link: string;
-}
 
 function MobileNav() {
   const router = useRouter();
 
   const [showNav, setShowNav] = useRecoilState(showNavState);
 
-  const [navigation, setNavigation] = useState<Navigation[]>();
-
-  const { data: currentChapter } = useQuery<{ currentChapterId: number }>(
-    ["currentChapter"],
-    async () => {
-      const { data } = await axios.get(
-        "https://a61e9270-0366-4013-a651-fbc3d46384ab.mock.pstmn.io/v1/current-chapter"
-      );
-      return data;
-    },
-    {
-      onSuccess: (currentChapter) => {
-        let newNavigation = [
-          {
-            name: "깜지 소개",
-            link: "/introduce",
-          },
-        ];
-        if (getCode()) {
-          newNavigation = newNavigation.concat({
-            name: "내 챌린지",
-            link: `/dashboard`,
-          });
-        }
-        setNavigation(newNavigation);
-      },
-    }
-  );
-
   const handleNavigation = () => {
     setShowNav(false);
   };
+  const isUser = getCode() ? true : false;
 
   return (
     <nav
       className={classNames(
         showNav
-          ? "flex flex-col justify-between fixed top-0 w-full h-full pt-32 pb-10 px-10 bg-white bg-opacity-95 z-10"
-          : "hidden"
+          ? "flex flex-col justify-between fixed top-0 w-full h-full pt-32 pb-10 px-10 bg-white bg-opacity-95 z-20"
+          : "hidden",
+        "lg:hidden animate-in fade-in-10"
       )}
     >
       <ul className="flex flex-col gap-5 text-xl" onClick={handleNavigation}>
-        {navigation?.map((element, index) => (
-          <li
-            key={index}
-            className={classNames(
-              router.pathname === element.link
-                ? "font-semibold text-black"
-                : "text-gray-500"
-            )}
-          >
-            <Link href={element.link}>{element.name}</Link>
-          </li>
-        ))}
+        <li
+          className={classNames(
+            router.pathname === "/introduce"
+              ? "font-semibold text-black"
+              : "text-gray-500"
+          )}
+        >
+          <Link href={"/introduce"}>깜지 소개</Link>
+        </li>
       </ul>
-      {!getCode() && (
+      {isUser ? (
+        <Link href={`/dashboard`}>
+          <button
+            onClick={handleNavigation}
+            className="btn btn-info text-white"
+          >
+            내 챌린지
+          </button>
+        </Link>
+      ) : (
         <Link href="/login">
           <button
             onClick={handleNavigation}

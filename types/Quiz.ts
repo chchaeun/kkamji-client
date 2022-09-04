@@ -4,10 +4,9 @@ export interface QuizDetail {
   quizWeek: number;
   quizCategory: string;
   quizContent: string;
-  quizAnswer: string;
-  quizExplanation: string;
+  quizAnswer: string | null;
+  quizExplanation: string | null;
   quizRubric: string;
-  quizSource: string;
   quizCreatedDate: string;
   quizModifiedDate: string;
   isMine: boolean;
@@ -30,18 +29,65 @@ export interface QuizDetailSelect {
   quizWeek: number;
   quizCategory: string;
   quizContent: string;
+  quizAnswer: string | null;
+  quizExplanation: string | null;
+  quizRubric: {
+    score: number;
+    content: string;
+  }[];
+  quizCreatedDate: string;
+  quizModifiedDate: string;
+  isMine: boolean;
+  solveAnswer: string | null;
+  solveScore: number | null;
+  writerName: string;
+  challengeId: number;
+
+  quizFiles: {
+    id: number;
+    qfName: string;
+    qfType: string;
+    qfPath: string;
+    qfCreatedDate: string;
+    qfModifiedDate: string;
+  }[];
+}
+export interface MyQuizDetail {
+  quizId: number;
+  quizTitle: string;
+  quizWeek: number;
+  quizCategory: string;
+  quizContent: string;
+  quizAnswer: string;
+  quizExplanation: string;
+  quizRubric: string;
+  quizCreatedDate: string;
+  quizModifiedDate: string;
+  writerName: string;
+  challengeId: number;
+  quizFiles: {
+    id: number;
+    qfName: string;
+    qfType: string;
+    qfPath: string;
+    qfCreatedDate: string;
+    qfModifiedDate: string;
+  }[];
+}
+export interface MyQuizDetailSelect {
+  quizId: number;
+  quizTitle: string;
+  quizWeek: number;
+  quizCategory: string;
+  quizContent: string;
   quizAnswer: string;
   quizExplanation: string;
   quizRubric: {
     score: number;
     content: string;
   }[];
-  quizSource: string;
   quizCreatedDate: string;
   quizModifiedDate: string;
-  isMine: boolean;
-  solveAnswer: string | null;
-  solveScore: number | null;
   writerName: string;
   challengeId: number;
   quizFiles: {

@@ -10,7 +10,7 @@ interface Props {
 
 function SubmitSuccessModal({ week }: Props) {
   const router = useRouter();
-
+  const challengeId = String(router.query.cid);
   const { data: submitCount } = useSubmitCountQuery();
 
   const onAgainClick = () => {
@@ -18,13 +18,13 @@ function SubmitSuccessModal({ week }: Props) {
   };
 
   const onMainClick = () => {
-    router.push("/?week=4");
+    router.push(`/challenges/${challengeId}`);
   };
 
   return (
     <>
       {submitCount && (
-        <div className="grid grid-rows-6 grid-cols-10 items-center justify-center gap-5 fixed w-2/5 h-1/3  sm:w-3/4 sm:h-2/5 left-1/2 top-1/4 -translate-x-1/2 bg-white rounded-lg z-10">
+        <div className="grid grid-rows-6 grid-cols-10 items-center justify-center gap-5 fixed w-2/5 h-1/3  sm:w-3/4 sm:h-2/5 left-1/2 top-1/4 -translate-x-1/2 bg-white rounded-lg z-10 animate-in fade-in-10">
           <Icon
             icon="bi:x-lg"
             color="black"
@@ -34,7 +34,7 @@ function SubmitSuccessModal({ week }: Props) {
           />
           <p className="row-start-3 col-start-3 col-span-6 sm:col-start-2 sm:col-span-8 flex flex-col items-center sm:items-start text-lg sm:text-base">
             <span>문제가 제출되었습니다.</span>
-            {submitCount === 2 ? (
+            {submitCount >= 2 ? (
               <span>
                 이번주 미션을 모두 완료했습니다.
                 <br />
@@ -46,22 +46,14 @@ function SubmitSuccessModal({ week }: Props) {
               </span>
             )}
           </p>
-          {submitCount === 2 ? (
-            <Link
-              href="/?week=4"
-              className="row-start-5 col-start-4 col-span-4 bg-[#5c3cde] hover:bg-[#4026ab] text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline cursor-pointer"
-            >
-              메인으로 가기
-            </Link>
-          ) : (
-            <button
-              type="button"
-              onClick={onAgainClick}
-              className="row-start-5 col-start-4 col-span-4 sm:col-start-3 sm:col-span-6 bg-[#5c3cde] hover:bg-[#4026ab] text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline cursor-pointer"
-            >
-              한 문제 더 제출하기
-            </button>
-          )}
+
+          <button
+            type="button"
+            onClick={onAgainClick}
+            className="row-start-5 col-start-4 col-span-4 sm:col-start-3 sm:col-span-6 bg-[#5c3cde] hover:bg-[#4026ab] text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline cursor-pointer"
+          >
+            한 문제 더 제출하기
+          </button>
         </div>
       )}
     </>

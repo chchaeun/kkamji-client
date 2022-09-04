@@ -1,3 +1,4 @@
+import Link from "next/link";
 import React from "react";
 import useChallengeDetailQuery from "../../hooks/challenge-detail-query";
 interface Props {
@@ -16,7 +17,11 @@ function ChallengeOverview({ challengeId }: Props) {
             className="rounded-xl sm:w-1/3"
           />
           <div className="flex flex-col gap-3">
-            <h1 className="text-2xl">{challengeDetail.title}</h1>
+            <Link href={`/challenges/${challengeId}`}>
+              <h1 className="text-2xl cursor-pointer hover:underline">
+                {challengeDetail.title} {challengeDetail.chapter}기
+              </h1>
+            </Link>
             <div className="flex flex-col">
               <span className="text-gray-700">
                 {challengeDetail.university} {challengeDetail.department}

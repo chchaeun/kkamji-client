@@ -19,7 +19,7 @@ function WeekFilter() {
     if (openWeeks?.weeks) {
       let allSuccessWeek = Array<number>();
       openWeeks.weeks.forEach((week) => {
-        if (week.status === "success") {
+        if (week.status === "READABLE") {
           allSuccessWeek.push(week.week);
         }
       });
