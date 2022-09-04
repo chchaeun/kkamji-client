@@ -35,22 +35,12 @@ function MobileNav() {
             name: "깜지 소개",
             link: "/introduce",
           },
-          {
-            name: "챌린지",
-            link: "/challenges",
-          },
         ];
         if (getCode()) {
-          newNavigation = newNavigation.concat(
-            {
-              name: "문제 작성",
-              link: `/chapters/${currentChapter.currentChapterId}/write`,
-            },
-            {
-              name: "MY",
-              link: `/dashboard`,
-            }
-          );
+          newNavigation = newNavigation.concat({
+            name: "내 챌린지",
+            link: `/dashboard`,
+          });
         }
         setNavigation(newNavigation);
       },

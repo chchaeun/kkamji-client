@@ -84,7 +84,7 @@ export interface QuizSummary {
 export interface QuizEdit {
   quizAnswer: string;
   quizExplanation: string;
-  quizSource: string;
+  quizRubric: { score: number; content: string }[];
 }
 
 export interface QuizSubmitCount {

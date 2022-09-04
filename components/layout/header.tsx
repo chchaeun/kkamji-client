@@ -4,8 +4,6 @@ import { useRouter } from "next/router";
 import { Icon } from "@iconify/react";
 import { useRecoilState } from "recoil";
 import { showNavState } from "../../stores/header";
-import { useQuery } from "@tanstack/react-query";
-import axios from "axios";
 import { classNames } from "../../styles/classname-maker";
 import { getCode } from "../../api/session-code";
 import MobileNav from "./mobile-nav";
@@ -15,21 +13,9 @@ function Header() {
 
   const isUser = getCode() ? true : false;
 
-  const { data: currentChapter } = useQuery<{ currentChapterId: number }>(
-    ["currentChapter"],
-    async () => {
-      const { data } = await axios.get(
-        "https://a61e9270-0366-4013-a651-fbc3d46384ab.mock.pstmn.io/v1/current-chapter"
-      );
-      return data;
-    }
-  );
-
   const onRankingClick = () => {
     setShowNav((prev) => !prev);
   };
-
-  // route 판단 함수 추가
 
   const isSameRoute = (route: string) => {
     if (router.pathname === route) {

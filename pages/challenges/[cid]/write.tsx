@@ -1,11 +1,10 @@
 import React, { Fragment, useRef, useState } from "react";
 import { SubmitHandler, useFieldArray, useForm } from "react-hook-form";
-import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
+import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { useRouter } from "next/router";
 import SubmitSuccessModal from "../../../components/quizzes/submit/submit-success-modal";
 import Overlay from "../../../components/layout/overlay";
 import { updateQuiz } from "../../../api/submit-quiz/update-quiz";
-import { fetchSubmitCount } from "../../../api/submit-quiz/submit-count";
 import SubmitCount from "../../../components/quizzes/submit/submit-count";
 import useCurrentWeekQuery from "../../../hooks/current-week-query";
 import { Icon } from "@iconify/react";
