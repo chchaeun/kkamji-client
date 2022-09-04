@@ -12,9 +12,9 @@ function OpenWeekList({ openWeeks }: Props) {
           key={week.week}
           className={classNames(
             week.status === "CLOSED" || week.status === "UNREADABLE"
-              ? "bg-[#ebebeb] cursor-default"
-              : "bg-[#b2a4e5] text-white cursor-pointer",
-            "flex justify-center items-center w-7 h-7 rounded font-semibold"
+              ? "bg-[#ebebeb]"
+              : "bg-[#b2a4e5] text-white",
+            "flex justify-center items-center w-7 h-7 rounded font-semibold cursor-default"
           )}
         >
           {week.status === "UNREADABLE" ? "X" : week.week}
