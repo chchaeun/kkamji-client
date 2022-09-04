@@ -35,6 +35,15 @@ function MobileNav() {
         >
           <Link href={"/introduce"}>깜지 소개</Link>
         </li>
+        <li
+          className={classNames(
+            router.pathname === "/manual"
+              ? "font-semibold text-black"
+              : "text-gray-500"
+          )}
+        >
+          <Link href={"/manual"}>문제 매뉴얼</Link>
+        </li>
       </ul>
       {isUser ? (
         <Link href={`/dashboard`}>
