@@ -33,15 +33,17 @@ function MyApp({ Component, pageProps }: AppProps) {
   const router = useRouter();
 
   useEffect(() => {
-    const handleRouteChange = (url: URL) => {
-      pageview(url);
-    };
-    router.events.on("routeChangeComplete", handleRouteChange);
-    router.events.on("hashChangeComplete", handleRouteChange);
-    return () => {
-      router.events.off("routeChangeComplete", handleRouteChange);
+    if (document.location.hostname.search("kkamjidot.com") !== -1) {
+      const handleRouteChange = (url: URL) => {
+        pageview(url);
+      };
+      router.events.on("routeChangeComplete", handleRouteChange);
       router.events.on("hashChangeComplete", handleRouteChange);
-    };
+      return () => {
+        router.events.off("routeChangeComplete", handleRouteChange);
+        router.events.on("hashChangeComplete", handleRouteChange);
+      };
+    }
   }, [router.events]);
 
   return (
@@ -59,13 +61,13 @@ function MyApp({ Component, pageProps }: AppProps) {
               strategy="afterInteractive"
               dangerouslySetInnerHTML={{
                 __html: `
-            window.dataLayer = window.dataLayer || [];
-            function gtag(){dataLayer.push(arguments);}
-            gtag('js', new Date());
-            gtag('config', '${GA_TRACKING_ID}', {
-              page_path: window.location.pathname,
-            });
-          `,
+                window.dataLayer = window.dataLayer || [];
+                function gtag(){dataLayer.push(arguments);}
+                gtag('js', new Date());
+                gtag('config', '${GA_TRACKING_ID}', {
+                  page_path: window.location.pathname,
+                });
+                `,
               }}
             />
             <Component {...pageProps} />
