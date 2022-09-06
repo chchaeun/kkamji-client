@@ -1,9 +1,11 @@
+import { Icon } from "@iconify/react";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { AxiosError } from "axios";
 import Link from "next/link";
 import { useRouter } from "next/router";
 import React, { useState } from "react";
 import { SubmitHandler, useForm } from "react-hook-form";
+import api from "../../../../../api/my-api";
 import { fetchQuizDetail } from "../../../../../api/quizzes/quiz-detail";
 import { updateQuizScore } from "../../../../../api/quizzes/quiz-grade";
 import { updateQuizIsSolved } from "../../../../../api/quizzes/quiz-solve";
@@ -79,6 +81,41 @@ function QuizDetailPage() {
     }
   );
 
+  const { mutate: mutateQuizRate } = useMutation(
+    async ({ rate }: { rate: "GOOD" | "BAD" | null }) => {
+      return await api.put(`/quizzes/${quizId}/rate`, rate);
+    },
+    {
+      onMutate: async (data) => {
+        await queryClient.cancelQueries(["quizDetail", quizId]);
+
+        const previousQuizDetail = queryClient.getQueryData<QuizDetailSelect>([
+          "quizDetail",
+          quizId,
+        ]);
+
+        if (previousQuizDetail) {
+          queryClient.setQueryData<QuizDetailSelect>(["quizDetail", quizId], {
+            ...previousQuizDetail,
+            quizRate: data.rate,
+            countOfGood: previousQuizDetail.countOfGood + 1,
+          });
+        }
+
+        return { previousQuizDetail };
+      },
+      onError: (err, newQuizDetail, context) => {
+        queryClient.setQueryData(
+          ["quizDetail", quizId],
+          context?.previousQuizDetail
+        );
+      },
+      onSettled: () => {
+        queryClient.invalidateQueries(["quizDetail", quizId]);
+      },
+    }
+  );
+
   const { data: challengeDetail, error: challengeError } =
     useChallengeDetailQuery({ challengeId });
 
@@ -95,6 +132,10 @@ function QuizDetailPage() {
       );
     }
   }
+
+  const onRateClick = (rate: "GOOD" | "BAD" | null) => {
+    mutateQuizRate({ rate });
+  };
 
   const onSolveValid: SubmitHandler<SolveValidForm> = ({ solve }) => {
     mutateQuizIsSolved(solve);
@@ -170,11 +211,40 @@ function QuizDetailPage() {
     setShowToc((prev) => !prev);
   };
 
+  console.log(quizDetail);
+
   return (
     <div className="absolute top-0 w-full h-screen pt-20 sm:h-full sm:mt-16 sm:pt-2">
-      <div className="flex gap-5 items-center py-5 px-20 text-gray-700 text-sm sm:px-10">
-        <h2 className="font-semibold text-2xl">{quizDetail?.quizTitle}</h2>
-        <span>작성자: {quizDetail?.writerName}</span>
+      <div className="flex justify-between items-center w-1/2 py-5 px-20 sm:px-10">
+        <div className="flex gap-5 items-center text-gray-700 text-sm">
+          <h2 className="font-semibold text-2xl">{quizDetail?.quizTitle}</h2>
+          <span>작성자: {quizDetail?.writerName}</span>
+        </div>
+        <div className="flex items-start gap-4">
+          <span className="flex items-center gap-1">
+            {quizDetail?.quizRate === "GOOD" ? (
+              <button onClick={() => onRateClick(null)}>
+                <Icon icon="icon-park-solid:good-two" height={22} />
+              </button>
+            ) : (
+              <button onClick={() => onRateClick("GOOD")}>
+                <Icon icon="icon-park-outline:good-two" height={22} />
+              </button>
+            )}
+            <span className="text-sm">
+              {quizDetail?.countOfGood ? quizDetail?.countOfGood : 0}
+            </span>
+          </span>
+          {quizDetail?.quizRate === "BAD" ? (
+            <button onClick={() => onRateClick(null)} className="pt-1">
+              <Icon icon="icon-park-solid:bad-two" height={22} />
+            </button>
+          ) : (
+            <button onClick={() => onRateClick("BAD")} className="pt-1">
+              <Icon icon="icon-park-outline:bad-two" height={22} />
+            </button>
+          )}
+        </div>
       </div>
       <div className="grid grid-cols-2 gap-10 px-20 h-[79%] sm:flex sm:flex-col sm:h-fit sm:px-10 sm:pb-20">
         <div className="h-full pr-10 pb-2 overflow-y-scroll scrollbar-thin scrollbar-thumb-gray-200 scrollbar-track-gray-100 sm:pr-0">
