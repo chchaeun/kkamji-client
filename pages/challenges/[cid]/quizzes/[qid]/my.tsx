@@ -139,6 +139,27 @@ function QuizDetailPage() {
                   </div>
                 </div>
               </div>
+              <div className="flex flex-col items-end gap-5">
+                <div className="w-full flex flex-col gap-3">
+                  <h2 className="text-xl">채점 기준</h2>
+                  <table className="table">
+                    <thead>
+                      <tr>
+                        <th className="bg-gray-200 w-2">점수</th>
+                        <th className="bg-gray-200">내용</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      {quizDetail?.quizRubric.map((rubric, index) => (
+                        <tr key={index}>
+                          <td>{rubric.score}</td>
+                          <td>{rubric.content}</td>
+                        </tr>
+                      ))}
+                    </tbody>
+                  </table>
+                </div>
+              </div>
             </>
             <CommentContainer />
           </div>
