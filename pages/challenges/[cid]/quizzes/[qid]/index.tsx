@@ -98,7 +98,12 @@ function QuizDetailPage() {
           queryClient.setQueryData<QuizDetailSelect>(["quizDetail", quizId], {
             ...previousQuizDetail,
             quizRate: data.rate,
-            countOfGood: previousQuizDetail.countOfGood + 1,
+            cntOfGood:
+              previousQuizDetail.quizRate === "GOOD"
+                ? previousQuizDetail.cntOfGood - 1
+                : data.rate === "GOOD"
+                ? previousQuizDetail.cntOfGood + 1
+                : previousQuizDetail.cntOfGood,
           });
         }
 
@@ -232,7 +237,7 @@ function QuizDetailPage() {
               </button>
             )}
             <span className="text-sm">
-              {quizDetail?.countOfGood ? quizDetail?.countOfGood : 0}
+              {quizDetail?.cntOfGood ? quizDetail?.cntOfGood : 0}
             </span>
           </span>
           {quizDetail?.quizRate === "BAD" ? (

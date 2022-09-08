@@ -15,7 +15,7 @@ export interface QuizDetail {
   writerName: string;
   challengeId: number;
   quizRate: "GOOD" | "BAD" | null;
-  countOfGood: number;
+  cntOfGood: number;
   quizFiles: {
     id: number;
     qfName: string;
@@ -46,7 +46,7 @@ export interface MyQuizDetail {
   challengeId: number;
 
   quizRate: "GOOD" | "BAD" | null;
-  countOfGood: number;
+  cntOfGood: number;
   quizFiles: {
     id: number;
     qfName: string;
@@ -88,7 +88,7 @@ export interface QuizSummary {
   solveScore: number | null;
   writerName: string;
   challengeId: number;
-  countOfGood: number;
+  cntOfGood: number;
 }
 
 export interface QuizEdit {
