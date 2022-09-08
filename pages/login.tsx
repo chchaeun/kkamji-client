@@ -19,8 +19,12 @@ function Login() {
       return await api.post("/user/login", loginBody);
     },
     {
-      onSuccess: () => {
+      onSuccess: (res, req) => {
+        sessionStorage.setItem("code", req.code);
         router.push("/");
+      },
+      onError: () => {
+        alert("로그인에 실패했습니다.");
       },
     }
   );
@@ -37,7 +41,6 @@ function Login() {
       name,
       code,
     };
-    sessionStorage.setItem("code", loginBody.code);
     mutateLogin(loginBody);
   };
   return (

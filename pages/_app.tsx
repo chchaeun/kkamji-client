@@ -33,7 +33,10 @@ function MyApp({ Component, pageProps }: AppProps) {
   const router = useRouter();
 
   useEffect(() => {
-    if (document.location.hostname.search("kkamjidot.com") !== -1) {
+    if (
+      document.location.hostname.search("kkamjidot.com") !== -1 &&
+      document.location.hostname.search("test") === -1
+    ) {
       const handleRouteChange = (url: URL) => {
         pageview(url);
       };
