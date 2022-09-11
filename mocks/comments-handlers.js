@@ -43,12 +43,11 @@ const comments = [
 ];
 
 export const commentsHandlers = [
-  rest.get(`${BASE_URL}/quizzes/:qid/comments`, (req, res, ctx) => {
-    return res(ctx.status(200), ctx.json(comments));
-  }),
-
-  rest.post(`${BASE_URL}/quizzes/:qid/comments`, (req, res, ctx) => {
-    comments.push(req.body);
-    return res(ctx.status(201));
-  }),
+  // rest.get(`${BASE_URL}/quizzes/:qid/comments`, (req, res, ctx) => {
+  //   return res(ctx.status(200), ctx.json(comments));
+  // }),
+  // rest.post(`${BASE_URL}/quizzes/:qid/comments`, (req, res, ctx) => {
+  //   comments.push(req.body);
+  //   return res(ctx.status(201));
+  // }),
 ];
