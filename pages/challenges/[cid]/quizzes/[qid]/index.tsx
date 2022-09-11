@@ -1,15 +1,27 @@
-import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
+import { Icon } from "@iconify/react";
+import {
+  dehydrate,
+  QueryClient,
+  useMutation,
+  useQuery,
+  useQueryClient,
+} from "@tanstack/react-query";
 import { AxiosError } from "axios";
+import { GetServerSideProps } from "next";
 import Link from "next/link";
 import { useRouter } from "next/router";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { SubmitHandler, useForm } from "react-hook-form";
+import api from "../../../../../api/my-api";
 import { fetchQuizDetail } from "../../../../../api/quizzes/quiz-detail";
 import { updateQuizScore } from "../../../../../api/quizzes/quiz-grade";
 import { updateQuizIsSolved } from "../../../../../api/quizzes/quiz-solve";
 import { fetchQuizzes } from "../../../../../api/quizzes/quizzes";
 import CommentContainer from "../../../../../components/quizzes/comment/comment-container";
+import QuizDetailNav from "../../../../../components/quizzes/quiz/quiz-detail-nav";
+import QuizRate from "../../../../../components/quizzes/rate/quiz-rate";
 import useChallengeDetailQuery from "../../../../../hooks/challenge-detail-query";
+import useQuizDetailQuery from "../../../../../hooks/quiz-detail";
 import { classNames } from "../../../../../styles/classname-maker";
 import {
   QuizDetail,
@@ -21,16 +33,28 @@ type SolveValidForm = {
   solve: string;
 };
 
+export const getServerSideProps: GetServerSideProps = async (context) => {
+  const queryClient = new QueryClient();
+  const quizId = String(context?.query?.qid);
+  await queryClient.prefetchQuery(["quizDetail", quizId], () =>
+    fetchQuizDetail({ quizId })
+  );
+  return {
+    props: {
+      dehydratedState: dehydrate(queryClient),
+    },
+  };
+};
+
 function QuizDetailPage() {
   const [showAnswer, setShowAnswer] = useState(false);
   const router = useRouter();
   const challengeId = String(router.query.cid);
   const quizId = String(router.query.qid);
   const week = String(router.query.week);
-  const queryClient = useQueryClient();
 
+  const queryClient = useQueryClient();
   const [rubricScore, setRubricScore] = useState<number>();
-  const [showToc, setShowToc] = useState(false);
 
   const {
     register: solveRegister,
@@ -38,18 +62,7 @@ function QuizDetailPage() {
     formState: { errors: solveErrors },
   } = useForm<SolveValidForm>();
 
-  const { data: quizDetail, error } = useQuery<
-    QuizDetail,
-    AxiosError,
-    QuizDetailSelect
-  >(["quizDetail", quizId], () => fetchQuizDetail({ quizId }), {
-    enabled: !!router.query.qid,
-    onError: (err) => {},
-    select: (data) => {
-      return { ...data, quizRubric: JSON.parse(data.quizRubric) };
-    },
-  });
-
+  const { data: quizDetail, error } = useQuizDetailQuery();
   const { data: quizzes } = useQuery<QuizSummary[]>(
     ["quizzes", challengeId],
     () => fetchQuizzes({ challengeId, week }),
@@ -78,7 +91,6 @@ function QuizDetailPage() {
       onError: (err) => {},
     }
   );
-
   const { data: challengeDetail, error: challengeError } =
     useChallengeDetailQuery({ challengeId });
 
@@ -111,47 +123,6 @@ function QuizDetailPage() {
   const onEditClick = () => {
     router.push(`/challenges/${challengeId}/quizzes/${quizId}/edit`);
   };
-
-  const onMoveQuizClick = (move: string) => {
-    if (!quizzes) {
-      return;
-    }
-    for (let i = 0; i < quizzes.length; i++) {
-      if (String(quizzes[i].quizId) === quizId) {
-        if (move === "prev" && i - 1 >= 0) {
-          router.push(
-            `/challenges/${challengeId}/quizzes/${
-              quizzes[i - 1].quizId
-            }?week=${week}`
-          );
-        } else if (move === "next" && i + 1 < quizzes.length) {
-          router.push(
-            `/challenges/${challengeId}/quizzes/${
-              quizzes[i + 1].quizId
-            }?week=${week}`
-          );
-        }
-      }
-    }
-  };
-  // 퀴즈가 첫 번째 혹은 마지막 순서인지 확인한다. 두 경우에는 각각 이전과 이후로 이동하지 못한다.
-  const isDisabled = (move: string) => {
-    if (!quizzes) {
-      return;
-    }
-
-    for (let i = 0; i < quizzes.length; i++) {
-      if (String(quizzes[i].quizId) === quizId) {
-        if (move === "prev" && i == 0) {
-          return true;
-        } else if (move === "next" && i == quizzes.length - 1) {
-          return true;
-        }
-      }
-    }
-    return false;
-  };
-
   const onRubricChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const {
       target: { value },
@@ -164,10 +135,6 @@ function QuizDetailPage() {
       return;
     }
     mutateQuizGrade(rubricScore);
-  };
-
-  const onTocClick = () => {
-    setShowToc((prev) => !prev);
   };
 
   const contentsFormat = (contents: string) => {
@@ -185,12 +152,14 @@ function QuizDetailPage() {
       </p>
     );
   };
-
   return (
     <div className="absolute top-0 w-full h-screen pt-20 sm:h-full sm:mt-16 sm:pt-2">
-      <div className="flex gap-5 items-center py-5 px-20 text-gray-700 text-sm sm:px-10">
-        <h2 className="font-semibold text-2xl">{quizDetail?.quizTitle}</h2>
-        <span>작성자: {quizDetail?.writerName}</span>
+      <div className="flex justify-between items-center w-1/2 py-5 px-20 sm:w-full sm:px-10">
+        <div className="flex gap-5 items-center text-gray-700 text-sm">
+          <h2 className="font-semibold text-2xl">{quizDetail?.quizTitle}</h2>
+          <span>작성자: {quizDetail?.writerName}</span>
+        </div>
+        {quizDetail && <QuizRate quizDetail={quizDetail} />}
       </div>
       <div className="grid grid-cols-2 gap-10 px-20 h-[79%] sm:flex sm:flex-col sm:h-fit sm:px-10 sm:pb-20">
         <div className="h-full pr-10 pb-2 overflow-y-scroll scrollbar-thin scrollbar-thumb-gray-200 scrollbar-track-gray-100 sm:pr-0">
@@ -326,77 +295,12 @@ function QuizDetailPage() {
           </div>
         </div>
       </div>
-      <div className="fixed flex items-center justify-between gap-3 w-full left-0 bottom-0 p-3 border-t-[1px] bg-white z-10">
-        <button
-          type="button"
-          onClick={onTocClick}
-          className="py-2 px-4 rounded bg-gray-100 text-gray-700 cursor-pointer"
-        >
-          문제 목록
-        </button>
-        <Link href={`/challenges/${challengeId}`}>
-          <button
-            type="button"
-            className="text-gray-700 cursor-pointer hover:drop-shadow"
-          >
-            {challengeDetail?.title} 챌린지
-          </button>
-        </Link>
-        <div className="flex gap-2">
-          <button
-            onClick={() => onMoveQuizClick("prev")}
-            className={classNames(
-              isDisabled("prev")
-                ? "bg-gray-100 text-gray-700 cursor-default"
-                : "bg-[#5c3cde] hover:bg-[#4026ab] text-white font-bold focus:outline-none focus:shadow-outline cursor-pointer",
-              "py-2 px-4 rounded"
-            )}
-          >
-            이전
-          </button>
-          <button
-            onClick={() => onMoveQuizClick("next")}
-            className={classNames(
-              isDisabled("next")
-                ? "bg-gray-200 text-gray-700 cursor-default"
-                : "bg-[#5c3cde] hover:bg-[#4026ab] text-white font-bold focus:outline-none focus:shadow-outline cursor-pointer",
-              "py-2 px-4 rounded"
-            )}
-          >
-            다음
-          </button>
-        </div>
-      </div>
-      {showToc && (
-        <div className="fixed left-0 top-0 flex flex-col gap-5 w-1/4 h-full py-32 px-10 bg-white shadow-sm border-[1px] border-gray-300 sm:w-[80%] sm:py-20 animate-in slide-in-from-left-10 duration-200">
-          <h2 className="font-semibold text-xl cursor-pointer">문제 목록</h2>
-
-          <ul className="flex flex-col gap-1 overflow-y-scroll scrollbar-thin">
-            {quizzes?.map((quiz) => (
-              <li
-                key={quiz.quizId}
-                className={classNames(
-                  String(quiz.quizId) === quizId
-                    ? "text-lg font-semibold text-[#5c3cde]"
-                    : "",
-                  "flex items-center gap-2"
-                )}
-                onClick={() => setShowToc(false)}
-              >
-                <Link
-                  href={`/challenges/${challengeId}/quizzes/${quiz.quizId}?${
-                    router.asPath.split("?")[1]
-                  }`}
-                >
-                  {quiz.quizTitle}
-                </Link>
-                <span className="badge badge-secondary font-normal">
-                  {quiz.quizWeek}주차
-                </span>
-              </li>
-            ))}
-          </ul>
-        </div>
+      {quizzes && (
+        <QuizDetailNav
+          challengeId={challengeId}
+          quizId={quizId}
+          quizzes={quizzes}
+        />
       )}
     </div>
   );

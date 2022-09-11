@@ -13,6 +13,7 @@ import { useEffect } from "react";
 
 import Script from "next/script";
 import { pageview, GA_TRACKING_ID } from "../utils/gtag";
+import { ReactQueryDevtools } from "@tanstack/react-query-devtools";
 
 function MyApp({ Component, pageProps }: AppProps) {
   const queryClient = new QueryClient({
@@ -43,7 +44,7 @@ function MyApp({ Component, pageProps }: AppProps) {
       router.events.on("hashChangeComplete", handleRouteChange);
       return () => {
         router.events.off("routeChangeComplete", handleRouteChange);
-        router.events.on("hashChangeComplete", handleRouteChange);
+        router.events.off("hashChangeComplete", handleRouteChange);
       };
     }
   }, [router.events]);
@@ -51,7 +52,7 @@ function MyApp({ Component, pageProps }: AppProps) {
   return (
     <RecoilRoot>
       <QueryClientProvider client={queryClient}>
-        {/* <ReactQueryDevtools initialIsOpen={false} /> */}
+        <ReactQueryDevtools initialIsOpen={false} />
         <Hydrate state={dehydratedState}>
           <Layout>
             <Script
@@ -63,13 +64,13 @@ function MyApp({ Component, pageProps }: AppProps) {
               strategy="afterInteractive"
               dangerouslySetInnerHTML={{
                 __html: `
-            window.dataLayer = window.dataLayer || [];
-            function gtag(){dataLayer.push(arguments);}
-            gtag('js', new Date());
-            gtag('config', '${GA_TRACKING_ID}', {
-              page_path: window.location.pathname,
-            });
-          `,
+                window.dataLayer = window.dataLayer || [];
+                function gtag(){dataLayer.push(arguments);}
+                gtag('js', new Date());
+                gtag('config', '${GA_TRACKING_ID}', {
+                  page_path: window.location.pathname,
+                });
+                `,
               }}
             />
             <Component {...pageProps} />

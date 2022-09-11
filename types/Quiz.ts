@@ -14,6 +14,8 @@ export interface QuizDetail {
   solveScore: number | null;
   writerName: string;
   challengeId: number;
+  didIRate: "GOOD" | "BAD" | null;
+  cntOfGood: number;
   quizFiles: {
     id: number;
     qfName: string;
@@ -23,33 +25,10 @@ export interface QuizDetail {
     qfModifiedDate: string;
   }[];
 }
-export interface QuizDetailSelect {
-  quizId: number;
-  quizTitle: string;
-  quizWeek: number;
-  quizCategory: string;
-  quizContent: string;
-  quizAnswer: string | null;
-  quizExplanation: string | null;
+export interface QuizDetailSelect extends Omit<QuizDetail, "quizRubric"> {
   quizRubric: {
     score: number;
     content: string;
-  }[];
-  quizCreatedDate: string;
-  quizModifiedDate: string;
-  isMine: boolean;
-  solveAnswer: string | null;
-  solveScore: number | null;
-  writerName: string;
-  challengeId: number;
-
-  quizFiles: {
-    id: number;
-    qfName: string;
-    qfType: string;
-    qfPath: string;
-    qfCreatedDate: string;
-    qfModifiedDate: string;
   }[];
 }
 export interface MyQuizDetail {
@@ -65,6 +44,8 @@ export interface MyQuizDetail {
   quizModifiedDate: string;
   writerName: string;
   challengeId: number;
+  didIRate: "GOOD" | "BAD" | null;
+  cntOfGood: number;
   quizFiles: {
     id: number;
     qfName: string;
@@ -74,29 +55,10 @@ export interface MyQuizDetail {
     qfModifiedDate: string;
   }[];
 }
-export interface MyQuizDetailSelect {
-  quizId: number;
-  quizTitle: string;
-  quizWeek: number;
-  quizCategory: string;
-  quizContent: string;
-  quizAnswer: string;
-  quizExplanation: string;
+export interface MyQuizDetailSelect extends Omit<MyQuizDetail, "quizRubric"> {
   quizRubric: {
     score: number;
     content: string;
-  }[];
-  quizCreatedDate: string;
-  quizModifiedDate: string;
-  writerName: string;
-  challengeId: number;
-  quizFiles: {
-    id: number;
-    qfName: string;
-    qfType: string;
-    qfPath: string;
-    qfCreatedDate: string;
-    qfModifiedDate: string;
   }[];
 }
 export interface QuizAnswer {
@@ -125,6 +87,7 @@ export interface QuizSummary {
   solveScore: number | null;
   writerName: string;
   challengeId: number;
+  cntOfGood: number;
 }
 
 export interface QuizEdit {

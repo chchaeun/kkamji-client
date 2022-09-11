@@ -24,6 +24,7 @@ function QuizList({ quizzes }: Props) {
             <th className="bg-gray-200">제목</th>
             <th className="bg-gray-200">작성자</th>
             <th className="bg-gray-200">주차</th>
+            <th className="bg-gray-200">좋아요</th>
             <th className="bg-gray-200">해결</th>
           </tr>
         </thead>
@@ -43,7 +44,15 @@ function QuizList({ quizzes }: Props) {
                 <td>{quiz.quizId}</td>
                 <td>{quiz.quizTitle}</td>
                 <td>{quiz.writerName}</td>
-                <td>{quiz.quizWeek}</td>
+                <td>{quiz.quizWeek}주</td>
+                <td className="flex items-center justify-start">
+                  <span className="flex items-center justify-center gap-1">
+                    <Icon icon="icon-park-solid:good-two" />
+                    <span className="">
+                      {quiz.cntOfGood ? quiz.cntOfGood : 0}
+                    </span>
+                  </span>
+                </td>
                 {quiz.solveAnswer ? (
                   <td>
                     <Icon

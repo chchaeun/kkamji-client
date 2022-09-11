@@ -174,23 +174,19 @@ const challengesOpenWeeks = {
 };
 
 export const challengesHandlers = [
-  rest.get(formattingUrl("/challenges"), (req, res, ctx) => {
-    return res(ctx.status(200), ctx.json(challenges));
-  }),
-
-  rest.get(formattingUrl("/challenges/:cid"), (req, res, ctx) => {
-    return res(ctx.status(200), ctx.json(challengeDetail));
-  }),
-
-  rest.get(formattingUrl("/my/challenges"), (req, res, ctx) => {
-    return res(ctx.status(200), ctx.json(myChallenges));
-  }),
-
-  rest.get(formattingUrl("/challenges/:cid/now"), (req, res, ctx) => {
-    return res(ctx.status(200), ctx.json(currentWeek));
-  }),
-
-  rest.get(formattingUrl("/challenges/:cid/weeks"), (req, res, ctx) => {
-    return res(ctx.status(200), ctx.json(challengesOpenWeeks));
-  }),
+  // rest.get(formattingUrl("/challenges"), (req, res, ctx) => {
+  //   return res(ctx.status(200), ctx.json(challenges));
+  // }),
+  // rest.get(formattingUrl("/challenges/:cid"), (req, res, ctx) => {
+  //   return res(ctx.status(200), ctx.json(challengeDetail));
+  // }),
+  // rest.get(formattingUrl("/my/challenges"), (req, res, ctx) => {
+  //   return res(ctx.status(200), ctx.json(myChallenges));
+  // }),
+  // rest.get(formattingUrl("/challenges/:cid/now"), (req, res, ctx) => {
+  //   return res(ctx.status(200), ctx.json(currentWeek));
+  // }),
+  // rest.get(formattingUrl("/challenges/:cid/weeks"), (req, res, ctx) => {
+  //   return res(ctx.status(200), ctx.json(challengesOpenWeeks));
+  // }),
 ];

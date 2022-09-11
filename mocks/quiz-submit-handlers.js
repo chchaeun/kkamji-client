@@ -7,19 +7,18 @@ let submitCount = {
   week: 0,
 };
 export const quizSubmitHandlers = [
-  rest.post(formattingUrl("/challenges/:cid/quizzes"), (req, res, ctx) => {
-    submitCount = {
-      count: 1,
-      challengeId: 0,
-      week: 0,
-    };
-    return res(ctx.status(201));
-  }),
-
-  rest.get(
-    formattingUrl("/challenges/:cid/my/quizzes/count"),
-    (req, res, ctx) => {
-      return res(ctx.status(200), ctx.json(submitCount));
-    }
-  ),
+  // rest.post(formattingUrl("/challenges/:cid/quizzes"), (req, res, ctx) => {
+  //   submitCount = {
+  //     count: 1,
+  //     challengeId: 0,
+  //     week: 0,
+  //   };
+  //   return res(ctx.status(201));
+  // }),
+  // rest.get(
+  //   formattingUrl("/challenges/:cid/my/quizzes/count"),
+  //   (req, res, ctx) => {
+  //     return res(ctx.status(200), ctx.json(submitCount));
+  //   }
+  // ),
 ];

@@ -39,6 +39,8 @@ function QuizWritePage() {
     watch,
     reset,
     formState: { errors },
+    resetField,
+    reset,
   } = useForm<QuizValidForm>({
     defaultValues: {
       rubric: [
