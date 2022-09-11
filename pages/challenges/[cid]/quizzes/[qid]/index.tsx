@@ -129,7 +129,7 @@ function QuizDetailPage() {
           <h2 className="font-semibold text-2xl">{quizDetail?.quizTitle}</h2>
           <span>작성자: {quizDetail?.writerName}</span>
         </div>
-        {quizDetail && <QuizRate quizDetail={quizDetail} />}
+        <QuizRate quizId={quizId} />
       </div>
       <div className="grid grid-cols-2 gap-10 px-20 h-[79%] sm:flex sm:flex-col sm:h-fit sm:px-10 sm:pb-20">
         <div className="h-full pr-10 pb-2 overflow-y-scroll scrollbar-thin scrollbar-thumb-gray-200 scrollbar-track-gray-100 sm:pr-0">

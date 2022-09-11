@@ -2,50 +2,48 @@ import { Icon } from "@iconify/react";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import React from "react";
 import { updateQuizRate } from "../../../api/quizzes/quiz-rate";
+import useQuizDetailQuery from "../../../hooks/quiz-detail";
 import { QuizDetailSelect } from "../../../types/Quiz";
 interface Props {
-  quizDetail: QuizDetailSelect;
+  quizId: string;
 }
 interface QuizRate {
   rate: "GOOD" | "BAD" | null;
 }
-function QuizRate({ quizDetail }: Props) {
+function QuizRate({ quizId }: Props) {
   const queryClient = useQueryClient();
-  const { quizId } = quizDetail;
+  const { data: quizDetail } = useQuizDetailQuery();
   const { mutate: mutateQuizRate } = useMutation(
-    ({ rate }: QuizRate) => updateQuizRate({ quizId: String(quizId), rate }),
+    ({ rate }: QuizRate) => updateQuizRate({ quizId: quizId, rate }),
     {
       onMutate: async (data) => {
-        await queryClient.cancelQueries(["quizDetail", String(quizId)]);
+        await queryClient.cancelQueries(["quizDetail", quizId]);
 
         const previousQuizDetail = queryClient.getQueryData<QuizDetailSelect>([
           "quizDetail",
-          String(quizId),
+          quizId,
         ]);
 
         if (previousQuizDetail) {
-          queryClient.setQueryData<QuizDetailSelect>(
-            ["quizDetail", String(quizId)],
-            {
-              ...previousQuizDetail,
-              didIRate: data.rate,
-              cntOfGood:
-                previousQuizDetail.didIRate === "GOOD"
-                  ? previousQuizDetail.cntOfGood - 1
-                  : data.rate === "GOOD"
-                  ? previousQuizDetail.cntOfGood + 1
-                  : previousQuizDetail.cntOfGood,
-            }
-          );
+          queryClient.setQueryData<QuizDetailSelect>(["quizDetail", quizId], {
+            ...previousQuizDetail,
+            didIRate: data.rate,
+            cntOfGood:
+              previousQuizDetail.didIRate === "GOOD"
+                ? previousQuizDetail.cntOfGood - 1
+                : data.rate === "GOOD"
+                ? previousQuizDetail.cntOfGood + 1
+                : previousQuizDetail.cntOfGood,
+          });
         }
 
         return { previousQuizDetail };
       },
       onError: (err, newQuizDetail, context) => {
-        queryClient.setQueryData(["quizDetail", String(quizId)], quizDetail);
+        queryClient.setQueryData(["quizDetail", quizId], quizDetail);
       },
       onSettled: () => {
-        queryClient.invalidateQueries(["quizDetail", String(quizId)]);
+        queryClient.invalidateQueries(["quizDetail", quizId]);
       },
     }
   );
