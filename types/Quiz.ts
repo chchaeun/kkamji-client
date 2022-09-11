@@ -14,7 +14,7 @@ export interface QuizDetail {
   solveScore: number | null;
   writerName: string;
   challengeId: number;
-  quizRate: "GOOD" | "BAD" | null;
+  didIRate: "GOOD" | "BAD" | null;
   cntOfGood: number;
   quizFiles: {
     id: number;
@@ -44,7 +44,7 @@ export interface MyQuizDetail {
   quizModifiedDate: string;
   writerName: string;
   challengeId: number;
-  quizRate: "GOOD" | "BAD" | null;
+  didIRate: "GOOD" | "BAD" | null;
   cntOfGood: number;
   quizFiles: {
     id: number;
