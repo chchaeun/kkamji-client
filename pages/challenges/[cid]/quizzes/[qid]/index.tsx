@@ -1,19 +1,7 @@
-import { Icon } from "@iconify/react";
-import {
-  dehydrate,
-  QueryClient,
-  useMutation,
-  useQuery,
-  useQueryClient,
-} from "@tanstack/react-query";
-import { AxiosError } from "axios";
-import { GetServerSideProps } from "next";
-import Link from "next/link";
+import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { useRouter } from "next/router";
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import { SubmitHandler, useForm } from "react-hook-form";
-import api from "../../../../../api/my-api";
-import { fetchQuizDetail } from "../../../../../api/quizzes/quiz-detail";
 import { updateQuizScore } from "../../../../../api/quizzes/quiz-grade";
 import { updateQuizIsSolved } from "../../../../../api/quizzes/quiz-solve";
 import { fetchQuizzes } from "../../../../../api/quizzes/quizzes";
@@ -22,28 +10,10 @@ import QuizDetailNav from "../../../../../components/quizzes/quiz/quiz-detail-na
 import QuizRate from "../../../../../components/quizzes/rate/quiz-rate";
 import useChallengeDetailQuery from "../../../../../hooks/challenge-detail-query";
 import useQuizDetailQuery from "../../../../../hooks/quiz-detail";
-import { classNames } from "../../../../../styles/classname-maker";
-import {
-  QuizDetail,
-  QuizDetailSelect,
-  QuizSummary,
-} from "../../../../../types/Quiz";
+import { QuizSummary } from "../../../../../types/Quiz";
 
 type SolveValidForm = {
   solve: string;
-};
-
-export const getServerSideProps: GetServerSideProps = async (context) => {
-  const queryClient = new QueryClient();
-  const quizId = String(context?.query?.qid);
-  await queryClient.prefetchQuery(["quizDetail", quizId], () =>
-    fetchQuizDetail({ quizId })
-  );
-  return {
-    props: {
-      dehydratedState: dehydrate(queryClient),
-    },
-  };
 };
 
 function QuizDetailPage() {
