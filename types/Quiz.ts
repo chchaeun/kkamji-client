@@ -44,7 +44,6 @@ export interface MyQuizDetail {
   quizModifiedDate: string;
   writerName: string;
   challengeId: number;
-
   quizRate: "GOOD" | "BAD" | null;
   cntOfGood: number;
   quizFiles: {

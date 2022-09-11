@@ -1,9 +1,16 @@
 import { Icon } from "@iconify/react";
-import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
+import {
+  dehydrate,
+  QueryClient,
+  useMutation,
+  useQuery,
+  useQueryClient,
+} from "@tanstack/react-query";
 import { AxiosError } from "axios";
+import { GetServerSideProps } from "next";
 import Link from "next/link";
 import { useRouter } from "next/router";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { SubmitHandler, useForm } from "react-hook-form";
 import api from "../../../../../api/my-api";
 import { fetchQuizDetail } from "../../../../../api/quizzes/quiz-detail";
@@ -23,14 +30,27 @@ type SolveValidForm = {
   solve: string;
 };
 
+export const getServerSideProps: GetServerSideProps = async (context) => {
+  const queryClient = new QueryClient();
+  const quizId = String(context?.query?.qid);
+  await queryClient.prefetchQuery(["quizDetail", quizId], () =>
+    fetchQuizDetail({ quizId })
+  );
+  return {
+    props: {
+      dehydratedState: dehydrate(queryClient),
+    },
+  };
+};
+
 function QuizDetailPage() {
   const [showAnswer, setShowAnswer] = useState(false);
   const router = useRouter();
   const challengeId = String(router.query.cid);
   const quizId = String(router.query.qid);
   const week = String(router.query.week);
-  const queryClient = useQueryClient();
 
+  const queryClient = useQueryClient();
   const [rubricScore, setRubricScore] = useState<number>();
   const [showToc, setShowToc] = useState(false);
 
@@ -80,14 +100,13 @@ function QuizDetailPage() {
       onError: (err) => {},
     }
   );
-
   const { mutate: mutateQuizRate } = useMutation(
     async ({ rate }: { rate: "GOOD" | "BAD" | null }) => {
-      return await api.put(`/quizzes/${quizId}/rate`, rate);
+      return await api.put(`/quizzes/${quizId}/rate`, { rate });
     },
     {
       onMutate: async (data) => {
-        await queryClient.cancelQueries(["quizDetail", quizId]);
+        // await queryClient.cancelQueries(["quizDetail", quizId]);
 
         const previousQuizDetail = queryClient.getQueryData<QuizDetailSelect>([
           "quizDetail",
@@ -216,11 +235,9 @@ function QuizDetailPage() {
     setShowToc((prev) => !prev);
   };
 
-  console.log(quizDetail);
-
   return (
     <div className="absolute top-0 w-full h-screen pt-20 sm:h-full sm:mt-16 sm:pt-2">
-      <div className="flex justify-between items-center w-1/2 py-5 px-20 sm:px-10">
+      <div className="flex justify-between items-center w-1/2 py-5 px-20 sm:w-full sm:px-10">
         <div className="flex gap-5 items-center text-gray-700 text-sm">
           <h2 className="font-semibold text-2xl">{quizDetail?.quizTitle}</h2>
           <span>작성자: {quizDetail?.writerName}</span>

@@ -49,7 +49,7 @@ function QuizList({ quizzes }: Props) {
                   <span className="flex items-center justify-center gap-1">
                     <Icon icon="icon-park-solid:good-two" />
                     <span className="">
-                      {quiz.countOfGood ? quiz.countOfGood : 0}
+                      {quiz.cntOfGood ? quiz.cntOfGood : 0}
                     </span>
                   </span>
                 </td>
