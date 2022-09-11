@@ -13,7 +13,6 @@ import { useEffect } from "react";
 
 import Script from "next/script";
 import { pageview, GA_TRACKING_ID } from "../utils/gtag";
-import ErrorBoundary from "../components/error-boundary";
 
 function MyApp({ Component, pageProps }: AppProps) {
   const queryClient = new QueryClient({

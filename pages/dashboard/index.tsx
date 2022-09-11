@@ -15,8 +15,6 @@ function Dashboard() {
     }
   );
 
-  console.log(error);
-
   return (
     <div className="flex flex-col gap-10 w-2/3 m-auto py-10">
       <div className="text-2xl">내 챌린지</div>
