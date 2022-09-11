@@ -37,6 +37,7 @@ function QuizWritePage() {
     control,
     handleSubmit,
     watch,
+    reset,
     formState: { errors },
   } = useForm<QuizValidForm>({
     defaultValues: {
@@ -63,6 +64,7 @@ function QuizWritePage() {
       onSuccess: () => {
         setSubmitSuccessModalOpen(true);
         setDisabledSubmit(false);
+        reset();
         queryClient.invalidateQueries(["quizCurrentSubmit"]);
       },
       onMutate: () => {
