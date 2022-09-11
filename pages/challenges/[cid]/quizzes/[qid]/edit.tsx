@@ -105,7 +105,7 @@ function QuizAnswerEdit() {
     return (
       <p>
         {contents
-          .replace("\\t", "\u00a0 \u00a0 \u00a0 \u00a0")
+          .replaceAll("\t", "\u00a0 \u00a0 \u00a0 \u00a0")
           .split("\n")
           .map((content) => (
             <>

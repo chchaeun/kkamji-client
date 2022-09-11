@@ -239,7 +239,7 @@ function QuizDetailPage() {
     return (
       <p>
         {contents
-          .replace("\\t", "\u00a0 \u00a0 \u00a0 \u00a0")
+          .replaceAll("\t", "\u00a0 \u00a0 \u00a0 \u00a0")
           .split("\n")
           .map((content) => (
             <>
@@ -250,7 +250,7 @@ function QuizDetailPage() {
       </p>
     );
   };
-
+  console.log(quizDetail?.quizContent);
   return (
     <div className="absolute top-0 w-full h-screen pt-20 sm:h-full sm:mt-16 sm:pt-2">
       <div className="flex justify-between items-center w-1/2 py-5 px-20 sm:w-full sm:px-10">
