@@ -101,7 +101,7 @@ function QuizDetailPage() {
     return (
       <p>
         {contents
-          .replace("\\t", "    ")
+          .replace("\\t", "\u00a0 \u00a0 \u00a0 \u00a0")
           .split("\n")
           .map((content) => (
             <>
