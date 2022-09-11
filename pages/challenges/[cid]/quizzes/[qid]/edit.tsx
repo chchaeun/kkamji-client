@@ -84,6 +84,7 @@ function QuizAnswerEdit() {
             .join(",")}`
         );
       },
+      retryDelay: 3000,
     }
   );
 
@@ -98,6 +99,22 @@ function QuizAnswerEdit() {
       quizRubric: JSON.stringify(rubric),
     };
     mutateAnswerEdit(editBody);
+  };
+
+  const contentsFormat = (contents: string) => {
+    return (
+      <p>
+        {contents
+          .replace("\\t", "    ")
+          .split("\n")
+          .map((content) => (
+            <>
+              {content}
+              <br />
+            </>
+          ))}
+      </p>
+    );
   };
 
   if (challengeError || challengeDetail?.applicationStatus !== "ACCEPTED") {
@@ -119,7 +136,7 @@ function QuizAnswerEdit() {
         <div className="flex flex-col gap-5">
           <h2 className="text-2xl">{quizDetail?.quizTitle}</h2>
           <div className="p-5 bg-white rounded-lg shadow-sm border-[1px] border-gray-300">
-            {quizDetail?.quizContent}
+            {quizDetail?.quizContent && contentsFormat(quizDetail?.quizContent)}
           </div>
         </div>
 
