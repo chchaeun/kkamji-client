@@ -68,6 +68,7 @@ function QuizWritePage() {
       onMutate: () => {
         setDisabledSubmit(true);
       },
+      retryDelay: 3000,
     }
   );
 
@@ -268,6 +269,7 @@ function QuizWritePage() {
             className={
               "flex items-center w-fit bg-[#5c3cde] hover:bg-[#4026ab] text-white font-bold py-2 px-6 rounded focus:outline-none focus:shadow-outline cursor-pointer"
             }
+            disabled={disabledSubmit}
           >
             {disabledSubmit && (
               <svg
