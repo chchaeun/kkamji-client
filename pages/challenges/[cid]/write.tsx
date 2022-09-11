@@ -37,6 +37,7 @@ function QuizWritePage() {
     control,
     handleSubmit,
     watch,
+    reset,
     formState: { errors },
     resetField,
     reset,
