@@ -33,7 +33,11 @@ function QuizDetailPage() {
     }
   );
 
-  const { data: myQuizzes } = useQuizzesQuery({ challengeId, filter: "MY" });
+  const { data: myQuizzes } = useQuizzesQuery({
+    challengeId,
+    filter: "MY",
+    suspense: false,
+  });
 
   const { data: challengeDetail, error: challengeError } =
     useChallengeDetailQuery({ challengeId });
@@ -153,6 +157,7 @@ function QuizDetailPage() {
       </div>
       {myQuizzes && (
         <QuizDetailNav
+          page={"MY"}
           challengeId={challengeId}
           quizId={quizId}
           quizzes={myQuizzes}
