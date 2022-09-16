@@ -8,12 +8,11 @@ interface Props {
   challengeId: string;
   quizId: string;
   quizzes: QuizSummary[];
+  page: "READABLE" | "MY" | "LIKED";
 }
-function QuizDetailNav({ challengeId, quizId, quizzes }: Props) {
+function QuizDetailNav({ challengeId, quizId, quizzes, page }: Props) {
   const { data: challengeDetail } = useChallengeDetailQuery({ challengeId });
   const router = useRouter();
-
-  const isMyQuiz = router.asPath.search("my") !== -1;
 
   const [showToc, setShowToc] = useState(false);
 
@@ -30,14 +29,22 @@ function QuizDetailNav({ challengeId, quizId, quizzes }: Props) {
         if (move === "prev" && i - 1 >= 0) {
           document.location.replace(
             `/challenges/${challengeId}/quizzes/${quizzes[i - 1].quizId}${
-              isMyQuiz ? "/my" : ""
-            }?week=${router.asPath.split("?week=")[1]}`
+              page === "MY" ? "/my" : page === "LIKED" ? "/like" : ""
+            }${
+              page === "READABLE"
+                ? `?week=${router.asPath.split("?week=")[1]}`
+                : ""
+            }`
           );
         } else if (move === "next" && i + 1 < quizzes.length) {
           document.location.replace(
             `/challenges/${challengeId}/quizzes/${quizzes[i + 1].quizId}${
-              isMyQuiz ? "/my" : ""
-            }?week=${router.asPath.split("?week=")[1]}`
+              page === "MY" ? "/my" : page === "LIKED" ? "/like" : ""
+            }${
+              page === "READABLE"
+                ? `?week=${router.asPath.split("?week=")[1]}`
+                : ""
+            }`
           );
         }
       }
@@ -63,7 +70,7 @@ function QuizDetailNav({ challengeId, quizId, quizzes }: Props) {
 
   return (
     <>
-      <div className="fixed flex items-center justify-between gap-3 w-full left-0 bottom-0 p-3 border-t-[1px] bg-white z-10">
+      <div className="fixed flex items-center justify-between gap-3 w-full left-0 bottom-0 p-3 border-t-[1px] bg-white z-30">
         <button
           type="button"
           onClick={onTocClick}
@@ -105,7 +112,7 @@ function QuizDetailNav({ challengeId, quizId, quizzes }: Props) {
         </div>
       </div>
       {showToc && (
-        <div className="fixed left-0 top-0 flex flex-col gap-5 w-1/4 h-full py-32 px-10 bg-white shadow-sm border-[1px] border-gray-300 sm:w-[80%] sm:py-20 animate-in slide-in-from-left-10 duration-200">
+        <div className="fixed left-0 top-0 flex flex-col gap-5 w-1/4 h-full py-32 px-10 bg-white shadow-sm border-[1px] border-gray-300 sm:w-[80%] sm:py-20 animate-in slide-in-from-left-10 duration-200 z-20">
           <h2 className="font-semibold text-xl cursor-pointer">문제 목록</h2>
 
           <ul className="flex flex-col gap-1 overflow-y-scroll scrollbar-thin">
@@ -124,8 +131,12 @@ function QuizDetailNav({ challengeId, quizId, quizzes }: Props) {
                   onClick={() => {
                     document.location.replace(
                       `/challenges/${challengeId}/quizzes/${quiz.quizId}${
-                        isMyQuiz ? "/my" : ""
-                      }?week=${router.asPath.split("?week=")[1]}`
+                        page === "MY" ? "/my" : page === "LIKED" ? "/like" : ""
+                      }${
+                        page === "READABLE"
+                          ? `?week=${router.asPath.split("?week=")[1]}`
+                          : ""
+                      }`
                     );
                   }}
                 >

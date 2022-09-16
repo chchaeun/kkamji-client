@@ -10,9 +10,10 @@ import QuizDetailNav from "./containers/nav";
 
 interface Props {
   quizzes: QuizSummary[];
+  page: "READABLE" | "MY" | "LIKED";
 }
 
-function QuizDetailTemplate({ quizzes }: Props) {
+function QuizDetailTemplate({ quizzes, page }: Props) {
   const router = useRouter();
   const challengeId = String(router.query.cid);
   const quizId = String(router.query.qid);
@@ -90,6 +91,7 @@ function QuizDetailTemplate({ quizzes }: Props) {
         </div>
       </div>
       <QuizDetailNav
+        page={page}
         challengeId={challengeId}
         quizId={quizId}
         quizzes={quizzes}

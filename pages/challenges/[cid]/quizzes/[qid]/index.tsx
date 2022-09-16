@@ -16,6 +16,7 @@ function QuizDetailPage() {
     challengeId,
     week,
     filter: "READABLE",
+    suspense: false,
   });
 
   const { data: challengeDetail, error: challengeError } =
@@ -25,7 +26,9 @@ function QuizDetailPage() {
     return <div>없는 페이지입니다.</div>;
   }
 
-  return <>{quizzes && <QuizDetailTemplate quizzes={quizzes} />}</>;
+  return (
+    <>{quizzes && <QuizDetailTemplate page={"READABLE"} quizzes={quizzes} />}</>
+  );
 }
 
 export default QuizDetailPage;

@@ -11,6 +11,7 @@ function LikedQuizDetailPage() {
   const { data: likedQuizzes } = useQuizzesQuery({
     challengeId,
     filter: "LIKED",
+    suspense: false,
   });
 
   const { data: challengeDetail, error: challengeError } =
@@ -20,7 +21,13 @@ function LikedQuizDetailPage() {
     return <div>없는 페이지입니다.</div>;
   }
 
-  return <>{likedQuizzes && <QuizDetailTemplate quizzes={likedQuizzes} />}</>;
+  return (
+    <>
+      {likedQuizzes && (
+        <QuizDetailTemplate page={"LIKED"} quizzes={likedQuizzes} />
+      )}
+    </>
+  );
 }
 
 export default LikedQuizDetailPage;
