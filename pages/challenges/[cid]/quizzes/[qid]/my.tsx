@@ -1,24 +1,19 @@
 import { Icon } from "@iconify/react";
 import { useQuery } from "@tanstack/react-query";
 import { AxiosError } from "axios";
-import Link from "next/link";
 import { useRouter } from "next/router";
-import React, { useState } from "react";
+import React from "react";
 import api from "../../../../../api/my-api";
-import CommentContainer from "../../../../../components/quizzes/comment/comment-container";
-import QuizDetailNav from "../../../../../components/quizzes/quiz/quiz-detail-nav";
-import QuizRate from "../../../../../components/quizzes/rate/quiz-rate";
+import QuizCommentContainer from "../../../../../components/quiz-detail/containers/comment-container";
+import QuizDetailNav from "../../../../../components/quiz-detail/containers/nav";
 import useChallengeDetailQuery from "../../../../../hooks/challenge-detail-query";
-import useMyQuizzesQuery from "../../../../../hooks/my-quizzes-query";
-import { classNames } from "../../../../../styles/classname-maker";
+import useQuizzesQuery from "../../../../../hooks/quizzes-query";
 import { MyQuizDetail, MyQuizDetailSelect } from "../../../../../types/Quiz";
 
 function QuizDetailPage() {
   const router = useRouter();
   const challengeId = String(router.query.cid);
   const quizId = String(router.query.qid);
-  const week = String(router.query.week);
-
   const { data: quizDetail, error } = useQuery<
     MyQuizDetail,
     AxiosError,
@@ -38,7 +33,7 @@ function QuizDetailPage() {
     }
   );
 
-  const { data: quizzes } = useMyQuizzesQuery({ challengeId });
+  const { data: myQuizzes } = useQuizzesQuery({ challengeId, filter: "MY" });
 
   const { data: challengeDetail, error: challengeError } =
     useChallengeDetailQuery({ challengeId });
@@ -91,7 +86,7 @@ function QuizDetailPage() {
           </span>
         </div>
       </div>
-      <div className="grid grid-cols-2 gap-10 px-20 pb-20 h-[79%] sm:flex sm:flex-col sm:h-fit sm:px-10">
+      <div className="grid grid-cols-2 gap-10 px-20 h-[79%] sm:flex sm:flex-col sm:h-fit sm:px-10 sm:pb-20">
         <div className="h-full pr-10 pb-2 overflow-y-scroll scrollbar-thin scrollbar-thumb-gray-200 scrollbar-track-gray-100 sm:pr-0">
           <div className="flex flex-col gap-10">
             <p className="flex flex-col gap-5 justify-between p-5 bg-white rounded-lg shadow-sm border-[1px] border-gray-300">
@@ -152,15 +147,15 @@ function QuizDetailPage() {
                 </div>
               </div>
             </>
-            <CommentContainer />
+            <QuizCommentContainer quizId={quizId} />
           </div>
         </div>
       </div>
-      {quizzes && (
+      {myQuizzes && (
         <QuizDetailNav
           challengeId={challengeId}
           quizId={quizId}
-          quizzes={quizzes}
+          quizzes={myQuizzes}
         />
       )}
     </div>

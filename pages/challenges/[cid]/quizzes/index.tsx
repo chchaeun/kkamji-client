@@ -1,23 +1,17 @@
-import { useQuery } from "@tanstack/react-query";
 import { useRouter } from "next/router";
-import React from "react";
-import { fetchQuizzes } from "../../../../api/quizzes/quizzes";
+import React, { Suspense } from "react";
 import ChallengeOverview from "../../../../components/challenges/challenge-overview";
-import QuizList from "../../../../components/quizzes/quiz/quiz-list";
 import WeekFilter from "../../../../components/quizzes/week/week-filter";
 import useChallengeDetailQuery from "../../../../hooks/challenge-detail-query";
+import dynamic from "next/dynamic";
+import QuizListSkeleton from "../../../../components/skeletons/quiz-list-skeleton";
+const QuizList = dynamic(
+  () => import("../../../../components/quizzes/blocks/quiz-list")
+);
 function QuizListPage() {
   const router = useRouter();
   const challengeId = String(router.query.cid);
   const week = String(router.query.week);
-
-  const { data: quizzes } = useQuery(
-    ["quizzes", week],
-    () => fetchQuizzes({ challengeId, week }),
-    {
-      enabled: !!router.query.week,
-    }
-  );
 
   const { data: challengeDetail, error } = useChallengeDetailQuery({
     challengeId,
@@ -34,8 +28,10 @@ function QuizListPage() {
         <WeekFilter />
       </div>
       <div className="flex flex-col gap-6 py-5 px-10 w-full bg-white rounded-lg shadow-sm border-[1px] border-gray-300 sm:px-5">
-        <div className="font-semibold">문제 목록</div>
-        <QuizList quizzes={quizzes} />
+        <div className="font-semibold">열람 가능한 문제</div>
+        <Suspense fallback={<QuizListSkeleton />}>
+          <QuizList challengeId={challengeId} week={week} filter={"READABLE"} />
+        </Suspense>
       </div>
     </div>
   );
