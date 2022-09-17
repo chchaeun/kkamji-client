@@ -1,9 +1,6 @@
-import { useQuery } from "@tanstack/react-query";
 import { useRouter } from "next/router";
 import React from "react";
-import { fetchQuizzes } from "../../../../../api/quizzes/quizzes";
 import useChallengeDetailQuery from "../../../../../hooks/challenge-detail-query";
-import { QuizSummary } from "../../../../../types/Quiz";
 import QuizDetailTemplate from "../../../../../components/quiz-detail";
 import useQuizzesQuery from "../../../../../hooks/quizzes-query";
 
@@ -15,8 +12,7 @@ function QuizDetailPage() {
   const { data: quizzes } = useQuizzesQuery({
     challengeId,
     week,
-    filter: "READABLE",
-    suspense: false,
+    page: "READABLE",
   });
 
   const { data: challengeDetail, error: challengeError } =

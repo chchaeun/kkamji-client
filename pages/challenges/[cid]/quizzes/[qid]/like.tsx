@@ -10,8 +10,7 @@ function LikedQuizDetailPage() {
 
   const { data: likedQuizzes } = useQuizzesQuery({
     challengeId,
-    filter: "LIKED",
-    suspense: false,
+    page: "LIKED",
   });
 
   const { data: challengeDetail, error: challengeError } =

@@ -39,7 +39,7 @@ function QuizListPage() {
               <QuizList
                 challengeId={challengeId}
                 week={week}
-                filter={"READABLE"}
+                page={"READABLE"}
               />
             </Suspense>
           </div>

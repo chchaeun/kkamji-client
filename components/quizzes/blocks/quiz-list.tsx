@@ -7,20 +7,21 @@ import useQuizzesQuery from "../../../hooks/quizzes-query";
 interface Props {
   challengeId: string;
   week?: string;
-  filter: "READABLE" | "MY" | "LIKED";
+  page: "READABLE" | "MY" | "LIKED";
 }
 
-function QuizList({ challengeId, week, filter }: Props) {
+function QuizList({ challengeId, week, page }: Props) {
   const { data: quizzes } = useQuizzesQuery({
     challengeId,
     week,
-    filter,
+    page,
+    suspense: true,
   });
 
-  // filter에 따라 퀴즈 상세페이지로 이동하는 href를 설정해주는 함수이다.
-  const getHrefByFilter = (quizId: number) => {
+  // page에 따라 퀴즈 상세페이지로 이동하는 href를 설정해주는 함수이다.
+  const getHrefByPage = (quizId: number) => {
     const LINK_HEAD = `/challenges/${challengeId}/quizzes/${quizId}`;
-    switch (filter) {
+    switch (page) {
       case "MY":
         return `${LINK_HEAD}/my`;
       case "LIKED":
@@ -44,7 +45,7 @@ function QuizList({ challengeId, week, filter }: Props) {
         </thead>
         <tbody>
           {quizzes?.map((quiz) => (
-            <Link href={getHrefByFilter(quiz.quizId)} key={quiz.quizId}>
+            <Link href={getHrefByPage(quiz.quizId)} key={quiz.quizId}>
               <tr className="cursor-pointer sm:text-sm">
                 <td>{quiz.quizId}</td>
                 <td>{quiz.quizTitle}</td>

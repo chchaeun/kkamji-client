@@ -30,7 +30,7 @@ function MyQuizListPage() {
           <div className="flex flex-col gap-6 py-5 px-10 bg-white rounded-lg shadow-sm border-[1px] border-gray-300 sm:px-5">
             <div className="font-semibold">내가 낸 문제</div>
             <Suspense fallback={<QuizListSkeleton />}>
-              <QuizList challengeId={challengeId} filter={"MY"} />
+              <QuizList challengeId={challengeId} page={"MY"} />
             </Suspense>
           </div>
         </>
