@@ -35,8 +35,7 @@ function QuizDetailPage() {
 
   const { data: myQuizzes } = useQuizzesQuery({
     challengeId,
-    filter: "MY",
-    suspense: false,
+    page: "MY",
   });
 
   const { data: challengeDetail, error: challengeError } =

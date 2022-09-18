@@ -7,20 +7,20 @@ import { QuizSummary } from "../types/Quiz";
 interface Props {
   challengeId: string;
   week?: string;
-  filter: "READABLE" | "MY" | "LIKED";
+  page: "READABLE" | "MY" | "LIKED";
   suspense?: boolean;
 }
 
 export default function useQuizzesQuery({
   challengeId,
   week,
-  filter,
-  suspense = true,
+  page,
+  suspense = false,
 }: Props) {
-  const queryKey = [filter, challengeId];
+  const queryKey = [page, challengeId];
   let queryFn;
   let queryOptions;
-  switch (filter) {
+  switch (page) {
     case "READABLE":
       queryFn = () => fetchQuizzes({ challengeId, week: week || "" });
       queryOptions = { enabled: !!(challengeId && week), suspense };
