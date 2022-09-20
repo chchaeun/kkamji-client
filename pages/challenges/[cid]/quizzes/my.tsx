@@ -23,7 +23,7 @@ function MyQuizListPage() {
   }
 
   return (
-    <div className="flex flex-col w-5/6 m-auto py-10 gap-10">
+    <div className="flex flex-col m-auto gap-10  py-[80px] px-[200px] sm:py-[88px] sm:px-[12px]">
       {challengeId && (
         <>
           <ChallengeOverview challengeId={challengeId} />

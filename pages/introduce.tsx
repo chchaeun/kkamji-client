@@ -15,8 +15,8 @@ function Introduce() {
     }
   );
   return (
-    <div className="sm:mx-5 mt-10">
-      <h1 className="font-bold text-2xl lg:hidden sm:ml-3">깜지 소개</h1>
+    <div className=" py-[10px] px-[200px] sm:px-[12px]">
+      <h1 className="text-2xl font-bold lg:hidden sm:ml-3">깜지 소개</h1>
       {introduceKkamji && (
         <NotionRenderer blockMap={introduceKkamji} fullPage={true} />
       )}
