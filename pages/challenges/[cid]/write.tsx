@@ -122,13 +122,13 @@ function QuizWritePage() {
     return <div>없는 페이지입니다.</div>;
   }
   return (
-    <div className="grid grid-cols-5 gap-4 w-full h-full m-auto sm:flex sm:flex-col-reverse sm:py-10">
+    <div className="grid grid-cols-5 gap-4 w-full h-full m-auto sm:flex sm:flex-col-reverse py-[80px] px-[10px] sm:py-[88px] sm:px-[12px]">
       {currentWeek && <SubmitCount currentWeek={currentWeek} />}
-      <div className="col-start-2 col-span-3 flex flex-col gap-10 sm:gap-7 sm:w-4/5 h-full bg-white py-10 px-20 sm:m-auto sm:px-0 sm:pt-0">
+      <div className="flex flex-col h-full col-span-3 col-start-2 gap-10 px-20 py-10 bg-white sm:gap-7 sm:w-4/5 sm:m-auto sm:px-0 sm:pt-0">
         <h1 className="text-2xl">문제 제출</h1>
         <form
           onSubmit={handleSubmit(onQuizSubmitValid)}
-          className="flex flex-col gap-8 pb-10 items-end"
+          className="flex flex-col items-end gap-8 pb-10"
         >
           <div className="flex flex-col w-full gap-2">
             <label>
@@ -142,7 +142,7 @@ function QuizWritePage() {
                     message: "제목은 50자 이하여야 합니다.",
                   },
                 })}
-                className="shadow appearance-none border rounded w-full mt-2 py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+                className="w-full px-3 py-2 mt-2 leading-tight text-gray-700 border rounded shadow appearance-none focus:outline-none focus:shadow-outline"
               />
             </label>
             <em>{errors.title?.message}</em>
@@ -159,7 +159,7 @@ function QuizWritePage() {
                     message: "내용은 3500자 이하여야 합니다.",
                   },
                 })}
-                className="shadow appearance-none border rounded w-full mt-2 py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+                className="w-full px-3 py-2 mt-2 leading-tight text-gray-700 border rounded shadow appearance-none focus:outline-none focus:shadow-outline"
               />
             </label>
             <em>{errors?.content?.message}</em>
@@ -194,7 +194,7 @@ function QuizWritePage() {
                     message: "정답은 3500자 이하여야 합니다.",
                   },
                 })}
-                className="shadow appearance-none border rounded w-full mt-2 py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+                className="w-full px-3 py-2 mt-2 leading-tight text-gray-700 border rounded shadow appearance-none focus:outline-none focus:shadow-outline"
               />
             </label>
             <em>{errors.answer?.message}</em>
@@ -211,38 +211,38 @@ function QuizWritePage() {
                     message: "해설은 3500자 이하여야 합니다.",
                   },
                 })}
-                className="shadow appearance-none border rounded w-full mt-2 py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+                className="w-full px-3 py-2 mt-2 leading-tight text-gray-700 border rounded shadow appearance-none focus:outline-none focus:shadow-outline"
               />
             </label>
 
             <em>{errors.explanation?.message}</em>
           </div>
           <div className="w-full">
-            <div className="grid grid-cols-12 gap-2 w-full sm:grid-cols-6">
+            <div className="grid w-full grid-cols-12 gap-2 sm:grid-cols-6">
               <label>점수</label>
               <label className="col-span-2">채점 기준</label>
             </div>
             {fields.map((item, index) => (
               <div
                 key={item.id}
-                className="grid grid-cols-12 gap-x-2 w-full sm:grid-cols-6"
+                className="grid w-full grid-cols-12 gap-x-2 sm:grid-cols-6"
               >
                 <input
                   {...register(`rubric.${index}.score`, {
                     required: "점수는 필수 입력값입니다.",
                   })}
-                  className="shadow appearance-none border rounded mt-2 py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+                  className="px-3 py-2 mt-2 leading-tight text-gray-700 border rounded shadow appearance-none focus:outline-none focus:shadow-outline"
                 />
                 <input
                   {...register(`rubric.${index}.content`, {
                     required: "채점 기준은 필수 입력값입니다.",
                   })}
-                  className="col-span-10 shadow appearance-none border rounded mt-2 py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline sm:col-span-4"
+                  className="col-span-10 px-3 py-2 mt-2 leading-tight text-gray-700 border rounded shadow appearance-none focus:outline-none focus:shadow-outline sm:col-span-4"
                 />
                 <button
                   type="button"
                   onClick={() => remove(index)}
-                  className="flex items-center text-3xl px-1"
+                  className="flex items-center px-1 text-3xl"
                 >
                   <Icon icon="akar-icons:circle-minus-fill" color={"#9686dc"} />
                 </button>
@@ -276,7 +276,7 @@ function QuizWritePage() {
             {disabledSubmit && (
               <svg
                 aria-hidden="true"
-                className="mr-2 w-4 h-4 text-gray-200 animate-spin fill-white"
+                className="w-4 h-4 mr-2 text-gray-200 animate-spin fill-white"
                 viewBox="0 0 100 101"
                 fill="none"
                 xmlns="http://www.w3.org/2000/svg"

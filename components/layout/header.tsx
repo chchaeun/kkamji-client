@@ -1,21 +1,12 @@
 import React from "react";
 import Link from "next/link";
 import { useRouter } from "next/router";
-import { Icon } from "@iconify/react";
-import { useRecoilState } from "recoil";
-import { showNavState } from "../../stores/header";
-import { classNames } from "../../styles/classname-maker";
 import { getCode } from "../../api/session-code";
-import MobileNav from "./mobile-nav";
+import styled from "styled-components";
+import { media } from "../../styles/media";
 function Header() {
   const router = useRouter();
-  const [showNav, setShowNav] = useRecoilState(showNavState);
-
   const isUser = getCode() ? true : false;
-
-  const onRankingClick = () => {
-    setShowNav((prev) => !prev);
-  };
 
   const isSameRoute = (route: string) => {
     if (router.pathname === route) {
@@ -28,66 +19,142 @@ function Header() {
   return (
     <>
       {!isSameRoute("/login") && (
-        <div className="flex sticky w-full top-0 left-0 bg-white z-50 justify-between items-center border-b-2 border-gray-100 text-3xl py-3 px-5">
-          <nav className="flex gap-20 sm:w-full sm:justify-between">
-            <Link href="/">
-              <h1 className="logo cursor-pointer">깜지.</h1>
-            </Link>
-            <ul className="flex items-center gap-10 text-lg sm:hidden">
-              <li
-                className={classNames(
-                  isSameRoute("/introduce") ? "text-black" : "text-gray-500"
-                )}
-              >
+        <Container>
+          <Link href="/">
+            <Logo className="logo">깜지.</Logo>
+          </Link>
+          <Navigation>
+            <Ul>
+              <Li showInMedium={false}>
                 <Link href="/introduce">깜지 소개</Link>
-              </li>
-              <li
-                className={classNames(
-                  isSameRoute("/manual") ? "text-black" : "text-gray-500"
-                )}
-              >
+              </Li>
+              <Li showInMedium={true}>
                 <Link href="/manual">문제 매뉴얼</Link>
-              </li>
-              {/* <li
-                className={classNames(
-                  isSameRoute("/challenges") ? "text-black" : "text-gray-500"
-                )}
-              >
-                <Link href="/challenges">깜지 챌린지</Link>
-              </li> */}
-            </ul>
-          </nav>
-          {isUser ? (
-            <Link href={`/dashboard`}>
-              <button className="btn btn-info text-white sm:hidden">
-                내 챌린지
-              </button>
-            </Link>
-          ) : (
-            <Link href="/login">
-              <button className="py-1 px-4 text-base border-[1px] rounded-3xl bg-black text-white sm:hidden">
-                로그인
-              </button>
-            </Link>
-          )}
-
-          {showNav ? (
-            <Icon
-              icon="bi:x-lg"
-              onClick={onRankingClick}
-              className="lg:hidden cursor-pointer"
-            />
-          ) : (
-            <Icon
-              icon="charm:menu-hamburger"
-              onClick={onRankingClick}
-              className="lg:hidden cursor-pointer"
-            />
-          )}
-        </div>
+              </Li>
+            </Ul>
+            {isUser ? (
+              <Link href={`/dashboard`}>
+                <Button type="button">내 챌린지</Button>
+              </Link>
+            ) : (
+              <Link href={`/login`}>
+                <Button type="button">로그인</Button>
+              </Link>
+            )}
+          </Navigation>
+        </Container>
       )}
     </>
   );
 }
 
 export default Header;
+
+const Container = styled.div`
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+  padding: 12px 31px;
+  gap: 10px;
+
+  position: fixed;
+  width: 100%;
+  height: 60px;
+  left: 0px;
+  background: #ffffff;
+  border-bottom: 1px solid #f1f5f9;
+
+  z-index: 10;
+
+  ${media.medium`
+    padding: 10px 16px;
+    height: 51px;
+  `}
+`;
+
+const Logo = styled.h1`
+  position: relative;
+  width: 60px;
+  height: 29px;
+  bottom: 5px;
+
+  font-size: 26px;
+  font-family: "HSSummer";
+
+  cursor: pointer;
+
+  ${media.medium`
+    font-size: 24px;
+  `}
+`;
+
+const Navigation = styled.nav`
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  padding: 0px;
+  gap: 32px;
+
+  width: 280px;
+  height: 36px;
+
+  ${media.medium`
+    width: 160px;
+    gap: 20px;
+  `}
+`;
+
+const Ul = styled.ul`
+  display: flex;
+  flex-direction: row;
+  align-items: flex-start;
+  padding: 0px;
+  gap: 24px;
+
+  width: 168px;
+  height: 16px;
+
+  ${media.medium`
+    width: 70px;
+  `}
+`;
+
+const Li = styled.li<{ showInMedium?: boolean }>`
+  width: 76px;
+  height: 16px;
+
+  font-style: normal;
+  font-weight: 500;
+  font-size: 14px;
+  line-height: 16px;
+
+  display: flex;
+  align-items: center;
+  text-align: center;
+
+  ${media.medium`
+    display: ${(p: { showInMedium?: boolean }) =>
+      p.showInMedium ? "flex" : "none"};
+  `}
+`;
+
+const Button = styled.button`
+  padding: 10px;
+  gap: 10px;
+
+  width: 84px;
+  height: 36px;
+
+  background: #171717;
+  border-radius: 8px;
+
+  color: #ffffff;
+  font-size: 14px;
+  line-height: 16px;
+
+  ${media.medium`
+    width: 77px;
+    font-size: 12px;
+  `}
+`;

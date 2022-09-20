@@ -4,12 +4,12 @@ import MobileBanner from "../components/home/mobile-banner";
 function HomePage() {
   return (
     <>
-      <div className="flex flex-col my-32 mx-40 gap-36 sm:m-auto sm gap-10">
+      <div className="flex flex-col gap-36 sm:m-auto sm:gap-10  py-[120px] px-[200px] sm:py-[88px] sm:px-[12px]">
         <div className="grid grid-cols-3 gap-10 sm:hidden">
           <img
             src="image/kkamji-home.gif"
             alt="종강까지 책임지는 찐한 학점 관리 '깜지'"
-            className="col-span-2 w-full h-full object-cover"
+            className="object-cover w-full h-full col-span-2"
           />
           <div className="col-span-1">
             <Banner />
