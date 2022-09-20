@@ -1,14 +1,20 @@
 import React, { useEffect, useState } from "react";
 import styled from "styled-components";
+import useChallengeDetailQuery from "../../../hooks/challenge-detail-query";
 import { media } from "../../../styles/media";
-
+interface Props {
+  challengeId: string;
+}
 interface FixItem {
   fixItem: boolean;
 }
 
-function ChallengeSuccessPeople() {
+function ChallengeSuccessPeople({ challengeId }: Props) {
   const [scrollY, setScrollY] = useState(0);
   const [fixItem, setFixItem] = useState(false);
+
+  const { data: challengeDetail } = useChallengeDetailQuery({ challengeId });
+
   useEffect(() => {
     (() => {
       window.addEventListener("scroll", () => setScrollY(window.pageYOffset));
@@ -26,7 +32,10 @@ function ChallengeSuccessPeople() {
   });
 
   return (
-    <Container fixItem={fixItem}>🔥 이번주 3명 챌린지 미션 완료!</Container>
+    <Container fixItem={fixItem}>
+      🔥 이번주 {challengeDetail?.numberOfChallengerWhoCompleted}명 챌린지 미션
+      완료!
+    </Container>
   );
 }
 
