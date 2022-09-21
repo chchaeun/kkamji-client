@@ -1,14 +1,19 @@
 import { useRouter } from "next/router";
-import React from "react";
+import React, { Suspense } from "react";
 import ChallengeOverview from "../../../../components/challenges/challenge-overview";
-import QuizList from "../../../../components/quizzes/quiz/quiz-list";
+import QuizListSkeleton from "../../../../components/skeletons/quiz-list-skeleton";
 import useChallengeDetailQuery from "../../../../hooks/challenge-detail-query";
-import useMyQuizzesQuery from "../../../../hooks/my-quizzes-query";
-
+import dynamic from "next/dynamic";
+const QuizList = dynamic(
+  () => import("../../../../components/quizzes/blocks/quiz-list"),
+  {
+    suspense: true,
+    ssr: false,
+  }
+);
 function MyQuizListPage() {
   const router = useRouter();
   const challengeId = String(router.query.cid) || "";
-  const { data: myQuizzes } = useMyQuizzesQuery({ challengeId });
   const { data: challengeDetail, error } = useChallengeDetailQuery({
     challengeId,
   });
@@ -18,13 +23,18 @@ function MyQuizListPage() {
   }
 
   return (
-    <div className="flex flex-col w-5/6 m-auto py-10 gap-10">
-      {challengeId && <ChallengeOverview challengeId={challengeId} />}
-
-      <div className="flex flex-col gap-6 py-5 px-10 bg-white rounded-lg shadow-sm border-[1px] border-gray-300 sm:px-5">
-        <div className="font-semibold">문제 목록</div>
-        {myQuizzes && <QuizList quizzes={myQuizzes} />}
-      </div>
+    <div className="flex flex-col m-auto gap-10  py-[80px] px-[200px] sm:py-[88px] sm:px-[12px]">
+      {challengeId && (
+        <>
+          <ChallengeOverview challengeId={challengeId} />
+          <div className="flex flex-col gap-6 py-5 px-10 bg-white rounded-lg shadow-sm border-[1px] border-gray-300 sm:px-5">
+            <div className="font-semibold">제출한 문제</div>
+            <Suspense fallback={<QuizListSkeleton />}>
+              <QuizList challengeId={challengeId} page={"MY"} />
+            </Suspense>
+          </div>
+        </>
+      )}
     </div>
   );
 }

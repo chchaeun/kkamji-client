@@ -19,6 +19,7 @@ export interface Challenge {
   createdDate: string;
   modifiedDate: string;
   applicationStatus: "ACCEPTED" | "APPLIED" | "REJECTED" | "CANCLED";
+  numberOfChallengerWhoCompleted: number;
 }
 
 export interface CurrentWeek {

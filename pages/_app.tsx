@@ -13,7 +13,12 @@ import { useEffect } from "react";
 
 import Script from "next/script";
 import { pageview, GA_TRACKING_ID } from "../utils/gtag";
+
 import { ReactQueryDevtools } from "@tanstack/react-query-devtools";
+
+import { initializeApp } from "firebase/app";
+import { getPerformance } from "firebase/performance";
+import { firebaseConfig } from "../utils/firebase";
 
 function MyApp({ Component, pageProps }: AppProps) {
   const queryClient = new QueryClient({
@@ -48,6 +53,11 @@ function MyApp({ Component, pageProps }: AppProps) {
       };
     }
   }, [router.events]);
+
+  useEffect(() => {
+    const app = initializeApp(firebaseConfig);
+    const performance = getPerformance(app);
+  }, []);
 
   return (
     <RecoilRoot>

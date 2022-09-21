@@ -15,8 +15,8 @@ function Introduce() {
     }
   );
   return (
-    <div className="flex flex-col items-center sm:mx-5 mt-10">
-      <h1 className="font-bold text-2xl sm:ml-3">
+    <div className="flex flex-col items-center  py-[80px] px-[200px] sm:px-[12px]">
+      <h1 className="text-2xl font-bold sm:ml-3">
         🌟 깜지 문제 제출 매뉴얼 🌟
       </h1>
       {introduceKkamji && (
