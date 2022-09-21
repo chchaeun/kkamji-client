@@ -23,7 +23,7 @@ function ChallengeOverview({ challengeId }: Props) {
     } else {
       return {
         countOfLine: 2,
-        description: strings.slice(0, 2).join(" ") + <br /> + professorName,
+        description: strings.slice(0, 2).join(" ") + "\n" + professorName,
       };
     }
   };
@@ -50,13 +50,18 @@ function ChallengeOverview({ challengeId }: Props) {
               </Title>
             </Link>
             <Description>
-              {
-                getDescription(
-                  challengeDetail.university,
-                  challengeDetail.department,
-                  challengeDetail.professorName
-                ).description
-              }
+              {getDescription(
+                challengeDetail.university,
+                challengeDetail.department,
+                challengeDetail.professorName
+              )
+                .description.split("\n")
+                .map((desc) => (
+                  <>
+                    {desc}
+                    <br />
+                  </>
+                ))}
             </Description>
           </Block>
         </Container>
