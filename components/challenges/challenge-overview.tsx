@@ -52,8 +52,9 @@ const Container = styled.div<{ bgImage: string }>`
   border-radius: 8px;
 
   ${media.medium`
-    width: 100vw;
+    width: 100%;
     height: 130px;
+
     border-radius: 0px;
   `}
 `;

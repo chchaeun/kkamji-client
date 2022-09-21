@@ -31,7 +31,7 @@ function QuizList({ challengeId, week, page }: Props) {
     }
   };
   return (
-    <div className="w-full sm:overflow-x-scroll">
+    <div className="w-full overflow-x-scroll">
       <table className="table w-full">
         <thead>
           <tr>

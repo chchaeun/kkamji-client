@@ -89,15 +89,15 @@ function WeekFilter() {
           전체선택
         </span>
       </div>
-      <div className="flex gap-2">
+      <div className="flex flex-wrap gap-2">
         {selected.map((week) => (
-          <div key={week} className="badge badge-primary gap-2">
+          <div key={week} className="gap-2 badge badge-primary">
             <svg
               onClick={() => onWeekClick(week)}
               xmlns="http://www.w3.org/2000/svg"
               fill="none"
               viewBox="0 0 24 24"
-              className="inline-block w-4 h-4 stroke-current cursor-pointer"
+              className="inline-block w-4 h-4 cursor-pointer stroke-current"
             >
               <path
                 strokeLinecap="round"
