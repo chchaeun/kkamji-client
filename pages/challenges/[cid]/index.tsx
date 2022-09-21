@@ -17,7 +17,7 @@ function ChallengePage() {
       {challengeId && (
         <>
           <ChallengeOverview challengeId={challengeId} />
-          <ChallengeSuccessPeople />
+          <ChallengeSuccessPeople challengeId={challengeId} />
           <ChallengeProgressContainer challengeId={challengeId} />
           <ChallengeQuizSummaryContainer challengeId={challengeId} />
 
