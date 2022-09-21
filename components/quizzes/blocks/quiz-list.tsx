@@ -19,7 +19,7 @@ function QuizList({ challengeId, week, page }: Props) {
   });
 
   // page에 따라 퀴즈 상세페이지로 이동하는 href를 설정해주는 함수이다.
-  const getHrefByPage = (quizId: number) => {
+  const getLinkByPage = (quizId: number) => {
     const LINK_HEAD = `/challenges/${challengeId}/quizzes/${quizId}`;
     switch (page) {
       case "MY":
@@ -45,7 +45,7 @@ function QuizList({ challengeId, week, page }: Props) {
         </thead>
         <tbody>
           {quizzes?.map((quiz) => (
-            <Link href={getHrefByPage(quiz.quizId)} key={quiz.quizId}>
+            <Link href={getLinkByPage(quiz.quizId)} key={quiz.quizId}>
               <tr className="cursor-pointer sm:text-sm">
                 <td>{quiz.quizId}</td>
                 <td>{quiz.quizTitle}</td>

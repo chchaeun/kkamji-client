@@ -29,9 +29,9 @@ function ChallengeProgressContainer({ challengeId }: Props) {
       (week) => week.status === "UNREADABLE"
     ).length;
 
-    if (successOrFail === "success") {
+    if (successOrFail === "SUCCESS") {
       return successCount;
-    } else if (successOrFail === "fail") {
+    } else if (successOrFail === "FAIL") {
       return failCount;
     } else {
       return challengeDetail!.totalWeeks - successCount - failCount;

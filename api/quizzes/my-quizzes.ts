@@ -15,5 +15,6 @@ export const fetchMyQuizzes = async ({ challengeId, week }: Props) => {
       week: week ? week : 0,
     },
   });
+
   return data;
 };
