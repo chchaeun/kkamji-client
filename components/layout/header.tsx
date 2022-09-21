@@ -65,7 +65,7 @@ const Container = styled.div`
   background: #ffffff;
   border-bottom: 1px solid #f1f5f9;
 
-  z-index: 10;
+  z-index: 20;
 
   ${media.medium`
     padding: 10px 16px;
@@ -96,11 +96,9 @@ const Navigation = styled.nav`
   padding: 0px;
   gap: 32px;
 
-  width: 280px;
   height: 36px;
 
   ${media.medium`
-    width: 160px;
     gap: 20px;
   `}
 `;
@@ -112,16 +110,10 @@ const Ul = styled.ul`
   padding: 0px;
   gap: 24px;
 
-  width: 168px;
   height: 16px;
-
-  ${media.medium`
-    width: 70px;
-  `}
 `;
 
 const Li = styled.li<{ showInMedium?: boolean }>`
-  width: 76px;
   height: 16px;
 
   font-style: normal;
@@ -143,7 +135,6 @@ const Button = styled.button`
   padding: 10px;
   gap: 10px;
 
-  width: 84px;
   height: 36px;
 
   background: #171717;
@@ -154,7 +145,6 @@ const Button = styled.button`
   line-height: 16px;
 
   ${media.medium`
-    width: 77px;
     font-size: 12px;
   `}
 `;

@@ -17,20 +17,49 @@ export default function useQuizzesQuery({
   page,
   suspense = false,
 }: Props) {
-  const queryKey = [page, challengeId];
+  const queryKey = ["quizzes", page, challengeId];
   let queryFn;
   let queryOptions;
   switch (page) {
     case "READABLE":
       queryFn = () => fetchQuizzes({ challengeId, week: week || "" });
-      queryOptions = { enabled: !!(challengeId && week), suspense };
+      queryOptions = {
+        enabled: !!(challengeId && week),
+        suspense,
+        select: (data: QuizSummary[]) => {
+          const orderData = data.sort(function (a, b) {
+            return +new Date(b.quizCreatedDate) - +new Date(a.quizCreatedDate);
+          });
+          return orderData;
+        },
+      };
+      break;
     case "MY":
       queryFn = () => fetchMyQuizzes({ challengeId });
-      queryOptions = { enabled: !!challengeId, suspense };
+      queryOptions = {
+        enabled: !!challengeId,
+        suspense,
+        select: (data: QuizSummary[]) => {
+          const orderData = data.sort(function (a, b) {
+            return +new Date(b.quizCreatedDate) - +new Date(a.quizCreatedDate);
+          });
+          return orderData;
+        },
+      };
+      break;
     case "LIKED":
       queryFn = () => fetchLikedQuizzes({ challengeId });
-      queryOptions = { enabled: !!challengeId, suspense };
+      queryOptions = {
+        enabled: !!challengeId,
+        suspense,
+        select: (data: QuizSummary[]) => {
+          const orderData = data.sort(function (a, b) {
+            return +new Date(b.quizCreatedDate) - +new Date(a.quizCreatedDate);
+          });
+          return orderData;
+        },
+      };
+      break;
   }
-
   return useQuery<QuizSummary[]>(queryKey, queryFn, queryOptions);
 }

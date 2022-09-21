@@ -1,5 +1,5 @@
 import Link from "next/link";
-import React from "react";
+import React, { useEffect } from "react";
 import styled from "styled-components";
 import useChallengeDetailQuery from "../../hooks/challenge-detail-query";
 import { media } from "../../styles/media";
@@ -9,25 +9,6 @@ interface Props {
 function ChallengeOverview({ challengeId }: Props) {
   const { data: challengeDetail } = useChallengeDetailQuery({ challengeId });
 
-  const getDescription = (
-    university: string,
-    department: string,
-    professorName: string
-  ): { countOfLine: number; description: string } => {
-    const strings = [university, department, professorName, "교수님"];
-    const totalLength = strings.reduce((sum, string) => {
-      return sum + string.length;
-    }, 0);
-    if (window.innerWidth > 600 || totalLength < 25) {
-      return { countOfLine: 1, description: strings.join(" ") };
-    } else {
-      return {
-        countOfLine: 2,
-        description: strings.slice(0, 2).join(" ") + <br /> + professorName,
-      };
-    }
-  };
-
   return (
     <>
       {challengeDetail && (
@@ -35,28 +16,18 @@ function ChallengeOverview({ challengeId }: Props) {
           bgImage={challengeDetail.imageUrl}
           className="w-[1036px] h-[140px] rounded-lg bg-black"
         >
-          <Block
-            countOfLine={
-              getDescription(
-                challengeDetail.university,
-                challengeDetail.department,
-                challengeDetail.professorName
-              ).countOfLine
-            }
-          >
+          <Block>
             <Link href={`/challenges/${challengeId}`}>
               <Title titleLength={challengeDetail.title.length}>
                 {challengeDetail.title} {challengeDetail.chapter}기
               </Title>
             </Link>
             <Description>
-              {
-                getDescription(
-                  challengeDetail.university,
-                  challengeDetail.department,
-                  challengeDetail.professorName
-                ).description
-              }
+              {[
+                challengeDetail.university,
+                challengeDetail.department,
+                challengeDetail.professorName,
+              ].join(" ")}
             </Description>
           </Block>
         </Container>
@@ -82,7 +53,7 @@ const Container = styled.div<{ bgImage: string }>`
   `}
 `;
 
-const Block = styled.div<{ countOfLine: number }>`
+const Block = styled.div`
   display: flex;
   flex-direction: column;
   align-items: flex-start;
@@ -90,7 +61,7 @@ const Block = styled.div<{ countOfLine: number }>`
   gap: 8px;
 
   position: relative;
-  width: 412px;
+  width: 100%;
   height: 63px;
   left: 24px;
   top: 57px;
@@ -99,13 +70,12 @@ const Block = styled.div<{ countOfLine: number }>`
     width: 320px;
     height: 54px;
     left: 20px;
-    top: ${(p: { countOfLine: number }) =>
-      p.countOfLine === 1 ? "56px" : "44px"};
+    top: 56px;
   `}
 `;
 
 const Title = styled.h1<{ titleLength: number }>`
-  width: 412px;
+  width: 100%;
   height: 38px;
 
   font-weight: 600;

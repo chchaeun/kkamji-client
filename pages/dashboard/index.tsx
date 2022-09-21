@@ -15,7 +15,7 @@ function Dashboard() {
     }
   );
   return (
-    <div className="flex flex-col gap-10 m-auto py-[80px] px-[200px] sm:py-[88px] sm:px-[12px]">
+    <div className="flex flex-col gap-10 m-auto py-[80px] px-[200px] sm:py-[88px] sm:px-[50px]">
       <div className="text-2xl">내 챌린지</div>
       {myChallenges && <ChallengeList challenges={myChallenges} />}
     </div>
