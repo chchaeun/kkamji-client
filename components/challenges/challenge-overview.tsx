@@ -42,8 +42,13 @@ const Container = styled.div<{ bgImage: string }>`
   position: relative;
   width: 100%;
   height: 140px;
+
   background: linear-gradient(0deg, rgba(0, 0, 0, 0.4), rgba(0, 0, 0, 0.4)),
     url(${(p) => p.bgImage});
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: cover;
+
   border-radius: 8px;
 
   ${media.medium`
