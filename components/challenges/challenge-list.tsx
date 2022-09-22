@@ -10,18 +10,18 @@ function ChallengeList({ challenges }: Props) {
   return (
     <div className="grid grid-cols-3 gap-10 sm:flex sm:flex-col">
       {challenges?.map((challenge) => (
-        <div key={challenge.challengeId}>
+        <>
           {challenge.applicationStatus === "ACCEPTED" && (
             <Link
               href={`/challenges/${challenge.challengeId}`}
               key={challenge.challengeId}
             >
-              <div className="col-span-1 flex flex-col gap-3 transition ease-in-out hover:-translate-y-1 duration-300 cursor-pointer">
+              <div className="flex flex-col col-span-1 gap-3 transition duration-300 ease-in-out cursor-pointer hover:-translate-y-1">
                 <img
                   src={challenge.imageUrl}
-                  className="w-96 h-52 object-cover rounded-2xl"
+                  className="object-cover w-96 h-52 rounded-2xl"
                 />
-                <div className="flex justify-between items-center">
+                <div className="flex items-center justify-between">
                   <div>
                     <div className="text-lg font-semibold">
                       {challenge.title} {challenge.chapter}기
@@ -34,7 +34,7 @@ function ChallengeList({ challenges }: Props) {
               </div>
             </Link>
           )}
-        </div>
+        </>
       ))}
     </div>
   );
