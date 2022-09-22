@@ -17,7 +17,7 @@ function ChallengeProgressContainer({ challengeId }: Props) {
     challengeId,
   });
   // 챌린지 미션 성공 또는 실패 횟수를 반환하는 함수이다.
-  const missionCount = (successOrFail: string) => {
+  const missionCount = (status: "SUCCESS" | "FAIL" | "REMAIN") => {
     if (!openWeeks && !challengeDetail) {
       return 0;
     }
@@ -29,9 +29,9 @@ function ChallengeProgressContainer({ challengeId }: Props) {
       (week) => week.status === "UNREADABLE"
     ).length;
 
-    if (successOrFail === "SUCCESS") {
+    if (status === "SUCCESS") {
       return successCount;
-    } else if (successOrFail === "FAIL") {
+    } else if (status === "FAIL") {
       return failCount;
     } else {
       return challengeDetail!.totalWeeks - successCount - failCount;
@@ -74,7 +74,7 @@ function ChallengeProgressContainer({ challengeId }: Props) {
           <Block>
             <h3 className="flex items-center gap-2 text-lg">미션 달성률</h3>
             <ProgressBar
-              completed={missionCount("success")}
+              completed={missionCount("SUCCESS")}
               bgColor="#059669"
               height="28px"
               borderRadius="8px"
@@ -83,8 +83,8 @@ function ChallengeProgressContainer({ challengeId }: Props) {
               labelSize={window.innerWidth > 700 ? "14px" : "12px"}
               animateOnRender
               maxCompleted={challengeDetail.totalWeeks}
-              customLabel={`${missionCount("success")}회 (${Math.floor(
-                (missionCount("success") / openWeeks?.totalWeeks) * 100
+              customLabel={`${missionCount("SUCCESS")}회 (${Math.floor(
+                (missionCount("SUCCESS") / openWeeks?.totalWeeks) * 100
               )}%)`}
               customLabelStyles={{ fontWeight: 400, paddingRight: "10px" }}
             />
