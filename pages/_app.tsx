@@ -19,6 +19,7 @@ import { ReactQueryDevtools } from "@tanstack/react-query-devtools";
 import { initializeApp } from "firebase/app";
 import { getPerformance } from "firebase/performance";
 import { firebaseConfig } from "../utils/firebase";
+import { getMessaging, getToken, onMessage } from "firebase/messaging";
 
 function MyApp({ Component, pageProps }: AppProps) {
   const queryClient = new QueryClient({
@@ -57,6 +58,38 @@ function MyApp({ Component, pageProps }: AppProps) {
   useEffect(() => {
     const app = initializeApp(firebaseConfig);
     const performance = getPerformance(app);
+  }, []);
+
+  useEffect(() => {
+    const app = initializeApp(firebaseConfig);
+    const messaging = getMessaging();
+    getToken(messaging, {
+      vapidKey:
+        "BGaD_yKusLKoL8xCppUbj9TIGu3vEOEbNUAr-6HkqiflDnwiuC-9tBRUW4fpfvYSo6zouqsYMuZ2Exz1TJ6H3Ys",
+    })
+      .then((currentToken) => {
+        if (currentToken) {
+          // Send the token to your server and update the UI if necessary
+          // ...
+          console.log(currentToken);
+        } else {
+          // Show permission request UI
+          console.log(
+            "No registration token available. Request permission to generate one."
+          );
+          // ...
+        }
+      })
+      .catch((err) => {
+        console.log("An error occurred while retrieving token. ", err);
+        // ...
+      });
+
+    //포그라운드 메시지 수신
+    onMessage(messaging, (payload) => {
+      console.log("Message received. ", payload);
+      // ...
+    });
   }, []);
 
   return (
