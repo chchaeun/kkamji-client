@@ -25,7 +25,6 @@ module.exports = withPlugins(
       {
         pwa: {
           dest: "public",
-          disable: prod ? false : true,
         },
       },
     ],
