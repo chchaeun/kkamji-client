@@ -9,7 +9,7 @@ import {
 } from "@tanstack/react-query";
 import { RecoilRoot } from "recoil";
 import { useRouter } from "next/router";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 
 import Script from "next/script";
 import { pageview, GA_TRACKING_ID } from "../utils/gtag";
@@ -19,8 +19,10 @@ import { ReactQueryDevtools } from "@tanstack/react-query-devtools";
 import { initializeApp } from "firebase/app";
 import { getPerformance } from "firebase/performance";
 import { firebaseConfig } from "../utils/firebase";
+import { getMessaging, getToken, onMessage } from "firebase/messaging";
 
 function MyApp({ Component, pageProps }: AppProps) {
+  const [token, setToken] = useState<string>();
   const queryClient = new QueryClient({
     defaultOptions: {
       queries: {
@@ -59,6 +61,30 @@ function MyApp({ Component, pageProps }: AppProps) {
     const performance = getPerformance(app);
   }, []);
 
+  useEffect(() => {
+    const app = initializeApp(firebaseConfig);
+    const messaging = getMessaging();
+    getToken(messaging, {
+      vapidKey: process.env.NEXT_PUBLIC_FIREBASE_VAPID_KEY,
+    })
+      .then((currentToken) => {
+        if (currentToken) {
+          setToken(currentToken);
+        } else {
+          console.log(
+            "No registration token available. Request permission to generate one."
+          );
+        }
+      })
+      .catch((err) => {
+        console.log("An error occurred while retrieving token. ", err);
+      });
+
+    onMessage(messaging, (payload) => {
+      console.log("Message received. ", payload);
+    });
+  }, []);
+
   return (
     <RecoilRoot>
       <QueryClientProvider client={queryClient}>
@@ -83,6 +109,7 @@ function MyApp({ Component, pageProps }: AppProps) {
                 `,
               }}
             />
+            {token}
             <Component {...pageProps} />
           </Layout>
         </Hydrate>
