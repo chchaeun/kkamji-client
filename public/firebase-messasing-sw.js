@@ -2,8 +2,15 @@ importScripts("https://www.gstatic.com/firebasejs/9.10.0/firebase-app.js");
 importScripts(
   "https://www.gstatic.com/firebasejs/9.10.0/firebase-messaging.js"
 );
-
-import { firebaseConfig } from "../utils/firebase-config";
+const firebaseConfig = {
+  apiKey: "AIzaSyAo1brz1FwHNtm3I9AGxBIe7-uKF9B6Y-k",
+  authDomain: "kkamji-e6a59.firebaseapp.com",
+  projectId: "kkamji-e6a59",
+  storageBucket: "kkamji-e6a59.appspot.com",
+  messagingSenderId: "619302817285",
+  appId: "1:619302817285:web:f7d43c92c49613c557166c",
+  measurementId: "G-602VS9X70J",
+};
 
 firebase.initializeApp(firebaseConfig);
 
