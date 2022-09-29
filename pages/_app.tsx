@@ -18,8 +18,8 @@ import { ReactQueryDevtools } from "@tanstack/react-query-devtools";
 
 import { initializeApp } from "firebase/app";
 import { getPerformance } from "firebase/performance";
-import { firebaseConfig } from "../utils/firebase-config";
 import { getMessaging, getToken, onMessage } from "firebase/messaging";
+import { firebaseConfig } from "../utils/firebase-config";
 
 function MyApp({ Component, pageProps }: AppProps) {
   const [token, setToken] = useState<string>();
