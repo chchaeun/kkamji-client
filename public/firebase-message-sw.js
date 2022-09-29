@@ -1,7 +1,5 @@
-importScripts("https://www.gstatic.com/firebasejs/9.10.0/firebase-app.js");
-importScripts(
-  "https://www.gstatic.com/firebasejs/9.10.0/firebase-messaging.js"
-);
+importScripts("https://www.gstatic.com/firebasejs/8.2.3/firebase-app.js");
+importScripts("https://www.gstatic.com/firebasejs/8.2.3/firebase-messaging.js");
 const firebaseConfig = {
   apiKey: "AIzaSyAo1brz1FwHNtm3I9AGxBIe7-uKF9B6Y-k",
   authDomain: "kkamji-e6a59.firebaseapp.com",
