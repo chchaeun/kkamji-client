@@ -18,7 +18,7 @@ import { ReactQueryDevtools } from "@tanstack/react-query-devtools";
 
 import { initializeApp } from "firebase/app";
 import { getPerformance } from "firebase/performance";
-import { firebaseConfig } from "../utils/firebase";
+import { firebaseConfig } from "../public/firebase-config";
 import { getMessaging, getToken, onMessage } from "firebase/messaging";
 
 function MyApp({ Component, pageProps }: AppProps) {
@@ -64,11 +64,13 @@ function MyApp({ Component, pageProps }: AppProps) {
   useEffect(() => {
     const app = initializeApp(firebaseConfig);
     const messaging = getMessaging();
+
     getToken(messaging, {
       vapidKey: process.env.NEXT_PUBLIC_FIREBASE_VAPID_KEY,
     })
       .then((currentToken) => {
         if (currentToken) {
+          console.log(currentToken);
           setToken(currentToken);
         } else {
           console.log(
