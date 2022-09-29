@@ -9,7 +9,7 @@ import {
 } from "@tanstack/react-query";
 import { RecoilRoot } from "recoil";
 import { useRouter } from "next/router";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 
 import Script from "next/script";
 import { pageview, GA_TRACKING_ID } from "../utils/gtag";
@@ -22,6 +22,7 @@ import { firebaseConfig } from "../utils/firebase";
 import { getMessaging, getToken, onMessage } from "firebase/messaging";
 
 function MyApp({ Component, pageProps }: AppProps) {
+  const [token, setToken] = useState<string>();
   const queryClient = new QueryClient({
     defaultOptions: {
       queries: {
@@ -64,31 +65,23 @@ function MyApp({ Component, pageProps }: AppProps) {
     const app = initializeApp(firebaseConfig);
     const messaging = getMessaging();
     getToken(messaging, {
-      vapidKey:
-        "BGaD_yKusLKoL8xCppUbj9TIGu3vEOEbNUAr-6HkqiflDnwiuC-9tBRUW4fpfvYSo6zouqsYMuZ2Exz1TJ6H3Ys",
+      vapidKey: process.env.NEXT_PUBLIC_FIREBASE_VAPID_KEY,
     })
       .then((currentToken) => {
         if (currentToken) {
-          // Send the token to your server and update the UI if necessary
-          // ...
-          console.log(currentToken);
+          setToken(currentToken);
         } else {
-          // Show permission request UI
           console.log(
             "No registration token available. Request permission to generate one."
           );
-          // ...
         }
       })
       .catch((err) => {
         console.log("An error occurred while retrieving token. ", err);
-        // ...
       });
 
-    //포그라운드 메시지 수신
     onMessage(messaging, (payload) => {
       console.log("Message received. ", payload);
-      // ...
     });
   }, []);
 
@@ -116,6 +109,7 @@ function MyApp({ Component, pageProps }: AppProps) {
                 `,
               }}
             />
+            {token}
             <Component {...pageProps} />
           </Layout>
         </Hydrate>
