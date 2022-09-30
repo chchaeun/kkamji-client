@@ -111,7 +111,6 @@ function MyApp({ Component, pageProps }: AppProps) {
                 `,
               }}
             />
-            {token}
             <Component {...pageProps} />
           </Layout>
         </Hydrate>

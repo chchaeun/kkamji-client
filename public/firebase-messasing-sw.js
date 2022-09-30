@@ -1,15 +1,14 @@
-importScripts("https://www.gstatic.com/firebasejs/9.10.0/firebase-app.js");
 importScripts(
-  "https://www.gstatic.com/firebasejs/9.10.0/firebase-messaging.js"
+  "https://www.gstatic.com/firebasejs/8.10.0/firebase-app-compat.js"
+);
+importScripts(
+  "https://www.gstatic.com/firebasejs/8.10.0/firebase-messaging-compat.js"
 );
 const firebaseConfig = {
   apiKey: "AIzaSyAo1brz1FwHNtm3I9AGxBIe7-uKF9B6Y-k",
-  authDomain: "kkamji-e6a59.firebaseapp.com",
   projectId: "kkamji-e6a59",
-  storageBucket: "kkamji-e6a59.appspot.com",
   messagingSenderId: "619302817285",
   appId: "1:619302817285:web:f7d43c92c49613c557166c",
-  measurementId: "G-0P0LS8Q1B2",
 };
 
 firebase.initializeApp(firebaseConfig);
