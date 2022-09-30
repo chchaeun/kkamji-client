@@ -3,12 +3,12 @@ importScripts(
   "https://www.gstatic.com/firebasejs/9.10.0/firebase-messaging.js"
 );
 const firebaseConfig = {
-  apiKey: process.env.NEXT_PUBLIC_FIREBASE_API_KEY,
-  authDomain: process.env.NEXT_PUBLIC_FIREBASE_AUTH_DOMAIN,
-  projectId: process.env.NEXT_PUBLIC_FIREBASE_PROJECT_ID,
-  storageBucket: process.env.NEXT_PUBLIC_FIREBASE_STORAGE_BUCKET,
-  messagingSenderId: process.env.NEXT_PUBLIC_FIREBASE_MESSAGING_SENDER_ID,
-  appId: process.env.NEXT_PUBLIC_FIREBASE_APP_ID,
+  apiKey: "AIzaSyAo1brz1FwHNtm3I9AGxBIe7-uKF9B6Y-k",
+  authDomain: "kkamji-e6a59.firebaseapp.com",
+  projectId: "kkamji-e6a59",
+  storageBucket: "kkamji-e6a59.appspot.com",
+  messagingSenderId: "619302817285",
+  appId: "1:619302817285:web:f7d43c92c49613c557166c",
   measurementId: "G-0P0LS8Q1B2",
 };
 
