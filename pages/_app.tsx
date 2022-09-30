@@ -16,9 +16,9 @@ import { pageview, GA_TRACKING_ID } from "../utils/gtag";
 
 import { ReactQueryDevtools } from "@tanstack/react-query-devtools";
 
-import { initializeApp } from "firebase/app";
-import { getPerformance } from "firebase/performance";
-import { getMessaging, getToken, onMessage } from "firebase/messaging";
+import firebase from "firebase/app";
+import "firebase/messaging";
+import "firebase/performance";
 import { firebaseConfig } from "../utils/firebase-config";
 
 function MyApp({ Component, pageProps }: AppProps) {
@@ -57,33 +57,35 @@ function MyApp({ Component, pageProps }: AppProps) {
   }, [router.events]);
 
   useEffect(() => {
-    const app = initializeApp(firebaseConfig);
-    const performance = getPerformance(app);
-  }, []);
-
-  useEffect(() => {
-    const app = initializeApp(firebaseConfig);
-    const messaging = getMessaging();
-
-    getToken(messaging, {
-      vapidKey: process.env.NEXT_PUBLIC_FIREBASE_VAPID_KEY,
-    })
+    if (!firebase.apps.length) {
+      firebase.initializeApp(firebaseConfig);
+    } else {
+      firebase.app();
+    }
+    const performance = firebase.performance();
+    const messaging = firebase.messaging();
+    messaging
+      .getToken({ vapidKey: process.env.NEXT_PUBLIC_FIREBASE_VAPID_KEY })
       .then((currentToken) => {
         if (currentToken) {
+          // Send the token to your server and update the UI if necessary
+          // ...
           console.log(currentToken);
-          setToken(currentToken);
         } else {
+          // Show permission request UI
           console.log(
             "No registration token available. Request permission to generate one."
           );
+          // ...
         }
       })
       .catch((err) => {
         console.log("An error occurred while retrieving token. ", err);
+        // ...
       });
-
-    onMessage(messaging, (payload) => {
+    messaging.onMessage((payload) => {
       console.log("Message received. ", payload);
+      // ...
     });
   }, []);
 
