@@ -22,6 +22,7 @@ import { getMessaging, getToken, onMessage } from "firebase/messaging";
 import { firebaseConfig } from "../utils/firebase-config";
 
 function MyApp({ Component, pageProps }: AppProps) {
+  const [token, setToken] = useState("");
   const queryClient = new QueryClient({
     defaultOptions: {
       queries: {
@@ -67,6 +68,7 @@ function MyApp({ Component, pageProps }: AppProps) {
       .then((currentToken) => {
         if (currentToken) {
           console.log(currentToken);
+          setToken(currentToken);
         } else {
           console.log(
             "No registration token available. Request permission to generate one."
@@ -106,6 +108,7 @@ function MyApp({ Component, pageProps }: AppProps) {
                 `,
               }}
             />
+            {token}
             <Component {...pageProps} />
           </Layout>
         </Hydrate>
