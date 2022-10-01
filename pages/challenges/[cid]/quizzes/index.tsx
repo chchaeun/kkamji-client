@@ -5,6 +5,7 @@ import WeekFilter from "../../../../components/quizzes/week/week-filter";
 import useChallengeDetailQuery from "../../../../hooks/challenge-detail-query";
 import dynamic from "next/dynamic";
 import QuizListSkeleton from "../../../../components/skeletons/quiz-list-skeleton";
+import DeferredComponent from "../../../../components/deferred";
 const QuizList = dynamic(
   () => import("../../../../components/quizzes/blocks/quiz-list"),
   {
@@ -35,7 +36,13 @@ function QuizListPage() {
           </div>
           <div className="flex flex-col gap-6 py-5 px-10 w-full bg-white rounded-lg shadow-sm border-[1px] border-gray-300 sm:px-5">
             <div className="font-semibold">열람 가능한 문제</div>
-            <Suspense fallback={<QuizListSkeleton />}>
+            <Suspense
+              fallback={
+                <DeferredComponent>
+                  <QuizListSkeleton />
+                </DeferredComponent>
+              }
+            >
               <QuizList
                 challengeId={challengeId}
                 week={week}
