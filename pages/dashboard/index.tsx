@@ -6,7 +6,7 @@ import ChallengeList from "../../components/dashboard/containers/challenge-list"
 import { Challenge } from "../../types/Challenge";
 
 function Dashboard() {
-  const { data: myChallenges, error } = useQuery<Challenge[]>(
+  const { data: myChallenges } = useQuery<Challenge[]>(
     ["myChallenges"],
     async () => {
       api.defaults.headers.common["code"] = getCode();

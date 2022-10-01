@@ -1,6 +1,5 @@
 import "../styles/globals.css";
 import type { AppProps } from "next/app";
-import Layout from "../components/layout/Layout";
 import {
   dehydrate,
   Hydrate,
@@ -20,6 +19,7 @@ import { initializeApp } from "firebase/app";
 import { getPerformance } from "firebase/performance";
 import { getMessaging, getToken, onMessage } from "firebase/messaging";
 import { firebaseConfig } from "../utils/FirebaseConfig";
+import Layout from "../components/layout/Layout";
 
 function MyApp({ Component, pageProps }: AppProps) {
   const [token, setToken] = useState("");
