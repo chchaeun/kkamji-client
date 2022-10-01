@@ -2,7 +2,7 @@ import Link from "next/link";
 import { useRouter } from "next/router";
 import React, { useState } from "react";
 import useChallengeDetailQuery from "../../../hooks/challenge-detail-query";
-import { classNames } from "../../../styles/classname-maker";
+import { classNames } from "../../../styles/ClassNames";
 import { QuizSummary } from "../../../types/Quiz";
 interface Props {
   challengeId: string;
@@ -74,7 +74,7 @@ function QuizDetailNav({ challengeId, quizId, quizzes, page }: Props) {
         <button
           type="button"
           onClick={onTocClick}
-          className="py-2 px-4 rounded bg-gray-100 text-gray-700 cursor-pointer"
+          className="px-4 py-2 text-gray-700 bg-gray-100 rounded cursor-pointer"
         >
           문제 목록
         </button>
@@ -113,7 +113,7 @@ function QuizDetailNav({ challengeId, quizId, quizzes, page }: Props) {
       </div>
       {showToc && (
         <div className="fixed left-0 top-0 flex flex-col gap-5 w-1/4 h-full py-32 px-10 bg-white shadow-sm border-[1px] border-gray-300 sm:w-[80%] sm:py-20 animate-in slide-in-from-left-10 duration-200 z-20">
-          <h2 className="font-semibold text-xl cursor-pointer">문제 목록</h2>
+          <h2 className="text-xl font-semibold cursor-pointer">문제 목록</h2>
 
           <ul className="flex flex-col gap-1 overflow-y-scroll scrollbar-thin">
             {quizzes?.map((quiz) => (
@@ -142,7 +142,7 @@ function QuizDetailNav({ challengeId, quizId, quizzes, page }: Props) {
                 >
                   {quiz.quizTitle}
                 </button>
-                <span className="badge badge-secondary font-normal">
+                <span className="font-normal badge badge-secondary">
                   {quiz.quizWeek}주차
                 </span>
               </li>

@@ -5,7 +5,7 @@ import WeekFilter from "../../../../components/quizzes/blocks/QuizListWeekFilter
 import useChallengeDetailQuery from "../../../../hooks/challenge-detail-query";
 import dynamic from "next/dynamic";
 import QuizListSkeleton from "../../../../components/skeletons/QuizListSkeleton";
-import DeferredComponent from "../../../../components/skeletons/DeferredSkeleton";
+import DeferredComponent from "../../../../components/skeletons/DeferredComponent";
 const QuizList = dynamic(
   () => import("../../../../components/quizzes/blocks/QuizList"),
   {

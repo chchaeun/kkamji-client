@@ -12,14 +12,14 @@ import { useRouter } from "next/router";
 import { useEffect, useState } from "react";
 
 import Script from "next/script";
-import { pageview, GA_TRACKING_ID } from "../utils/gtag";
+import { pageview, GA_TRACKING_ID } from "../utils/GTag";
 
 import { ReactQueryDevtools } from "@tanstack/react-query-devtools";
 
 import { initializeApp } from "firebase/app";
 import { getPerformance } from "firebase/performance";
 import { getMessaging, getToken, onMessage } from "firebase/messaging";
-import { firebaseConfig } from "../utils/firebase-config";
+import { firebaseConfig } from "../utils/FirebaseConfig";
 
 function MyApp({ Component, pageProps }: AppProps) {
   const [token, setToken] = useState("");

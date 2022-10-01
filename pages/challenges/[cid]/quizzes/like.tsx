@@ -4,7 +4,7 @@ import ChallengeOverview from "../../../../components/challenges/ChallengeOvervi
 import useChallengeDetailQuery from "../../../../hooks/challenge-detail-query";
 import dynamic from "next/dynamic";
 import QuizListSkeleton from "../../../../components/skeletons/QuizListSkeleton";
-import DeferredComponent from "../../../../components/DeferredComponent";
+import DeferredComponent from "../../../../components/skeletons/DeferredComponent";
 const QuizList = dynamic(
   () => import("../../../../components/quizzes/blocks/QuizList"),
   {

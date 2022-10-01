@@ -1,7 +1,7 @@
 import React from "react";
 import styled from "styled-components";
-import { classNames } from "../../../styles/classname-maker";
-import { media } from "../../../styles/media";
+import { classNames } from "../../../styles/ClassNames";
+import { media } from "../../../styles/Media";
 import { OpenWeeksSelect } from "../../../types/Challenge";
 interface Props {
   openWeeks: OpenWeeksSelect;

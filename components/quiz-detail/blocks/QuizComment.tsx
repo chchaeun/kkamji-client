@@ -2,7 +2,7 @@ import { useMutation, useQueryClient } from "@tanstack/react-query";
 import React from "react";
 import api from "../../../api/my-api";
 import { Comment } from "../../../types/Comment";
-import { getDateFormat } from "../../../utils/date-fotmat";
+import { getDateFormat } from "../../../utils/DateFormat";
 interface Props {
   quizId: string;
   comment: Comment;

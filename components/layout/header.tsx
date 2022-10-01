@@ -3,7 +3,7 @@ import Link from "next/link";
 import { useRouter } from "next/router";
 import { getCode } from "../../api/session-code";
 import styled from "styled-components";
-import { media } from "../../styles/media";
+import { media } from "../../styles/Media";
 function Header() {
   const router = useRouter();
   const isUser = getCode() ? true : false;
