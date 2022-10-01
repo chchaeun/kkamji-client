@@ -9,7 +9,7 @@ interface Props {
   week?: string;
   challengeId: string;
 }
-function QuizSummary({ title, page, week, challengeId }: Props) {
+function ChallengeQuizSummary({ title, page, week, challengeId }: Props) {
   const { data: quizzes } = useQuizzesQuery({ challengeId, page, week });
 
   const getLinkByPage = (quizId?: number) => {
@@ -57,7 +57,7 @@ function QuizSummary({ title, page, week, challengeId }: Props) {
   );
 }
 
-export default QuizSummary;
+export default ChallengeQuizSummary;
 
 const Container = styled.div`
   display: flex;

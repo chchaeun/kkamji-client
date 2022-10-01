@@ -2,7 +2,7 @@ import { useQuery } from "@tanstack/react-query";
 import React from "react";
 import api from "../../api/my-api";
 import { getCode } from "../../api/session-code";
-import ChallengeList from "../../components/challenges/challenge-list";
+import ChallengeList from "../../components/dashboard/containers/challenge-list";
 import { Challenge } from "../../types/Challenge";
 
 function Dashboard() {

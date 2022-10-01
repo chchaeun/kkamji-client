@@ -2,7 +2,7 @@ import React from "react";
 import styled from "styled-components";
 import useOpenWeeksQuery from "../../../hooks/open-weeks";
 import { media } from "../../../styles/media";
-import QuizSummary from "../blocks/quiz-summary";
+import QuizSummary from "../blocks/ChallengeQuizSummary";
 interface Props {
   challengeId: string;
 }

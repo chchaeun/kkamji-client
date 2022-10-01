@@ -1,6 +1,6 @@
 import React from "react";
-import Banner from "../components/home/banner";
-import MobileBanner from "../components/home/mobile-banner";
+import Banner from "../components/home/HomeBanner";
+import MobileBanner from "../components/home/HomeMobileBanner";
 function HomePage() {
   return (
     <>

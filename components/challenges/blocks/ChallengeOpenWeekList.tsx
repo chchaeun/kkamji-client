@@ -6,7 +6,7 @@ import { OpenWeeksSelect } from "../../../types/Challenge";
 interface Props {
   openWeeks: OpenWeeksSelect;
 }
-function OpenWeekList({ openWeeks }: Props) {
+function ChallengeOpenWeekList({ openWeeks }: Props) {
   return (
     <Block>
       {openWeeks.weeks.map((week) => (
@@ -27,7 +27,7 @@ function OpenWeekList({ openWeeks }: Props) {
   );
 }
 
-export default OpenWeekList;
+export default ChallengeOpenWeekList;
 
 const Block = styled.div`
   display: flex;
