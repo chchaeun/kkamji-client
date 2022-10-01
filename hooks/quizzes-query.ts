@@ -19,45 +19,37 @@ export default function useQuizzesQuery({
 }: Props) {
   const queryKey = ["quizzes", page, challengeId];
   let queryFn;
-  let queryOptions;
+  let queryOptions = {
+    enabled: true,
+    suspense,
+    select: (data: QuizSummary[]) => {
+      const orderData = data.sort(function (a, b) {
+        return +new Date(b.quizCreatedDate) - +new Date(a.quizCreatedDate);
+      });
+      return orderData;
+    },
+  };
+
   switch (page) {
     case "READABLE":
       queryFn = () => fetchQuizzes({ challengeId, week: week || "" });
       queryOptions = {
+        ...queryOptions,
         enabled: !!(challengeId && week),
-        suspense,
-        select: (data: QuizSummary[]) => {
-          const orderData = data.sort(function (a, b) {
-            return +new Date(b.quizCreatedDate) - +new Date(a.quizCreatedDate);
-          });
-          return orderData;
-        },
       };
       break;
     case "MY":
       queryFn = () => fetchMyQuizzes({ challengeId });
       queryOptions = {
+        ...queryOptions,
         enabled: !!challengeId,
-        suspense,
-        select: (data: QuizSummary[]) => {
-          const orderData = data.sort(function (a, b) {
-            return +new Date(b.quizCreatedDate) - +new Date(a.quizCreatedDate);
-          });
-          return orderData;
-        },
       };
       break;
     case "LIKED":
       queryFn = () => fetchLikedQuizzes({ challengeId });
       queryOptions = {
+        ...queryOptions,
         enabled: !!challengeId,
-        suspense,
-        select: (data: QuizSummary[]) => {
-          const orderData = data.sort(function (a, b) {
-            return +new Date(b.quizCreatedDate) - +new Date(a.quizCreatedDate);
-          });
-          return orderData;
-        },
       };
       break;
   }
