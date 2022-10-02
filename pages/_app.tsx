@@ -11,7 +11,7 @@ import { useRouter } from "next/router";
 import { useEffect, useState } from "react";
 
 import Script from "next/script";
-import { pageview, GA_TRACKING_ID } from "../utils/GTag";
+import { pageview, GA_TRACKING_ID } from "../utils/gtag";
 
 import { ReactQueryDevtools } from "@tanstack/react-query-devtools";
 
