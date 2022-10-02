@@ -1,10 +1,12 @@
-import { useMutation, useQuery } from "@tanstack/react-query";
-import axios from "axios";
+import { useMutation } from "@tanstack/react-query";
+import { initializeApp } from "firebase/app";
+import { getMessaging, getToken } from "firebase/messaging";
 import { useRouter } from "next/router";
-import React, { useEffect, useRef } from "react";
+import React from "react";
 import { SubmitHandler, useForm } from "react-hook-form";
 import api from "../api/my-api";
 import { getCode } from "../api/session-code";
+import { firebaseConfig } from "../utils/FirebaseConfig";
 
 type LoginValidForm = {
   name: string;
@@ -14,25 +16,18 @@ type LoginValidForm = {
 function Login() {
   const router = useRouter();
 
-  const { data: currentChapter } = useQuery<{ currentChapterId: number }>(
-    ["currentChapter"],
-    async () => {
-      const { data } = await axios.get(
-        "https://a61e9270-0366-4013-a651-fbc3d46384ab.mock.pstmn.io/v1/current-chapter"
-      );
-      return data;
-    },
-    {
-      enabled: !!getCode(),
-      onSuccess: (currentChapter) => {
-        router.push(`/chapters/${currentChapter.currentChapterId}`);
-      },
-    }
-  );
-
   const { mutate: mutateLogin } = useMutation(
     async (loginBody: LoginValidForm) => {
-      return await api.post("/login", loginBody);
+      return await api.post("/user/login", loginBody);
+    },
+    {
+      onSuccess: (res, req) => {
+        sessionStorage.setItem("code", req.code);
+        router.push("/");
+      },
+      onError: () => {
+        alert("로그인에 실패했습니다.");
+      },
     }
   );
 
@@ -44,16 +39,34 @@ function Login() {
 
   const onLoginValid: SubmitHandler<LoginValidForm> = async (data) => {
     const { name, code } = data;
-    const loginBody = {
+    let loginBody = {
       name,
       code,
+      token: "",
+      platform: "",
     };
-    sessionStorage.setItem("code", loginBody.code);
+
+    const app = initializeApp(firebaseConfig);
+
+    const messaging = getMessaging();
+
+    getToken(messaging, {
+      vapidKey: process.env.NEXT_PUBLIC_FIREBASE_VAPID_KEY,
+    })
+      .then((currentToken) => {
+        console.log(currentToken);
+        loginBody = {
+          ...loginBody,
+          token: currentToken,
+        };
+      })
+      .catch((err) => {});
+
     mutateLogin(loginBody);
   };
   return (
-    <div className="flex flex-col items-center pt-20 gap-10">
-      <h1 className="font-summer text-4xl">깜지.</h1>
+    <div className="flex flex-col items-center gap-10 pt-20">
+      <h1 className="text-4xl logo">깜지.</h1>
       <form
         onSubmit={handleSubmit(onLoginValid)}
         className="flex flex-col gap-8"
@@ -66,7 +79,7 @@ function Login() {
               {...register("name", {
                 required: "이름을 입력해주세요.",
               })}
-              className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+              className="w-full px-3 py-2 leading-tight text-gray-700 border rounded shadow appearance-none focus:outline-none focus:shadow-outline"
             />
           </label>
           <em>{errors?.name?.message}</em>
@@ -79,7 +92,7 @@ function Login() {
                 minLength: { value: 4, message: "코드는 4자여야 합니다." },
                 maxLength: { value: 4, message: "코드는 4자여야 합니다." },
               })}
-              className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+              className="w-full px-3 py-2 leading-tight text-gray-700 border rounded shadow appearance-none focus:outline-none focus:shadow-outline"
             />
             <em>{errors.code?.message}</em>
           </label>

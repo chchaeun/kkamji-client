@@ -1,5 +1,6 @@
 export const getCode = () => {
-  if (typeof window !== "undefined") {
-    return sessionStorage.getItem("code");
+  if (typeof window === "undefined") {
+    return "";
   }
+  return sessionStorage.getItem("code") || "";
 };

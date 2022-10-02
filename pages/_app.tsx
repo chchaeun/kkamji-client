@@ -1,18 +1,25 @@
 import "../styles/globals.css";
 import type { AppProps } from "next/app";
-import Layout from "../components/layout/layout";
 import {
+  dehydrate,
   Hydrate,
   QueryClient,
   QueryClientProvider,
 } from "@tanstack/react-query";
 import { RecoilRoot } from "recoil";
-import { ReactQueryDevtools } from "@tanstack/react-query-devtools";
 import { useRouter } from "next/router";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 
 import Script from "next/script";
-import { pageview, GA_TRACKING_ID } from "../utils/gtag";
+import { pageview, GA_TRACKING_ID } from "../utils/GTag";
+
+import { ReactQueryDevtools } from "@tanstack/react-query-devtools";
+
+import { initializeApp } from "firebase/app";
+import { getPerformance } from "firebase/performance";
+import { getMessaging, onMessage } from "firebase/messaging";
+import { firebaseConfig } from "../utils/FirebaseConfig";
+import Layout from "../components/layout/Layout";
 
 function MyApp({ Component, pageProps }: AppProps) {
   const queryClient = new QueryClient({
@@ -23,6 +30,8 @@ function MyApp({ Component, pageProps }: AppProps) {
     },
   });
 
+  const dehydratedState = dehydrate(queryClient);
+
   if (process.env.NEXT_PUBLIC_API_MOCKING === "enabled") {
     require("../mocks");
   }
@@ -30,22 +39,36 @@ function MyApp({ Component, pageProps }: AppProps) {
   const router = useRouter();
 
   useEffect(() => {
-    const handleRouteChange = (url: URL) => {
-      pageview(url);
-    };
-    router.events.on("routeChangeComplete", handleRouteChange);
-    router.events.on("hashChangeComplete", handleRouteChange);
-    return () => {
-      router.events.off("routeChangeComplete", handleRouteChange);
+    if (
+      document.location.hostname.search("kkamjidot.com") !== -1 &&
+      document.location.hostname.search("test") === -1
+    ) {
+      const handleRouteChange = (url: URL) => {
+        pageview(url);
+      };
+      router.events.on("routeChangeComplete", handleRouteChange);
       router.events.on("hashChangeComplete", handleRouteChange);
-    };
+      return () => {
+        router.events.off("routeChangeComplete", handleRouteChange);
+        router.events.off("hashChangeComplete", handleRouteChange);
+      };
+    }
   }, [router.events]);
+
+  useEffect(() => {
+    const app = initializeApp(firebaseConfig);
+    const performance = getPerformance(app);
+
+    const messaging = getMessaging(app);
+
+    onMessage(messaging, (payload) => {});
+  }, []);
 
   return (
     <RecoilRoot>
       <QueryClientProvider client={queryClient}>
         <ReactQueryDevtools initialIsOpen={false} />
-        <Hydrate state={pageProps.dehydratedState}>
+        <Hydrate state={dehydratedState}>
           <Layout>
             <Script
               strategy="afterInteractive"
@@ -56,13 +79,13 @@ function MyApp({ Component, pageProps }: AppProps) {
               strategy="afterInteractive"
               dangerouslySetInnerHTML={{
                 __html: `
-            window.dataLayer = window.dataLayer || [];
-            function gtag(){dataLayer.push(arguments);}
-            gtag('js', new Date());
-            gtag('config', '${GA_TRACKING_ID}', {
-              page_path: window.location.pathname,
-            });
-          `,
+                window.dataLayer = window.dataLayer || [];
+                function gtag(){dataLayer.push(arguments);}
+                gtag('js', new Date());
+                gtag('config', '${GA_TRACKING_ID}', {
+                  page_path: window.location.pathname,
+                });
+                `,
               }}
             />
             <Component {...pageProps} />

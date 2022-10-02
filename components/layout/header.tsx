@@ -1,53 +1,150 @@
-import React, { useEffect, useState } from "react";
+import React from "react";
 import Link from "next/link";
 import { useRouter } from "next/router";
-import { Icon } from "@iconify/react";
-import { useRecoilState } from "recoil";
-import { showNavState } from "../../stores/header";
-import { useQuery, useQueryClient } from "@tanstack/react-query";
-import { fetchChapters, IChapter } from "../../api/chapters/chapters";
-import axios from "axios";
+import { getCode } from "../../api/session-code";
+import styled from "styled-components";
+import { media } from "../../styles/Media";
 function Header() {
   const router = useRouter();
-  const [showNav, setShowNav] = useRecoilState(showNavState);
+  const isUser = getCode() ? true : false;
 
-  const { data: currentChapter } = useQuery<{ currentChapterId: number }>(
-    ["currentChapter"],
-    async () => {
-      const { data } = await axios.get(
-        "https://a61e9270-0366-4013-a651-fbc3d46384ab.mock.pstmn.io/v1/current-chapter"
-      );
-      return data;
+  const isSameRoute = (route: string) => {
+    if (router.pathname === route) {
+      return true;
+    } else {
+      return false;
     }
-  );
-
-  const onRankingClick = () => {
-    setShowNav((prev) => !prev);
   };
+
   return (
     <>
-      {router.pathname !== "/login" && (
-        <nav className="flex bg-white fixed w-screen top-0 left-0 z-50 justify-between items-center border-b-2 border-gray-100 font-summer text-3xl p-3">
-          <Link href={`/chapters/${currentChapter?.currentChapterId}`}>
-            깜지.
+      {!isSameRoute("/login") && (
+        <Container>
+          <Link href="/">
+            <Logo className="logo">깜지.</Logo>
           </Link>
-          {showNav ? (
-            <Icon
-              icon="bi:x-lg"
-              onClick={onRankingClick}
-              className="lg:hidden cursor-pointer"
-            />
-          ) : (
-            <Icon
-              icon="charm:menu-hamburger"
-              onClick={onRankingClick}
-              className="lg:hidden cursor-pointer"
-            />
-          )}
-        </nav>
+          <Navigation>
+            <Ul>
+              <Li showInMedium={false}>
+                <Link href="/introduce">깜지 소개</Link>
+              </Li>
+              <Li showInMedium={true}>
+                <Link href="/manual">문제 매뉴얼</Link>
+              </Li>
+            </Ul>
+            {isUser ? (
+              <Link href={`/dashboard`}>
+                <Button type="button">내 챌린지</Button>
+              </Link>
+            ) : (
+              <Link href={`/login`}>
+                <Button type="button">로그인</Button>
+              </Link>
+            )}
+          </Navigation>
+        </Container>
       )}
     </>
   );
 }
 
 export default Header;
+
+const Container = styled.div`
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+  padding: 12px 31px;
+  gap: 10px;
+
+  position: fixed;
+  width: 100%;
+  height: 60px;
+  left: 0px;
+  background: #ffffff;
+  border-bottom: 1px solid #f1f5f9;
+
+  z-index: 20;
+
+  ${media.medium`
+    padding: 10px 16px;
+    height: 51px;
+  `}
+`;
+
+const Logo = styled.h1`
+  position: relative;
+  width: 60px;
+  height: 29px;
+  bottom: 5px;
+
+  font-size: 26px;
+  font-family: "HSSummer";
+
+  cursor: pointer;
+
+  ${media.medium`
+    font-size: 24px;
+  `}
+`;
+
+const Navigation = styled.nav`
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  padding: 0px;
+  gap: 32px;
+
+  height: 36px;
+
+  ${media.medium`
+    gap: 20px;
+  `}
+`;
+
+const Ul = styled.ul`
+  display: flex;
+  flex-direction: row;
+  align-items: flex-start;
+  padding: 0px;
+  gap: 24px;
+
+  height: 16px;
+`;
+
+const Li = styled.li<{ showInMedium?: boolean }>`
+  height: 16px;
+
+  font-style: normal;
+  font-weight: 500;
+  font-size: 14px;
+  line-height: 16px;
+
+  display: flex;
+  align-items: center;
+  text-align: center;
+
+  ${media.medium`
+    display: ${(p: { showInMedium?: boolean }) =>
+      p.showInMedium ? "flex" : "none"};
+  `}
+`;
+
+const Button = styled.button`
+  padding: 10px;
+  gap: 10px;
+
+  height: 36px;
+
+  background: #171717;
+  border-radius: 8px;
+
+  color: #ffffff;
+  font-size: 14px;
+  line-height: 16px;
+
+  ${media.medium`
+    font-size: 12px;
+  `}
+`;
