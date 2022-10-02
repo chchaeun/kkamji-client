@@ -1,28 +1,33 @@
-import { useQuery } from "@tanstack/react-query";
-import React from "react";
+import React, { Suspense } from "react";
 import styled from "styled-components";
-import api from "../../api/my-api";
-import { getCode } from "../../api/session-code";
-import ChallengeListContainer from "../../components/dashboard/containers/ChallengeListContainer";
 import { media } from "../../styles/Media";
-import { Challenge } from "../../types/Challenge";
+import dynamic from "next/dynamic";
+import ChallengeListSkeleton from "../../components/skeletons/ChallengeListSkeleton";
+import DeferredComponent from "../../components/skeletons/DeferredComponent";
+const ChallengeList = dynamic(
+  async () => await import("../../components/dashboard/blocks/ChallengeList"),
+  {
+    suspense: true,
+    ssr: false,
+  }
+);
 
 function Dashboard() {
-  const { data: myChallenges } = useQuery<Challenge[]>(
-    ["myChallenges"],
-    async () => {
-      api.defaults.headers.common["code"] = getCode();
-      const { data } = await api.get("/my/challenges");
-      return data;
-    }
-  );
   return (
     <Frame>
       <Title>나의 챌린지 현황</Title>
       <HighlightBar>
         📢 벼락치기를 하는 50%의 대학생들을 앞서고 있습니다! 조금만 더 화이팅!
       </HighlightBar>
-      {myChallenges && <ChallengeListContainer challenges={myChallenges} />}
+      <Suspense
+        fallback={
+          <DeferredComponent>
+            <ChallengeListSkeleton />
+          </DeferredComponent>
+        }
+      >
+        <ChallengeList />
+      </Suspense>
     </Frame>
   );
 }
