@@ -6,12 +6,16 @@ import { Challenge } from "../types/Challenge";
 
 interface Props {
   challengeId: string;
+  suspense: boolean;
 }
 
-export default function useChallengeDetailQuery({ challengeId }: Props) {
+export default function useChallengeDetailQuery({
+  challengeId,
+  suspense = false,
+}: Props) {
   return useQuery<Challenge, AxiosError>(
     ["challenge", challengeId],
     () => fetchChallengeDetail({ challengeId }),
-    { enabled: !!challengeId }
+    { enabled: !!challengeId, suspense }
   );
 }
