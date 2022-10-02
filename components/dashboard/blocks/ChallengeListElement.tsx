@@ -2,32 +2,25 @@ import { Icon } from "@iconify/react";
 import Link from "next/link";
 import React, { useState } from "react";
 import styled from "styled-components";
-import useChallengeDetailQuery from "../../../hooks/challenge-detail-query";
 import { media } from "../../../styles/Media";
+import { Challenge } from "../../../types/Challenge";
 
 interface Props {
-  challengeId: string;
+  challenge: Challenge;
 }
 
-function ChallengeListElement({ challengeId }: Props) {
-  const { data: challengeDetail } = useChallengeDetailQuery({
-    challengeId,
-    suspense: true,
-  });
-
-  const [success] = useState(false);
+function ChallengeListElement({ challenge }: Props) {
+  const [success] = useState(true);
 
   return (
     <>
-      {challengeDetail && (
-        <Link href={`/challenges/${challengeId}`}>
+      {challenge && challenge.applicationStatus === "ACCEPTED" && (
+        <Link href={`/challenges/${challenge.challengeId}`}>
           <Container>
             {success ? (
-              <CompleteImageBox
-                bgImage={challengeDetail.imageUrl}
-              ></CompleteImageBox>
+              <CompleteImageBox bgImage={challenge.imageUrl}></CompleteImageBox>
             ) : (
-              <IncompleteImageBox bgImage={challengeDetail.imageUrl}>
+              <IncompleteImageBox bgImage={challenge.imageUrl}>
                 <Icon icon="heroicons-solid:pencil-alt" color={"#ffffff"} />
               </IncompleteImageBox>
             )}
@@ -42,11 +35,11 @@ function ChallengeListElement({ challengeId }: Props) {
               </Badges>
               <div>
                 <Title>
-                  {challengeDetail.title} {challengeDetail.chapter}기
+                  {challenge.title} {challenge.chapter}기
                 </Title>
                 <SubTitle>
-                  {challengeDetail.university} {challengeDetail.department}{" "}
-                  {challengeDetail.professorName} 교수님
+                  {challenge.university} {challenge.department}{" "}
+                  {challenge.professorName} 교수님
                 </SubTitle>
               </div>
             </InfoBox>
