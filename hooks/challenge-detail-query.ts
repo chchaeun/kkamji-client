@@ -6,7 +6,7 @@ import { Challenge } from "../types/Challenge";
 
 interface Props {
   challengeId: string;
-  suspense: boolean;
+  suspense?: boolean;
 }
 
 export default function useChallengeDetailQuery({
