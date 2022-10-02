@@ -19,7 +19,7 @@ import { initializeApp } from "firebase/app";
 import { getPerformance } from "firebase/performance";
 import { getMessaging, onMessage } from "firebase/messaging";
 import { firebaseConfig } from "../utils/FirebaseConfig";
-import Layout from "../components/layout/Layout";
+import Layout from "../components/layout/LayoutComponent";
 
 function MyApp({ Component, pageProps }: AppProps) {
   const queryClient = new QueryClient({

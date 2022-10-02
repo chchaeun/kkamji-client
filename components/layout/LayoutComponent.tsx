@@ -1,5 +1,5 @@
 import React, { Fragment, ReactNode } from "react";
-import Header from "./Header";
+import Header from "./HeaderComponent";
 interface IProps {
   children: ReactNode;
 }
