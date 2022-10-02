@@ -3,7 +3,7 @@ import { SubmitHandler, useFieldArray, useForm } from "react-hook-form";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { useRouter } from "next/router";
 import { updateQuiz } from "../../../api/submit-quiz/update-quiz";
-import Overlay from "../../../components/layout/Overlay";
+import Overlay from "../../../components/layout/OverlayComponent";
 import SubmitCount from "../../../components/write/blocks/SubmitCount";
 import useCurrentWeekQuery from "../../../hooks/current-week-query";
 import useSubmitCountQuery from "../../../hooks/submit-count-query";
