@@ -3,10 +3,10 @@ importScripts(
   "https://www.gstatic.com/firebasejs/8.10.0/firebase-messaging.js"
 );
 const firebaseConfig = {
-  apiKey: process.env.NEXT_PUBLIC_FIREBASE_API_KEY,
-  projectId: process.env.NEXT_PUBLIC_FIREBASE_PROJECT_ID,
-  messagingSenderId: process.env.NEXT_PUBLIC_FIREBASE_MESSAGING_SENDER_ID,
-  appId: process.env.NEXT_PUBLIC_FIREBASE_APP_ID,
+  apiKey: "AIzaSyDsU0g3N_AqvS0TL1ALmyomBH-UwpkROhE",
+  projectId: "kkamjidot-notification-server",
+  messagingSenderId: "107969704796",
+  appId: "1:107969704796:web:3ffc334d4751dfdad80799",
 };
 
 firebase.initializeApp(firebaseConfig);

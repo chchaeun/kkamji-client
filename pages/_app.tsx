@@ -17,12 +17,11 @@ import { ReactQueryDevtools } from "@tanstack/react-query-devtools";
 
 import { initializeApp } from "firebase/app";
 import { getPerformance } from "firebase/performance";
-import { getMessaging, getToken, onMessage } from "firebase/messaging";
+import { getMessaging, onMessage } from "firebase/messaging";
 import { firebaseConfig } from "../utils/FirebaseConfig";
 import Layout from "../components/layout/Layout";
 
 function MyApp({ Component, pageProps }: AppProps) {
-  const [token, setToken] = useState("");
   const queryClient = new QueryClient({
     defaultOptions: {
       queries: {
@@ -60,28 +59,9 @@ function MyApp({ Component, pageProps }: AppProps) {
     const app = initializeApp(firebaseConfig);
     const performance = getPerformance(app);
 
-    const messaging = getMessaging();
+    const messaging = getMessaging(app);
 
-    getToken(messaging, {
-      vapidKey: process.env.NEXT_PUBLIC_FIREBASE_VAPID_KEY,
-    })
-      .then((currentToken) => {
-        if (currentToken) {
-          console.log(currentToken);
-          setToken(currentToken);
-        } else {
-          console.log(
-            "No registration token available. Request permission to generate one."
-          );
-        }
-      })
-      .catch((err) => {
-        console.log("An error occurred while retrieving token. ", err);
-      });
-
-    onMessage(messaging, (payload) => {
-      console.log("Message received. ", payload);
-    });
+    onMessage(messaging, (payload) => {});
   }, []);
 
   return (
@@ -108,7 +88,6 @@ function MyApp({ Component, pageProps }: AppProps) {
                 `,
               }}
             />
-            {token}
             <Component {...pageProps} />
           </Layout>
         </Hydrate>
