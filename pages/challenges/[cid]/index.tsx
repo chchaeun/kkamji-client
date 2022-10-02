@@ -2,7 +2,7 @@ import { useRouter } from "next/router";
 import React from "react";
 import ChallengeOverview from "../../../components/challenges/ChallengeOverview";
 import styled from "styled-components";
-import { media } from "../../../styles/Media";
+import { media } from "../../../styles/media";
 import ChallengeSuccessPeople from "../../../components/challenges/blocks/ChallengeSuccessPeople";
 import ChallengeProgressContainer from "../../../components/challenges/containers/ChallengeProgressContainer";
 import ChallengeQuizSummaryContainer from "../../../components/challenges/containers/ChallengeQuizSummaryContainer";

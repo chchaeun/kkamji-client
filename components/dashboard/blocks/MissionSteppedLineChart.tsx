@@ -9,7 +9,7 @@ import {
   LineElement,
 } from "chart.js";
 import styled from "styled-components";
-import { media } from "../../../styles/Media";
+import { media } from "../../../styles/media";
 
 ChartJS.register(CategoryScale, LinearScale, PointElement, LineElement);
 

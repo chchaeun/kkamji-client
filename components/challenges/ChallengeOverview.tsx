@@ -2,7 +2,7 @@ import Link from "next/link";
 import React, { useEffect } from "react";
 import styled from "styled-components";
 import useChallengeDetailQuery from "../../hooks/challenge-detail-query";
-import { media } from "../../styles/Media";
+import { media } from "../../styles/media";
 interface Props {
   challengeId: string;
 }
