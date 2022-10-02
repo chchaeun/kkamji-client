@@ -2,7 +2,7 @@ import { Icon } from "@iconify/react";
 import Link from "next/link";
 import React, { useState } from "react";
 import styled from "styled-components";
-import { media } from "../../../styles/Media";
+import { media } from "../../../styles/media";
 import { Challenge } from "../../../types/Challenge";
 
 interface Props {

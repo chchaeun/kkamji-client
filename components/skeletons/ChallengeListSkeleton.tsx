@@ -2,7 +2,7 @@ import React from "react";
 import Skeleton from "react-loading-skeleton";
 import "react-loading-skeleton/dist/skeleton.css";
 import styled from "styled-components";
-import { media } from "../../styles/Media";
+import { media } from "../../styles/media";
 function ChallengeListSkeleton() {
   return (
     <Container>

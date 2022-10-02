@@ -1,6 +1,6 @@
 import React, { Suspense } from "react";
 import styled from "styled-components";
-import { media } from "../../styles/Media";
+import { media } from "../../styles/media";
 import dynamic from "next/dynamic";
 import ChallengeListSkeleton from "../../components/skeletons/ChallengeListSkeleton";
 import DeferredComponent from "../../components/skeletons/DeferredComponent";

@@ -3,7 +3,7 @@ import React from "react";
 import styled from "styled-components";
 import api from "../../../api/my-api";
 import { getCode } from "../../../api/session-code";
-import { media } from "../../../styles/Media";
+import { media } from "../../../styles/media";
 import { Challenge } from "../../../types/Challenge";
 import ChallengeListElement from "./ChallengeListElement";
 
