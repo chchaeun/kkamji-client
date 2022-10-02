@@ -4,6 +4,7 @@ import { media } from "../../styles/Media";
 import dynamic from "next/dynamic";
 import ChallengeListSkeleton from "../../components/skeletons/ChallengeListSkeleton";
 import DeferredComponent from "../../components/skeletons/DeferredComponent";
+import MissionSteppedLineChart from "../../components/dashboard/blocks/MissionSteppedLineChart";
 const ChallengeList = dynamic(
   async () => await import("../../components/dashboard/blocks/ChallengeList"),
   {
@@ -19,6 +20,7 @@ function Dashboard() {
       <HighlightBar>
         📢 벼락치기를 하는 50%의 대학생들을 앞서고 있습니다! 조금만 더 화이팅!
       </HighlightBar>
+      <MissionSteppedLineChart />
       <Suspense
         fallback={
           <DeferredComponent>
