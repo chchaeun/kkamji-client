@@ -37,6 +37,7 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["@ramonak/react-progress-bar", "virtual:1ca3d45661282aa6e2c01a90bb2bde2c1af70673e4a578116428a2af70aff6d82b1728295f748f195ecea8e57b31ba96a8112edcc0dc7d20b416549af71a1795#npm:5.0.2"],\
             ["@tanstack/react-query", "virtual:1ca3d45661282aa6e2c01a90bb2bde2c1af70673e4a578116428a2af70aff6d82b1728295f748f195ecea8e57b31ba96a8112edcc0dc7d20b416549af71a1795#npm:4.0.10"],\
             ["@tanstack/react-query-devtools", "npm:4.0.10"],\
+            ["@types/chart.js", "npm:2.9.37"],\
             ["@types/gtag.js", "npm:0.0.10"],\
             ["@types/node", "npm:18.0.3"],\
             ["@types/react", "npm:18.0.15"],\
@@ -50,6 +51,8 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["autoprefixer", "virtual:1ca3d45661282aa6e2c01a90bb2bde2c1af70673e4a578116428a2af70aff6d82b1728295f748f195ecea8e57b31ba96a8112edcc0dc7d20b416549af71a1795#npm:10.4.7"],\
             ["aws", "npm:0.0.3-2"],\
             ["axios", "npm:0.27.2"],\
+            ["chart.js", "npm:3.9.1"],\
+            ["chartjs-plugin-zoom", "virtual:1ca3d45661282aa6e2c01a90bb2bde2c1af70673e4a578116428a2af70aff6d82b1728295f748f195ecea8e57b31ba96a8112edcc0dc7d20b416549af71a1795#npm:1.2.1"],\
             ["daisyui", "virtual:1ca3d45661282aa6e2c01a90bb2bde2c1af70673e4a578116428a2af70aff6d82b1728295f748f195ecea8e57b31ba96a8112edcc0dc7d20b416549af71a1795#npm:2.24.0"],\
             ["eslint", "npm:8.19.0"],\
             ["eslint-config-next", "virtual:1ca3d45661282aa6e2c01a90bb2bde2c1af70673e4a578116428a2af70aff6d82b1728295f748f195ecea8e57b31ba96a8112edcc0dc7d20b416549af71a1795#npm:12.2.2"],\
@@ -63,6 +66,7 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["postcss", "npm:8.4.14"],\
             ["prop-types", "npm:15.8.1"],\
             ["react", "npm:18.2.0"],\
+            ["react-chartjs-2", "virtual:1ca3d45661282aa6e2c01a90bb2bde2c1af70673e4a578116428a2af70aff6d82b1728295f748f195ecea8e57b31ba96a8112edcc0dc7d20b416549af71a1795#npm:4.3.1"],\
             ["react-dom", "virtual:1ca3d45661282aa6e2c01a90bb2bde2c1af70673e4a578116428a2af70aff6d82b1728295f748f195ecea8e57b31ba96a8112edcc0dc7d20b416549af71a1795#npm:18.2.0"],\
             ["react-error-boundary", "virtual:1ca3d45661282aa6e2c01a90bb2bde2c1af70673e4a578116428a2af70aff6d82b1728295f748f195ecea8e57b31ba96a8112edcc0dc7d20b416549af71a1795#npm:3.1.4"],\
             ["react-hook-form", "virtual:1ca3d45661282aa6e2c01a90bb2bde2c1af70673e4a578116428a2af70aff6d82b1728295f748f195ecea8e57b31ba96a8112edcc0dc7d20b416549af71a1795#npm:7.33.1"],\
@@ -6060,6 +6064,16 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
           "linkType": "HARD"\
         }]\
       ]],\
+      ["@types/chart.js", [\
+        ["npm:2.9.37", {\
+          "packageLocation": "./.yarn/cache/@types-chart.js-npm-2.9.37-b6ebfac7e0-5626a8cc3b.zip/node_modules/@types/chart.js/",\
+          "packageDependencies": [\
+            ["@types/chart.js", "npm:2.9.37"],\
+            ["moment", "npm:2.29.4"]\
+          ],\
+          "linkType": "HARD"\
+        }]\
+      ]],\
       ["@types/cookie", [\
         ["npm:0.4.1", {\
           "packageLocation": "./.yarn/cache/@types-cookie-npm-0.4.1-274a704dc6-3275534ed6.zip/node_modules/@types/cookie/",\
@@ -7874,6 +7888,38 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
           "packageLocation": "./.yarn/cache/chardet-npm-0.7.0-27933dd6c7-6fd5da1f5d.zip/node_modules/chardet/",\
           "packageDependencies": [\
             ["chardet", "npm:0.7.0"]\
+          ],\
+          "linkType": "HARD"\
+        }]\
+      ]],\
+      ["chart.js", [\
+        ["npm:3.9.1", {\
+          "packageLocation": "./.yarn/cache/chart.js-npm-3.9.1-931bfaba91-9ab0c0ac01.zip/node_modules/chart.js/",\
+          "packageDependencies": [\
+            ["chart.js", "npm:3.9.1"]\
+          ],\
+          "linkType": "HARD"\
+        }]\
+      ]],\
+      ["chartjs-plugin-zoom", [\
+        ["npm:1.2.1", {\
+          "packageLocation": "./.yarn/cache/chartjs-plugin-zoom-npm-1.2.1-df03c2d349-ea053ff103.zip/node_modules/chartjs-plugin-zoom/",\
+          "packageDependencies": [\
+            ["chartjs-plugin-zoom", "npm:1.2.1"]\
+          ],\
+          "linkType": "SOFT"\
+        }],\
+        ["virtual:1ca3d45661282aa6e2c01a90bb2bde2c1af70673e4a578116428a2af70aff6d82b1728295f748f195ecea8e57b31ba96a8112edcc0dc7d20b416549af71a1795#npm:1.2.1", {\
+          "packageLocation": "./.yarn/__virtual__/chartjs-plugin-zoom-virtual-9166905455/0/cache/chartjs-plugin-zoom-npm-1.2.1-df03c2d349-ea053ff103.zip/node_modules/chartjs-plugin-zoom/",\
+          "packageDependencies": [\
+            ["chartjs-plugin-zoom", "virtual:1ca3d45661282aa6e2c01a90bb2bde2c1af70673e4a578116428a2af70aff6d82b1728295f748f195ecea8e57b31ba96a8112edcc0dc7d20b416549af71a1795#npm:1.2.1"],\
+            ["@types/chart.js", "npm:2.9.37"],\
+            ["chart.js", "npm:3.9.1"],\
+            ["hammerjs", "npm:2.0.8"]\
+          ],\
+          "packagePeers": [\
+            "@types/chart.js",\
+            "chart.js"\
           ],\
           "linkType": "HARD"\
         }]\
@@ -10212,6 +10258,15 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
           "linkType": "HARD"\
         }]\
       ]],\
+      ["hammerjs", [\
+        ["npm:2.0.8", {\
+          "packageLocation": "./.yarn/cache/hammerjs-npm-2.0.8-f656ba2573-b092da7d15.zip/node_modules/hammerjs/",\
+          "packageDependencies": [\
+            ["hammerjs", "npm:2.0.8"]\
+          ],\
+          "linkType": "HARD"\
+        }]\
+      ]],\
       ["hamt_plus", [\
         ["npm:1.0.2", {\
           "packageLocation": "./.yarn/cache/hamt_plus-npm-1.0.2-67a52ee1df-af26ea32db.zip/node_modules/hamt_plus/",\
@@ -11810,6 +11865,15 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
           "linkType": "HARD"\
         }]\
       ]],\
+      ["moment", [\
+        ["npm:2.29.4", {\
+          "packageLocation": "./.yarn/cache/moment-npm-2.29.4-902943305d-0ec3f9c2bc.zip/node_modules/moment/",\
+          "packageDependencies": [\
+            ["moment", "npm:2.29.4"]\
+          ],\
+          "linkType": "HARD"\
+        }]\
+      ]],\
       ["ms", [\
         ["npm:2.0.0", {\
           "packageLocation": "./.yarn/cache/ms-npm-2.0.0-9e1101a471-0e6a22b8b7.zip/node_modules/ms/",\
@@ -12989,6 +13053,32 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
           "linkType": "HARD"\
         }]\
       ]],\
+      ["react-chartjs-2", [\
+        ["npm:4.3.1", {\
+          "packageLocation": "./.yarn/cache/react-chartjs-2-npm-4.3.1-467e2ad798-574d12cc43.zip/node_modules/react-chartjs-2/",\
+          "packageDependencies": [\
+            ["react-chartjs-2", "npm:4.3.1"]\
+          ],\
+          "linkType": "SOFT"\
+        }],\
+        ["virtual:1ca3d45661282aa6e2c01a90bb2bde2c1af70673e4a578116428a2af70aff6d82b1728295f748f195ecea8e57b31ba96a8112edcc0dc7d20b416549af71a1795#npm:4.3.1", {\
+          "packageLocation": "./.yarn/__virtual__/react-chartjs-2-virtual-e696868230/0/cache/react-chartjs-2-npm-4.3.1-467e2ad798-574d12cc43.zip/node_modules/react-chartjs-2/",\
+          "packageDependencies": [\
+            ["react-chartjs-2", "virtual:1ca3d45661282aa6e2c01a90bb2bde2c1af70673e4a578116428a2af70aff6d82b1728295f748f195ecea8e57b31ba96a8112edcc0dc7d20b416549af71a1795#npm:4.3.1"],\
+            ["@types/chart.js", "npm:2.9.37"],\
+            ["@types/react", "npm:18.0.15"],\
+            ["chart.js", "npm:3.9.1"],\
+            ["react", "npm:18.2.0"]\
+          ],\
+          "packagePeers": [\
+            "@types/chart.js",\
+            "@types/react",\
+            "chart.js",\
+            "react"\
+          ],\
+          "linkType": "HARD"\
+        }]\
+      ]],\
       ["react-dom", [\
         ["npm:18.2.0", {\
           "packageLocation": "./.yarn/cache/react-dom-npm-18.2.0-dd675bca1c-7d323310be.zip/node_modules/react-dom/",\
@@ -13941,6 +14031,7 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["@ramonak/react-progress-bar", "virtual:1ca3d45661282aa6e2c01a90bb2bde2c1af70673e4a578116428a2af70aff6d82b1728295f748f195ecea8e57b31ba96a8112edcc0dc7d20b416549af71a1795#npm:5.0.2"],\
             ["@tanstack/react-query", "virtual:1ca3d45661282aa6e2c01a90bb2bde2c1af70673e4a578116428a2af70aff6d82b1728295f748f195ecea8e57b31ba96a8112edcc0dc7d20b416549af71a1795#npm:4.0.10"],\
             ["@tanstack/react-query-devtools", "npm:4.0.10"],\
+            ["@types/chart.js", "npm:2.9.37"],\
             ["@types/gtag.js", "npm:0.0.10"],\
             ["@types/node", "npm:18.0.3"],\
             ["@types/react", "npm:18.0.15"],\
@@ -13954,6 +14045,8 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["autoprefixer", "virtual:1ca3d45661282aa6e2c01a90bb2bde2c1af70673e4a578116428a2af70aff6d82b1728295f748f195ecea8e57b31ba96a8112edcc0dc7d20b416549af71a1795#npm:10.4.7"],\
             ["aws", "npm:0.0.3-2"],\
             ["axios", "npm:0.27.2"],\
+            ["chart.js", "npm:3.9.1"],\
+            ["chartjs-plugin-zoom", "virtual:1ca3d45661282aa6e2c01a90bb2bde2c1af70673e4a578116428a2af70aff6d82b1728295f748f195ecea8e57b31ba96a8112edcc0dc7d20b416549af71a1795#npm:1.2.1"],\
             ["daisyui", "virtual:1ca3d45661282aa6e2c01a90bb2bde2c1af70673e4a578116428a2af70aff6d82b1728295f748f195ecea8e57b31ba96a8112edcc0dc7d20b416549af71a1795#npm:2.24.0"],\
             ["eslint", "npm:8.19.0"],\
             ["eslint-config-next", "virtual:1ca3d45661282aa6e2c01a90bb2bde2c1af70673e4a578116428a2af70aff6d82b1728295f748f195ecea8e57b31ba96a8112edcc0dc7d20b416549af71a1795#npm:12.2.2"],\
@@ -13967,6 +14060,7 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["postcss", "npm:8.4.14"],\
             ["prop-types", "npm:15.8.1"],\
             ["react", "npm:18.2.0"],\
+            ["react-chartjs-2", "virtual:1ca3d45661282aa6e2c01a90bb2bde2c1af70673e4a578116428a2af70aff6d82b1728295f748f195ecea8e57b31ba96a8112edcc0dc7d20b416549af71a1795#npm:4.3.1"],\
             ["react-dom", "virtual:1ca3d45661282aa6e2c01a90bb2bde2c1af70673e4a578116428a2af70aff6d82b1728295f748f195ecea8e57b31ba96a8112edcc0dc7d20b416549af71a1795#npm:18.2.0"],\
             ["react-error-boundary", "virtual:1ca3d45661282aa6e2c01a90bb2bde2c1af70673e4a578116428a2af70aff6d82b1728295f748f195ecea8e57b31ba96a8112edcc0dc7d20b416549af71a1795#npm:3.1.4"],\
             ["react-hook-form", "virtual:1ca3d45661282aa6e2c01a90bb2bde2c1af70673e4a578116428a2af70aff6d82b1728295f748f195ecea8e57b31ba96a8112edcc0dc7d20b416549af71a1795#npm:7.33.1"],\
