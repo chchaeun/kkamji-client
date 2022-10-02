@@ -4,8 +4,8 @@ import styled from "styled-components";
 import useChallengeDetailQuery from "../../../hooks/challenge-detail-query";
 import useCurrentWeekQuery from "../../../hooks/current-week-query";
 import useOpenWeeksQuery from "../../../hooks/open-weeks";
-import { media } from "../../../styles/media";
-import OpenWeekList from "../blocks/open-weeks-list";
+import { media } from "../../../styles/Media";
+import OpenWeekList from "../blocks/ChallengeOpenWeekList";
 interface Props {
   challengeId: string;
 }

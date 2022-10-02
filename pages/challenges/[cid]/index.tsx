@@ -1,11 +1,11 @@
 import { useRouter } from "next/router";
 import React from "react";
-import ChallengeOverview from "../../../components/challenges/challenge-overview";
+import ChallengeOverview from "../../../components/challenges/ChallengeOverview";
 import styled from "styled-components";
-import { media } from "../../../styles/media";
-import ChallengeSuccessPeople from "../../../components/challenges/blocks/success-people";
-import ChallengeProgressContainer from "../../../components/challenges/containers/progress-container";
-import ChallengeQuizSummaryContainer from "../../../components/challenges/containers/quiz-summary-container";
+import { media } from "../../../styles/Media";
+import ChallengeSuccessPeople from "../../../components/challenges/blocks/ChallengeSuccessPeople";
+import ChallengeProgressContainer from "../../../components/challenges/containers/ChallengeProgressContainer";
+import ChallengeQuizSummaryContainer from "../../../components/challenges/containers/ChallengeQuizSummaryContainer";
 import Link from "next/link";
 
 function ChallengePage() {

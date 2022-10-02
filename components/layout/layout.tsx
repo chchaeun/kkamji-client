@@ -1,6 +1,5 @@
-import { useRouter } from "next/router";
-import React, { Fragment, ReactNode, useEffect } from "react";
-import Header from "./header";
+import React, { Fragment, ReactNode } from "react";
+import Header from "./Header";
 interface IProps {
   children: ReactNode;
 }

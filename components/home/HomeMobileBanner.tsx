@@ -21,7 +21,7 @@ const bannerContents = [
     link: "",
   },
 ];
-function MobileBanner() {
+function HomeMobileBanner() {
   return (
     <Swiper
       modules={[Navigation, Pagination, Scrollbar, A11y, Autoplay]}
@@ -34,7 +34,7 @@ function MobileBanner() {
       {bannerContents.map((bannerContent, index) => (
         <SwiperSlide key={index} className="cursor-pointer">
           <Link href={bannerContent.link}>
-            <img src={bannerContent.image} className="w-screen object-cover" />
+            <img src={bannerContent.image} className="object-cover w-screen" />
           </Link>
         </SwiperSlide>
       ))}
@@ -42,4 +42,4 @@ function MobileBanner() {
   );
 }
 
-export default MobileBanner;
+export default HomeMobileBanner;

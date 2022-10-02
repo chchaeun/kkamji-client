@@ -2,11 +2,11 @@ import { useRouter } from "next/router";
 import React from "react";
 import useQuizDetailQuery from "../../hooks/quiz-detail";
 import { QuizSummary } from "../../types/Quiz";
-import QuizRate from "./blocks/rate";
-import QuizSolveForm from "./blocks/solve-form";
-import QuizSolveView from "./blocks/solve-view";
-import QuizCommentContainer from "./containers/comment-container";
-import QuizDetailNav from "./containers/nav";
+import QuizRate from "./blocks/QuizRate";
+import QuizSolveForm from "./blocks/QuizSolveForm";
+import QuizSolveView from "./blocks/QuizSolveView";
+import QuizCommentContainer from "./containers/QuizCommentContainer";
+import QuizDetailNav from "./containers/QuizDetailNav";
 
 interface Props {
   quizzes: QuizSummary[];

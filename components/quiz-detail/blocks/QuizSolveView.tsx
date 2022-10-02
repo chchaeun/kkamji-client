@@ -1,7 +1,7 @@
 import { useRouter } from "next/router";
 import React, { useState } from "react";
 import { QuizDetailSelect } from "../../../types/Quiz";
-import SolveRubric from "./solve-rubric";
+import SolveRubric from "./QuizSolveRubric";
 interface Props {
   challengeId: string;
   quizId: string;

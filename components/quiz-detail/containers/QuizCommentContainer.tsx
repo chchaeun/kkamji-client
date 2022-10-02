@@ -3,8 +3,8 @@ import { useRouter } from "next/router";
 import React, { useState } from "react";
 import { fetchComments } from "../../../api/comments/comments";
 import { Comment } from "../../../types/Comment";
-import QuizComment from "../blocks/comment";
-import QuizCommentForm from "../blocks/comment-form";
+import QuizComment from "../blocks/QuizComment";
+import QuizCommentForm from "../blocks/QuizCommentForm";
 
 interface Props {
   quizId: string;
