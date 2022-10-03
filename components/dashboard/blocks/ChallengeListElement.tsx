@@ -1,7 +1,9 @@
 import { Icon } from "@iconify/react";
 import Link from "next/link";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import styled from "styled-components";
+import useCurrentWeekQuery from "../../../hooks/current-week-query";
+import useSubmitCountQuery from "../../../hooks/submit-count-query";
 import { media } from "../../../styles/media";
 import { Challenge } from "../../../types/Challenge";
 
@@ -10,28 +12,56 @@ interface Props {
 }
 
 function ChallengeListElement({ challenge }: Props) {
-  const [success] = useState(true);
+  const [complete, setComplete] = useState(false);
+
+  const { data: currentWeek } = useCurrentWeekQuery({
+    challengeId: String(challenge.challengeId),
+  });
+
+  const { data: quizCount } = useSubmitCountQuery({
+    challengeId: String(challenge.challengeId),
+    week: currentWeek || 0,
+  });
+
+  useEffect(() => {
+    if (quizCount && quizCount >= 2) {
+      setComplete(true);
+    }
+  }, [quizCount]);
 
   return (
     <>
       {challenge && challenge.applicationStatus === "ACCEPTED" && (
         <Link href={`/challenges/${challenge.challengeId}`}>
           <Container>
-            {success ? (
-              <CompleteImageBox bgImage={challenge.imageUrl}></CompleteImageBox>
+            {complete ? (
+              <CompleteImageBox bgImage={challenge.imageUrl}>
+                {quizCount && quizCount >= 3 && (
+                  <Icon
+                    icon="heroicons-solid:lightning-bolt"
+                    color={"#10B981"}
+                    fontSize={"32px"}
+                    className="bolt"
+                  />
+                )}
+              </CompleteImageBox>
             ) : (
               <IncompleteImageBox bgImage={challenge.imageUrl}>
-                <Icon icon="heroicons-solid:pencil-alt" color={"#ffffff"} />
+                <Icon
+                  icon="heroicons-solid:pencil-alt"
+                  color={"#ffffff"}
+                  className="pencil"
+                />
               </IncompleteImageBox>
             )}
             <InfoBox>
               <Badges>
-                {success ? (
+                {complete ? (
                   <RedGreenBadge mission={"COMPLETE"}>완료</RedGreenBadge>
                 ) : (
                   <RedGreenBadge mission={"INCOMPLETE"}>미완료</RedGreenBadge>
                 )}
-                <GrayBadge>문제제출현황 1/2</GrayBadge>
+                <GrayBadge>문제제출현황 {quizCount}/2</GrayBadge>
               </Badges>
               <div>
                 <Title>
@@ -83,7 +113,7 @@ const ImageBox = styled.div<{
     border-radius: 4px;
   `}
 
-  svg {
+  .pencil {
     width: 36px;
     height: 36px;
 
@@ -95,10 +125,32 @@ const ImageBox = styled.div<{
 `;
 
 const CompleteImageBox = styled(ImageBox)`
+  display: flex;
+  align-items: flex-end;
+  justify-content: flex-start;
+  padding: 17px;
+
   background: url(${(p) => p.bgImage});
   background-repeat: no-repeat;
   background-position: center;
   background-size: cover;
+
+  ${media.medium`
+    align-items: center;
+    justify-content: center;
+  `}
+
+  .bolt {
+    ${media.medium`
+      height: 25px;
+    `}
+
+    path {
+      stroke: #ffffff;
+      stroke-width: 1px;
+      stroke-linejoin: round;
+    }
+  }
 `;
 
 const IncompleteImageBox = styled(ImageBox)`

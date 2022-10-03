@@ -17,6 +17,7 @@ function ChallengeList() {
       return data;
     },
     {
+      enabled: !!getCode(),
       suspense: true,
     }
   );

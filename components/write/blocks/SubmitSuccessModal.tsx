@@ -10,7 +10,7 @@ interface Props {
 function SubmitSuccessModal({ week }: Props) {
   const router = useRouter();
   const challengeId = String(router.query.cid);
-  const { data: submitCount } = useSubmitCountQuery();
+  const { data: submitCount } = useSubmitCountQuery({ challengeId, week });
 
   const onAgainClick = () => {
     router.reload();

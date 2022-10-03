@@ -1,11 +1,17 @@
 import ProgressBar from "@ramonak/react-progress-bar";
+import { useRouter } from "next/router";
 import React from "react";
 import useSubmitCountQuery from "../../../hooks/submit-count-query";
 interface Props {
   currentWeek: number;
 }
 function SubmitCount({ currentWeek }: Props) {
-  const { data: submitCount } = useSubmitCountQuery();
+  const router = useRouter();
+  const challengeId = String(router.query.cid);
+  const { data: submitCount } = useSubmitCountQuery({
+    challengeId,
+    week: currentWeek,
+  });
   return (
     <div className="col-start-1 flex flex-col gap-5 h-fit mt-10 ml-10 py-5 px-8 bg-white rounded-lg shadow-sm border-[1px] border-gray-300 sm:mx-10 sm:my-0">
       <span className="">{currentWeek}주차 제출 현황</span>

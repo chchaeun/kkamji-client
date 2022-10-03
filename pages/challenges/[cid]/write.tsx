@@ -74,8 +74,11 @@ function QuizWritePage() {
     }
   );
 
-  const { data: currentWeek } = useCurrentWeekQuery();
-  const { data: submitCount } = useSubmitCountQuery();
+  const { data: currentWeek } = useCurrentWeekQuery({ challengeId });
+  const { data: submitCount } = useSubmitCountQuery({
+    challengeId,
+    week: currentWeek || 0,
+  });
 
   const onQuizSubmitValid: SubmitHandler<QuizValidForm> = async ({
     title,
