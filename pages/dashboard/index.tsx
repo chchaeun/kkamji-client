@@ -47,6 +47,11 @@ const Frame = styled.div`
 
   padding: 80px 240px;
 
+  ${media.large`
+    padding: 88px 440px;
+    gap: 20px;
+  `}
+
   ${media.medium`
     padding: 88px 20px;
     gap: 20px;
