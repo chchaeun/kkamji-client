@@ -10,7 +10,7 @@ interface Props {
   challengeId: string;
 }
 function ChallengeProgressContainer({ challengeId }: Props) {
-  const { data: currentWeek } = useCurrentWeekQuery();
+  const { data: currentWeek } = useCurrentWeekQuery({ challengeId });
   const { data: openWeeks } = useOpenWeeksQuery();
 
   const { data: challengeDetail } = useChallengeDetailQuery({

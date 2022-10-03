@@ -1,20 +1,19 @@
 import { useQuery } from "@tanstack/react-query";
 import { AxiosError } from "axios";
-import { useRouter } from "next/router";
 import { fetchSubmitCount } from "../api/submit-quiz/submit-count";
 import { QuizSubmitCount } from "../types/Quiz";
-import useCurrentWeekQuery from "./current-week-query";
 
-export default function useSubmitCountQuery() {
-  const router = useRouter();
-  const challengeId = String(router.query.cid);
-  const { data: currentWeek } = useCurrentWeekQuery();
+interface Props {
+  challengeId: string;
+  week: number;
+}
+export default function useSubmitCountQuery({ challengeId, week }: Props) {
   return useQuery<QuizSubmitCount, AxiosError, number>(
     ["quizSubmit", challengeId],
-    () => fetchSubmitCount({ challengeId, week: currentWeek || 0 }),
+    () => fetchSubmitCount({ challengeId, week }),
     {
       select: (data) => data.count,
-      enabled: !!(challengeId && currentWeek),
+      enabled: !!(challengeId && week),
     }
   );
 }

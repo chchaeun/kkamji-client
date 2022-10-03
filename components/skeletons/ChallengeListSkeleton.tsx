@@ -10,7 +10,6 @@ function ChallengeListSkeleton() {
         <Skeleton className="img-box" />
         <Skeleton count={2} className="info-box" />
       </Block>
-
       <Block>
         <Skeleton className="img-box" />
         <Skeleton count={2} className="info-box" />
@@ -24,13 +23,17 @@ function ChallengeListSkeleton() {
 }
 
 export default ChallengeListSkeleton;
+
 const Container = styled.div`
   display: flex;
   flex-direction: row;
   gap: 10px;
 
+  width: 100%;
+
   ${media.medium`
     flex-direction: column;    
+    gap: 0px;
   `}
 `;
 const Block = styled.div`
@@ -38,28 +41,27 @@ const Block = styled.div`
   flex-direction: column;
   gap: 10px;
 
+  width: 100%;
+
   ${media.medium`
-    flex-direction: row-reverse;
-    justify-content: center;
-    
-    width: 90vw;
+    gap: 2px;
   `}
 
   .img-box {
-    width: 20vw;
+    display: block;
+    width: 100%;
     height: 180px;
 
     ${media.medium`
-        width: 15vw;
-        height: 15vw;
+      display: none;
     `}
   }
 
   .info-box {
-    width: 20vw;
+    display: block;
+    width: 100%;
+
     ${media.medium`
-        width: 70vw;
-        height: 7vw;
     `}
   }
 `;

@@ -43,7 +43,7 @@ function Login() {
       name,
       code,
       token: "",
-      platform: "",
+      platform: navigator.platform,
     };
 
     const app = initializeApp(firebaseConfig);
@@ -54,7 +54,6 @@ function Login() {
       vapidKey: process.env.NEXT_PUBLIC_FIREBASE_VAPID_KEY,
     })
       .then((currentToken) => {
-        console.log(currentToken);
         loginBody = {
           ...loginBody,
           token: currentToken,
