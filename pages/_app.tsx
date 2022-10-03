@@ -17,11 +17,12 @@ import { ReactQueryDevtools } from "@tanstack/react-query-devtools";
 
 import { initializeApp } from "firebase/app";
 import { getPerformance } from "firebase/performance";
-import { getMessaging, onMessage } from "firebase/messaging";
+import { getMessaging, getToken, onMessage } from "firebase/messaging";
 import { firebaseConfig } from "../utils/FirebaseConfig";
 import Layout from "../components/layout/LayoutComponent";
 
 function MyApp({ Component, pageProps }: AppProps) {
+  const [token, setToken] = useState("");
   const queryClient = new QueryClient({
     defaultOptions: {
       queries: {
@@ -61,6 +62,13 @@ function MyApp({ Component, pageProps }: AppProps) {
 
     const messaging = getMessaging(app);
 
+    getToken(messaging, {
+      vapidKey: process.env.NEXT_PUBLIC_FIREBASE_VAPID_KEY,
+    })
+      .then((currentToken) => {
+        setToken(currentToken);
+      })
+      .catch((err) => {});
     onMessage(messaging, (payload) => {});
   }, []);
 
@@ -88,6 +96,7 @@ function MyApp({ Component, pageProps }: AppProps) {
                 `,
               }}
             />
+            {token}
             <Component {...pageProps} />
           </Layout>
         </Hydrate>
