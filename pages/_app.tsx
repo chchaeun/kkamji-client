@@ -1,6 +1,5 @@
 import "../styles/globals.css";
 import type { AppProps } from "next/app";
-import Layout from "../components/layout/layout";
 import {
   dehydrate,
   Hydrate,
@@ -9,7 +8,7 @@ import {
 } from "@tanstack/react-query";
 import { RecoilRoot } from "recoil";
 import { useRouter } from "next/router";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 
 import Script from "next/script";
 import { pageview, GA_TRACKING_ID } from "../utils/gtag";
@@ -18,7 +17,9 @@ import { ReactQueryDevtools } from "@tanstack/react-query-devtools";
 
 import { initializeApp } from "firebase/app";
 import { getPerformance } from "firebase/performance";
-import { firebaseConfig } from "../utils/firebase";
+import { getMessaging, getToken, onMessage } from "firebase/messaging";
+import { firebaseConfig } from "../utils/FirebaseConfig";
+import Layout from "../components/layout/LayoutComponent";
 
 function MyApp({ Component, pageProps }: AppProps) {
   const queryClient = new QueryClient({
@@ -57,6 +58,9 @@ function MyApp({ Component, pageProps }: AppProps) {
   useEffect(() => {
     const app = initializeApp(firebaseConfig);
     const performance = getPerformance(app);
+
+    const messaging = getMessaging(app);
+    onMessage(messaging, (payload) => {});
   }, []);
 
   return (

@@ -1,11 +1,11 @@
 import { useRouter } from "next/router";
 import React from "react";
-import ChallengeOverview from "../../../components/challenges/challenge-overview";
+import ChallengeOverview from "../../../components/challenges/ChallengeOverview";
 import styled from "styled-components";
 import { media } from "../../../styles/media";
-import ChallengeSuccessPeople from "../../../components/challenges/blocks/success-people";
-import ChallengeProgressContainer from "../../../components/challenges/containers/progress-container";
-import ChallengeQuizSummaryContainer from "../../../components/challenges/containers/quiz-summary-container";
+import ChallengeSuccessPeople from "../../../components/challenges/blocks/ChallengeSuccessPeople";
+import ChallengeProgressContainer from "../../../components/challenges/containers/ChallengeProgressContainer";
+import ChallengeQuizSummaryContainer from "../../../components/challenges/containers/ChallengeQuizSummaryContainer";
 import Link from "next/link";
 
 function ChallengePage() {
@@ -79,15 +79,3 @@ const Button = styled.button`
     bottom: 16px;
   `}
 `;
-
-// <div className="flex flex-col items-center gap-2">
-//   <Link href={`/challenges/${challengeId}/write`}>
-//     <button className="w-fit h-fit bg-[#5c3cde] hover:bg-[#4026ab] text-white font-bold py-2 px-4 rounded-lg focus:outline-none focus:shadow-outline cursor-pointer sm:w-full">
-//       문제 작성
-//     </button>
-//   </Link>
-//   <div className="flex items-center">
-//     이번주{" "}
-//     <Icon icon={`carbon:number-${submitCount}`} className="text-3xl" />
-//   </div>
-// </div>;

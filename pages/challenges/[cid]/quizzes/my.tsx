@@ -1,11 +1,12 @@
 import { useRouter } from "next/router";
 import React, { Suspense } from "react";
-import ChallengeOverview from "../../../../components/challenges/challenge-overview";
-import QuizListSkeleton from "../../../../components/skeletons/quiz-list-skeleton";
+import ChallengeOverview from "../../../../components/challenges/ChallengeOverview";
+import QuizListSkeleton from "../../../../components/skeletons/QuizListSkeleton";
 import useChallengeDetailQuery from "../../../../hooks/challenge-detail-query";
 import dynamic from "next/dynamic";
+import DeferredComponent from "../../../../components/skeletons/DeferredComponent";
 const QuizList = dynamic(
-  () => import("../../../../components/quizzes/blocks/quiz-list"),
+  () => import("../../../../components/quizzes/blocks/QuizList"),
   {
     suspense: true,
     ssr: false,
@@ -29,7 +30,13 @@ function MyQuizListPage() {
           <ChallengeOverview challengeId={challengeId} />
           <div className="flex flex-col gap-6 py-5 px-10 bg-white rounded-lg shadow-sm border-[1px] border-gray-300 sm:px-5">
             <div className="font-semibold">제출한 문제</div>
-            <Suspense fallback={<QuizListSkeleton />}>
+            <Suspense
+              fallback={
+                <DeferredComponent>
+                  <QuizListSkeleton />
+                </DeferredComponent>
+              }
+            >
               <QuizList challengeId={challengeId} page={"MY"} />
             </Suspense>
           </div>
