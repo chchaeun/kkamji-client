@@ -58,10 +58,11 @@ function Login() {
           ...loginBody,
           token: currentToken,
         };
+        mutateLogin(loginBody);
       })
-      .catch((err) => {});
-
-    mutateLogin(loginBody);
+      .catch((err) => {
+        mutateLogin(loginBody);
+      });
   };
   return (
     <div className="flex flex-col items-center gap-10 pt-20">
