@@ -4,9 +4,12 @@ import { media } from "../../styles/media";
 import dynamic from "next/dynamic";
 import ChallengeListSkeleton from "../../components/skeletons/ChallengeListSkeleton";
 import DeferredComponent from "../../components/skeletons/DeferredComponent";
-import MissionSteppedLineChart from "../../components/dashboard/blocks/MissionSteppedLineChart";
+import MissionStackedCountChart from "../../components/dashboard/containers/MissionStackedCountContainer";
 const ChallengeList = dynamic(
-  async () => await import("../../components/dashboard/blocks/ChallengeList"),
+  async () =>
+    await import(
+      "../../components/dashboard/containers/ChallengeListContainer"
+    ),
   {
     suspense: true,
     ssr: false,
@@ -16,11 +19,11 @@ const ChallengeList = dynamic(
 function Dashboard() {
   return (
     <Frame>
-      <Title>나의 챌린지 현황</Title>
+      <Title>내 챌린지</Title>
       <HighlightBar>
         📢 벼락치기를 하는 50%의 대학생들을 앞서고 있습니다! 조금만 더 화이팅!
       </HighlightBar>
-      <MissionSteppedLineChart />
+      <MissionStackedCountChart />
       <Suspense
         fallback={
           <DeferredComponent>
