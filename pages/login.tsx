@@ -2,7 +2,7 @@ import { useMutation } from "@tanstack/react-query";
 import { initializeApp } from "firebase/app";
 import { getMessaging, getToken } from "firebase/messaging";
 import { useRouter } from "next/router";
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { SubmitHandler, useForm } from "react-hook-form";
 import api from "../api/my-api";
 import { getCode } from "../api/session-code";
@@ -13,8 +13,16 @@ type LoginValidForm = {
   code: string;
 };
 
+type LoginBody = {
+  name: string;
+  code: string;
+  token: string | null;
+  platform: string;
+};
+
 function Login() {
   const router = useRouter();
+  const [token, setToken] = useState<string | null>(null);
 
   const { mutate: mutateLogin } = useMutation(
     async (loginBody: LoginValidForm) => {
@@ -37,15 +45,7 @@ function Login() {
     formState: { errors },
   } = useForm<LoginValidForm>();
 
-  const onLoginValid: SubmitHandler<LoginValidForm> = async (data) => {
-    const { name, code } = data;
-    let loginBody = {
-      name,
-      code,
-      token: "",
-      platform: navigator.platform,
-    };
-
+  useEffect(() => {
     const app = initializeApp(firebaseConfig);
 
     const messaging = getMessaging();
@@ -54,15 +54,20 @@ function Login() {
       vapidKey: process.env.NEXT_PUBLIC_FIREBASE_VAPID_KEY,
     })
       .then((currentToken) => {
-        loginBody = {
-          ...loginBody,
-          token: currentToken,
-        };
-        mutateLogin(loginBody);
+        setToken(currentToken);
       })
-      .catch((err) => {
-        mutateLogin(loginBody);
-      });
+      .catch((err) => {});
+  }, []);
+
+  const onLoginValid: SubmitHandler<LoginValidForm> = async (data) => {
+    const { name, code } = data;
+    let loginBody: LoginBody = {
+      name,
+      code,
+      token,
+      platform: navigator.platform,
+    };
+    mutateLogin(loginBody);
   };
   return (
     <div className="flex flex-col items-center gap-10 pt-20">
