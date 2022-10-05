@@ -5,9 +5,9 @@ import api from "../../../api/my-api";
 import { getCode } from "../../../api/session-code";
 import { media } from "../../../styles/media";
 import { Challenge } from "../../../types/Challenge";
-import ChallengeListElement from "./ChallengeListElement";
+import ChallengeListElement from "../blocks/ChallengeListElement";
 
-function ChallengeList() {
+function ChallengeListContainer() {
   const { data: challenges } = useQuery<Challenge[]>(
     ["myChallenge"],
     async () => {
@@ -34,7 +34,7 @@ function ChallengeList() {
   );
 }
 
-export default ChallengeList;
+export default ChallengeListContainer;
 
 const Container = styled.div`
   display: grid;
