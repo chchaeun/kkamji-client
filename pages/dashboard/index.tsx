@@ -16,13 +16,20 @@ const ChallengeList = dynamic(
   }
 );
 
+const sentences = [
+  "벼락치기를 하고 있는 전국의 50%의 대학생들을 앞서고 있습니다! 조금만 더 화이팅!",
+
+  "지금 공부하는 1시간이 시험 기간에 다른 학생들과 격차를 벌릴 수 있는 1시간입니다! 계속 화이팅해봐요!",
+
+  "여러분들은 지금까지 1달 동안 꾸준히 공부를 해오셨습니다! 시험 기간까지 조금만 더 화이팅해요!",
+];
+const random_index = Math.floor(Math.random() * sentences.length);
+
 function Dashboard() {
   return (
     <Frame>
       <Title>내 챌린지</Title>
-      <HighlightBar>
-        📢 벼락치기를 하는 50%의 대학생들을 앞서고 있습니다! 조금만 더 화이팅!
-      </HighlightBar>
+      <HighlightBar>📢 {sentences[random_index]}</HighlightBar>
       <MissionStackedCountChart />
       <Suspense
         fallback={
