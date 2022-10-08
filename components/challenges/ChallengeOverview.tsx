@@ -1,8 +1,9 @@
 import Link from "next/link";
-import React, { useEffect } from "react";
+import React from "react";
 import styled from "styled-components";
 import useChallengeDetailQuery from "../../hooks/challenge-detail-query";
 import { media } from "../../styles/media";
+import HeadTitle from "../common/Title";
 interface Props {
   challengeId: string;
 }
@@ -11,6 +12,7 @@ function ChallengeOverview({ challengeId }: Props) {
 
   return (
     <>
+      <HeadTitle name={`${challengeDetail?.title} 챌린지 : 깜지`} />
       {challengeDetail && (
         <Container
           bgImage={challengeDetail.imageUrl}

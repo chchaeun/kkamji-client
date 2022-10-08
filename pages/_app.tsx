@@ -8,7 +8,7 @@ import {
 } from "@tanstack/react-query";
 import { RecoilRoot } from "recoil";
 import { useRouter } from "next/router";
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
 
 import Script from "next/script";
 import { pageview, GA_TRACKING_ID } from "../utils/gtag";
@@ -20,6 +20,8 @@ import { getPerformance } from "firebase/performance";
 import { getMessaging, getToken, onMessage } from "firebase/messaging";
 import { firebaseConfig } from "../utils/FirebaseConfig";
 import Layout from "../components/layout/LayoutComponent";
+import Head from "next/head";
+import HeadTitle from "../components/common/Title";
 
 function MyApp({ Component, pageProps }: AppProps) {
   const queryClient = new QueryClient({
@@ -87,6 +89,7 @@ function MyApp({ Component, pageProps }: AppProps) {
                 `,
               }}
             />
+            <HeadTitle name="깜지" />
             <Component {...pageProps} />
           </Layout>
         </Hydrate>
