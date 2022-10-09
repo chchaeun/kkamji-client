@@ -3,12 +3,13 @@ import { useQuery } from "@tanstack/react-query";
 import { AxiosError } from "axios";
 import { useRouter } from "next/router";
 import React from "react";
+import { useChallengeDetailQuery } from "../../../../../api/challenges/hooks";
 import api from "../../../../../api/my-api";
+import { fetchMyQuizDetail } from "../../../../../api/quizzes";
+import { useQuizzesQuery } from "../../../../../api/quizzes/hooks";
 import HeadTitle from "../../../../../components/common/Title";
 import QuizCommentContainer from "../../../../../components/quiz-detail/containers/QuizCommentContainer";
 import QuizDetailNav from "../../../../../components/quiz-detail/containers/QuizDetailNav";
-import useChallengeDetailQuery from "../../../../../hooks/challenge-detail-query";
-import useQuizzesQuery from "../../../../../hooks/quizzes-query";
 import { MyQuizDetail, MyQuizDetailSelect } from "../../../../../types/Quiz";
 
 function QuizDetailPage() {
@@ -19,20 +20,13 @@ function QuizDetailPage() {
     MyQuizDetail,
     AxiosError,
     MyQuizDetailSelect
-  >(
-    ["myQuizDetail", quizId],
-    async () => {
-      const { data } = await api.get(`/my/quizzes/${quizId}`);
-      return data;
+  >(["myQuizDetail", quizId], () => fetchMyQuizDetail({ quizId }), {
+    enabled: !!router.query.qid,
+    onError: (err) => {},
+    select: (data) => {
+      return { ...data, quizRubric: JSON.parse(data.quizRubric) };
     },
-    {
-      enabled: !!router.query.qid,
-      onError: (err) => {},
-      select: (data) => {
-        return { ...data, quizRubric: JSON.parse(data.quizRubric) };
-      },
-    }
-  );
+  });
 
   const { data: myQuizzes } = useQuizzesQuery({
     challengeId,

@@ -1,7 +1,7 @@
 import Link from "next/link";
 import React from "react";
 import styled from "styled-components";
-import useQuizzesQuery from "../../../hooks/quizzes-query";
+import { useQuizzesQuery } from "../../../api/quizzes/hooks";
 
 interface Props {
   title: string;

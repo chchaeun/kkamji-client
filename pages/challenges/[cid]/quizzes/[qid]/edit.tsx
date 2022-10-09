@@ -4,10 +4,10 @@ import { AxiosError } from "axios";
 import { useRouter } from "next/router";
 import React from "react";
 import { SubmitHandler, useFieldArray, useForm } from "react-hook-form";
+import { useChallengeDetailQuery } from "../../../../../api/challenges/hooks";
 import api from "../../../../../api/my-api";
+import { fetchMyQuizDetail } from "../../../../../api/quizzes";
 import HeadTitle from "../../../../../components/common/Title";
-import useChallengeDetailQuery from "../../../../../hooks/challenge-detail-query";
-import useOpenWeeksQuery from "../../../../../hooks/open-weeks";
 import {
   MyQuizDetail,
   MyQuizDetailSelect,
@@ -27,8 +27,6 @@ function QuizAnswerEdit() {
   const router = useRouter();
   const quizId = String(router.query.qid);
   const challengeId = String(router.query.cid);
-  const { data: openWeeks } = useOpenWeeksQuery();
-
   const {
     register,
     control,
@@ -45,10 +43,7 @@ function QuizAnswerEdit() {
     isLoading,
   } = useQuery<MyQuizDetail, AxiosError, MyQuizDetailSelect>(
     ["quizDetail", quizId],
-    async () => {
-      const { data } = await api.get(`/my/quizzes/${quizId}`);
-      return data;
-    },
+    () => fetchMyQuizDetail({ quizId }),
     {
       select: (quizDetail) => {
         return { ...quizDetail, quizRubric: JSON.parse(quizDetail.quizRubric) };
@@ -78,12 +73,7 @@ function QuizAnswerEdit() {
     },
     {
       onSuccess: () => {
-        router.push(
-          `${router.asPath.split("/edit")[0]}?week=${openWeeks!.weeks
-            .filter((week) => week.status === "READABLE")
-            .map((week) => week.week)
-            .join(",")}`
-        );
+        router.push(`${router.asPath.split("/edit")[0]}/my`);
       },
       retryDelay: 3000,
     }

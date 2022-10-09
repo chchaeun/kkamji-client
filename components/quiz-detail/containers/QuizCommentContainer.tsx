@@ -1,7 +1,7 @@
 import { useQuery } from "@tanstack/react-query";
 import { useRouter } from "next/router";
 import React, { useState } from "react";
-import { fetchComments } from "../../../api/comments/comments";
+import { fetchComments } from "../../../api/comments";
 import { Comment } from "../../../types/Comment";
 import QuizComment from "../blocks/QuizComment";
 import QuizCommentForm from "../blocks/QuizCommentForm";

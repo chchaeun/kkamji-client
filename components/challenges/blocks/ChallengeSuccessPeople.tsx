@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import styled from "styled-components";
-import useChallengeDetailQuery from "../../../hooks/challenge-detail-query";
+import { useChallengeDetailQuery } from "../../../api/challenges/hooks";
 import { media } from "../../../styles/media";
 interface Props {
   challengeId: string;

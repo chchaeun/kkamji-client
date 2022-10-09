@@ -1,7 +1,7 @@
 import Link from "next/link";
 import React from "react";
 import styled from "styled-components";
-import useChallengeDetailQuery from "../../hooks/challenge-detail-query";
+import { useChallengeDetailQuery } from "../../api/challenges/hooks";
 import { media } from "../../styles/media";
 import HeadTitle from "../common/Title";
 interface Props {

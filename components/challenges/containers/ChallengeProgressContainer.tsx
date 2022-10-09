@@ -1,9 +1,11 @@
 import ProgressBar from "@ramonak/react-progress-bar";
 import React from "react";
 import styled from "styled-components";
-import useChallengeDetailQuery from "../../../hooks/challenge-detail-query";
-import useCurrentWeekQuery from "../../../hooks/current-week-query";
-import useOpenWeeksQuery from "../../../hooks/open-weeks";
+import {
+  useChallengeDetailQuery,
+  useCurrentWeekQuery,
+  useOpenWeeksQuery,
+} from "../../../api/challenges/hooks";
 import { media } from "../../../styles/media";
 import OpenWeekList from "../blocks/ChallengeOpenWeekList";
 interface Props {
@@ -11,11 +13,12 @@ interface Props {
 }
 function ChallengeProgressContainer({ challengeId }: Props) {
   const { data: currentWeek } = useCurrentWeekQuery({ challengeId });
-  const { data: openWeeks } = useOpenWeeksQuery();
+  const { data: openWeeks } = useOpenWeeksQuery({ challengeId });
 
   const { data: challengeDetail } = useChallengeDetailQuery({
     challengeId,
   });
+
   // 챌린지 미션 성공 또는 실패 횟수를 반환하는 함수이다.
   const missionCount = (status: "SUCCESS" | "FAIL" | "REMAIN") => {
     if (!openWeeks && !challengeDetail) {

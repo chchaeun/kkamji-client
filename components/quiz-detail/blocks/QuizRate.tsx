@@ -1,8 +1,8 @@
 import { Icon } from "@iconify/react";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import React from "react";
-import { updateQuizRate } from "../../../api/quizzes/quiz-rate";
-import useQuizDetailQuery from "../../../hooks/quiz-detail";
+import { updateQuizRate } from "../../../api/quizzes";
+import { useQuizDetailQuery } from "../../../api/quizzes/hooks";
 import { QuizDetailSelect } from "../../../types/Quiz";
 interface Props {
   quizId: string;
@@ -12,7 +12,7 @@ interface QuizRate {
 }
 function QuizRate({ quizId }: Props) {
   const queryClient = useQueryClient();
-  const { data: quizDetail } = useQuizDetailQuery();
+  const { data: quizDetail } = useQuizDetailQuery({ quizId });
   const { mutate: mutateQuizRate } = useMutation(
     ({ rate }: QuizRate) => updateQuizRate({ quizId: quizId, rate }),
     {

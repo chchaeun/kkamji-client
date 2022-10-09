@@ -1,6 +1,6 @@
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import React, { useState } from "react";
-import { updateQuizScore } from "../../../api/quizzes/quiz-grade";
+import { updateQuizGrade } from "../../../api/quizzes";
 interface Props {
   quizId: string;
   solveScore: number | null;
@@ -14,7 +14,7 @@ function QuizSolveRubric({ quizId, solveScore, rubricList }: Props) {
   const [rubricScore, setRubricScore] = useState<number>();
 
   const { mutate: mutateQuizGrade } = useMutation(
-    (score: number) => updateQuizScore({ quizId, score }),
+    (score: number) => updateQuizGrade({ quizId, score }),
     {
       onSuccess: () => {
         queryClient.invalidateQueries(["quizDetail", quizId]);
@@ -36,7 +36,7 @@ function QuizSolveRubric({ quizId, solveScore, rubricList }: Props) {
     mutateQuizGrade(rubricScore);
   };
   return (
-    <div className="w-full flex flex-col gap-3 items-end mb-10">
+    <div className="flex flex-col items-end w-full gap-3 mb-10">
       {solveScore ? (
         <>
           <h2 className="w-full text-xl">채점 결과</h2>
@@ -62,7 +62,7 @@ function QuizSolveRubric({ quizId, solveScore, rubricList }: Props) {
               />
               <label
                 htmlFor={`bordered-radio-${index}`}
-                className="flex justify-between pr-3 py-4 ml-2 w-full text-sm font-medium text-gray-900"
+                className="flex justify-between w-full py-4 pr-3 ml-2 text-sm font-medium text-gray-900"
               >
                 <span>{rubric.content}</span>
                 <span>{rubric.score}점</span>
