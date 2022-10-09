@@ -5,7 +5,8 @@ import dynamic from "next/dynamic";
 import ChallengeListSkeleton from "../../components/skeletons/ChallengeListSkeleton";
 import DeferredComponent from "../../components/skeletons/DeferredComponent";
 import MissionStackedCountChart from "../../components/dashboard/containers/MissionStackedCountContainer";
-const ChallengeList = dynamic(
+import HeadTitle from "../../components/common/Title";
+const ChallengeListContainer = dynamic(
   async () =>
     await import(
       "../../components/dashboard/containers/ChallengeListContainer"
@@ -27,20 +28,23 @@ const random_index = Math.floor(Math.random() * sentences.length);
 
 function Dashboard() {
   return (
-    <Frame>
-      <Title>내 챌린지</Title>
-      <HighlightBar>📢 {sentences[random_index]}</HighlightBar>
-      <MissionStackedCountChart />
-      <Suspense
-        fallback={
-          <DeferredComponent>
-            <ChallengeListSkeleton />
-          </DeferredComponent>
-        }
-      >
-        <ChallengeList />
-      </Suspense>
-    </Frame>
+    <>
+      <HeadTitle name="내 챌린지 : 깜지" />
+      <Frame>
+        <Title>내 챌린지</Title>
+        <HighlightBar>📢 {sentences[random_index]}</HighlightBar>
+        <MissionStackedCountChart />
+        <Suspense
+          fallback={
+            <DeferredComponent>
+              <ChallengeListSkeleton />
+            </DeferredComponent>
+          }
+        >
+          <ChallengeListContainer />
+        </Suspense>
+      </Frame>
+    </>
   );
 }
 

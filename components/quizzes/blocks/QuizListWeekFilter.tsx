@@ -1,11 +1,12 @@
 import { useRouter } from "next/router";
 import React, { useEffect, useState } from "react";
-import useOpenWeeksQuery from "../../../hooks/open-weeks";
-
-function WeekFilter() {
+import { useOpenWeeksQuery } from "../../../api/challenges/hooks";
+interface Props {
+  challengeId: string;
+}
+function WeekFilter({ challengeId }: Props) {
   const router = useRouter();
-
-  const { data: openWeeks } = useOpenWeeksQuery();
+  const { data: openWeeks } = useOpenWeeksQuery({ challengeId });
 
   const [selected, setSelected] = useState<number[]>([]);
   const [unselected, setUnselected] = useState<number[]>([]);

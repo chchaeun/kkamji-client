@@ -1,5 +1,6 @@
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import React from "react";
+import { deleteComment } from "../../../api/comments";
 import api from "../../../api/my-api";
 import { Comment } from "../../../types/Comment";
 import { getDateFormat } from "../../../utils/DateFormat";
@@ -19,7 +20,7 @@ function QuizComment({ quizId, comment }: Props) {
   } = comment;
 
   const { mutate: mutateCommentDelete } = useMutation(
-    async (commentId: number) => await api.delete(`/comments/${commentId}`),
+    (commentId: number) => deleteComment({ commentId }),
     {
       onSettled: () => {
         queryClient.invalidateQueries(["comments", quizId]);
@@ -33,8 +34,8 @@ function QuizComment({ quizId, comment }: Props) {
 
   return (
     <div className="flex flex-col gap-2">
-      <div className="flex justify-between items-center">
-        <div className="flex gap-2 items-center">
+      <div className="flex items-center justify-between">
+        <div className="flex items-center gap-2">
           <span className="text-base font-semibold">{writerName}</span>
           {isQuizWriter && (
             <span className="text-sm text-[#5c3cde]">작성자</span>

@@ -1,7 +1,7 @@
 import ProgressBar from "@ramonak/react-progress-bar";
 import { useRouter } from "next/router";
 import React from "react";
-import useSubmitCountQuery from "../../../hooks/submit-count-query";
+import { useSubmitCountQuery } from "../../../api/quizzes/hooks";
 interface Props {
   currentWeek: number;
 }

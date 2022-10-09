@@ -1,13 +1,13 @@
 import React from "react";
 import styled from "styled-components";
-import useOpenWeeksQuery from "../../../hooks/open-weeks";
+import { useOpenWeeksQuery } from "../../../api/challenges/hooks";
 import { media } from "../../../styles/media";
 import QuizSummary from "../blocks/ChallengeQuizSummary";
 interface Props {
   challengeId: string;
 }
 function ChallengeQuizSummaryContainer({ challengeId }: Props) {
-  const { data: openWeeks } = useOpenWeeksQuery();
+  const { data: openWeeks } = useOpenWeeksQuery({ challengeId });
 
   const getReadableWeeks = () => {
     let readable = new Array<string>();

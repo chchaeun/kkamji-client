@@ -20,7 +20,6 @@ function ChallengePage() {
           <ChallengeSuccessPeople challengeId={challengeId} />
           <ChallengeProgressContainer challengeId={challengeId} />
           <ChallengeQuizSummaryContainer challengeId={challengeId} />
-
           <Link href={`/challenges/${challengeId}/write`}>
             <Button type="button">문제 제출하기</Button>
           </Link>

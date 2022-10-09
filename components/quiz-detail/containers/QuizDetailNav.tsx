@@ -1,7 +1,7 @@
 import Link from "next/link";
 import { useRouter } from "next/router";
 import React, { useState } from "react";
-import useChallengeDetailQuery from "../../../hooks/challenge-detail-query";
+import { useChallengeDetailQuery } from "../../../api/challenges/hooks";
 import { classNames } from "../../../styles/ClassNames";
 import { QuizSummary } from "../../../types/Quiz";
 interface Props {
