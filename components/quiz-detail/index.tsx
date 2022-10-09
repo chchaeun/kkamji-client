@@ -1,6 +1,6 @@
 import { useRouter } from "next/router";
 import React from "react";
-import useQuizDetailQuery from "../../hooks/quiz-detail";
+import { useQuizDetailQuery } from "../../api/quizzes/hooks";
 import { QuizSummary } from "../../types/Quiz";
 import HeadTitle from "../common/Title";
 import QuizRate from "./blocks/QuizRate";
@@ -19,7 +19,7 @@ function QuizDetailTemplate({ quizzes, page }: Props) {
   const challengeId = String(router.query.cid);
   const quizId = String(router.query.qid);
 
-  const { data: quizDetail, error } = useQuizDetailQuery();
+  const { data: quizDetail, error } = useQuizDetailQuery({ quizId });
 
   if (error) {
     if (error?.response?.status === 404) {

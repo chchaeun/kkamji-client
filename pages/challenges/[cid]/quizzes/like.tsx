@@ -1,11 +1,11 @@
 import { useRouter } from "next/router";
 import React, { Suspense } from "react";
 import ChallengeOverview from "../../../../components/challenges/ChallengeOverview";
-import useChallengeDetailQuery from "../../../../hooks/challenge-detail-query";
 import dynamic from "next/dynamic";
 import QuizListSkeleton from "../../../../components/skeletons/QuizListSkeleton";
 import DeferredComponent from "../../../../components/skeletons/DeferredComponent";
 import HeadTitle from "../../../../components/common/Title";
+import { useChallengeDetailQuery } from "../../../../api/challenges/hooks";
 const QuizList = dynamic(
   () => import("../../../../components/quizzes/blocks/QuizList"),
   {

@@ -1,7 +1,7 @@
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import React from "react";
 import { SubmitHandler, useForm } from "react-hook-form";
-import { updateQuizIsSolved } from "../../../api/quizzes/quiz-solve";
+import { updateQuizIsSolved } from "../../../api/quizzes";
 
 interface Props {
   quizId: string;
@@ -37,14 +37,14 @@ function QuizSolveForm({ quizId }: Props) {
   return (
     <form
       onSubmit={handleSolveSubmit(onSolveValid)}
-      className="flex flex-col gap-8 pb-10 items-end"
+      className="flex flex-col items-end gap-8 pb-10"
     >
       <div className="flex flex-col w-full gap-2">
         <label className="text-xl">
           정답 입력
           <textarea
             {...solveRegister("solve", { required: true })}
-            className="shadow appearance-none border rounded w-full mt-2 py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+            className="w-full px-3 py-2 mt-2 leading-tight text-gray-700 border rounded shadow appearance-none focus:outline-none focus:shadow-outline"
           />
         </label>
         {solveErrors.solve && solveErrors.solve.type === "required" && (

@@ -6,7 +6,7 @@ import ChallengeListSkeleton from "../../components/skeletons/ChallengeListSkele
 import DeferredComponent from "../../components/skeletons/DeferredComponent";
 import MissionStackedCountChart from "../../components/dashboard/containers/MissionStackedCountContainer";
 import HeadTitle from "../../components/common/Title";
-const ChallengeList = dynamic(
+const ChallengeListContainer = dynamic(
   async () =>
     await import(
       "../../components/dashboard/containers/ChallengeListContainer"
@@ -41,7 +41,7 @@ function Dashboard() {
             </DeferredComponent>
           }
         >
-          <ChallengeList />
+          <ChallengeListContainer />
         </Suspense>
       </Frame>
     </>

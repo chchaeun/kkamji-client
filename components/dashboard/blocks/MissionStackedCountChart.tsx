@@ -12,6 +12,7 @@ import {
   PointElement,
   LineElement,
 } from "chart.js";
+import { fetchQuizSubmitStackedCount } from "../../../api/quizzes";
 
 ChartJS.register(CategoryScale, LinearScale, PointElement, LineElement);
 
@@ -70,20 +71,11 @@ function MissionStackedCountChart() {
     { week: number; count: number }[],
     AxiosError,
     number[]
-  >(
-    ["missionCount"],
-    async () => {
-      api.defaults.headers.common["code"] = getCode();
-
-      const { data } = await api.get("/my/quizzes/count");
-      return data;
-    },
-    {
-      enabled: !!getCode(),
-      suspense: true,
-      select: (data) => data.map((value) => value.count),
-    }
-  );
+  >(["missionCount"], fetchQuizSubmitStackedCount, {
+    enabled: !!getCode(),
+    suspense: true,
+    select: (data) => data.map((value) => value.count),
+  });
 
   useEffect(() => {
     if (!missionCount) {

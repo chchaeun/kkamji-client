@@ -1,8 +1,8 @@
 import { useRouter } from "next/router";
 import React from "react";
-import useChallengeDetailQuery from "../../../../../hooks/challenge-detail-query";
+import { useChallengeDetailQuery } from "../../../../../api/challenges/hooks";
+import { useQuizzesQuery } from "../../../../../api/quizzes/hooks";
 import QuizDetailTemplate from "../../../../../components/quiz-detail";
-import useQuizzesQuery from "../../../../../hooks/quizzes-query";
 
 function QuizDetailPage() {
   const router = useRouter();

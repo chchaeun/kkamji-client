@@ -2,7 +2,7 @@ import React from "react";
 
 import { Icon } from "@iconify/react";
 import Link from "next/link";
-import useQuizzesQuery from "../../../hooks/quizzes-query";
+import { useQuizzesQuery } from "../../../api/quizzes/hooks";
 
 interface Props {
   challengeId: string;

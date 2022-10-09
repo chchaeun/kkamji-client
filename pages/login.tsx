@@ -5,6 +5,7 @@ import Head from "next/head";
 import { useRouter } from "next/router";
 import React, { useEffect, useState } from "react";
 import { SubmitHandler, useForm } from "react-hook-form";
+import { postLogin } from "../api/auth";
 import api from "../api/my-api";
 import { getCode } from "../api/session-code";
 import HeadTitle from "../components/common/Title";
@@ -27,9 +28,7 @@ function Login() {
   const [token, setToken] = useState<string | null>(null);
 
   const { mutate: mutateLogin } = useMutation(
-    async (loginBody: LoginValidForm) => {
-      return await api.post("/user/login", loginBody);
-    },
+    (loginBody: LoginBody) => postLogin(loginBody),
     {
       onSuccess: (res, req) => {
         sessionStorage.setItem("code", req.code);

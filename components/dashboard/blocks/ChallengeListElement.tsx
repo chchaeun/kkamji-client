@@ -2,8 +2,8 @@ import { Icon } from "@iconify/react";
 import Link from "next/link";
 import React, { useEffect, useState } from "react";
 import styled from "styled-components";
-import useCurrentWeekQuery from "../../../hooks/current-week-query";
-import useSubmitCountQuery from "../../../hooks/submit-count-query";
+import { useCurrentWeekQuery } from "../../../api/challenges/hooks";
+import { useSubmitCountQuery } from "../../../api/quizzes/hooks";
 import { media } from "../../../styles/media";
 import { Challenge } from "../../../types/Challenge";
 

@@ -1,7 +1,7 @@
 import { useRouter } from "next/router";
 import React from "react";
 import { Icon } from "@iconify/react";
-import useSubmitCountQuery from "../../../hooks/submit-count-query";
+import { useSubmitCountQuery } from "../../../api/quizzes/hooks";
 
 interface Props {
   week: number;

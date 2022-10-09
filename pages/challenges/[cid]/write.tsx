@@ -2,15 +2,17 @@ import React, { Fragment, useRef, useState } from "react";
 import { SubmitHandler, useFieldArray, useForm } from "react-hook-form";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { useRouter } from "next/router";
-import { updateQuiz } from "../../../api/submit-quiz/update-quiz";
 import Overlay from "../../../components/layout/OverlayComponent";
 import SubmitCount from "../../../components/write/blocks/SubmitCount";
-import useCurrentWeekQuery from "../../../hooks/current-week-query";
-import useSubmitCountQuery from "../../../hooks/submit-count-query";
 import { Icon } from "@iconify/react";
-import useChallengeDetailQuery from "../../../hooks/challenge-detail-query";
 import SubmitSuccessModal from "../../../components/write/blocks/SubmitSuccessModal";
 import HeadTitle from "../../../components/common/Title";
+import { updateQuiz } from "../../../api/quizzes";
+import {
+  useChallengeDetailQuery,
+  useCurrentWeekQuery,
+} from "../../../api/challenges/hooks";
+import { useSubmitCountQuery } from "../../../api/quizzes/hooks";
 
 type QuizValidForm = {
   title: string;
