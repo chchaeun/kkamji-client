@@ -1,15 +1,15 @@
 import Link from "next/link";
 import React from "react";
-import useOpenWeeksQuery from "../../hooks/open-weeks";
+import { useOpenWeeksQuery } from "../../api/challenges/hooks";
 interface Props {
   challengeId: string;
 }
 function ChallengeMenu({ challengeId }: Props) {
-  const { data: openWeeks } = useOpenWeeksQuery();
+  const { data: openWeeks } = useOpenWeeksQuery({ challengeId });
   return (
     <div className="col-start-1 col-span-2 m-10 border-r-[1px] sm:w-5/6 sm:m-auto sm:border-none">
       <h3 className="py-3 text-sm font-semibold text-gray-500">문제</h3>
-      <ul className="menu bg-base-100 pr-5">
+      <ul className="pr-5 menu bg-base-100">
         {openWeeks && (
           <li>
             <Link
