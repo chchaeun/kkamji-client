@@ -1,0 +1,77 @@
+import React from "react";
+import { SubmitHandler, useForm } from "react-hook-form";
+import HeadTitle from "../components/common/Title";
+
+type PasswordValidForm = {
+  password: string;
+  passwordConform: string;
+};
+
+function PasswordNoticePage() {
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+  } = useForm<PasswordValidForm>();
+
+  const onPasswordValid: SubmitHandler<PasswordValidForm> = async (data) => {
+    const { password, passwordConform } = data;
+
+    if (password === passwordConform) {
+      // mutatePasswordChange(data);
+    } else {
+      alert("비밀번호와 비밀번호 확인이 다릅니다.");
+    }
+  };
+
+  return (
+    <>
+      <HeadTitle name="비밀번호 변경 : 깜지" />
+      <div className="flex flex-col items-center gap-10 px-40 pt-20">
+        <h2 className="text-2xl font-bold">로그인 방식이 변경됩니다.</h2>
+        <p>
+          회원님들의 소중한 개인정보를 보호하기 위해 로그인 방식이 변경됩니다.
+          다음 로그인부터는 안내드린 이메일과 함께 새 비밀번호로 로그인해주시길
+          바랍니다. 감사합니다.
+        </p>
+        <form
+          onSubmit={handleSubmit(onPasswordValid)}
+          className="flex flex-col gap-8"
+        >
+          <div className="flex flex-col gap-2">
+            <label className="flex flex-col">
+              새 비밀번호
+              <input
+                type="password"
+                {...register("password", {
+                  required: "새 비밀번호를 입력해주세요.",
+                })}
+                className="w-full px-3 py-2 leading-tight text-gray-700 border rounded shadow appearance-none focus:outline-none focus:shadow-outline"
+              />
+              <em>{errors.password?.message}</em>
+            </label>
+            <label className="flex flex-col">
+              새 비밀번호 확인
+              <input
+                type="password"
+                {...register("passwordConform", {
+                  required: "새 비밀번호 확인을 입력해주세요.",
+                })}
+                className="w-full px-3 py-2 leading-tight text-gray-700 border rounded shadow appearance-none focus:outline-none focus:shadow-outline"
+              />
+              <em>{errors.passwordConform?.message}</em>
+            </label>
+          </div>
+          <button
+            type="submit"
+            className="bg-[#5c3cde] hover:bg-[#4026ab] text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline cursor-pointer"
+          >
+            비밀번호 변경
+          </button>
+        </form>
+      </div>
+    </>
+  );
+}
+
+export default PasswordNoticePage;
