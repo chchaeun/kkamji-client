@@ -6,6 +6,7 @@ import ChallengeListSkeleton from "../../components/skeletons/ChallengeListSkele
 import DeferredComponent from "../../components/skeletons/DeferredComponent";
 import MissionStackedCountChart from "../../components/dashboard/containers/MissionStackedCountContainer";
 import HeadTitle from "../../components/common/Title";
+import MyPointBlock from "../../components/dashboard/blocks/MyPointBlock";
 const ChallengeListContainer = dynamic(
   async () =>
     await import(
@@ -33,7 +34,10 @@ function Dashboard() {
       <Frame>
         <Title>내 챌린지</Title>
         <HighlightBar>📢 {sentences[random_index]}</HighlightBar>
-        <MissionStackedCountChart />
+        <LayoutBlock>
+          <MissionStackedCountChart />
+          <MyPointBlock />
+        </LayoutBlock>
         <Suspense
           fallback={
             <DeferredComponent>
@@ -60,11 +64,6 @@ const Frame = styled.div`
   justify-content: center;
 
   padding: 80px 240px;
-
-  ${media.large`
-    padding: 88px 440px;
-    gap: 20px;
-  `}
 
   ${media.medium`
     padding: 88px 20px;
@@ -108,5 +107,14 @@ const HighlightBar = styled.div`
   ${media.medium`
     line-height: 21px;
     text-align: start;
+  `}
+`;
+
+const LayoutBlock = styled.div`
+  width: 100%;
+
+  ${media.medium`
+    display: flex;
+    flex-direction: column;
   `}
 `;
