@@ -8,7 +8,7 @@ import { SubmitHandler, useForm } from "react-hook-form";
 import { postLogin } from "../api/auth";
 import api from "../api/my-api";
 import { getCode } from "../api/session-code";
-import HeadTitle from "../components/common/Title";
+import HeadTitle from "../components/common/HeadTitle";
 import { firebaseConfig } from "../utils/FirebaseConfig";
 
 type LoginValidForm = {

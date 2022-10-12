@@ -21,7 +21,7 @@ import { getMessaging, getToken, onMessage } from "firebase/messaging";
 import { firebaseConfig } from "../utils/FirebaseConfig";
 import Layout from "../components/layout/LayoutComponent";
 import Head from "next/head";
-import HeadTitle from "../components/common/Title";
+import HeadTitle from "../components/common/HeadTitle";
 
 function MyApp({ Component, pageProps }: AppProps) {
   const queryClient = new QueryClient({

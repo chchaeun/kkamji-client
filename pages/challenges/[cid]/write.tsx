@@ -6,7 +6,7 @@ import Overlay from "../../../components/layout/OverlayComponent";
 import SubmitCount from "../../../components/write/blocks/SubmitCount";
 import { Icon } from "@iconify/react";
 import SubmitSuccessModal from "../../../components/write/blocks/SubmitSuccessModal";
-import HeadTitle from "../../../components/common/Title";
+import HeadTitle from "../../../components/common/HeadTitle";
 import { updateQuiz } from "../../../api/quizzes";
 import {
   useChallengeDetailQuery,

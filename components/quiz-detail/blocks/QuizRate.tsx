@@ -1,9 +1,11 @@
 import { Icon } from "@iconify/react";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import React from "react";
+import styled from "styled-components";
 import { updateQuizRate } from "../../../api/quizzes";
 import { useQuizDetailQuery } from "../../../api/quizzes/hooks";
 import { QuizDetailSelect } from "../../../types/Quiz";
+
 interface Props {
   quizId: string;
 }
@@ -12,7 +14,9 @@ interface QuizRate {
 }
 function QuizRate({ quizId }: Props) {
   const queryClient = useQueryClient();
+
   const { data: quizDetail } = useQuizDetailQuery({ quizId });
+
   const { mutate: mutateQuizRate } = useMutation(
     ({ rate }: QuizRate) => updateQuizRate({ quizId: quizId, rate }),
     {
@@ -53,32 +57,57 @@ function QuizRate({ quizId }: Props) {
   };
 
   return (
-    <div className="flex items-start gap-4">
-      <span className="flex items-center gap-1">
+    <>
+      <Block>
         {quizDetail?.didIRate === "GOOD" ? (
           <button onClick={() => onRateClick({ rate: null })}>
-            <Icon icon="icon-park-solid:good-two" height={22} />
+            <Icon
+              icon="heroicons-solid:thumb-up"
+              color={"#4F46E5"}
+              fontSize={16}
+            />
           </button>
         ) : (
           <button onClick={() => onRateClick({ rate: "GOOD" })}>
-            <Icon icon="icon-park-outline:good-two" height={22} />
+            <Icon
+              icon="heroicons-solid:thumb-up"
+              color={"#6B7280"}
+              fontSize={16}
+            />
           </button>
         )}
-        <span className="text-sm">
+        <Number didIRate={quizDetail?.didIRate || null}>
           {quizDetail?.cntOfGood ? quizDetail?.cntOfGood : 0}
-        </span>
-      </span>
+        </Number>
+      </Block>
       {quizDetail?.didIRate === "BAD" ? (
-        <button onClick={() => onRateClick({ rate: null })} className="pt-1">
-          <Icon icon="icon-park-solid:bad-two" height={22} />
+        <button onClick={() => onRateClick({ rate: null })}>
+          <Icon
+            icon="heroicons-solid:thumb-down"
+            color={"#EF4444"}
+            fontSize={16}
+          />
         </button>
       ) : (
-        <button onClick={() => onRateClick({ rate: "BAD" })} className="pt-1">
-          <Icon icon="icon-park-outline:bad-two" height={22} />
+        <button onClick={() => onRateClick({ rate: "BAD" })}>
+          <Icon
+            icon="heroicons-solid:thumb-down"
+            color={"#6B7280"}
+            fontSize={16}
+          />
         </button>
       )}
-    </div>
+    </>
   );
 }
 
 export default QuizRate;
+
+const Block = styled.span`
+  display: flex;
+  gap: 5px;
+`;
+
+const Number = styled.span<{ didIRate: "GOOD" | "BAD" | null }>`
+  color: ${(p) => p.didIRate && "#4F46E5"};
+`;
