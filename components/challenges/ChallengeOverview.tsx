@@ -3,7 +3,7 @@ import React from "react";
 import styled from "styled-components";
 import { useChallengeDetailQuery } from "../../api/challenges/hooks";
 import { media } from "../../styles/media";
-import HeadTitle from "../common/Title";
+import HeadTitle from "../common/HeadTitle";
 interface Props {
   challengeId: string;
 }

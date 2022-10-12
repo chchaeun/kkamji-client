@@ -3,7 +3,7 @@ import axios from "axios";
 import React from "react";
 import { NotionRenderer, BlockMapType } from "react-notion";
 import "react-notion/src/styles.css";
-import HeadTitle from "../components/common/Title";
+import HeadTitle from "../components/common/HeadTitle";
 function Introduce() {
   const { data: introduceKkamji } = useQuery<BlockMapType>(
     ["introduceKkamji"],

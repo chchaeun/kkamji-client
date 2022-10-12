@@ -1,7 +1,7 @@
 import { Icon } from "@iconify/react";
 import React, { useState } from "react";
 import { SubmitHandler, useForm } from "react-hook-form";
-import HeadTitle from "../components/common/Title";
+import HeadTitle from "../components/common/HeadTitle";
 
 type PasswordValidForm = {
   password: string;

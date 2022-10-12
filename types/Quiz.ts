@@ -101,3 +101,9 @@ export interface QuizSubmitCount {
   challengeId: number;
   week: number;
 }
+
+export interface QuizSolve {
+  quizId: number;
+  solveAnswer: string;
+  solveExplanation: string;
+}

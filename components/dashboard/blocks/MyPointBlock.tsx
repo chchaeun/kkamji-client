@@ -26,11 +26,8 @@ const Container = styled.div`
   gap: 10px;
 
   position: absolute;
-
-  right: 270px;
-  top: 190px;
-
   width: 180px;
+  margin: 10px 24px;
 
   background: #10b981;
   border-radius: 6px;
@@ -47,6 +44,7 @@ const Container = styled.div`
     right: 0px;
 
     width: 100%;
+    margin: 0;
 
     border-radius: 0px 0px 8px 8px;
   `}

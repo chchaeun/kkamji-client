@@ -4,14 +4,11 @@ import { media } from "../../styles/media";
 import dynamic from "next/dynamic";
 import ChallengeListSkeleton from "../../components/skeletons/ChallengeListSkeleton";
 import DeferredComponent from "../../components/skeletons/DeferredComponent";
-import MissionStackedCountChart from "../../components/dashboard/containers/MissionStackedCountContainer";
-import HeadTitle from "../../components/common/Title";
+import HeadTitle from "../../components/common/HeadTitle";
 import MyPointBlock from "../../components/dashboard/blocks/MyPointBlock";
+import MissionStackedCountContainer from "../../components/dashboard/containers/MissionStackedCountContainer";
 const ChallengeListContainer = dynamic(
-  async () =>
-    await import(
-      "../../components/dashboard/containers/ChallengeListContainer"
-    ),
+  () => import("../../components/dashboard/containers/ChallengeListContainer"),
   {
     suspense: true,
     ssr: false,
@@ -35,7 +32,7 @@ function Dashboard() {
         <Title>내 챌린지</Title>
         <HighlightBar>📢 {sentences[random_index]}</HighlightBar>
         <LayoutBlock>
-          <MissionStackedCountChart />
+          <MissionStackedCountContainer />
           <MyPointBlock />
         </LayoutBlock>
         <Suspense
@@ -63,13 +60,17 @@ const Frame = styled.div`
   align-items: center;
   justify-content: center;
 
-  padding: 80px 240px;
+  width: 1040px;
+  padding: 80px;
+  margin: 0 auto;
 
   ${media.medium`
+    width: 100%;
     padding: 88px 20px;
     gap: 20px;
   `}
 `;
+
 const Title = styled.h1`
   display: flex;
   align-items: flex-start;
@@ -111,6 +112,9 @@ const HighlightBar = styled.div`
 `;
 
 const LayoutBlock = styled.div`
+  display: flex;
+  justify-content: flex-end;
+
   width: 100%;
 
   ${media.medium`
