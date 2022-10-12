@@ -1,8 +1,5 @@
-import { Icon } from "@iconify/react";
-import { useQuery } from "@tanstack/react-query";
-import { AxiosError } from "axios";
 import { useRouter } from "next/router";
-import React, { useState } from "react";
+import React from "react";
 import styled from "styled-components";
 import MyQuizContentContainer from "../../../../../components/quiz-detail/containers/MyQuizContentContainer";
 import QuizCommentContainer from "../../../../../components/quiz-detail/containers/QuizCommentContainer";

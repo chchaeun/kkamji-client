@@ -39,15 +39,15 @@ function ChallengeQuizSummary({ title, page, week, challengeId }: Props) {
       <Title> {title}</Title>
       <ul>
         {quizzes?.slice(0, 5).map((quiz) => (
-          <Li key={quiz.quizId}>
-            <Link href={getLinkByPage(quiz.quizId)}>
+          <Link href={getLinkByPage(quiz.quizId)} key={quiz.quizId}>
+            <Li>
               <a>{quiz.quizTitle}</a>
-            </Link>
-            <div>
-              <span>{quiz.writerName}</span>
-              <span>{getDateFormatted(quiz.quizCreatedDate)}</span>
-            </div>
-          </Li>
+              <div>
+                <span>{quiz.writerName}</span>
+                <span>{getDateFormatted(quiz.quizCreatedDate)}</span>
+              </div>
+            </Li>
+          </Link>
         ))}
       </ul>
       <Link href={getLinkByPage()}>
@@ -98,6 +98,8 @@ const Li = styled.li`
   height: 79px;
 
   border-top: 1px solid #f4f4f5;
+
+  cursor: pointer;
 
   a {
     font-weight: 600;

@@ -14,7 +14,7 @@ interface Props {
 function QuizCommentContainer({ quizId }: Props) {
   const router = useRouter();
 
-  const { data: comments } = useQuery<Comment[]>(
+  const { data: comments, error } = useQuery<Comment[]>(
     ["comments", quizId],
     () => fetchComments({ quizId }),
     {
@@ -22,6 +22,9 @@ function QuizCommentContainer({ quizId }: Props) {
     }
   );
 
+  if (error) {
+    return <></>;
+  }
   return (
     <Container>
       <Title>의견</Title>

@@ -10,7 +10,9 @@ interface Props {
   quizId: string;
 }
 function QuizTitleBlock({ challengeId, quizId }: Props) {
-  const { data: challenge } = useChallengeDetailQuery({ challengeId });
+  const { data: challenge } = useChallengeDetailQuery({
+    challengeId,
+  });
   const { data: quizDetail } = useQuizDetailQuery({ quizId });
 
   return (
@@ -38,6 +40,8 @@ const Container = styled.div`
   display: flex;
   flex-direction: column;
   gap: 17px;
+
+  width: 100%;
 
   a {
     font-size: 14px;

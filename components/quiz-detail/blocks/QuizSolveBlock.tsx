@@ -1,4 +1,4 @@
-import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
+import { useMutation, useQuery } from "@tanstack/react-query";
 import { AxiosError } from "axios";
 import React, { useState } from "react";
 import { SubmitHandler, useForm } from "react-hook-form";
@@ -16,8 +16,6 @@ type SolveValidForm = {
 };
 
 function QuizSolveBlock({ quizId }: Props) {
-  const queryClient = useQueryClient();
-
   const [isFocus, setIsFocus] = useState(false);
 
   const {
@@ -46,9 +44,7 @@ function QuizSolveBlock({ quizId }: Props) {
     {
       mutationKey: ["quizIsSolved", quizId],
       onSuccess: () => {
-        queryClient.invalidateQueries(["quizSolve", quizId]);
-
-        queryClient.invalidateQueries(["quizDetail", quizId]);
+        window.location.reload();
       },
       onError: (err) => {},
     }

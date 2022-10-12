@@ -1,16 +1,14 @@
 import { Icon } from "@iconify/react";
-import { useRouter } from "next/router";
 import React, { useState } from "react";
 import styled from "styled-components";
 import { useQuizDetailQuery } from "../../../api/quizzes/hooks";
 import ContentsFormat from "../../../utils/ContentsFormat";
 import QuizRubric from "./QuizRubric";
 interface Props {
-  challengeId: string;
   quizId: string;
 }
 
-function QuizAnswerBlock({ challengeId, quizId }: Props) {
+function QuizAnswerBlock({ quizId }: Props) {
   const { data: quizDetail } = useQuizDetailQuery({ quizId });
 
   const [showAnswer, setShowAnswer] = useState(false);
