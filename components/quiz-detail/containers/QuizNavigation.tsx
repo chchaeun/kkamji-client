@@ -87,7 +87,7 @@ function QuizNavigation({ challengeId, quizId, page, week }: Props) {
           {!isDisabled("next") && (
             <Button onClick={() => onMoveQuizClick("next")}>
               <ColDiv align={"flex-start"}>
-                <span>다음</span>
+                <span>다음 문제</span>
                 <span>{getQuizTitle("next")}</span>
               </ColDiv>
               <Icon icon="zondicons:cheveron-right" color={"#9CA3AF"} />
@@ -118,6 +118,7 @@ const Containter = styled.div`
 `;
 
 const Vertical = styled.div`
+  width: 0px;
   height: 42px;
 
   border: 1px solid #f3f4f6;
@@ -131,10 +132,15 @@ const Button = styled.button`
   padding: 12px 24px;
   gap: 8px;
 
-  width: 100%;
+  width: 45%;
   margin: 4px;
 
   border-radius: 4px;
+
+  svg {
+    width: 32px;
+    height: 20px;
+  }
 
   &:hover {
     background: #eef2ff;
@@ -148,11 +154,20 @@ const Button = styled.button`
 const ColDiv = styled.div<{ align: "flex-end" | "flex-start" }>`
   display: flex;
   flex-direction: column;
-  align-items: ${(p) => p.align};
   gap: 8px;
 
+  overflow: hidden;
+  white-space: nowrap;
+
   span {
+    display: flex;
+    flex-direction: column;
+
+    width: 100%;
+
     &:first-child {
+      align-items: ${(p) => p.align};
+
       font-weight: 400;
       font-size: 12px;
       line-height: 14px;
@@ -160,15 +175,13 @@ const ColDiv = styled.div<{ align: "flex-end" | "flex-start" }>`
       color: #111827;
     }
     &:last-child {
+      align-items: flex-start;
+
       font-weight: 600;
       font-size: 14px;
       line-height: 17px;
 
       color: #4f46e5;
-
-      overflow: hidden;
-      text-overflow: ellipsis;
-      white-space: nowrap;
 
       ${media.medium`
         width: 28vw;
