@@ -1,5 +1,5 @@
 import { Icon } from "@iconify/react";
-import { useMutation, useQueryClient } from "@tanstack/react-query";
+import { QueryClient, useMutation } from "@tanstack/react-query";
 import React, { useState } from "react";
 import { useForm } from "react-hook-form";
 import styled from "styled-components";
@@ -11,7 +11,7 @@ type CommentValidForm = {
   comment: string;
 };
 function QuizCommentForm({ quizId }: Props) {
-  const queryClient = useQueryClient();
+  const queryClient = new QueryClient();
 
   const {
     register,
@@ -33,13 +33,13 @@ function QuizCommentForm({ quizId }: Props) {
 
     {
       onSuccess: () => {
+        window.location.reload();
         queryClient.invalidateQueries(["comments", quizId]);
         resetField("comment");
         setDisabledSubmit(false);
       },
       onError: (err) => {
         queryClient.invalidateQueries(["comments", quizId]);
-        resetField("comment");
       },
       onMutate: () => {
         setDisabledSubmit(true);

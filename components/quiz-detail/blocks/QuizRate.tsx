@@ -1,5 +1,5 @@
 import { Icon } from "@iconify/react";
-import { useMutation, useQueryClient } from "@tanstack/react-query";
+import { QueryClient, useMutation } from "@tanstack/react-query";
 import React from "react";
 import styled from "styled-components";
 import { updateQuizRate } from "../../../api/quizzes";
@@ -13,7 +13,7 @@ interface QuizRate {
   rate: "GOOD" | "BAD" | null;
 }
 function QuizRate({ quizId }: Props) {
-  const queryClient = useQueryClient();
+  const queryClient = new QueryClient();
 
   const { data: quizDetail } = useQuizDetailQuery({ quizId });
 
@@ -48,6 +48,7 @@ function QuizRate({ quizId }: Props) {
       },
       onSettled: () => {
         queryClient.invalidateQueries(["quizDetail", quizId]);
+        window.location.reload();
       },
     }
   );

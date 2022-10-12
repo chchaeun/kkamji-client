@@ -1,4 +1,4 @@
-import { useMutation, useQueryClient } from "@tanstack/react-query";
+import { QueryClient, useMutation } from "@tanstack/react-query";
 import React, { useRef, useState } from "react";
 import styled from "styled-components";
 import { updateQuizGrade } from "../../../api/quizzes";
@@ -7,7 +7,7 @@ interface Props {
   quizId: string;
 }
 function QuizRubric({ quizId }: Props) {
-  const queryClient = useQueryClient();
+  const queryClient = new QueryClient();
   const [rubricScore, setRubricScore] = useState<number | null>();
 
   const [isFocus, setIsFocus] = useState(false);
@@ -20,6 +20,7 @@ function QuizRubric({ quizId }: Props) {
     {
       onSuccess: () => {
         queryClient.invalidateQueries(["quizDetail", quizId]);
+        window.location.reload();
       },
       onError: (err) => {},
     }
@@ -51,10 +52,10 @@ function QuizRubric({ quizId }: Props) {
   };
   return (
     <Container>
-      {quizDetail?.solveScore ? (
+      {quizDetail?.solveScore !== null ? (
         <>
           <Title>채점 결과</Title>
-          <BlueBox>{quizDetail.solveScore} 점</BlueBox>
+          <BlueBox>{quizDetail?.solveScore} 점</BlueBox>
         </>
       ) : (
         <>

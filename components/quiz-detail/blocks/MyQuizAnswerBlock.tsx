@@ -1,5 +1,5 @@
 import { Icon } from "@iconify/react";
-import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
+import { QueryClient, useMutation, useQuery } from "@tanstack/react-query";
 import { AxiosError } from "axios";
 import { useRouter } from "next/router";
 import React, { useState } from "react";
@@ -7,13 +7,11 @@ import { SubmitHandler, useFieldArray, useForm } from "react-hook-form";
 import styled from "styled-components";
 import api from "../../../api/my-api";
 import { fetchMyQuizDetail } from "../../../api/quizzes";
-import { useQuizDetailQuery } from "../../../api/quizzes/hooks";
 import {
   MyQuizDetail,
   MyQuizDetailSelect,
   QuizEdit,
 } from "../../../types/Quiz";
-import ContentsFormat from "../../../utils/ContentsFormat";
 
 interface Props {
   quizId: string;
@@ -29,7 +27,7 @@ type EditValidForm = {
 };
 function MyQuizAnswerBlock({ quizId }: Props) {
   const router = useRouter();
-  const queryClient = useQueryClient();
+  const queryClient = new QueryClient();
 
   const [isAnswerFocus, setIsAnswerFocus] = useState(false);
   const [isExplanationFocus, setIsExplanationFocus] = useState(false);
@@ -131,6 +129,7 @@ function MyQuizAnswerBlock({ quizId }: Props) {
     {
       onSuccess: () => {
         queryClient.invalidateQueries(["myQuizDetail", quizId]);
+        window.location.reload();
       },
       onMutate: () => {
         setIsAnswerFocus(false);
@@ -151,7 +150,6 @@ function MyQuizAnswerBlock({ quizId }: Props) {
       quizExplanation: explanation,
       quizRubric: JSON.stringify(rubric),
     };
-    console.log(editBody);
     mutateAnswerEdit(editBody);
   };
 

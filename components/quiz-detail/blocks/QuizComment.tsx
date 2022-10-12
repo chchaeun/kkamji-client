@@ -1,5 +1,5 @@
 import { Icon } from "@iconify/react";
-import { useMutation, useQueryClient } from "@tanstack/react-query";
+import { QueryClient, useMutation } from "@tanstack/react-query";
 import React, { useState } from "react";
 import styled from "styled-components";
 import { deleteComment } from "../../../api/comments";
@@ -11,7 +11,7 @@ interface Props {
   comment: Comment;
 }
 function QuizComment({ quizId, comment }: Props) {
-  const queryClient = useQueryClient();
+  const queryClient = new QueryClient();
 
   const [showDropdown, setShowDropdown] = useState(false);
 
@@ -27,7 +27,8 @@ function QuizComment({ quizId, comment }: Props) {
   const { mutate: mutateCommentDelete } = useMutation(
     (commentId: number) => deleteComment({ commentId }),
     {
-      onSettled: () => {
+      onSuccess: () => {
+        window.location.reload();
         queryClient.invalidateQueries(["comments", quizId]);
       },
     }

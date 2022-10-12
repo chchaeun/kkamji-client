@@ -1,6 +1,8 @@
 import { Icon } from "@iconify/react";
+import { useRouter } from "next/router";
 import React from "react";
 import styled from "styled-components";
+import { fetchQuizzes } from "../../../api/quizzes";
 import { useQuizzesQuery } from "../../../api/quizzes/hooks";
 import { media } from "../../../styles/media";
 
@@ -12,6 +14,7 @@ interface Props {
 }
 
 function QuizNavigation({ challengeId, quizId, page, week }: Props) {
+  const router = useRouter();
   const { data: quizzes } = useQuizzesQuery({ challengeId, week, page });
 
   const getQuizTitle = (move: string) => {
@@ -37,13 +40,13 @@ function QuizNavigation({ challengeId, quizId, page, week }: Props) {
     for (let i = 0; i < quizzes.length; i++) {
       if (String(quizzes[i].quizId) === quizId) {
         if (move === "prev" && i - 1 >= 0) {
-          document.location.replace(
+          router.replace(
             `/challenges/${challengeId}/quizzes/${quizzes[i - 1].quizId}${
               page === "MY" ? "/my" : page === "LIKED" ? "/like" : ""
             }${page === "READABLE" ? `?week=${week}` : ""}`
           );
         } else if (move === "next" && i + 1 < quizzes.length) {
-          document.location.replace(
+          router.replace(
             `/challenges/${challengeId}/quizzes/${quizzes[i + 1].quizId}${
               page === "MY" ? "/my" : page === "LIKED" ? "/like" : ""
             }${page === "READABLE" ? `?week=${week}` : ""}`
@@ -55,7 +58,7 @@ function QuizNavigation({ challengeId, quizId, page, week }: Props) {
   // 퀴즈가 첫 번째 혹은 마지막 순서인지 확인한다. 두 경우에는 각각 이전과 이후로 이동하지 못한다.
   const isDisabled = (move: string) => {
     if (!quizzes) {
-      return;
+      return true;
     }
 
     for (let i = 0; i < quizzes.length; i++) {
@@ -75,7 +78,10 @@ function QuizNavigation({ challengeId, quizId, page, week }: Props) {
       {quizzes && (
         <Containter>
           {!isDisabled("prev") && (
-            <Button onClick={() => onMoveQuizClick("prev")}>
+            <Button
+              onClick={() => onMoveQuizClick("prev")}
+              isFullWidth={isDisabled("next")}
+            >
               <Icon icon="zondicons:cheveron-left" color={"#9CA3AF"} />
               <ColDiv align={"flex-end"}>
                 <span>이전 문제</span>
@@ -85,7 +91,10 @@ function QuizNavigation({ challengeId, quizId, page, week }: Props) {
           )}
           {!isDisabled("prev") && !isDisabled("next") && <Vertical />}
           {!isDisabled("next") && (
-            <Button onClick={() => onMoveQuizClick("next")}>
+            <Button
+              onClick={() => onMoveQuizClick("next")}
+              isFullWidth={isDisabled("prev")}
+            >
               <ColDiv align={"flex-start"}>
                 <span>다음 문제</span>
                 <span>{getQuizTitle("next")}</span>
@@ -124,7 +133,7 @@ const Vertical = styled.div`
   border: 1px solid #f3f4f6;
 `;
 
-const Button = styled.button`
+const Button = styled.button<{ isFullWidth: boolean }>`
   display: flex;
   flex-direction: row;
   justify-content: space-between;
@@ -132,7 +141,7 @@ const Button = styled.button`
   padding: 12px 24px;
   gap: 8px;
 
-  width: 45%;
+  width: ${(p) => (p.isFullWidth ? "100%" : "45%")};
   margin: 4px;
 
   border-radius: 4px;

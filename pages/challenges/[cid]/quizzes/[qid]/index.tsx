@@ -1,5 +1,5 @@
 import { useRouter } from "next/router";
-import React from "react";
+import React, { useEffect } from "react";
 import styled from "styled-components";
 import QuizCommentContainer from "../../../../../components/quiz-detail/containers/QuizCommentContainer";
 import QuizContentContainer from "../../../../../components/quiz-detail/containers/QuizContentContainer";

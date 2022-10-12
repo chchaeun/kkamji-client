@@ -1,7 +1,7 @@
 import React from "react";
 import styled from "styled-components";
 import MyQuizAnswerBlock from "../blocks/MyQuizAnswerBlock";
-import QuizContentBlock from "../blocks/QuizContentBlock";
+import MyQuizContentBlock from "../blocks/MyQuizContentBlock";
 import QuizPointBlock from "../blocks/QuizPointBlock";
 import QuizTitleBlock from "../blocks/QuizTitleBlock";
 
@@ -17,7 +17,7 @@ function MyQuizContentContainer({ challengeId, quizId }: Props) {
         <QuizTitleBlock challengeId={challengeId} quizId={quizId} />
       </ColDiv>
       <Horizontal />
-      <QuizContentBlock quizId={quizId} />
+      <MyQuizContentBlock quizId={quizId} />
       <DashedHorizontal />
       <MyQuizAnswerBlock quizId={quizId} />
     </Container>
@@ -45,6 +45,8 @@ const ColDiv = styled.div`
   display: flex;
   flex-direction: column;
   gap: 16px;
+
+  width: 100%;
 `;
 
 const Horizontal = styled.hr`

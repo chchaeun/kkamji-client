@@ -6,6 +6,7 @@ import QuizSolveBlock from "../blocks/QuizSolveBlock";
 import QuizAnswerBlock from "../blocks/QuizAnswerBlock";
 import QuizTitleBlock from "../blocks/QuizTitleBlock";
 import { media } from "../../../styles/media";
+import { useChallengeDetailQuery } from "../../../api/challenges/hooks";
 
 interface Props {
   challengeId: string;
@@ -22,7 +23,7 @@ function QuizContentContainer({ challengeId, quizId }: Props) {
       <QuizContentBlock quizId={quizId} />
       <QuizSolveBlock quizId={quizId} />
       <DashedHorizontal />
-      <QuizAnswerBlock quizId={quizId} challengeId={challengeId} />
+      <QuizAnswerBlock quizId={quizId} />
     </Container>
   );
 }
