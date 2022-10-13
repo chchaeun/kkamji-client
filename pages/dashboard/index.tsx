@@ -33,7 +33,6 @@ function Dashboard() {
         <HighlightBar>📢 {sentences[random_index]}</HighlightBar>
         <LayoutBlock>
           <MissionStackedCountContainer />
-          <MyPointBlock />
         </LayoutBlock>
         <Suspense
           fallback={

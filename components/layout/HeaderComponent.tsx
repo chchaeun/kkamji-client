@@ -20,7 +20,7 @@ function Header() {
     <>
       {!isSameRoute("/login") && (
         <Container>
-          <Link href="/">
+          <Link href={getToken() ? "/dashboard" : "/"}>
             <Logo className="logo">깜지.</Logo>
           </Link>
           <Navigation>
