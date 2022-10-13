@@ -1,14 +1,21 @@
 import { Icon } from "@iconify/react";
+import { useMutation } from "@tanstack/react-query";
+import { useRouter } from "next/router";
 import React, { useState } from "react";
 import { SubmitHandler, useForm } from "react-hook-form";
+import api from "../api/myApi";
 import HeadTitle from "../components/common/HeadTitle";
 
 type PasswordValidForm = {
-  password: string;
-  passwordConfirm: string;
+  email: string;
+  existingPassword: string;
+  newPassword: string;
+  newPasswordConfirm: string;
 };
 
 function PasswordNoticePage() {
+  const router = useRouter();
+
   const inputType = {
     password: "password",
     text: "text",
@@ -31,15 +38,29 @@ function PasswordNoticePage() {
     watch,
   } = useForm<PasswordValidForm>();
 
-  const passwordField = watch("password");
+  const passwordField = watch("newPassword");
 
-  console.log(passwordField);
+  const { mutate: mutatePasswordChange } = useMutation(
+    async (passwordChangeBody: PasswordValidForm) => {
+      return await api.patch("/users/password", passwordChangeBody);
+    },
+    {
+      onSuccess: () => {
+        router.push("/login");
+      },
+      onError: () => {
+        alert("비밀번호 변경에 실패했습니다. 입력한 정보를 확인해주세요.");
+      },
+    }
+  );
 
-  const onPasswordValid: SubmitHandler<PasswordValidForm> = async (data) => {
-    const { password, passwordConfirm } = data;
+  const onPasswordValid: SubmitHandler<PasswordValidForm> = async (
+    passwordChangeBody
+  ) => {
+    const { newPassword, newPasswordConfirm } = passwordChangeBody;
 
-    if (password === passwordConfirm) {
-      // mutatePasswordChange(data);
+    if (newPassword === newPasswordConfirm) {
+      mutatePasswordChange(passwordChangeBody);
     } else {
       alert("비밀번호와 비밀번호 확인이 다릅니다.");
     }
@@ -49,30 +70,65 @@ function PasswordNoticePage() {
     <>
       <HeadTitle name="비밀번호 변경 : 깜지" />
       <div className="flex flex-col items-center gap-10 px-40 pt-20">
-        <h2 className="text-2xl font-bold">로그인 방식이 변경됩니다.</h2>
+        <h2 className="text-2xl font-bold">비밀번호를 변경해주세요.</h2>
         <p>
           회원님들의 소중한 개인정보를 보호하기 위해 로그인 방식이 변경됩니다.
-          다음 로그인부터는 안내드린 이메일과 함께 새 비밀번호로 로그인해주시길
-          바랍니다. 감사합니다.
+          다음 로그인부터는 새 비밀번호로 로그인해주시길 바랍니다. 감사합니다.
         </p>
         <form
           onSubmit={handleSubmit(onPasswordValid)}
           className="flex flex-col gap-8"
         >
           <div className="flex flex-col gap-2">
+            <label>
+              이메일
+              <div className="flex">
+                <input
+                  type={"email"}
+                  {...register("email", {
+                    required: "이메일을 입력해주세요.",
+                  })}
+                  className="w-full px-3 py-2 leading-tight text-gray-700 border rounded shadow appearance-none focus:outline-none focus:shadow-outline"
+                />
+              </div>
+            </label>
+            <label>
+              기존 비밀번호
+              <div className="flex">
+                <input
+                  type="password"
+                  {...register("existingPassword", {
+                    required: "기존 비밀번호를 입력해주세요.",
+                    minLength: {
+                      value: 4,
+                      message: "기존 비밀번호는 4자입니다.",
+                    },
+                    maxLength: {
+                      value: 4,
+                      message: "기존 비밀번호는 4자입니다.",
+                    },
+                  })}
+                  className="w-full px-3 py-2 leading-tight text-gray-700 border rounded shadow appearance-none focus:outline-none focus:shadow-outline"
+                />
+              </div>
+            </label>
             <label className="flex flex-col">
               새 비밀번호
               <div className="flex">
                 <input
                   type={showPassword ? inputType.text : inputType.password}
-                  {...register("password", {
+                  {...register("newPassword", {
                     required: "새 비밀번호를 입력해주세요.",
                     minLength: {
                       value: 8,
                       message: "최소 8자 이상의 비밀번호를 입력해주세요.",
                     },
+                    maxLength: {
+                      value: 255,
+                      message: "비밀번호는 255자를 초과하면 안됩니다.",
+                    },
                     pattern: {
-                      value: /^(?=.*\d)(?=.*[a-zA-zS]).{8,}/,
+                      value: /^(?=.*\d)(?=.*[a-zA-zS]).{8,255}/,
                       message: "영문, 숫자를 혼용하여 입력해주세요.",
                     },
                   })}
@@ -93,7 +149,7 @@ function PasswordNoticePage() {
                   )}
                 </button>
               </div>
-              <em>{errors.password?.message}</em>
+              <em>{errors.newPassword?.message}</em>
             </label>
             <label className="flex flex-col">
               새 비밀번호 확인
@@ -102,7 +158,7 @@ function PasswordNoticePage() {
                   type={
                     showPasswordConfirm ? inputType.text : inputType.password
                   }
-                  {...register("passwordConfirm", {
+                  {...register("newPasswordConfirm", {
                     required: "새 비밀번호 확인을 입력해주세요.",
                     validate: (value) =>
                       value === passwordField ||
@@ -125,7 +181,7 @@ function PasswordNoticePage() {
                   )}
                 </button>
               </div>
-              <em>{errors.passwordConfirm?.message}</em>
+              <em>{errors.newPasswordConfirm?.message}</em>
             </label>
           </div>
           <button

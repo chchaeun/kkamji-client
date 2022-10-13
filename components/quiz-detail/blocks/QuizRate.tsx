@@ -110,5 +110,5 @@ const Block = styled.span`
 `;
 
 const Number = styled.span<{ didIRate: "GOOD" | "BAD" | null }>`
-  color: ${(p) => p.didIRate && "#4F46E5"};
+  color: ${(p) => p.didIRate === "GOOD" && "#4F46E5"};
 `;

@@ -1,12 +1,12 @@
 import React from "react";
 import Link from "next/link";
 import { useRouter } from "next/router";
-import { getCode } from "../../api/session-code";
+import { getToken } from "../../api/getToken";
 import styled from "styled-components";
 import { media } from "../../styles/media";
 function Header() {
   const router = useRouter();
-  const isUser = getCode() ? true : false;
+  const isUser = getToken() ? true : false;
 
   const isSameRoute = (route: string) => {
     if (router.pathname === route) {

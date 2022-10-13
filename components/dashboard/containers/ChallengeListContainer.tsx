@@ -2,7 +2,7 @@ import { useQuery } from "@tanstack/react-query";
 import React from "react";
 import styled from "styled-components";
 import { fetchMyChallenge } from "../../../api/challenges";
-import { getCode } from "../../../api/session-code";
+import { getToken } from "../../../api/getToken";
 import { media } from "../../../styles/media";
 import { Challenge } from "../../../types/Challenge";
 import ChallengeListElement from "../blocks/ChallengeListElement";
@@ -12,7 +12,7 @@ function ChallengeListContainer() {
     ["myChallenge"],
     fetchMyChallenge,
     {
-      enabled: !!getCode(),
+      enabled: !!getToken(),
       suspense: true,
     }
   );
