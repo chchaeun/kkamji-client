@@ -1,38 +1,48 @@
 import { useMutation } from "@tanstack/react-query";
 import { initializeApp } from "firebase/app";
 import { getMessaging, getToken } from "firebase/messaging";
-import Head from "next/head";
 import { useRouter } from "next/router";
 import React, { useEffect, useState } from "react";
 import { SubmitHandler, useForm } from "react-hook-form";
 import { postLogin } from "../api/auth";
-import api from "../api/my-api";
-import { getCode } from "../api/session-code";
 import HeadTitle from "../components/common/HeadTitle";
 import { firebaseConfig } from "../utils/FirebaseConfig";
 
 type LoginValidForm = {
-  name: string;
-  code: string;
+  email: string;
+  password: string;
+  isAutoLogin: boolean;
 };
 
 type LoginBody = {
-  name: string;
-  code: string;
-  token: string | null;
+  email: string;
+  password: string;
+  fcmToken: string | null;
   platform: string;
+  isAutoLogin: boolean;
 };
+
+interface LoginProps {
+  loginBody: LoginBody;
+  isAutoLogin: boolean;
+}
 
 function Login() {
   const router = useRouter();
-  const [token, setToken] = useState<string | null>(null);
+  const [fcmToken, setFcmToken] = useState<string | null>(null);
 
   const { mutate: mutateLogin } = useMutation(
-    (loginBody: LoginBody) => postLogin(loginBody),
+    ({ loginBody }: LoginProps) => postLogin(loginBody),
     {
       onSuccess: (res, req) => {
-        sessionStorage.setItem("code", req.code);
-        router.push("/");
+        if (req.isAutoLogin) {
+          localStorage.setItem("token", res.data.token);
+          sessionStorage.removeItem("token");
+        } else {
+          sessionStorage.setItem("token", res.data.token);
+          localStorage.removeItem("token");
+        }
+        router.push("/dashboard");
       },
       onError: () => {
         alert("로그인에 실패했습니다.");
@@ -55,20 +65,26 @@ function Login() {
       vapidKey: process.env.NEXT_PUBLIC_FIREBASE_VAPID_KEY,
     })
       .then((currentToken) => {
-        setToken(currentToken);
+        setFcmToken(currentToken);
       })
       .catch((err) => {});
   }, []);
 
   const onLoginValid: SubmitHandler<LoginValidForm> = async (data) => {
-    const { name, code } = data;
-    let loginBody: LoginBody = {
-      name,
-      code,
-      token,
-      platform: navigator.platform,
-    };
-    mutateLogin(loginBody);
+    const { email, password, isAutoLogin } = data;
+
+    if (password.length === 4) {
+      router.push("/password-notice");
+    } else {
+      let loginBody: LoginBody = {
+        email,
+        password,
+        fcmToken,
+        isAutoLogin,
+        platform: navigator.platform,
+      };
+      mutateLogin({ loginBody, isAutoLogin });
+    }
   };
   return (
     <>
@@ -81,31 +97,32 @@ function Login() {
         >
           <div className="flex flex-col gap-2">
             <label className="flex flex-col">
-              이름
+              이메일
               <input
                 type="text"
-                {...register("name", {
-                  required: "이름을 입력해주세요.",
+                {...register("email", {
+                  required: "이메일을 입력해주세요.",
                 })}
                 className="w-full px-3 py-2 leading-tight text-gray-700 border rounded shadow appearance-none focus:outline-none focus:shadow-outline"
               />
             </label>
-            <em>{errors?.name?.message}</em>
+            <em>{errors?.email?.message}</em>
             <label className="flex flex-col">
-              코드
+              비밀번호
               <input
                 type="password"
-                {...register("code", {
-                  required: "코드를 입력해주세요.",
-                  minLength: { value: 4, message: "코드는 4자여야 합니다." },
-                  maxLength: { value: 4, message: "코드는 4자여야 합니다." },
+                {...register("password", {
+                  required: "비밀번호를 입력해주세요.",
                 })}
                 className="w-full px-3 py-2 leading-tight text-gray-700 border rounded shadow appearance-none focus:outline-none focus:shadow-outline"
               />
-              <em>{errors.code?.message}</em>
+              <em>{errors.password?.message}</em>
             </label>
           </div>
-
+          <label className="flex gap-2">
+            <input type="checkbox" {...register("isAutoLogin")} />
+            자동 로그인
+          </label>
           <button
             type="submit"
             className="bg-[#5c3cde] hover:bg-[#4026ab] text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline cursor-pointer"
