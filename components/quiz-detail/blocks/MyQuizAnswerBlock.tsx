@@ -5,7 +5,7 @@ import { useRouter } from "next/router";
 import React, { useState } from "react";
 import { SubmitHandler, useFieldArray, useForm } from "react-hook-form";
 import styled from "styled-components";
-import api from "../../../api/my-api";
+import api from "../../../api/myApi";
 import { fetchMyQuizDetail } from "../../../api/quizzes";
 import {
   MyQuizDetail,

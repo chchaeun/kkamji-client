@@ -1,8 +1,7 @@
 import { useQuery } from "@tanstack/react-query";
 import { AxiosError } from "axios";
 import React, { useEffect, useState } from "react";
-import api from "../../../api/my-api";
-import { getCode } from "../../../api/session-code";
+import { getToken } from "../../../api/getToken";
 import { Line } from "react-chartjs-2";
 import styled from "styled-components";
 import {
@@ -72,7 +71,7 @@ function MissionStackedCountChart() {
     AxiosError,
     number[]
   >(["missionCount"], fetchQuizSubmitStackedCount, {
-    enabled: !!getCode(),
+    enabled: !!getToken(),
     suspense: true,
     select: (data) => data.map((value) => value.count),
   });
