@@ -1,12 +1,12 @@
 import React, { Fragment, useRef, useState } from "react";
 import { SubmitHandler, useFieldArray, useForm } from "react-hook-form";
-import { useMutation, useQueryClient } from "@tanstack/react-query";
+import { QueryClient, useMutation } from "@tanstack/react-query";
 import { useRouter } from "next/router";
 import Overlay from "../../../components/layout/OverlayComponent";
 import SubmitCount from "../../../components/write/blocks/SubmitCount";
 import { Icon } from "@iconify/react";
 import SubmitSuccessModal from "../../../components/write/blocks/SubmitSuccessModal";
-import HeadTitle from "../../../components/common/Title";
+import HeadTitle from "../../../components/common/HeadTitle";
 import { updateQuiz } from "../../../api/quizzes";
 import {
   useChallengeDetailQuery,
@@ -27,7 +27,7 @@ type QuizValidForm = {
 };
 function QuizWritePage() {
   const router = useRouter();
-  const queryClient = useQueryClient();
+  const queryClient = new QueryClient();
 
   const challengeId = String(router.query.cid);
 
@@ -69,6 +69,7 @@ function QuizWritePage() {
         setDisabledSubmit(false);
         reset();
         queryClient.invalidateQueries(["quizCurrentSubmit"]);
+        window.location.reload();
       },
       onMutate: () => {
         setDisabledSubmit(true);

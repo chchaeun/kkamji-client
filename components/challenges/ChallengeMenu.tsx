@@ -12,14 +12,7 @@ function ChallengeMenu({ challengeId }: Props) {
       <ul className="pr-5 menu bg-base-100">
         {openWeeks && (
           <li>
-            <Link
-              href={`/challenges/${challengeId}/quizzes?week=${openWeeks?.weeks
-                .filter((week) => week.status === "READABLE")
-                .map((week) => week.week)
-                .join(",")}`}
-            >
-              열람 가능한 문제
-            </Link>
+            <Link href={`/challenges/${challengeId}/quizzes`}>전체 문제</Link>
           </li>
         )}
         <li>

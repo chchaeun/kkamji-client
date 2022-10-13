@@ -1,7 +1,7 @@
 interface LoginProps {
-  name: string;
-  code: string;
-  token: string | null;
+  email: string;
+  password: string;
+  fcmToken: string | null;
   platform: string;
 }
 

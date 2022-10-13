@@ -13,7 +13,6 @@ interface Props {
 function QuizList({ challengeId, week, page }: Props) {
   const { data: quizzes } = useQuizzesQuery({
     challengeId,
-    week,
     page,
     suspense: true,
   });
@@ -27,7 +26,7 @@ function QuizList({ challengeId, week, page }: Props) {
       case "LIKED":
         return `${LINK_HEAD}/like`;
       case "READABLE":
-        return `${LINK_HEAD}?week=${week}`;
+        return `${LINK_HEAD}`;
     }
   };
   return (

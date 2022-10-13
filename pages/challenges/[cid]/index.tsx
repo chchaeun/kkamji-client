@@ -13,23 +13,29 @@ function ChallengePage() {
   const challengeId = String(router.query.cid);
 
   return (
-    <Frame>
-      {challengeId && (
-        <>
-          <ChallengeOverview challengeId={challengeId} />
-          <ChallengeSuccessPeople challengeId={challengeId} />
-          <ChallengeProgressContainer challengeId={challengeId} />
-          <ChallengeQuizSummaryContainer challengeId={challengeId} />
-          <Link href={`/challenges/${challengeId}/write`}>
-            <Button type="button">문제 제출하기</Button>
-          </Link>
-        </>
-      )}
-    </Frame>
+    <Background>
+      <Frame>
+        {challengeId && (
+          <>
+            <ChallengeOverview challengeId={challengeId} />
+            <ChallengeSuccessPeople challengeId={challengeId} />
+            <ChallengeProgressContainer challengeId={challengeId} />
+            <ChallengeQuizSummaryContainer challengeId={challengeId} />
+            <Link href={`/challenges/${challengeId}/write`}>
+              <Button type="button">문제 제출하기</Button>
+            </Link>
+          </>
+        )}
+      </Frame>
+    </Background>
   );
 }
 
 export default ChallengePage;
+
+const Background = styled.div`
+  background-color: #f8fafc;
+`;
 
 const Frame = styled.div`
   box-sizing: border-box;
@@ -40,11 +46,15 @@ const Frame = styled.div`
   align-items: center;
   justify-content: center;
 
-  padding: 80px 200px;
+  padding: 80px 0px;
+
+  width: 1040px;
+  margin: 0 auto;
 
   background-color: #f8fafc;
 
   ${media.medium`
+    width: 100%;
     padding: 88px 12px;
   `}
 `;

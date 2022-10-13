@@ -1,6 +1,7 @@
 import { useQuery } from "@tanstack/react-query";
 import { useRouter } from "next/router";
 import React, { useState } from "react";
+import styled from "styled-components";
 import { fetchComments } from "../../../api/comments";
 import { Comment } from "../../../types/Comment";
 import QuizComment from "../blocks/QuizComment";
@@ -13,9 +14,7 @@ interface Props {
 function QuizCommentContainer({ quizId }: Props) {
   const router = useRouter();
 
-  const [showComment, setShowComment] = useState(false);
-
-  const { data: comments } = useQuery<Comment[]>(
+  const { data: comments, error } = useQuery<Comment[]>(
     ["comments", quizId],
     () => fetchComments({ quizId }),
     {
@@ -23,42 +22,62 @@ function QuizCommentContainer({ quizId }: Props) {
     }
   );
 
-  const onCommentOpenClick = () => {
-    setShowComment((prev) => !prev);
-  };
-
+  if (error) {
+    return <></>;
+  }
   return (
-    <div className="flex flex-col gap-5">
-      <div className="flex flex-col gap-3">
-        <div className="flex justify-between">
-          <h2 className="text-xl">의견</h2>
-          <button
-            type="button"
-            onClick={onCommentOpenClick}
-            className="text-gray-700 underline"
-          >
-            {showComment ? "닫기" : "열기"}
-          </button>
-        </div>
-      </div>
-      {showComment && (
-        <>
-          <div className="flex flex-col w-full gap-2">
-            <QuizCommentForm quizId={quizId} />
-          </div>
-          <div className="flex flex-col gap-6">
-            {comments?.map((comment) => (
-              <QuizComment
-                quizId={quizId}
-                comment={comment}
-                key={comment.commentId}
-              />
-            ))}
-          </div>
-        </>
+    <Container>
+      <Title>의견</Title>
+      <QuizCommentForm quizId={quizId} />
+      {comments?.length === 0 && (
+        <ContentBox>등록된 의견이 없습니다.</ContentBox>
       )}
-    </div>
+      {comments?.map((comment) => (
+        <QuizComment
+          quizId={quizId}
+          comment={comment}
+          key={comment.commentId}
+        />
+      ))}
+    </Container>
   );
 }
 
 export default QuizCommentContainer;
+
+const Container = styled.div`
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  padding: 24px 24px 36px;
+  gap: 20px;
+
+  width: 100%;
+
+  background: #ffffff;
+  border: 1px solid #f3f4f6;
+  border-radius: 8px;
+`;
+
+const Title = styled.h2`
+  font-weight: 700;
+  font-size: 16px;
+  line-height: 19px;
+
+  color: #111827;
+`;
+
+const ContentBox = styled.div`
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 8px 0px 0px 0px;
+
+  width: 100%;
+
+  font-weight: 400;
+  font-size: 14px;
+  line-height: 17px;
+
+  color: #6b7280;
+`;

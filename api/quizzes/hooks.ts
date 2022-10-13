@@ -46,7 +46,6 @@ function useQuizDetailQuery({ quizId }: QuizProps) {
 
 function useQuizzesQuery({
   challengeId,
-  week,
   page,
   suspense = false,
 }: QuizzesProps) {
@@ -65,10 +64,10 @@ function useQuizzesQuery({
 
   switch (page) {
     case "READABLE":
-      queryFn = () => fetchQuizzes({ challengeId, week: week || "" });
+      queryFn = () => fetchQuizzes({ challengeId });
       queryOptions = {
         ...queryOptions,
-        enabled: !!(challengeId && week),
+        enabled: !!challengeId,
       };
       break;
     case "MY":
