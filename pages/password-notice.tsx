@@ -69,7 +69,7 @@ function PasswordNoticePage() {
   return (
     <>
       <HeadTitle name="비밀번호 변경 : 깜지" />
-      <div className="flex flex-col items-center gap-10 px-40 pt-20">
+      <div className="flex flex-col items-center gap-10 px-40 pt-20 sm:px-10">
         <h2 className="text-2xl font-bold">비밀번호를 변경해주세요.</h2>
         <p>
           회원님들의 소중한 개인정보를 보호하기 위해 로그인 방식이 변경됩니다.
