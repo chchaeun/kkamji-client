@@ -17,7 +17,6 @@ const QuizList = dynamic(
 function QuizListPage() {
   const router = useRouter();
   const challengeId = String(router.query.cid);
-  const week = String(router.query.week);
 
   const { data: challengeDetail, error } = useChallengeDetailQuery({
     challengeId,
@@ -29,16 +28,16 @@ function QuizListPage() {
 
   return (
     <>
-      <HeadTitle name="열람 가능한 문제 : 깜지" />
+      <HeadTitle name="전체 문제 : 깜지" />
       <div className="flex flex-col m-auto gap-10  py-[80px] px-[200px] sm:py-[88px] sm:px-[12px]">
         {challengeId && (
           <>
             <ChallengeOverview challengeId={challengeId} />
-            <div className="flex flex-col gap-3 py-5 px-10 bg-white rounded-lg shadow-sm border-[1px] border-gray-300 sm:px-5">
+            {/* <div className="flex flex-col gap-3 py-5 px-10 bg-white rounded-lg shadow-sm border-[1px] border-gray-300 sm:px-5">
               <WeekFilter challengeId={challengeId} />
-            </div>
+            </div> */}
             <div className="flex flex-col gap-6 py-5 px-10 w-full bg-white rounded-lg shadow-sm border-[1px] border-gray-300 sm:px-5">
-              <div className="font-semibold">열람 가능한 문제</div>
+              <div className="font-semibold">전체 문제</div>
               <Suspense
                 fallback={
                   <DeferredComponent>
@@ -46,11 +45,7 @@ function QuizListPage() {
                   </DeferredComponent>
                 }
               >
-                <QuizList
-                  challengeId={challengeId}
-                  week={week}
-                  page={"READABLE"}
-                />
+                <QuizList challengeId={challengeId} page={"READABLE"} />
               </Suspense>
             </div>
           </>

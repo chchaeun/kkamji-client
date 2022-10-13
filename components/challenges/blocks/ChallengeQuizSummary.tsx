@@ -6,17 +6,16 @@ import { useQuizzesQuery } from "../../../api/quizzes/hooks";
 interface Props {
   title: string;
   page: "READABLE" | "MY" | "LIKED";
-  week?: string;
   challengeId: string;
 }
-function ChallengeQuizSummary({ title, page, week, challengeId }: Props) {
-  const { data: quizzes } = useQuizzesQuery({ challengeId, page, week });
+function ChallengeQuizSummary({ title, page, challengeId }: Props) {
+  const { data: quizzes } = useQuizzesQuery({ challengeId, page });
 
   const getLinkByPage = (quizId?: number) => {
     const BASE_LINK = `/challenges/${challengeId}/quizzes`;
     switch (page) {
       case "READABLE":
-        return BASE_LINK + `${quizId ? `/${quizId}` : ""}?week=${week}`;
+        return BASE_LINK + `${quizId ? `/${quizId}` : ""}`;
       case "MY":
         return BASE_LINK + `${quizId ? `/${quizId}` : ""}/my`;
       case "LIKED":
