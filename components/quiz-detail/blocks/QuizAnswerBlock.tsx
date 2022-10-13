@@ -1,5 +1,6 @@
 import { Icon } from "@iconify/react";
-import React, { useState } from "react";
+import { useRouter } from "next/router";
+import React, { useEffect, useState } from "react";
 import styled from "styled-components";
 import { useQuizDetailQuery } from "../../../api/quizzes/hooks";
 import ContentsFormat from "../../../utils/ContentsFormat";
@@ -9,9 +10,14 @@ interface Props {
 }
 
 function QuizAnswerBlock({ quizId }: Props) {
+  const router = useRouter();
   const { data: quizDetail } = useQuizDetailQuery({ quizId });
 
   const [showAnswer, setShowAnswer] = useState(false);
+
+  useEffect(() => {
+    setShowAnswer(false);
+  }, [router]);
 
   const onAnswerClick = () => {
     if (quizDetail?.solveAnswer) {
@@ -29,7 +35,7 @@ function QuizAnswerBlock({ quizId }: Props) {
           <Block>
             <Title>정답 확인</Title>
             <ContentBox>
-              <ContentsFormat contents={quizDetail.quizContent} />
+              <ContentsFormat contents={quizDetail.quizAnswer || ""} />
             </ContentBox>
           </Block>
           <Block>
