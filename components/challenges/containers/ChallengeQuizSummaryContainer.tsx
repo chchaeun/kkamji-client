@@ -9,24 +9,13 @@ interface Props {
 function ChallengeQuizSummaryContainer({ challengeId }: Props) {
   const { data: openWeeks } = useOpenWeeksQuery({ challengeId });
 
-  const getReadableWeeks = () => {
-    let readable = new Array<string>();
-    openWeeks?.weeks.forEach((week) => {
-      if (week.status === "READABLE") {
-        readable.push(String(week.week));
-      }
-    });
-    return readable.join(",");
-  };
-
   return (
     <Container>
       {openWeeks && (
         <QuizSummary
           challengeId={challengeId}
-          title={"열람 가능 문제"}
+          title={"전체 문제"}
           page={"READABLE"}
-          week={getReadableWeeks()}
         ></QuizSummary>
       )}
       <QuizSummary

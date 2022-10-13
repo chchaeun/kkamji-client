@@ -15,7 +15,7 @@ interface Props {
 
 function QuizNavigation({ challengeId, quizId, page, week }: Props) {
   const router = useRouter();
-  const { data: quizzes } = useQuizzesQuery({ challengeId, week, page });
+  const { data: quizzes } = useQuizzesQuery({ challengeId, page });
 
   const getQuizTitle = (move: string) => {
     if (!quizzes) {
@@ -43,13 +43,13 @@ function QuizNavigation({ challengeId, quizId, page, week }: Props) {
           router.replace(
             `/challenges/${challengeId}/quizzes/${quizzes[i - 1].quizId}${
               page === "MY" ? "/my" : page === "LIKED" ? "/like" : ""
-            }${page === "READABLE" ? `?week=${week}` : ""}`
+            }`
           );
         } else if (move === "next" && i + 1 < quizzes.length) {
           router.replace(
             `/challenges/${challengeId}/quizzes/${quizzes[i + 1].quizId}${
               page === "MY" ? "/my" : page === "LIKED" ? "/like" : ""
-            }${page === "READABLE" ? `?week=${week}` : ""}`
+            }`
           );
         }
       }
