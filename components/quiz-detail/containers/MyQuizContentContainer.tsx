@@ -13,7 +13,6 @@ function MyQuizContentContainer({ challengeId, quizId }: Props) {
   return (
     <Container>
       <ColDiv>
-        <QuizPointBlock />
         <QuizTitleBlock challengeId={challengeId} quizId={quizId} />
       </ColDiv>
       <Horizontal />
