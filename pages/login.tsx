@@ -19,7 +19,6 @@ type LoginBody = {
   password: string;
   fcmToken: string | null;
   platform: string;
-  isAutoLogin: boolean;
 };
 
 interface LoginProps {
@@ -80,7 +79,6 @@ function Login() {
         email,
         password,
         fcmToken,
-        isAutoLogin,
         platform: navigator.platform,
       };
       mutateLogin({ loginBody, isAutoLogin });
