@@ -10,7 +10,6 @@ function QuizDetailPage() {
   const router = useRouter();
   const challengeId = String(router.query.cid);
   const quizId = String(router.query.qid);
-  const week = String(router.query.week);
 
   return (
     <Background>
@@ -19,7 +18,6 @@ function QuizDetailPage() {
         <QuizNavigation
           challengeId={challengeId}
           quizId={quizId}
-          week={week}
           page={"READABLE"}
         />
         <QuizCommentContainer quizId={quizId} />
