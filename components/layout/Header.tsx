@@ -4,6 +4,7 @@ import { useRouter } from "next/router";
 import { getToken } from "../../api/getToken";
 import styled from "styled-components";
 import { media } from "../../styles/media";
+import UserMenu from "./UserMenu";
 function Header() {
   const router = useRouter();
   const isUser = getToken() ? true : false;
@@ -20,7 +21,7 @@ function Header() {
     <>
       {!isSameRoute("/login") && (
         <Container>
-          <Link href={getToken() ? "/dashboard" : "/"}>
+          <Link href={"/"}>
             <Logo className="logo">깜지.</Logo>
           </Link>
           <Navigation>
@@ -33,9 +34,7 @@ function Header() {
               </Li>
             </Ul>
             {isUser ? (
-              <Link href={`/dashboard`}>
-                <Button type="button">내 챌린지</Button>
-              </Link>
+              <UserMenu />
             ) : (
               <Link href={`/login`}>
                 <Button type="button">로그인</Button>
