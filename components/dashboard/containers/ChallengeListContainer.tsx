@@ -34,7 +34,8 @@ export default ChallengeListContainer;
 const Container = styled.div`
   display: grid;
   grid-template-columns: repeat(3, 1fr);
-  gap: 24px;
+  row-gap: 36px;
+  column-gap: 16px;
 
   width: 100%;
 
