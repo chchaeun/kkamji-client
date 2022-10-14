@@ -9,19 +9,19 @@ import Link from "next/link";
 
 const bannerContents = [
   {
-    image: "image/kkamji-banner-1.png",
+    image: "image/kkamji-mobile-banner-1.png",
     link: "/introduce",
   },
   {
-    image: "image/kkamji-banner-2.png",
+    image: "image/kkamji-mobile-banner-2.png",
     link: "",
   },
   {
-    image: "image/kkamji-banner-3.png",
+    image: "image/kkamji-mobile-banner-3.png",
     link: "",
   },
 ];
-function HomeBanner() {
+function LandingMobileBanner() {
   return (
     <Swiper
       modules={[Navigation, Pagination, Scrollbar, A11y, Autoplay]}
@@ -34,7 +34,7 @@ function HomeBanner() {
       {bannerContents.map((bannerContent, index) => (
         <SwiperSlide key={index} className="cursor-pointer">
           <Link href={bannerContent.link}>
-            <img src={bannerContent.image} className="object-cover h-full" />
+            <img src={bannerContent.image} className="object-cover w-screen" />
           </Link>
         </SwiperSlide>
       ))}
@@ -42,4 +42,4 @@ function HomeBanner() {
   );
 }
 
-export default HomeBanner;
+export default LandingMobileBanner;

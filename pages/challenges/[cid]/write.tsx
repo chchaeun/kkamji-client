@@ -2,7 +2,7 @@ import React, { Fragment, useRef, useState } from "react";
 import { SubmitHandler, useFieldArray, useForm } from "react-hook-form";
 import { QueryClient, useMutation } from "@tanstack/react-query";
 import { useRouter } from "next/router";
-import Overlay from "../../../components/layout/OverlayComponent";
+import Overlay from "../../../components/layout/Overlay";
 import SubmitCount from "../../../components/write/blocks/SubmitCount";
 import { Icon } from "@iconify/react";
 import SubmitSuccessModal from "../../../components/write/blocks/SubmitSuccessModal";
