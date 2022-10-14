@@ -2,7 +2,6 @@ import { Icon } from "@iconify/react";
 import { useRouter } from "next/router";
 import React from "react";
 import styled from "styled-components";
-import { fetchQuizzes } from "../../../api/quizzes";
 import { useQuizzesQuery } from "../../../api/quizzes/hooks";
 import { media } from "../../../styles/media";
 
