@@ -1,4 +1,4 @@
-import { api } from "../myApi";
+import { api, apiV2 } from "../myApi";
 import { getToken } from "../getToken";
 import {
   QuizAnswerProps,
@@ -16,13 +16,13 @@ const updateQuizIsSolved = async ({ quizId, answer }: QuizAnswerProps) => {
   return await api.post(`/quizzes/${quizId}/solve`, { answer });
 };
 
-const updateQuizGrade = async ({ quizId, score }: QuizGradeProps) => {
-  api.defaults.headers.common["jwt"] = getToken();
+const updateQuizGrade = async ({ quizId, scoreBody }: QuizGradeProps) => {
+  apiV2.defaults.headers.common["jwt"] = getToken();
 
-  return await api.post(`/quizzes/${quizId}/grade`, { score });
+  return await apiV2.post(`/quizzes/${quizId}/grade`, scoreBody);
 };
 
-const fetchQuizzes = async ({ challengeId, week }: QuizzesProps) => {
+const fetchQuizzes = async ({ challengeId }: QuizzesProps) => {
   api.defaults.headers.common["jwt"] = getToken();
 
   const { data } = await api.get(`/challenges/${challengeId}/quizzes`);
