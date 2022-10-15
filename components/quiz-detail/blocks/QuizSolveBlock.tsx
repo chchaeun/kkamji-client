@@ -3,7 +3,7 @@ import { AxiosError } from "axios";
 import React, { useState } from "react";
 import { SubmitHandler, useForm } from "react-hook-form";
 import styled from "styled-components";
-import api from "../../../api/myApi";
+import { api } from "../../../api/myApi";
 import { updateQuizIsSolved } from "../../../api/quizzes";
 import { QuizSolve } from "../../../types/Quiz";
 

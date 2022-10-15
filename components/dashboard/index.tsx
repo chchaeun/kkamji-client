@@ -1,14 +1,14 @@
+import dynamic from "next/dynamic";
 import React, { Suspense } from "react";
 import styled from "styled-components";
 import { media } from "../../styles/media";
-import dynamic from "next/dynamic";
-import ChallengeListSkeleton from "../../components/skeletons/ChallengeListSkeleton";
-import DeferredComponent from "../../components/skeletons/DeferredComponent";
-import HeadTitle from "../../components/common/HeadTitle";
-import MyPointBlock from "../../components/dashboard/blocks/MyPointBlock";
-import MissionStackedCountContainer from "../../components/dashboard/containers/MissionStackedCountContainer";
+import HeadTitle from "../common/HeadTitle";
+import ChallengeListSkeleton from "../skeletons/ChallengeListSkeleton";
+import DeferredComponent from "../skeletons/DeferredComponent";
+import MissionStackedCountContainer from "./containers/MissionStackedCountContainer";
+
 const ChallengeListContainer = dynamic(
-  () => import("../../components/dashboard/containers/ChallengeListContainer"),
+  () => import("./containers/ChallengeListContainer"),
   {
     suspense: true,
     ssr: false,
@@ -24,7 +24,7 @@ const sentences = [
 ];
 const random_index = Math.floor(Math.random() * sentences.length);
 
-function Dashboard() {
+function DashboardPage() {
   return (
     <>
       <HeadTitle name="내 챌린지 : 깜지" />
@@ -48,7 +48,7 @@ function Dashboard() {
   );
 }
 
-export default Dashboard;
+export default DashboardPage;
 
 const Frame = styled.div`
   box-sizing: border-box;

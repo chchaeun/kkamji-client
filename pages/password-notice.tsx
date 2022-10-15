@@ -3,7 +3,7 @@ import { useMutation } from "@tanstack/react-query";
 import { useRouter } from "next/router";
 import React, { useState } from "react";
 import { SubmitHandler, useForm } from "react-hook-form";
-import api from "../api/myApi";
+import { api } from "../api/myApi";
 import HeadTitle from "../components/common/HeadTitle";
 
 type PasswordValidForm = {

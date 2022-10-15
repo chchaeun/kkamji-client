@@ -1,14 +1,19 @@
 import { QueryClient, useMutation } from "@tanstack/react-query";
-import React, { useRef, useState } from "react";
+import React, { useState } from "react";
 import styled from "styled-components";
 import { updateQuizGrade } from "../../../api/quizzes";
 import { useQuizDetailQuery } from "../../../api/quizzes/hooks";
 interface Props {
   quizId: string;
 }
+
+type RubricSelected = {
+  score: number;
+  solveRubric: string;
+};
 function QuizRubric({ quizId }: Props) {
   const queryClient = new QueryClient();
-  const [rubricScore, setRubricScore] = useState<number | null>();
+  const [rubricSelected, setRubricSelected] = useState<RubricSelected | null>();
 
   const [isFocus, setIsFocus] = useState(false);
   const [focusInput, setFocusInput] = useState<HTMLInputElement | null>();
@@ -16,13 +21,15 @@ function QuizRubric({ quizId }: Props) {
   const { data: quizDetail } = useQuizDetailQuery({ quizId });
 
   const { mutate: mutateQuizGrade } = useMutation(
-    (score: number) => updateQuizGrade({ quizId, score }),
+    (scoreBody: RubricSelected) => updateQuizGrade({ quizId, scoreBody }),
     {
       onSuccess: () => {
         queryClient.invalidateQueries(["quizDetail", quizId]);
         window.location.reload();
       },
-      onError: (err) => {},
+      onError: (err) => {
+        console.log(err);
+      },
     }
   );
   const onRubricChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -30,16 +37,21 @@ function QuizRubric({ quizId }: Props) {
       target: { value },
     } = e;
 
+    let scoreBody = {
+      ...JSON.parse(value),
+    };
+    scoreBody.score = Number(scoreBody.score);
+
     setFocusInput(e.target);
-    setRubricScore(Number(value));
+    setRubricSelected(scoreBody);
     setIsFocus(true);
   };
 
   const onGradeClick = () => {
-    if (!rubricScore) {
+    if (!rubricSelected) {
       return;
     }
-    mutateQuizGrade(rubricScore);
+    mutateQuizGrade(rubricSelected);
   };
 
   const onCancelClick = () => {
@@ -47,7 +59,7 @@ function QuizRubric({ quizId }: Props) {
       focusInput.checked = false;
       setFocusInput(null);
     }
-    setRubricScore(null);
+    setRubricSelected(null);
     setIsFocus(false);
   };
   return (
@@ -55,7 +67,9 @@ function QuizRubric({ quizId }: Props) {
       {quizDetail?.solveScore !== null ? (
         <>
           <Title>채점 결과</Title>
-          <BlueBox>{quizDetail?.solveScore} 점</BlueBox>
+          <BlueBox>
+            <span>{quizDetail?.solveScore} 점</span>
+          </BlueBox>
         </>
       ) : (
         <>
@@ -66,7 +80,10 @@ function QuizRubric({ quizId }: Props) {
                 <input
                   id={`bordered-radio-${index}`}
                   type="radio"
-                  value={rubric.score}
+                  value={JSON.stringify({
+                    score: rubric.score,
+                    solveRubric: rubric.content,
+                  })}
                   name="bordered-radio"
                   onChange={onRubricChange}
                 />
