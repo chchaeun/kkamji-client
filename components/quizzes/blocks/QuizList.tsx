@@ -49,10 +49,11 @@ function QuizList({ challengeId, week, page }: Props) {
           </tr>
         </thead>
         <tbody>
-          {quizzes?.map((quiz) => (
-            <>
-              {selected[quiz.quizWeek - 1] && (
-                <Link href={getLinkByPage(quiz.quizId)} key={quiz.quizId}>
+          {quizzes
+            ?.filter((value) => selected[value.quizWeek - 1])
+            ?.map((quiz) => (
+              <Link href={getLinkByPage(quiz.quizId)} key={quiz.quizId}>
+                {
                   <tr className="cursor-pointer sm:text-sm">
                     <td>{quiz.quizId}</td>
                     <td>{quiz.quizTitle}</td>
@@ -78,10 +79,9 @@ function QuizList({ challengeId, week, page }: Props) {
                       <td></td>
                     )}
                   </tr>
-                </Link>
-              )}
-            </>
-          ))}
+                }
+              </Link>
+            ))}
         </tbody>
       </table>
     </div>

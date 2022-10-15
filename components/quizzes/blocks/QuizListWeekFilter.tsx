@@ -8,7 +8,6 @@ interface Props {
 }
 function WeekFilter({ challengeId }: Props) {
   const [selected, setSelected] = useRecoilState<boolean[]>(weekSelectState);
-  const [unselected, setUnselected] = useState<number[]>([]);
 
   const { data: currentWeek } = useCurrentWeekQuery({ challengeId });
 
@@ -21,7 +20,6 @@ function WeekFilter({ challengeId }: Props) {
     if (currentWeek) {
       const allWeek = Array(currentWeek).fill(true);
       setSelected(allWeek);
-      setUnselected([]);
     }
   };
 
@@ -45,32 +43,30 @@ function WeekFilter({ challengeId }: Props) {
         </span>
       </div>
       <div className="flex flex-wrap gap-2">
-        {selected.map((value, index) => (
-          <>
-            {value && (
-              <div
-                key={index}
-                onClick={() => onWeekClick(index)}
-                className="gap-2 cursor-pointer badge badge-primary"
+        {selected
+          .filter((value) => value)
+          .map((value, index) => (
+            <div
+              key={index}
+              onClick={() => onWeekClick(index)}
+              className="gap-2 cursor-pointer badge badge-primary"
+            >
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                fill="none"
+                viewBox="0 0 24 24"
+                className="inline-block w-4 h-4 cursor-pointer stroke-current"
               >
-                <svg
-                  xmlns="http://www.w3.org/2000/svg"
-                  fill="none"
-                  viewBox="0 0 24 24"
-                  className="inline-block w-4 h-4 cursor-pointer stroke-current"
-                >
-                  <path
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                    strokeWidth="2"
-                    d="M6 18L18 6M6 6l12 12"
-                  ></path>
-                </svg>
-                {index + 1}주차
-              </div>
-            )}
-          </>
-        ))}
+                <path
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  strokeWidth="2"
+                  d="M6 18L18 6M6 6l12 12"
+                ></path>
+              </svg>
+              {index + 1}주차
+            </div>
+          ))}
         {selected.map((value, index) => (
           <>
             {!value && (

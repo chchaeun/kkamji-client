@@ -5,7 +5,10 @@ interface QuizAnswerProps {
 
 interface QuizGradeProps {
   quizId: string;
-  score: number;
+  scoreBody: {
+    score: number;
+    solveRubric: string;
+  };
 }
 
 interface QuizzesProps {
