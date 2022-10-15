@@ -33,9 +33,9 @@ function QuizListPage() {
         {challengeId && (
           <>
             <ChallengeOverview challengeId={challengeId} />
-            {/* <div className="flex flex-col gap-3 py-5 px-10 bg-white rounded-lg shadow-sm border-[1px] border-gray-300 sm:px-5">
+            <div className="flex flex-col gap-3 py-5 px-10 bg-white rounded-lg shadow-sm border-[1px] border-gray-300 sm:px-5">
               <WeekFilter challengeId={challengeId} />
-            </div> */}
+            </div>
             <div className="flex flex-col gap-6 py-5 px-10 w-full bg-white rounded-lg shadow-sm border-[1px] border-gray-300 sm:px-5">
               <div className="font-semibold">전체 문제</div>
               <Suspense
