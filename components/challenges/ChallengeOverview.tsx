@@ -94,11 +94,6 @@ const Title = styled.h1<{ titleLength: number }>`
 
   color: #ffffff;
 
-  &:hover {
-    color: #4f46e5;
-    transition: 150ms;
-  }
-
   ${media.medium`
     font-size: ${(p: { titleLength: number }) =>
       p.titleLength > 20 ? "24px" : "20px"};

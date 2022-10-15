@@ -82,6 +82,12 @@ const Button = styled.button`
 
   color: #ffffff;
 
+  cursor: pointer;
+
+  &:hover {
+    background: #4338ca;
+  }
+
   ${media.medium`
     width: 90%;
     height: 48px;
