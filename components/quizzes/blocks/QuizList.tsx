@@ -3,6 +3,8 @@ import React from "react";
 import { Icon } from "@iconify/react";
 import Link from "next/link";
 import { useQuizzesQuery } from "../../../api/quizzes/hooks";
+import { useRecoilValue } from "recoil";
+import { weekSelectState } from "../stores/weekFilter";
 
 interface Props {
   challengeId: string;
@@ -11,9 +13,12 @@ interface Props {
 }
 
 function QuizList({ challengeId, week, page }: Props) {
+  const selected = useRecoilValue<boolean[]>(weekSelectState);
+
   const { data: quizzes } = useQuizzesQuery({
     challengeId,
     page,
+    week,
     suspense: true,
   });
 
@@ -29,6 +34,7 @@ function QuizList({ challengeId, week, page }: Props) {
         return `${LINK_HEAD}`;
     }
   };
+
   return (
     <div className="w-full overflow-x-scroll">
       <table className="table w-full">
@@ -44,33 +50,37 @@ function QuizList({ challengeId, week, page }: Props) {
         </thead>
         <tbody>
           {quizzes?.map((quiz) => (
-            <Link href={getLinkByPage(quiz.quizId)} key={quiz.quizId}>
-              <tr className="cursor-pointer sm:text-sm">
-                <td>{quiz.quizId}</td>
-                <td>{quiz.quizTitle}</td>
-                <td>{quiz.writerName}</td>
-                <td>{quiz.quizWeek}주</td>
-                <td className="flex items-center justify-start">
-                  <span className="flex items-center justify-center gap-1">
-                    <Icon icon="icon-park-solid:good-two" />
-                    <span className="">
-                      {quiz.cntOfGood ? quiz.cntOfGood : 0}
-                    </span>
-                  </span>
-                </td>
-                {quiz.isSolved ? (
-                  <td>
-                    <Icon
-                      icon="bi:patch-check-fill"
-                      color="#5c3cde"
-                      height={24}
-                    />
-                  </td>
-                ) : (
-                  <td></td>
-                )}
-              </tr>
-            </Link>
+            <>
+              {selected[quiz.quizWeek - 1] && (
+                <Link href={getLinkByPage(quiz.quizId)} key={quiz.quizId}>
+                  <tr className="cursor-pointer sm:text-sm">
+                    <td>{quiz.quizId}</td>
+                    <td>{quiz.quizTitle}</td>
+                    <td>{quiz.writerName}</td>
+                    <td>{quiz.quizWeek}주</td>
+                    <td className="flex items-center justify-start">
+                      <span className="flex items-center justify-center gap-1">
+                        <Icon icon="icon-park-solid:good-two" />
+                        <span className="">
+                          {quiz.cntOfGood ? quiz.cntOfGood : 0}
+                        </span>
+                      </span>
+                    </td>
+                    {quiz.isSolved ? (
+                      <td>
+                        <Icon
+                          icon="bi:patch-check-fill"
+                          color="#5c3cde"
+                          height={24}
+                        />
+                      </td>
+                    ) : (
+                      <td></td>
+                    )}
+                  </tr>
+                </Link>
+              )}
+            </>
           ))}
         </tbody>
       </table>
