@@ -1,4 +1,3 @@
-import axios from "axios";
 import { apiV2 } from "../myApi";
 import { LoginProps } from "./types";
 
