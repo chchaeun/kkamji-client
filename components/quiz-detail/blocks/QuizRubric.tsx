@@ -1,5 +1,5 @@
 import { QueryClient, useMutation } from "@tanstack/react-query";
-import React, { useRef, useState } from "react";
+import React, { useState } from "react";
 import styled from "styled-components";
 import { updateQuizGrade } from "../../../api/quizzes";
 import { useQuizDetailQuery } from "../../../api/quizzes/hooks";

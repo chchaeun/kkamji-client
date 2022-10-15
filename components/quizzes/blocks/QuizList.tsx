@@ -58,7 +58,7 @@ function QuizList({ challengeId, week, page }: Props) {
                     </span>
                   </span>
                 </td>
-                {quiz.solveAnswer ? (
+                {quiz.isSolved ? (
                   <td>
                     <Icon
                       icon="bi:patch-check-fill"

@@ -83,8 +83,7 @@ export interface QuizSummary {
   quizCreatedDate: string;
   quizModifiedDate: string;
   isMine: boolean;
-  solveAnswer: string | null;
-  solveScore: number | null;
+  isSolved: boolean;
   writerName: string;
   challengeId: number;
   cntOfGood: number;

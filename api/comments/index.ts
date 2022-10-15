@@ -1,4 +1,4 @@
-import api from "../myApi";
+import { api } from "../myApi";
 import { getToken } from "../getToken";
 import { CommentDeleteProps, CommentProps, CommentUpdateProps } from "./types";
 

@@ -1,11 +1,8 @@
-import axios from "axios";
+import { apiV2 } from "../myApi";
 import { LoginProps } from "./types";
 
 const postLogin = async (loginBody: LoginProps) => {
-  return await axios.post(
-    `${process.env.NEXT_PUBLIC_API_BASE_URL_V2}/user/login`,
-    loginBody
-  );
+  return await apiV2.post("/user/login", loginBody);
 };
 
 export { postLogin };

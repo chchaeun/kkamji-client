@@ -1,4 +1,4 @@
-import api from "../myApi";
+import { api } from "../myApi";
 import { getToken } from "../getToken";
 import {
   QuizAnswerProps,
@@ -22,12 +22,10 @@ const updateQuizGrade = async ({ quizId, score }: QuizGradeProps) => {
   return await api.post(`/quizzes/${quizId}/grade`, { score });
 };
 
-const fetchQuizzes = async ({ challengeId }: QuizzesProps) => {
+const fetchQuizzes = async ({ challengeId, week }: QuizzesProps) => {
   api.defaults.headers.common["jwt"] = getToken();
 
-  const { data } = await api.get(`/challenges/${challengeId}/quizzes`, {
-    params: { week: "1,2,3,4,5,6,7,8,9,10,11,12,13,14,15" },
-  });
+  const { data } = await api.get(`/challenges/${challengeId}/quizzes`);
   return data;
 };
 
