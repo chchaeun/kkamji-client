@@ -128,7 +128,7 @@ function PasswordNoticePage() {
                       message: "비밀번호는 255자를 초과하면 안됩니다.",
                     },
                     pattern: {
-                      value: /^(?=.*\d)(?=.*[a-zA-zS]).{8,255}/,
+                      value: /^(?=.*\d)(?=.*[A-Za-z])[\40-\176]{8,255}$/,
                       message: "영문, 숫자를 혼용하여 입력해주세요.",
                     },
                   })}
