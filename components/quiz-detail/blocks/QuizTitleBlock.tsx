@@ -26,8 +26,8 @@ function QuizTitleBlock({ challengeId, quizId }: Props) {
       <SubTitle>
         <span>작성자: {quizDetail?.writerName}</span>
         <span aria-hidden={"true"}>|</span>
-        {/* <span>문제 풀린 횟수 940</span> */}
-        {/* <span aria-hidden={"true"}>|</span> */}
+        <span>문제 풀린 횟수 {quizDetail?.cntOfSolved}</span>
+        <span aria-hidden={"true"}>|</span>
         <QuizRate quizId={quizId} />
       </SubTitle>
     </Container>
