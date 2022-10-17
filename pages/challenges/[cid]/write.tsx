@@ -96,6 +96,13 @@ function QuizWritePage() {
       return;
     }
 
+    for (let i = 0; i < rubric.length; i++) {
+      if (!rubric[i].content) {
+        alert("채점 기준을 입력해주세요.");
+        return;
+      }
+    }
+
     const quizSubmitFormData = new FormData();
 
     const createQuizRequest = {
@@ -237,6 +244,9 @@ function QuizWritePage() {
                   className="grid w-full grid-cols-12 gap-x-2 sm:grid-cols-6"
                 >
                   <input
+                    type="number"
+                    min="0"
+                    max="10"
                     {...register(`rubric.${index}.score`, {
                       required: "점수는 필수 입력값입니다.",
                     })}
@@ -245,6 +255,10 @@ function QuizWritePage() {
                   <input
                     {...register(`rubric.${index}.content`, {
                       required: "채점 기준은 필수 입력값입니다.",
+                      pattern: {
+                        value: /[^ ]/,
+                        message: "채점 기준은 필수 입력값입니다.",
+                      },
                     })}
                     className="col-span-10 px-3 py-2 mt-2 leading-tight text-gray-700 border rounded shadow appearance-none focus:outline-none focus:shadow-outline sm:col-span-4"
                   />
