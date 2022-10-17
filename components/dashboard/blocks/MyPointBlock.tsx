@@ -1,17 +1,50 @@
 import { Icon } from "@iconify/react";
-import React from "react";
+import { useQuery } from "@tanstack/react-query";
+import { AxiosError } from "axios";
+import React, { useState } from "react";
 import styled from "styled-components";
+import { fetchMyPoint } from "../../../api/point";
 import { media } from "../../../styles/media";
+import { MyPoint } from "../../../types/Point";
 
 function MyPointBlock() {
+  const [isMouseOver, setIsMouseOver] = useState(false);
+  const [isClicked, setIsClicked] = useState(false);
+
+  const { data: point } = useQuery<MyPoint, AxiosError, number>(
+    ["point"],
+    fetchMyPoint,
+    {
+      select: (data) => data.point,
+    }
+  );
+
   return (
-    <Container>
-      <span>내 포인트</span>
-      <RowBox>
-        <span>5,400</span>
-        <Icon icon="heroicons:information-circle-20-solid" />
-      </RowBox>
-    </Container>
+    <>
+      <Container>
+        <span>내 포인트</span>
+        <RowBox>
+          <span>{point?.toLocaleString()}</span>
+          <InfoIcon>
+            <Icon
+              icon="heroicons:information-circle-20-solid"
+              onMouseOver={() => setIsMouseOver(true)}
+              onMouseOut={() => setIsMouseOver(false)}
+              onClick={() => setIsClicked((prev) => !prev)}
+            />
+          </InfoIcon>
+        </RowBox>
+      </Container>
+      {(isMouseOver || isClicked) && (
+        <TooltipBlock>
+          <TooltipTail />
+          <Tooltip>
+            내 문제가 풀렸을 때 쌓이는 포인트입니다. <br />
+            포인트 사용은 서포터즈에게 문의해주세요.
+          </Tooltip>
+        </TooltipBlock>
+      )}
+    </>
   );
 }
 
@@ -54,4 +87,63 @@ const RowBox = styled.span`
   display: flex;
   align-items: center;
   gap: 5px;
+
+  z-index: 10;
+`;
+
+const InfoIcon = styled.span`
+  cursor: pointer;
+`;
+
+const TooltipBlock = styled.div`
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+
+  position: absolute;
+`;
+const TooltipTail = styled.span`
+  position: relative;
+  width: 8px;
+  height: 8px;
+
+  top: 52px;
+  right: 38px;
+
+  ${media.medium`
+    top: 74px;
+    right: 16px;
+  `}
+
+  transform: rotate(45deg);
+
+  background: rgba(0, 0, 0);
+`;
+const Tooltip = styled.span`
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  position: relative;
+
+  width: 243px;
+  height: 58px;
+
+  top: 48px;
+  right: 24px;
+
+  ${media.medium`
+    top: 68px;
+    right: 0px;
+  `}
+
+  font-weight: 400;
+  font-size: 12px;
+  line-height: 15px;
+  text-align: center;
+
+  background: rgba(0, 0, 0);
+  border-radius: 6px;
+
+  color: #ffffff;
 `;

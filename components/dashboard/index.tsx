@@ -5,6 +5,7 @@ import { media } from "../../styles/media";
 import HeadTitle from "../common/HeadTitle";
 import ChallengeListSkeleton from "../skeletons/ChallengeListSkeleton";
 import DeferredComponent from "../skeletons/DeferredComponent";
+import MyPointBlock from "./blocks/MyPointBlock";
 import MissionStackedCountContainer from "./containers/MissionStackedCountContainer";
 
 const ChallengeListContainer = dynamic(
@@ -33,6 +34,7 @@ function DashboardPage() {
         <HighlightBar>📢 {sentences[random_index]}</HighlightBar>
         <LayoutBlock>
           <MissionStackedCountContainer />
+          <MyPointBlock />
         </LayoutBlock>
         <Suspense
           fallback={
@@ -119,5 +121,6 @@ const LayoutBlock = styled.div`
   ${media.medium`
     display: flex;
     flex-direction: column;
+    align-items: flex-end;
   `}
 `;
