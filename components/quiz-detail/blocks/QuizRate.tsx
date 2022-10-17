@@ -4,7 +4,7 @@ import React from "react";
 import styled from "styled-components";
 import { updateQuizRate } from "../../../api/quizzes";
 import { useQuizDetailQuery } from "../../../api/quizzes/hooks";
-import { QuizDetailSelect } from "../../../types/Quiz";
+import { QuizDetail } from "../../../types/Quiz";
 
 interface Props {
   quizId: string;
@@ -23,17 +23,20 @@ function QuizRate({ quizId }: Props) {
       onMutate: async (data) => {
         await queryClient.cancelQueries(["quizDetail", quizId]);
 
-        const previousQuizDetail = queryClient.getQueryData<QuizDetailSelect>([
+        const previousQuizDetail = queryClient.getQueryData<QuizDetail>([
           "quizDetail",
           quizId,
         ]);
 
         if (previousQuizDetail) {
-          queryClient.setQueryData<QuizDetailSelect>(["quizDetail", quizId], {
+          queryClient.setQueryData<QuizDetail>(["quizDetail", quizId], {
             ...previousQuizDetail,
-            didIRate: data.rate,
+            quizInfoByUser: {
+              ...previousQuizDetail.quizInfoByUser,
+              didIRate: data.rate,
+            },
             cntOfGood:
-              previousQuizDetail.didIRate === "GOOD"
+              previousQuizDetail.quizInfoByUser.didIRate === "GOOD"
                 ? previousQuizDetail.cntOfGood - 1
                 : data.rate === "GOOD"
                 ? previousQuizDetail.cntOfGood + 1
@@ -60,7 +63,7 @@ function QuizRate({ quizId }: Props) {
   return (
     <>
       <Block>
-        {quizDetail?.didIRate === "GOOD" ? (
+        {quizDetail?.quizInfoByUser.didIRate === "GOOD" ? (
           <button onClick={() => onRateClick({ rate: null })}>
             <Icon
               icon="heroicons-solid:thumb-up"
@@ -77,11 +80,11 @@ function QuizRate({ quizId }: Props) {
             />
           </button>
         )}
-        <Number didIRate={quizDetail?.didIRate || null}>
+        <Number didIRate={quizDetail?.quizInfoByUser.didIRate || null}>
           {quizDetail?.cntOfGood ? quizDetail?.cntOfGood : 0}
         </Number>
       </Block>
-      {quizDetail?.didIRate === "BAD" ? (
+      {quizDetail?.quizInfoByUser.didIRate === "BAD" ? (
         <button onClick={() => onRateClick({ rate: null })}>
           <Icon
             icon="heroicons-solid:thumb-down"

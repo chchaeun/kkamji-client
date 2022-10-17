@@ -2,7 +2,7 @@ import { Icon } from "@iconify/react";
 import { useRouter } from "next/router";
 import React, { useEffect, useState } from "react";
 import styled from "styled-components";
-import { useQuizDetailQuery } from "../../../api/quizzes/hooks";
+import { useQuizSolveQuery } from "../../../api/solve/hooks";
 import ContentsFormat from "../../../utils/ContentsFormat";
 import QuizRubric from "./QuizRubric";
 interface Props {
@@ -11,7 +11,9 @@ interface Props {
 
 function QuizAnswerBlock({ quizId }: Props) {
   const router = useRouter();
-  const { data: quizDetail } = useQuizDetailQuery({ quizId });
+  const { data: quizSolve, error } = useQuizSolveQuery({ quizId });
+
+  console.log(quizSolve);
 
   const [showAnswer, setShowAnswer] = useState(false);
 
@@ -20,7 +22,7 @@ function QuizAnswerBlock({ quizId }: Props) {
   }, [router]);
 
   const onAnswerClick = () => {
-    if (quizDetail?.solveAnswer) {
+    if (quizSolve) {
       setShowAnswer((prev) => !prev);
     } else {
       alert("정답을 제출해야 열람할 수 있습니다.");
@@ -30,18 +32,18 @@ function QuizAnswerBlock({ quizId }: Props) {
   return (
     <Container>
       {!showAnswer && <Title>정답 확인</Title>}
-      {quizDetail && showAnswer && (
+      {quizSolve && showAnswer && (
         <>
           <Block>
             <Title>정답 확인</Title>
             <ContentBox>
-              <ContentsFormat contents={quizDetail.quizAnswer || ""} />
+              <ContentsFormat contents={quizSolve.quiz.answer} />
             </ContentBox>
           </Block>
           <Block>
             <Title>해설</Title>
             <ContentBox>
-              <ContentsFormat contents={quizDetail.quizExplanation || ""} />
+              <ContentsFormat contents={quizSolve.quiz.explanation} />
             </ContentBox>
           </Block>
           <QuizRubric quizId={quizId} />
