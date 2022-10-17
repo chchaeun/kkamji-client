@@ -250,7 +250,7 @@ function QuizWritePage() {
                     {...register(`rubric.${index}.score`, {
                       required: "점수는 필수 입력값입니다.",
                     })}
-                    className="px-3 py-2 mt-2 leading-tight text-gray-700 border rounded shadow appearance-none focus:outline-none focus:shadow-outline"
+                    className="px-4 py-2 mt-2 leading-tight text-gray-700 border rounded shadow appearance-none focus:outline-none focus:shadow-outline"
                   />
                   <input
                     {...register(`rubric.${index}.content`, {
