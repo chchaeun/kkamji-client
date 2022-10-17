@@ -1,8 +1,8 @@
 import { QueryClient, useMutation } from "@tanstack/react-query";
 import React, { useState } from "react";
 import styled from "styled-components";
-import { updateQuizGrade } from "../../../api/quizzes";
-import { useQuizDetailQuery } from "../../../api/quizzes/hooks";
+import { updateQuizGrade } from "../../../api/solve";
+import { useQuizSolveQuery } from "../../../api/solve/hooks";
 interface Props {
   quizId: string;
 }
@@ -18,7 +18,7 @@ function QuizRubric({ quizId }: Props) {
   const [isFocus, setIsFocus] = useState(false);
   const [focusInput, setFocusInput] = useState<HTMLInputElement | null>();
 
-  const { data: quizDetail } = useQuizDetailQuery({ quizId });
+  const { data: quizSolve, error } = useQuizSolveQuery({ quizId });
 
   const { mutate: mutateQuizGrade } = useMutation(
     (scoreBody: RubricSelected) => updateQuizGrade({ quizId, scoreBody }),
@@ -64,17 +64,20 @@ function QuizRubric({ quizId }: Props) {
   };
   return (
     <Container>
-      {quizDetail?.solveScore !== null ? (
+      {quizSolve?.solve.score !== null ? (
         <>
           <Title>채점 결과</Title>
           <BlueBox>
-            <span>{quizDetail?.solveScore} 점</span>
+            <span>
+              {quizSolve?.solve.rubric} <span aria-hidden>·</span>{" "}
+              {quizSolve?.solve.score} 점
+            </span>
           </BlueBox>
         </>
       ) : (
         <>
           <Title>채점하기</Title>
-          {quizDetail?.quizRubric?.map((rubric, index) => (
+          {quizSolve?.quiz.rubric.map((rubric, index) => (
             <Label key={index} htmlFor={`bordered-radio-${index}`}>
               <RowDiv>
                 <input
@@ -229,8 +232,7 @@ const Buttons = styled.div`
 
 const BlueBox = styled.div`
   display: flex;
-  flex-direction: column;
-  align-items: flex-start;
+  flex-direction: row;
   padding: 16px;
   gap: 8px;
 

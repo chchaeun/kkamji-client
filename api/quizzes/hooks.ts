@@ -7,12 +7,7 @@ import {
   fetchQuizzes,
   fetchSubmitCount,
 } from ".";
-import {
-  QuizDetail,
-  QuizDetailSelect,
-  QuizSubmitCount,
-  QuizSummary,
-} from "../../types/Quiz";
+import { QuizDetail, QuizSubmitCount, QuizSummary } from "../../types/Quiz";
 
 interface QuizProps {
   quizId: string;
@@ -31,15 +26,12 @@ interface QuizSubmitCountProps {
 }
 
 function useQuizDetailQuery({ quizId }: QuizProps) {
-  return useQuery<QuizDetail, AxiosError, QuizDetailSelect>(
+  return useQuery<QuizDetail, AxiosError>(
     ["quizDetail", quizId],
     () => fetchQuizDetail({ quizId }),
     {
       enabled: !!quizId,
       onError: (err) => {},
-      select: (data) => {
-        return { ...data, quizRubric: JSON.parse(data.quizRubric) };
-      },
     }
   );
 }
