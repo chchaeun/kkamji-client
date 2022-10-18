@@ -1,14 +1,19 @@
-import React, { Suspense } from "react";
-import styled from "styled-components";
-import { media } from "../../styles/media";
+import { initializeApp } from "firebase/app";
+import { getMessaging, getToken } from "firebase/messaging";
 import dynamic from "next/dynamic";
-import ChallengeListSkeleton from "../../components/skeletons/ChallengeListSkeleton";
-import DeferredComponent from "../../components/skeletons/DeferredComponent";
-import HeadTitle from "../../components/common/HeadTitle";
-import MyPointBlock from "../../components/dashboard/blocks/MyPointBlock";
-import MissionStackedCountContainer from "../../components/dashboard/containers/MissionStackedCountContainer";
+import React, { Suspense, useEffect } from "react";
+import styled from "styled-components";
+import { api } from "../../api/myApi";
+import { media } from "../../styles/media";
+import { firebaseConfig } from "../../utils/FirebaseConfig";
+import HeadTitle from "../common/HeadTitle";
+import ChallengeListSkeleton from "../skeletons/ChallengeListSkeleton";
+import DeferredComponent from "../skeletons/DeferredComponent";
+import MyPointBlock from "./blocks/MyPointBlock";
+import MissionStackedCountContainer from "./containers/MissionStackedCountContainer";
+import { getToken as getApiToken } from "../../api/getToken";
 const ChallengeListContainer = dynamic(
-  () => import("../../components/dashboard/containers/ChallengeListContainer"),
+  () => import("./containers/ChallengeListContainer"),
   {
     suspense: true,
     ssr: false,
@@ -24,7 +29,25 @@ const sentences = [
 ];
 const random_index = Math.floor(Math.random() * sentences.length);
 
-function Dashboard() {
+function DashboardPage() {
+  useEffect(() => {
+    const app = initializeApp(firebaseConfig);
+
+    const messaging = getMessaging();
+
+    getToken(messaging, {
+      vapidKey: process.env.NEXT_PUBLIC_FIREBASE_VAPID_KEY,
+    })
+      .then((currentToken) => {
+        api.defaults.headers.common["jwt"] = getApiToken();
+        api.post("/notification/register", {
+          platform: navigator.platform,
+          fcmToken: currentToken,
+        });
+      })
+      .catch((err) => {});
+  }, []);
+
   return (
     <>
       <HeadTitle name="내 챌린지 : 깜지" />
@@ -33,6 +56,7 @@ function Dashboard() {
         <HighlightBar>📢 {sentences[random_index]}</HighlightBar>
         <LayoutBlock>
           <MissionStackedCountContainer />
+          <MyPointBlock />
         </LayoutBlock>
         <Suspense
           fallback={
@@ -48,7 +72,7 @@ function Dashboard() {
   );
 }
 
-export default Dashboard;
+export default DashboardPage;
 
 const Frame = styled.div`
   box-sizing: border-box;
@@ -119,5 +143,6 @@ const LayoutBlock = styled.div`
   ${media.medium`
     display: flex;
     flex-direction: column;
+    align-items: flex-end;
   `}
 `;

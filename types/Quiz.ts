@@ -1,21 +1,14 @@
 export interface QuizDetail {
+  challengeId: number;
   quizId: number;
   quizTitle: string;
   quizWeek: number;
-  quizCategory: string;
   quizContent: string;
-  quizAnswer: string | null;
-  quizExplanation: string | null;
-  quizRubric: string;
   quizCreatedDate: string;
   quizModifiedDate: string;
-  isMine: boolean;
-  solveAnswer: string | null;
-  solveScore: number | null;
   writerName: string;
-  challengeId: number;
-  didIRate: "GOOD" | "BAD" | null;
   cntOfGood: number;
+  cntOfSolved: number;
   quizFiles: {
     id: number;
     qfName: string;
@@ -24,12 +17,12 @@ export interface QuizDetail {
     qfCreatedDate: string;
     qfModifiedDate: string;
   }[];
-}
-export interface QuizDetailSelect extends Omit<QuizDetail, "quizRubric"> {
-  quizRubric: {
-    score: number;
-    content: string;
-  }[];
+  quizInfoByUser: {
+    userId: number;
+    isMine: boolean;
+    didIRate: "GOOD" | "BAD" | null;
+    solveAnswer: string;
+  };
 }
 export interface MyQuizDetail {
   quizId: number;
@@ -83,8 +76,7 @@ export interface QuizSummary {
   quizCreatedDate: string;
   quizModifiedDate: string;
   isMine: boolean;
-  solveAnswer: string | null;
-  solveScore: number | null;
+  isSolved: boolean;
   writerName: string;
   challengeId: number;
   cntOfGood: number;
@@ -103,7 +95,32 @@ export interface QuizSubmitCount {
 }
 
 export interface QuizSolve {
-  quizId: number;
-  solveAnswer: string;
-  solveExplanation: string;
+  quiz: {
+    quizId: number;
+    answer: string;
+    explanation: string;
+    rubric: string;
+  };
+  solve: {
+    answer: string;
+    score: number;
+    rubric: string;
+  };
+}
+
+export interface QuizSolveSelect {
+  quiz: {
+    quizId: number;
+    answer: string;
+    explanation: string;
+    rubric: {
+      score: number;
+      content: string;
+    }[];
+  };
+  solve: {
+    answer: string;
+    score: number | null;
+    rubric: string | null;
+  };
 }

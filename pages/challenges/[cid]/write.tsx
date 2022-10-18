@@ -2,7 +2,7 @@ import React, { Fragment, useRef, useState } from "react";
 import { SubmitHandler, useFieldArray, useForm } from "react-hook-form";
 import { QueryClient, useMutation } from "@tanstack/react-query";
 import { useRouter } from "next/router";
-import Overlay from "../../../components/layout/OverlayComponent";
+import Overlay from "../../../components/layout/Overlay";
 import SubmitCount from "../../../components/write/blocks/SubmitCount";
 import { Icon } from "@iconify/react";
 import SubmitSuccessModal from "../../../components/write/blocks/SubmitSuccessModal";
@@ -94,6 +94,13 @@ function QuizWritePage() {
   }) => {
     if (disabledSubmit) {
       return;
+    }
+
+    for (let i = 0; i < rubric.length; i++) {
+      if (!rubric[i].content) {
+        alert("채점 기준을 입력해주세요.");
+        return;
+      }
     }
 
     const quizSubmitFormData = new FormData();
@@ -237,14 +244,21 @@ function QuizWritePage() {
                   className="grid w-full grid-cols-12 gap-x-2 sm:grid-cols-6"
                 >
                   <input
+                    type="number"
+                    min="0"
+                    max="10"
                     {...register(`rubric.${index}.score`, {
                       required: "점수는 필수 입력값입니다.",
                     })}
-                    className="px-3 py-2 mt-2 leading-tight text-gray-700 border rounded shadow appearance-none focus:outline-none focus:shadow-outline"
+                    className="px-4 py-2 mt-2 leading-tight text-gray-700 border rounded shadow appearance-none focus:outline-none focus:shadow-outline"
                   />
                   <input
                     {...register(`rubric.${index}.content`, {
                       required: "채점 기준은 필수 입력값입니다.",
+                      pattern: {
+                        value: /[^ ]/,
+                        message: "채점 기준은 필수 입력값입니다.",
+                      },
                     })}
                     className="col-span-10 px-3 py-2 mt-2 leading-tight text-gray-700 border rounded shadow appearance-none focus:outline-none focus:shadow-outline sm:col-span-4"
                   />

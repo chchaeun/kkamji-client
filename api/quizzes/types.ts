@@ -1,13 +1,3 @@
-interface QuizAnswerProps {
-  quizId: string;
-  answer: string;
-}
-
-interface QuizGradeProps {
-  quizId: string;
-  score: number;
-}
-
 interface QuizzesProps {
   challengeId: string;
   week?: string;
@@ -33,8 +23,6 @@ interface QuizRateProps {
 }
 
 export type {
-  QuizAnswerProps,
-  QuizGradeProps,
   QuizzesProps,
   QuizSubmitProps,
   QuizProps,

@@ -1,11 +1,9 @@
-import { useMutation, useQuery } from "@tanstack/react-query";
-import { AxiosError } from "axios";
+import { useMutation } from "@tanstack/react-query";
 import React, { useState } from "react";
 import { SubmitHandler, useForm } from "react-hook-form";
 import styled from "styled-components";
-import api from "../../../api/myApi";
-import { updateQuizIsSolved } from "../../../api/quizzes";
-import { QuizSolve } from "../../../types/Quiz";
+import { updateQuizIsSolved } from "../../../api/solve";
+import { useQuizSolveQuery } from "../../../api/solve/hooks";
 
 interface Props {
   quizId: string;
@@ -28,16 +26,7 @@ function QuizSolveBlock({ quizId }: Props) {
 
   const solveRef = watch("solve");
 
-  const { data: quizSolve, error } = useQuery<QuizSolve, AxiosError>(
-    ["quizSolve", quizId],
-    async () => {
-      const { data } = await api.get(`/quizzes/${quizId}/solve`);
-      return data;
-    },
-    {
-      enabled: !!quizId,
-    }
-  );
+  const { data: quizSolve, error } = useQuizSolveQuery({ quizId });
 
   const { mutate: mutateQuizIsSolved } = useMutation(
     (answer: string) => updateQuizIsSolved({ quizId, answer }),
@@ -99,7 +88,7 @@ function QuizSolveBlock({ quizId }: Props) {
           )}
         </Form>
       )}
-      {quizSolve && <ContentBox>{quizSolve.solveAnswer}</ContentBox>}
+      {quizSolve && <ContentBox>{quizSolve.solve.answer}</ContentBox>}
     </Container>
   );
 }

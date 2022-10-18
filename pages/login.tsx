@@ -41,7 +41,7 @@ function Login() {
           sessionStorage.setItem("token", res.data.token);
           localStorage.removeItem("token");
         }
-        router.push("/dashboard");
+        router.push("/");
       },
       onError: () => {
         alert("로그인에 실패했습니다.");

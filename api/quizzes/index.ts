@@ -1,8 +1,6 @@
-import api from "../myApi";
+import { api } from "../myApi";
 import { getToken } from "../getToken";
 import {
-  QuizAnswerProps,
-  QuizGradeProps,
   QuizProps,
   QuizRateProps,
   QuizSubmitCountProps,
@@ -10,24 +8,10 @@ import {
   QuizzesProps,
 } from "./types";
 
-const updateQuizIsSolved = async ({ quizId, answer }: QuizAnswerProps) => {
-  api.defaults.headers.common["jwt"] = getToken();
-
-  return await api.post(`/quizzes/${quizId}/solve`, { answer });
-};
-
-const updateQuizGrade = async ({ quizId, score }: QuizGradeProps) => {
-  api.defaults.headers.common["jwt"] = getToken();
-
-  return await api.post(`/quizzes/${quizId}/grade`, { score });
-};
-
 const fetchQuizzes = async ({ challengeId }: QuizzesProps) => {
   api.defaults.headers.common["jwt"] = getToken();
 
-  const { data } = await api.get(`/challenges/${challengeId}/quizzes`, {
-    params: { week: "1,2,3,4,5,6,7,8,9,10,11,12,13,14,15" },
-  });
+  const { data } = await api.get(`/challenges/${challengeId}/quizzes`);
   return data;
 };
 
@@ -40,7 +24,7 @@ const updateQuiz = async ({ challengeId, quizSubmitBody }: QuizSubmitProps) => {
 const fetchQuizDetail = async ({ quizId }: QuizProps) => {
   api.defaults.headers.common["jwt"] = getToken() || "";
 
-  const { data } = await api.get(`/quizzes/${quizId}`);
+  const { data } = await api.get(`/quizzes/${quizId}/content`);
   return data;
 };
 
@@ -91,8 +75,6 @@ const fetchLikedQuizzes = async ({ challengeId }: QuizzesProps) => {
 };
 
 export {
-  updateQuizIsSolved,
-  updateQuizGrade,
   fetchQuizzes,
   updateQuiz,
   fetchQuizDetail,
