@@ -27,9 +27,7 @@ function QuizRubric({ quizId }: Props) {
         queryClient.invalidateQueries(["quizDetail", quizId]);
         window.location.reload();
       },
-      onError: (err) => {
-        console.log(err);
-      },
+      onError: (err) => {},
     }
   );
   const onRubricChange = (e: React.ChangeEvent<HTMLInputElement>) => {
