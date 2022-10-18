@@ -22,7 +22,7 @@ function UserMenu() {
     setShowDropdown(false);
     localStorage.removeItem("token");
     sessionStorage.removeItem("token");
-    window.location.reload();
+    window.location.replace("/");
   };
 
   return (
