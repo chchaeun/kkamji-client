@@ -6,6 +6,7 @@ import dynamic from "next/dynamic";
 import DeferredComponent from "../../../../components/skeletons/DeferredComponent";
 import HeadTitle from "../../../../components/common/HeadTitle";
 import { useChallengeDetailQuery } from "../../../../api/challenges/hooks";
+import WeekFilter from "../../../../components/quizzes/blocks/QuizListWeekFilter";
 const QuizList = dynamic(
   () => import("../../../../components/quizzes/blocks/QuizList"),
   {
@@ -32,6 +33,9 @@ function MyQuizListPage() {
         {challengeId && (
           <>
             <ChallengeOverview challengeId={challengeId} />
+            <div className="flex flex-col gap-3 py-5 px-10 bg-white rounded-lg shadow-sm border-[1px] border-gray-300 sm:px-5">
+              <WeekFilter challengeId={challengeId} />
+            </div>
             <div className="flex flex-col gap-6 py-5 px-10 bg-white rounded-lg shadow-sm border-[1px] border-gray-300 sm:px-5">
               <div className="font-semibold">제출한 문제</div>
               <Suspense

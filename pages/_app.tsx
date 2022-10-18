@@ -20,8 +20,9 @@ import { getPerformance } from "firebase/performance";
 import { getMessaging, getToken, onMessage } from "firebase/messaging";
 import { firebaseConfig } from "../utils/FirebaseConfig";
 import Layout from "../components/layout/Layout";
-import Head from "next/head";
 import HeadTitle from "../components/common/HeadTitle";
+
+import { getToken as getApiToken } from "../api/getToken";
 
 function MyApp({ Component, pageProps }: AppProps) {
   const queryClient = new QueryClient({
@@ -64,6 +65,18 @@ function MyApp({ Component, pageProps }: AppProps) {
     const messaging = getMessaging(app);
     onMessage(messaging, (payload) => {});
   }, []);
+
+  useEffect(() => {
+    if (
+      !getApiToken() &&
+      !["/", "/login", "/manual", "/introcudce", "/password-notice"].includes(
+        router.asPath
+      )
+    ) {
+      alert("로그인이 필요합니다.");
+      router.push("/");
+    }
+  }, [router]);
 
   return (
     <RecoilRoot>

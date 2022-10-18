@@ -1,5 +1,4 @@
-import { useRouter } from "next/router";
-import React, { useEffect, useState } from "react";
+import React, { useEffect } from "react";
 import { useRecoilState } from "recoil";
 import { useCurrentWeekQuery } from "../../../api/challenges/hooks";
 import { weekSelectState } from "../stores/weekFilter";
@@ -43,30 +42,32 @@ function WeekFilter({ challengeId }: Props) {
         </span>
       </div>
       <div className="flex flex-wrap gap-2">
-        {selected
-          .filter((value) => value)
-          .map((value, index) => (
-            <div
-              key={index}
-              onClick={() => onWeekClick(index)}
-              className="gap-2 cursor-pointer badge badge-primary"
-            >
-              <svg
-                xmlns="http://www.w3.org/2000/svg"
-                fill="none"
-                viewBox="0 0 24 24"
-                className="inline-block w-4 h-4 cursor-pointer stroke-current"
+        {selected.map((value, index) => (
+          <>
+            {value && (
+              <div
+                key={index}
+                onClick={() => onWeekClick(index)}
+                className="gap-2 cursor-pointer badge badge-primary"
               >
-                <path
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                  strokeWidth="2"
-                  d="M6 18L18 6M6 6l12 12"
-                ></path>
-              </svg>
-              {index + 1}주차
-            </div>
-          ))}
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  fill="none"
+                  viewBox="0 0 24 24"
+                  className="inline-block w-4 h-4 cursor-pointer stroke-current"
+                >
+                  <path
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    strokeWidth="2"
+                    d="M6 18L18 6M6 6l12 12"
+                  ></path>
+                </svg>
+                {index + 1}주차
+              </div>
+            )}
+          </>
+        ))}
         {selected.map((value, index) => (
           <>
             {!value && (

@@ -40,12 +40,10 @@ function DashboardPage() {
     })
       .then((currentToken) => {
         api.defaults.headers.common["jwt"] = getApiToken();
-        api
-          .post("/notification/register", {
-            platform: navigator.platform,
-            fcmToken: currentToken,
-          })
-          .then((res) => console.log(res));
+        api.post("/notification/register", {
+          platform: navigator.platform,
+          fcmToken: currentToken,
+        });
       })
       .catch((err) => {});
   }, []);

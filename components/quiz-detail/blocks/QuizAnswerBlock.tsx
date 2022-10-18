@@ -13,8 +13,6 @@ function QuizAnswerBlock({ quizId }: Props) {
   const router = useRouter();
   const { data: quizSolve, error } = useQuizSolveQuery({ quizId });
 
-  console.log(quizSolve);
-
   const [showAnswer, setShowAnswer] = useState(false);
 
   useEffect(() => {
