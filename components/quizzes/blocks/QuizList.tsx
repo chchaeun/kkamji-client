@@ -5,6 +5,7 @@ import Link from "next/link";
 import { useQuizzesQuery } from "../../../api/quizzes/hooks";
 import { useRecoilValue } from "recoil";
 import { weekSelectState } from "../stores/weekFilter";
+import { useRouter } from "next/router";
 
 interface Props {
   challengeId: string;
@@ -13,6 +14,7 @@ interface Props {
 }
 
 function QuizList({ challengeId, week, page }: Props) {
+  const router = useRouter();
   const selected = useRecoilValue<boolean[]>(weekSelectState);
 
   const { data: quizzes } = useQuizzesQuery({
@@ -35,52 +37,79 @@ function QuizList({ challengeId, week, page }: Props) {
     }
   };
 
+  const onQuizClick = (quizId: number) => {
+    router.push(getLinkByPage(quizId));
+  };
+
   return (
     <div className="w-full overflow-x-scroll">
-      <table className="table w-full">
-        <thead>
+      <table className="w-full text-sm text-left text-gray-500 ">
+        <thead className="text-xs text-gray-700 uppercase bg-gray-50">
           <tr>
-            <th className="bg-gray-200">번호</th>
-            <th className="bg-gray-200">제목</th>
-            <th className="bg-gray-200">작성자</th>
-            <th className="bg-gray-200">주차</th>
-            <th className="bg-gray-200">좋아요</th>
-            <th className="bg-gray-200">해결</th>
+            <th scope="col" className="px-6 py-3 sm:px-3">
+              번호
+            </th>
+            <th scope="col" className="px-6 py-3 sm:px-3">
+              제목
+            </th>
+            <th scope="col" className="px-6 py-3 sm:px-3">
+              작성자
+            </th>
+            <th scope="col" className="px-6 py-3 sm:px-3">
+              주차
+            </th>
+            <th scope="col" className="px-6 py-3 sm:px-3">
+              좋아요
+            </th>
+            <th scope="col" className="px-6 py-3 sm:px-3">
+              해결
+            </th>
           </tr>
         </thead>
         <tbody>
           {quizzes
             ?.filter((value) => selected[value.quizWeek - 1])
             ?.map((quiz) => (
-              <Link href={getLinkByPage(quiz.quizId)} key={quiz.quizId}>
-                {
-                  <tr className="cursor-pointer sm:text-sm">
-                    <td>{quiz.quizId}</td>
-                    <td>{quiz.quizTitle}</td>
-                    <td>{quiz.writerName}</td>
-                    <td>{quiz.quizWeek}주</td>
-                    <td className="flex items-center justify-start">
-                      <span className="flex items-center justify-center gap-1">
-                        <Icon icon="icon-park-solid:good-two" />
-                        <span className="">
-                          {quiz.cntOfGood ? quiz.cntOfGood : 0}
-                        </span>
-                      </span>
-                    </td>
-                    {quiz.isSolved ? (
-                      <td>
-                        <Icon
-                          icon="bi:patch-check-fill"
-                          color="#5c3cde"
-                          height={24}
-                        />
-                      </td>
-                    ) : (
-                      <td></td>
-                    )}
-                  </tr>
-                }
-              </Link>
+              <tr
+                className="bg-white border-b cursor-pointer"
+                key={quiz.quizId}
+                onClick={() => onQuizClick(quiz.quizId)}
+              >
+                <td
+                  scope="row"
+                  className="px-6 py-4 font-medium text-gray-900 sm:px-3 whitespace-nowrap"
+                >
+                  {quiz.quizId}
+                </td>
+                <td className="px-6 py-4 sm:px-3 whitespace-nowrap">
+                  {quiz.quizTitle}
+                </td>
+                <td className="px-6 py-4 sm:px-3 whitespace-nowrap">
+                  {quiz.writerName}
+                </td>
+                <td className="px-6 py-4 sm:px-3 whitespace-nowrap">
+                  {quiz.quizWeek}주
+                </td>
+                <td className="flex items-center justify-start px-6 py-4 sm:px-3 whitespace-nowrap">
+                  <span className="flex items-center justify-center gap-1">
+                    <Icon icon="icon-park-solid:good-two" />
+                    <span className="">
+                      {quiz.cntOfGood ? quiz.cntOfGood : 0}
+                    </span>
+                  </span>
+                </td>
+                {quiz.isSolved ? (
+                  <td className="px-6 py-4 sm:px-3 whitespace-nowrap">
+                    <Icon
+                      icon="bi:patch-check-fill"
+                      color="#5c3cde"
+                      height={24}
+                    />
+                  </td>
+                ) : (
+                  <td className="px-6 py-4 sm:px-3 whitespace-nowrap"></td>
+                )}
+              </tr>
             ))}
         </tbody>
       </table>
