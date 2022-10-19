@@ -37,25 +37,25 @@ function QuizList({ challengeId, week, page }: Props) {
 
   return (
     <div className="w-full overflow-x-scroll">
-      <table className="w-full">
-        <thead>
+      <table className="w-full text-sm text-left text-gray-500 ">
+        <thead className="text-xs text-gray-700 uppercase bg-gray-50">
           <tr>
-            <th className="px-4 py-3 text-sm font-normal bg-gray-200 sm:px-1">
+            <th scope="col" className="px-6 py-3 sm:px-3">
               번호
             </th>
-            <th className="px-4 py-3 text-sm font-normal bg-gray-200 sm:px-1">
+            <th scope="col" className="px-6 py-3 sm:px-3">
               제목
             </th>
-            <th className="px-4 py-3 text-sm font-normal bg-gray-200 sm:px-1">
+            <th scope="col" className="px-6 py-3 sm:px-3">
               작성자
             </th>
-            <th className="px-4 py-3 text-sm font-normal bg-gray-200 sm:px-1">
+            <th scope="col" className="px-6 py-3 sm:px-3">
               주차
             </th>
-            <th className="px-4 py-3 text-sm font-normal bg-gray-200 sm:px-1">
+            <th scope="col" className="px-6 py-3 sm:px-3">
               좋아요
             </th>
-            <th className="px-4 py-3 text-sm font-normal bg-gray-200 sm:px-1">
+            <th scope="col" className="px-6 py-3 sm:px-3">
               해결
             </th>
           </tr>
@@ -66,14 +66,23 @@ function QuizList({ challengeId, week, page }: Props) {
             ?.map((quiz) => (
               <Link href={getLinkByPage(quiz.quizId)} key={quiz.quizId}>
                 {
-                  <tr className="cursor-pointer sm:text-sm">
-                    <td className="px-4 py-3">{quiz.quizId}</td>
-                    <td className="px-4 py-3 overflow-hidden">
+                  <tr className="bg-white border-b">
+                    <td
+                      scope="row"
+                      className="px-6 py-4 font-medium text-gray-900 sm:px-3 whitespace-nowrap"
+                    >
+                      {quiz.quizId}
+                    </td>
+                    <td className="px-6 py-4 sm:px-3 whitespace-nowrap">
                       {quiz.quizTitle}
                     </td>
-                    <td className="px-4 py-3">{quiz.writerName}</td>
-                    <td className="px-4 py-3">{quiz.quizWeek}주</td>
-                    <td className="flex items-center justify-start px-4 py-3">
+                    <td className="px-6 py-4 sm:px-3 whitespace-nowrap">
+                      {quiz.writerName}
+                    </td>
+                    <td className="px-6 py-4 sm:px-3 whitespace-nowrap">
+                      {quiz.quizWeek}주
+                    </td>
+                    <td className="flex items-center justify-start px-6 py-4 sm:px-3 whitespace-nowrap">
                       <span className="flex items-center justify-center gap-1">
                         <Icon icon="icon-park-solid:good-two" />
                         <span className="">
@@ -82,7 +91,7 @@ function QuizList({ challengeId, week, page }: Props) {
                       </span>
                     </td>
                     {quiz.isSolved ? (
-                      <td className="px-4 py-3">
+                      <td className="px-6 py-4 sm:px-3 whitespace-nowrap">
                         <Icon
                           icon="bi:patch-check-fill"
                           color="#5c3cde"
@@ -90,7 +99,7 @@ function QuizList({ challengeId, week, page }: Props) {
                         />
                       </td>
                     ) : (
-                      <td className="px-4 py-3"></td>
+                      <td className="px-6 py-4 sm:px-3 whitespace-nowrap"></td>
                     )}
                   </tr>
                 }
