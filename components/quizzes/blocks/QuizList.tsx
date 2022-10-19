@@ -5,6 +5,7 @@ import Link from "next/link";
 import { useQuizzesQuery } from "../../../api/quizzes/hooks";
 import { useRecoilValue } from "recoil";
 import { weekSelectState } from "../stores/weekFilter";
+import { useRouter } from "next/router";
 
 interface Props {
   challengeId: string;
@@ -13,6 +14,7 @@ interface Props {
 }
 
 function QuizList({ challengeId, week, page }: Props) {
+  const router = useRouter();
   const selected = useRecoilValue<boolean[]>(weekSelectState);
 
   const { data: quizzes } = useQuizzesQuery({
@@ -33,6 +35,10 @@ function QuizList({ challengeId, week, page }: Props) {
       case "READABLE":
         return `${LINK_HEAD}`;
     }
+  };
+
+  const onQuizClick = (quizId: number) => {
+    router.push(getLinkByPage(quizId));
   };
 
   return (
@@ -64,46 +70,46 @@ function QuizList({ challengeId, week, page }: Props) {
           {quizzes
             ?.filter((value) => selected[value.quizWeek - 1])
             ?.map((quiz) => (
-              <Link href={getLinkByPage(quiz.quizId)} key={quiz.quizId}>
-                {
-                  <tr className="bg-white border-b">
-                    <td
-                      scope="row"
-                      className="px-6 py-4 font-medium text-gray-900 sm:px-3 whitespace-nowrap"
-                    >
-                      {quiz.quizId}
-                    </td>
-                    <td className="px-6 py-4 sm:px-3 whitespace-nowrap">
-                      {quiz.quizTitle}
-                    </td>
-                    <td className="px-6 py-4 sm:px-3 whitespace-nowrap">
-                      {quiz.writerName}
-                    </td>
-                    <td className="px-6 py-4 sm:px-3 whitespace-nowrap">
-                      {quiz.quizWeek}주
-                    </td>
-                    <td className="flex items-center justify-start px-6 py-4 sm:px-3 whitespace-nowrap">
-                      <span className="flex items-center justify-center gap-1">
-                        <Icon icon="icon-park-solid:good-two" />
-                        <span className="">
-                          {quiz.cntOfGood ? quiz.cntOfGood : 0}
-                        </span>
-                      </span>
-                    </td>
-                    {quiz.isSolved ? (
-                      <td className="px-6 py-4 sm:px-3 whitespace-nowrap">
-                        <Icon
-                          icon="bi:patch-check-fill"
-                          color="#5c3cde"
-                          height={24}
-                        />
-                      </td>
-                    ) : (
-                      <td className="px-6 py-4 sm:px-3 whitespace-nowrap"></td>
-                    )}
-                  </tr>
-                }
-              </Link>
+              <tr
+                className="bg-white border-b cursor-pointer"
+                key={quiz.quizId}
+                onClick={() => onQuizClick(quiz.quizId)}
+              >
+                <td
+                  scope="row"
+                  className="px-6 py-4 font-medium text-gray-900 sm:px-3 whitespace-nowrap"
+                >
+                  {quiz.quizId}
+                </td>
+                <td className="px-6 py-4 sm:px-3 whitespace-nowrap">
+                  {quiz.quizTitle}
+                </td>
+                <td className="px-6 py-4 sm:px-3 whitespace-nowrap">
+                  {quiz.writerName}
+                </td>
+                <td className="px-6 py-4 sm:px-3 whitespace-nowrap">
+                  {quiz.quizWeek}주
+                </td>
+                <td className="flex items-center justify-start px-6 py-4 sm:px-3 whitespace-nowrap">
+                  <span className="flex items-center justify-center gap-1">
+                    <Icon icon="icon-park-solid:good-two" />
+                    <span className="">
+                      {quiz.cntOfGood ? quiz.cntOfGood : 0}
+                    </span>
+                  </span>
+                </td>
+                {quiz.isSolved ? (
+                  <td className="px-6 py-4 sm:px-3 whitespace-nowrap">
+                    <Icon
+                      icon="bi:patch-check-fill"
+                      color="#5c3cde"
+                      height={24}
+                    />
+                  </td>
+                ) : (
+                  <td className="px-6 py-4 sm:px-3 whitespace-nowrap"></td>
+                )}
+              </tr>
             ))}
         </tbody>
       </table>
