@@ -71,6 +71,8 @@ const Button = styled.button`
   width: 862px;
   height: 48px;
   bottom: 24px;
+  left: 50%;
+  transform: translate(-50%);
 
   background: #4f46e5;
   box-shadow: 0px 4px 6px rgba(79, 70, 229, 0.2);

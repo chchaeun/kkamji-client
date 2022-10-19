@@ -37,15 +37,27 @@ function QuizList({ challengeId, week, page }: Props) {
 
   return (
     <div className="w-full overflow-x-scroll">
-      <table className="table w-full">
+      <table className="w-full">
         <thead>
           <tr>
-            <th className="bg-gray-200">번호</th>
-            <th className="bg-gray-200">제목</th>
-            <th className="bg-gray-200">작성자</th>
-            <th className="bg-gray-200">주차</th>
-            <th className="bg-gray-200">좋아요</th>
-            <th className="bg-gray-200">해결</th>
+            <th className="px-4 py-3 text-sm font-normal bg-gray-200 sm:px-1">
+              번호
+            </th>
+            <th className="px-4 py-3 text-sm font-normal bg-gray-200 sm:px-1">
+              제목
+            </th>
+            <th className="px-4 py-3 text-sm font-normal bg-gray-200 sm:px-1">
+              작성자
+            </th>
+            <th className="px-4 py-3 text-sm font-normal bg-gray-200 sm:px-1">
+              주차
+            </th>
+            <th className="px-4 py-3 text-sm font-normal bg-gray-200 sm:px-1">
+              좋아요
+            </th>
+            <th className="px-4 py-3 text-sm font-normal bg-gray-200 sm:px-1">
+              해결
+            </th>
           </tr>
         </thead>
         <tbody>
@@ -55,11 +67,13 @@ function QuizList({ challengeId, week, page }: Props) {
               <Link href={getLinkByPage(quiz.quizId)} key={quiz.quizId}>
                 {
                   <tr className="cursor-pointer sm:text-sm">
-                    <td>{quiz.quizId}</td>
-                    <td>{quiz.quizTitle}</td>
-                    <td>{quiz.writerName}</td>
-                    <td>{quiz.quizWeek}주</td>
-                    <td className="flex items-center justify-start">
+                    <td className="px-4 py-3">{quiz.quizId}</td>
+                    <td className="px-4 py-3 overflow-hidden">
+                      {quiz.quizTitle}
+                    </td>
+                    <td className="px-4 py-3">{quiz.writerName}</td>
+                    <td className="px-4 py-3">{quiz.quizWeek}주</td>
+                    <td className="flex items-center justify-start px-4 py-3">
                       <span className="flex items-center justify-center gap-1">
                         <Icon icon="icon-park-solid:good-two" />
                         <span className="">
@@ -68,7 +82,7 @@ function QuizList({ challengeId, week, page }: Props) {
                       </span>
                     </td>
                     {quiz.isSolved ? (
-                      <td>
+                      <td className="px-4 py-3">
                         <Icon
                           icon="bi:patch-check-fill"
                           color="#5c3cde"
@@ -76,7 +90,7 @@ function QuizList({ challengeId, week, page }: Props) {
                         />
                       </td>
                     ) : (
-                      <td></td>
+                      <td className="px-4 py-3"></td>
                     )}
                   </tr>
                 }
