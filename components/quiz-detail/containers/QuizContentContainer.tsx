@@ -1,12 +1,10 @@
 import React from "react";
 import styled from "styled-components";
 import QuizContentBlock from "../blocks/QuizContentBlock";
-import QuizPointBlock from "../blocks/QuizPointBlock";
 import QuizSolveBlock from "../blocks/QuizSolveBlock";
 import QuizAnswerBlock from "../blocks/QuizAnswerBlock";
 import QuizTitleBlock from "../blocks/QuizTitleBlock";
 import { media } from "../../../styles/media";
-import { useChallengeDetailQuery } from "../../../api/challenges/hooks";
 
 interface Props {
   challengeId: string;
