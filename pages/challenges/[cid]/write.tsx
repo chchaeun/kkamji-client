@@ -9,27 +9,19 @@ function QuizWritePage() {
   const router = useRouter();
   const challengeId = String(router.query.cid);
 
-  const [isWriting, setIsWriting] = useState(false);
-
   const onBeforeUnload = (e: BeforeUnloadEvent) => {
-    if (isWriting) {
-      e.preventDefault();
-      e.returnValue = "";
-    }
+    e.preventDefault();
+    e.returnValue = "";
   };
 
   const onPopState = () => {
-    if (isWriting) {
-      const pageLeaveConfirmMessage =
-        "페이지를 떠나시겠습니까? 변경 사항이 저장되지 않을 수 있습니다.";
-      const pageLeave = confirm(pageLeaveConfirmMessage);
-      if (pageLeave) {
-        router.push(`/challenges/${challengeId}`);
-      } else {
-        history.pushState(null, "", location.href);
-      }
-    } else {
+    const pageLeaveConfirmMessage =
+      "페이지를 떠나시겠습니까? 변경 사항이 저장되지 않을 수 있습니다.";
+    const pageLeave = confirm(pageLeaveConfirmMessage);
+    if (pageLeave) {
       router.push(`/challenges/${challengeId}`);
+    } else {
+      history.pushState(null, "", location.href);
     }
   };
 
@@ -49,7 +41,7 @@ function QuizWritePage() {
     <Background>
       <Frame>
         <HeaderContainer challengeId={challengeId} />
-        <WriteContainer challengeId={challengeId} setIsWriting={setIsWriting} />
+        <WriteContainer challengeId={challengeId} />
       </Frame>
     </Background>
   );
