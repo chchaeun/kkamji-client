@@ -1,4 +1,5 @@
 import Link from "next/link";
+import { useRouter } from "next/router";
 import React from "react";
 import styled from "styled-components";
 import {
@@ -18,20 +19,38 @@ function HeaderContainer({ challengeId }: Props) {
     challengeId,
     week: currentWeek || 0,
   });
+
+  const router = useRouter();
+
+  const onLinkClick = (link: string) => {
+    const pageLeaveConfirmMessage =
+      "페이지를 떠나시겠습니까? 변경 사항이 저장되지 않을 수 있습니다.";
+    const pageLeave = confirm(pageLeaveConfirmMessage);
+    if (pageLeave) {
+      router.push(link);
+    }
+  };
+
   return (
     <Container>
       <BreadCrump>
-        <Link href={`/`}>
-          <BreadCrumpButton type="button">내 챌린지</BreadCrumpButton>
-        </Link>
+        <BreadCrumpButton type="button" onClick={() => onLinkClick(`/`)}>
+          내 챌린지
+        </BreadCrumpButton>
         <Dash aria-hidden>/</Dash>
-        <Link href={`/challenges/${challengeId}`}>
-          <BreadCrumpButton type="button">{challenge?.title}</BreadCrumpButton>
-        </Link>
+        <BreadCrumpButton
+          type="button"
+          onClick={() => onLinkClick(`/challenges/${challengeId}`)}
+        >
+          {challenge?.title}
+        </BreadCrumpButton>
         <Dash aria-hidden>/</Dash>
-        <Link href={`/challenges/${challengeId}/write`}>
-          <BreadCrumpButton type="button">문제 제출하기</BreadCrumpButton>
-        </Link>
+        <BreadCrumpButton
+          type="button"
+          onClick={() => onLinkClick(`/challenges/${challengeId}/write`)}
+        >
+          문제 제출하기
+        </BreadCrumpButton>
       </BreadCrump>
       <Horizontal />
       <TitleBlock>
