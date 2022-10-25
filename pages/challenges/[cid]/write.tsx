@@ -1,5 +1,5 @@
 import { useRouter } from "next/router";
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import styled from "styled-components";
 import HeaderContainer from "../../../components/write/containers/HeaderContainer";
 import WriteContainer from "../../../components/write/containers/WriteContainer";
@@ -9,26 +9,39 @@ function QuizWritePage() {
   const router = useRouter();
   const challengeId = String(router.query.cid);
 
+  const [isWriting, setIsWriting] = useState(false);
+
   const onBeforeUnload = (e: BeforeUnloadEvent) => {
-    e.preventDefault();
-    e.returnValue = "";
+    if (isWriting) {
+      e.preventDefault();
+      e.returnValue = "";
+    }
   };
 
-  const onRouteChangeStart = () => {
-    const goBackConfirmMessage =
-      "뒤로 가시겠습니까? 변경 사항이 저장되지 않을 수 있습니다.";
-    const goBack = confirm(goBackConfirmMessage);
-    if (!goBack) {
-      router.events.emit("routeChangeError");
+  const onPopState = () => {
+    if (isWriting) {
+      const pageLeaveConfirmMessage =
+        "페이지를 떠나시겠습니까? 변경 사항이 저장되지 않을 수 있습니다.";
+      const pageLeave = confirm(pageLeaveConfirmMessage);
+      if (pageLeave) {
+        router.push(`/challenges/${challengeId}`);
+      } else {
+        history.pushState(null, "", location.href);
+      }
+    } else {
+      router.push(`/challenges/${challengeId}`);
     }
   };
 
   useEffect(() => {
     window.addEventListener("beforeunload", onBeforeUnload);
-    router.events.on("routeChangeStart", onRouteChangeStart);
+
+    window.history.pushState(null, "", location.href);
+    window.addEventListener("popstate", onPopState);
+
     return () => {
       window.removeEventListener("beforeunload", onBeforeUnload);
-      router.events.off("routeChangeStart", onRouteChangeStart);
+      window.removeEventListener("popstate", onPopState);
     };
   }, []);
 
@@ -36,7 +49,7 @@ function QuizWritePage() {
     <Background>
       <Frame>
         <HeaderContainer challengeId={challengeId} />
-        <WriteContainer challengeId={challengeId} />
+        <WriteContainer challengeId={challengeId} setIsWriting={setIsWriting} />
       </Frame>
     </Background>
   );

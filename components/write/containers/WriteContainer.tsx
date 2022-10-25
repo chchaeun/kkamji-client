@@ -1,4 +1,4 @@
-import React, { useRef, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import styled from "styled-components";
 import ImageInputBlock from "../blocks/ImageInputBlock";
 import { Icon } from "@iconify/react";
@@ -8,6 +8,7 @@ import { updateQuiz } from "../../../api/quizzes";
 
 interface Props {
   challengeId: string;
+  setIsWriting: Function;
 }
 
 type QuizWriteValidForm = {
@@ -21,7 +22,7 @@ type QuizWriteValidForm = {
   }[];
 };
 
-function WriteContainer({ challengeId }: Props) {
+function WriteContainer({ challengeId, setIsWriting }: Props) {
   const queryClient = new QueryClient();
 
   const [contentImage, setContentImage] = useState<File | null>(null);
@@ -36,17 +37,23 @@ function WriteContainer({ challengeId }: Props) {
 
   const RUBRIC_SCORE = [10, 5, 3, 1];
 
-  const { register, control, handleSubmit, watch, reset } =
-    useForm<QuizWriteValidForm>({
-      defaultValues: {
-        rubric: [
-          {
-            score: "10",
-            content: "",
-          },
-        ],
-      },
-    });
+  const {
+    register,
+    control,
+    handleSubmit,
+    watch,
+    reset,
+    formState: { isDirty, dirtyFields },
+  } = useForm<QuizWriteValidForm>({
+    defaultValues: {
+      rubric: [
+        {
+          score: "10",
+          content: "",
+        },
+      ],
+    },
+  });
 
   const titleRef = useRef<string | null>(null);
   titleRef.current = watch("title");
@@ -67,6 +74,10 @@ function WriteContainer({ challengeId }: Props) {
     control,
     name: "rubric",
   });
+
+  useEffect(() => {
+    setIsWriting(Boolean(dirtyFields));
+  }, [dirtyFields]);
 
   const { mutate: mutateQuizSubmit, isLoading } = useMutation(
     (quizSubmitBody: FormData) => updateQuiz({ challengeId, quizSubmitBody }),
