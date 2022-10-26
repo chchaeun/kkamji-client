@@ -43,6 +43,13 @@ function ImageInputBlock({ contentImageState }: Props) {
     readImage(e.dataTransfer.files[0]);
   };
 
+  const onContentImageChange = (e: ChangeEvent<HTMLInputElement>) => {
+    if (e.target.files) {
+      setContentImage(e.target.files[0]);
+      readImage(e.target.files[0]);
+    }
+  };
+
   const readImage = (image: File) => {
     const reader = new FileReader();
     reader.onload = function (e) {
@@ -55,14 +62,6 @@ function ImageInputBlock({ contentImageState }: Props) {
     setContentImage(null);
     setContentImageUrl(null);
   };
-
-  const onContentImageChange = (e: ChangeEvent<HTMLInputElement>) => {
-    if (e.target.files) {
-      setContentImage(e.target.files[0]);
-      readImage(e.target.files[0]);
-    }
-  };
-
   const onModalStateChange = ({ state }: { state: boolean }) => {
     setContentImageModal(state);
   };
@@ -91,6 +90,7 @@ function ImageInputBlock({ contentImageState }: Props) {
             accept=".png,.jpg,.jpeg"
             id="input-file"
             style={{ display: "none" }}
+            aria-hidden
             onChange={onContentImageChange}
           />
           <DndBox

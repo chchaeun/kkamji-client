@@ -69,7 +69,7 @@ function MyApp({ Component, pageProps }: AppProps) {
   useEffect(() => {
     if (
       !getApiToken() &&
-      !["/", "/login", "/manual", "/introcudce", "/password-notice"].includes(
+      !["/", "/login", "/manual", "/introduce", "/password-notice"].includes(
         router.asPath
       )
     ) {
