@@ -27,6 +27,8 @@ function QuizWritePage() {
 
   useEffect(() => {
     window.addEventListener("beforeunload", onBeforeUnload);
+
+    history.pushState(null, "", location.href);
     window.addEventListener("popstate", onPopState);
 
     return () => {
