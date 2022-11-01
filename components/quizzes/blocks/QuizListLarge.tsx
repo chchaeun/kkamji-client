@@ -10,10 +10,10 @@ import QuizListPagination from "./QuizListPagination";
 interface Props {
   challengeId: string;
   page: "READABLE" | "LIKED" | "MY";
-  filteredQuizzes: QuizSummary[];
+  quizzes: QuizSummary[];
 }
 
-function QuizListLarge({ challengeId, page, filteredQuizzes }: Props) {
+function QuizListLarge({ challengeId, page, quizzes }: Props) {
   const router = useRouter();
   const currentPage = useRecoilValue(currentPageState);
 
@@ -51,14 +51,14 @@ function QuizListLarge({ challengeId, page, filteredQuizzes }: Props) {
           </Tr>
         </thead>
         <tbody>
-          {filteredQuizzes
+          {quizzes
             ?.slice(currentPage * 10, currentPage * 10 + 10)
             ?.map((quiz) => (
               <Tr key={quiz.quizId} onClick={() => onQuizClick(quiz.quizId)}>
                 <Td>{quiz.quizId}</Td>
                 <Td textAlign={"left"}>{quiz.quizTitle}</Td>
                 <Td>{quiz.writerName}</Td>
-                <Td>100회</Td>
+                <Td>{quiz.cntOfSolved}회</Td>
                 <Td>{quiz.quizWeek}주</Td>
                 <Td>
                   <IconSpan>
@@ -87,7 +87,7 @@ function QuizListLarge({ challengeId, page, filteredQuizzes }: Props) {
             ))}
         </tbody>
       </table>
-      <QuizListPagination quizListLength={filteredQuizzes.length} />
+      <QuizListPagination quizListLength={quizzes.length} />
     </>
   );
 }
