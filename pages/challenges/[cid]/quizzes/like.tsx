@@ -6,14 +6,8 @@ import QuizListSkeleton from "../../../../components/skeletons/QuizListSkeleton"
 import DeferredComponent from "../../../../components/skeletons/DeferredComponent";
 import HeadTitle from "../../../../components/common/HeadTitle";
 import { useChallengeDetailQuery } from "../../../../api/challenges/hooks";
-import WeekFilter from "../../../../components/quizzes/blocks/QuizListWeekFilter";
-const QuizList = dynamic(
-  () => import("../../../../components/quizzes/blocks/QuizList"),
-  {
-    suspense: true,
-    ssr: false,
-  }
-);
+import QuizListPageTemplate from "../../../../components/quizzes";
+
 function LikedQuizListPage() {
   const router = useRouter();
   const challengeId = String(router.query.cid);
@@ -28,28 +22,7 @@ function LikedQuizListPage() {
   return (
     <>
       <HeadTitle name="좋아요한 문제 : 깜지" />
-      <div className="flex flex-col m-auto gap-10  py-[80px] px-[200px] sm:py-[88px] sm:px-[12px]">
-        {challengeId && (
-          <>
-            <ChallengeOverview challengeId={challengeId} />
-            <div className="flex flex-col gap-3 py-5 px-10 bg-white rounded-lg shadow-sm border-[1px] border-gray-300 sm:px-5">
-              <WeekFilter challengeId={challengeId} />
-            </div>
-            <div className="flex flex-col gap-6 py-5 px-10 bg-white rounded-lg shadow-sm border-[1px] border-gray-300 sm:px-5">
-              <div className="font-semibold">좋아요한 문제</div>
-              <Suspense
-                fallback={
-                  <DeferredComponent>
-                    <QuizListSkeleton />
-                  </DeferredComponent>
-                }
-              >
-                <QuizList challengeId={challengeId} page={"LIKED"} />
-              </Suspense>
-            </div>
-          </>
-        )}
-      </div>
+      <QuizListPageTemplate challengeId={challengeId} page={"LIKED"} />
     </>
   );
 }
