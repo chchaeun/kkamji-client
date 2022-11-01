@@ -1,23 +1,28 @@
-import { getToken } from "../getToken";
+import { authorizationHeader } from "../authHeader";
 import { api, apiV2 } from "../myApi";
 import { QuizAnswerProps, QuizGradeProps, QuizProps } from "./types";
 
 const updateQuizIsSolved = async ({ quizId, answer }: QuizAnswerProps) => {
-  api.defaults.headers.common["jwt"] = getToken();
-
-  return await api.post(`/quizzes/${quizId}/solve`, { answer });
+  return await api.post(
+    `/quizzes/${quizId}/solve`,
+    { answer },
+    authorizationHeader
+  );
 };
 
 const updateQuizGrade = async ({ quizId, scoreBody }: QuizGradeProps) => {
-  apiV2.defaults.headers.common["jwt"] = getToken();
-
-  return await apiV2.post(`/quizzes/${quizId}/grade`, scoreBody);
+  return await apiV2.post(
+    `/quizzes/${quizId}/grade`,
+    scoreBody,
+    authorizationHeader
+  );
 };
 
 const fetchQuizSolve = async ({ quizId }: QuizProps) => {
-  apiV2.defaults.headers.common["jwt"] = getToken();
-
-  const { data } = await apiV2.get(`/quizzes/${quizId}/solve`);
+  const { data } = await apiV2.get(
+    `/quizzes/${quizId}/solve`,
+    authorizationHeader
+  );
 
   return data;
 };

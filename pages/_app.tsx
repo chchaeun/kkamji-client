@@ -22,7 +22,7 @@ import { firebaseConfig } from "../utils/FirebaseConfig";
 import Layout from "../components/layout/Layout";
 import HeadTitle from "../components/common/HeadTitle";
 
-import { getToken as getApiToken } from "../api/getToken";
+import { getJwtToken } from "../api/getJwtToken";
 
 function MyApp({ Component, pageProps }: AppProps) {
   const queryClient = new QueryClient({
@@ -68,7 +68,7 @@ function MyApp({ Component, pageProps }: AppProps) {
 
   useEffect(() => {
     if (
-      !getApiToken() &&
+      !getJwtToken() &&
       !["/", "/login", "/manual", "/introduce", "/password-notice"].includes(
         router.asPath
       )
