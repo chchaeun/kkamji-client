@@ -80,7 +80,7 @@ function QuizListContainer({ challengeId, week, page }: Props) {
           )}
         </>
       ) : (
-        <div>문제가 없습니다.</div>
+        <EmptyBox>문제가 없습니다.</EmptyBox>
       )}
     </Container>
   );
@@ -100,4 +100,15 @@ const Title = styled.h2`
   line-height: 24px;
 
   color: #111827;
+`;
+
+const EmptyBox = styled.div`
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  padding: 100px 0px;
+
+  font-size: 14px;
+  color: gray;
 `;
