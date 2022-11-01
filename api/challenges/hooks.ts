@@ -1,12 +1,19 @@
 import { useQuery } from "@tanstack/react-query";
 import { AxiosError } from "axios";
-import { fetchChallengeDetail, fetchCurrentWeek, fetchOpenWeeks } from ".";
+import {
+  fetchChallengeDetail,
+  fetchCurrentWeek,
+  fetchMyChallenge,
+  fetchOpenWeeks,
+} from ".";
 import {
   Challenge,
   CurrentWeek,
   OpenWeeks,
   OpenWeeksSelect,
 } from "../../types/Challenge";
+import { openDB } from "idb";
+import { getJwtToken } from "../getJwtToken";
 
 interface Props {
   challengeId: string;
@@ -50,4 +57,35 @@ function useOpenWeeksQuery({ challengeId }: Props) {
   );
 }
 
-export { useChallengeDetailQuery, useCurrentWeekQuery, useOpenWeeksQuery };
+function useMyChallengeQuery() {
+  const { data, isError } = useQuery<Challenge[]>(
+    ["myChallenge"],
+    fetchMyChallenge,
+    {
+      enabled: !!getJwtToken(),
+      suspense: true,
+    }
+  );
+
+  let challenges;
+  if (data) {
+    challenges = data;
+  } else if (isError) {
+    (async () => {
+      if ("indexedDB" in window) {
+        const idbPromise = await openDB("test-store", 1);
+        const store = idbPromise.transaction("test").objectStore("test");
+        const values = await store.getAll();
+        challenges = values.map((value) => value);
+      }
+    })();
+  }
+  return challenges;
+}
+
+export {
+  useChallengeDetailQuery,
+  useCurrentWeekQuery,
+  useOpenWeeksQuery,
+  useMyChallengeQuery,
+};

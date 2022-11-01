@@ -1,9 +1,9 @@
 import React from "react";
-import { getToken } from "../api/getToken";
+import { getJwtToken } from "../api/getJwtToken";
 import DashboardPage from "../components/dashboard";
 import LandingPage from "../components/landing";
 function HomePage() {
-  const isLoginUser = getToken();
+  const isLoginUser = getJwtToken();
 
   return (
     <>
