@@ -77,6 +77,7 @@ export interface QuizSummary {
   quizModifiedDate: string;
   isMine: boolean;
   isSolved: boolean;
+  cntOfSolved: number;
   writerName: string;
   challengeId: number;
   cntOfGood: number;
