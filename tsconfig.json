@@ -21,7 +21,8 @@
     "**/*.tsx",
     "mocks/comment-handlers.js",
     "mocks/challenges-handlers.js",
-    "mocks/quizzes-handlers.js"
+    "mocks/quizzes-handlers.js",
+    "worker/index.js"
   ],
   "exclude": ["node_modules"]
 }
