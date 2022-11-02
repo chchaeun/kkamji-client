@@ -10,7 +10,7 @@ function Header() {
   const isUser = getJwtToken() ? true : false;
 
   const isSameRoute = (route: string) => {
-    if (router?.pathname === route) {
+    if (router.pathname === route) {
       return true;
     } else {
       return false;
