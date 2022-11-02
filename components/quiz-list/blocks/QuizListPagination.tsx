@@ -130,4 +130,8 @@ const Button = styled.button<{ isCurrentPage: boolean }>`
   line-height: 17px;
 
   color: ${(p) => (p.isCurrentPage ? "#4f46e5" : "#9CA3AF")};
+
+  &:hover {
+    background: ${(p) => (p.isCurrentPage ? "#ffffff" : "#F3F4F6")};
+  }
 `;
