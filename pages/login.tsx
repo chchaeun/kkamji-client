@@ -5,6 +5,7 @@ import { useRouter } from "next/router";
 import React, { useEffect, useState } from "react";
 import { SubmitHandler, useForm } from "react-hook-form";
 import { postLogin } from "../api/auth";
+import { getJwtToken } from "../api/getJwtToken";
 import HeadTitle from "../components/common/HeadTitle";
 import { firebaseConfig } from "../utils/FirebaseConfig";
 
@@ -30,6 +31,14 @@ function Login() {
   const router = useRouter();
   const [fcmToken, setFcmToken] = useState<string | null>(null);
 
+  useEffect(() => {
+    const isUser = getJwtToken();
+
+    if (isUser) {
+      router.push("/");
+    }
+  });
+
   const { mutate: mutateLogin } = useMutation(
     ({ loginBody }: LoginProps) => postLogin(loginBody),
     {
@@ -41,7 +50,7 @@ function Login() {
           sessionStorage.setItem("token", res.data.token);
           localStorage.removeItem("token");
         }
-        router.push("/");
+        window.location.reload();
       },
       onError: () => {
         alert("로그인에 실패했습니다.");
