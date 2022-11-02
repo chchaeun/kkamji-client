@@ -56,8 +56,6 @@ const Container = styled.div<{ bgImage: string }>`
   ${media.medium`
     width: 100%;
     height: 130px;
-
-    border-radius: 0px;
   `}
 `;
 

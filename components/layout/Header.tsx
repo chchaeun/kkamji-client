@@ -1,13 +1,13 @@
 import React from "react";
 import Link from "next/link";
 import { useRouter } from "next/router";
-import { getToken } from "../../api/getToken";
+import { getJwtToken } from "../../api/getJwtToken";
 import styled from "styled-components";
 import { media } from "../../styles/media";
 import UserMenu from "./UserMenu";
 function Header() {
   const router = useRouter();
-  const isUser = getToken() ? true : false;
+  const isUser = getJwtToken() ? true : false;
 
   const isSameRoute = (route: string) => {
     if (router.pathname === route) {
@@ -22,7 +22,9 @@ function Header() {
       {!isSameRoute("/login") && (
         <Container>
           <Link href={"/"}>
-            <Logo className="logo">깜지.</Logo>
+            <Logo className="logo" role="button">
+              깜지.
+            </Logo>
           </Link>
           <Navigation>
             <Ul>

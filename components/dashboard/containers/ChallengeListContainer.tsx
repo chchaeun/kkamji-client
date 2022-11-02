@@ -1,8 +1,8 @@
-import { useQuery } from "@tanstack/react-query";
-import React from "react";
+import { QueryClient, useQuery } from "@tanstack/react-query";
+import React, { useEffect } from "react";
 import styled from "styled-components";
 import { fetchMyChallenge } from "../../../api/challenges";
-import { getToken } from "../../../api/getToken";
+import { getJwtToken } from "../../../api/getJwtToken";
 import { media } from "../../../styles/media";
 import { Challenge } from "../../../types/Challenge";
 import ChallengeListElement from "../blocks/ChallengeListElement";
@@ -12,7 +12,7 @@ function ChallengeListContainer() {
     ["myChallenge"],
     fetchMyChallenge,
     {
-      enabled: !!getToken(),
+      enabled: !!getJwtToken(),
       suspense: true,
     }
   );

@@ -1,12 +1,18 @@
 import { useQuery } from "@tanstack/react-query";
 import { AxiosError } from "axios";
-import { fetchChallengeDetail, fetchCurrentWeek, fetchOpenWeeks } from ".";
+import {
+  fetchChallengeDetail,
+  fetchCurrentWeek,
+  fetchMyChallenge,
+  fetchOpenWeeks,
+} from ".";
 import {
   Challenge,
   CurrentWeek,
   OpenWeeks,
   OpenWeeksSelect,
 } from "../../types/Challenge";
+import { getJwtToken } from "../getJwtToken";
 
 interface Props {
   challengeId: string;
@@ -50,4 +56,16 @@ function useOpenWeeksQuery({ challengeId }: Props) {
   );
 }
 
-export { useChallengeDetailQuery, useCurrentWeekQuery, useOpenWeeksQuery };
+function useMyChallengeQuery() {
+  return useQuery<Challenge[]>(["myChallenge"], fetchMyChallenge, {
+    enabled: !!getJwtToken(),
+    suspense: true,
+  });
+}
+
+export {
+  useChallengeDetailQuery,
+  useCurrentWeekQuery,
+  useOpenWeeksQuery,
+  useMyChallengeQuery,
+};

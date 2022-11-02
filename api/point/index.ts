@@ -1,9 +1,8 @@
-import { getToken } from "../getToken";
+import { authorizationHeader } from "../authHeader";
 import { api } from "../myApi";
 
 const fetchMyPoint = async () => {
-  api.defaults.headers.common["jwt"] = getToken();
-  const { data } = await api.get("/my/point");
+  const { data } = await api.get("/my/point", authorizationHeader);
   return data;
 };
 

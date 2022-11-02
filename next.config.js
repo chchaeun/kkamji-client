@@ -3,7 +3,6 @@ const withPWA = require("next-pwa");
 const nextConfig = {
   reactStrictMode: true,
   concurrentFeatures: true,
-  swcMinify: true,
   experimental: {
     reactMode: "concurrent",
   },
@@ -11,7 +10,7 @@ const nextConfig = {
 
 module.exports = withPWA({
   pwa: {
-    disable: process.env.NODE_ENV === "production" ? false : true,
+    disable: false,
     dest: "public",
   },
   nextConfig,
