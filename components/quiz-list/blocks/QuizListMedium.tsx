@@ -1,6 +1,6 @@
 import { Icon } from "@iconify/react";
 import Link from "next/link";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import styled from "styled-components";
 import { QuizSummary } from "../../../types/Quiz";
 
@@ -12,31 +12,50 @@ interface Props {
 
 function QuizListMedium({ challengeId, page, quizzes }: Props) {
   const offset = 5;
+
+  const ButtonNames = {
+    SEEMORE: "더보기",
+    CLOSE: "접기",
+  };
+  Object.freeze(ButtonNames);
+
   const [pagination, setPagination] = useState(offset);
-  const [buttonName, setButtonName] = useState("더보기");
+  const [buttonName, setButtonName] = useState(ButtonNames.SEEMORE);
 
   const getLinkByPage = (quizId?: number) => {
     const BASE_LINK = `/challenges/${challengeId}/quizzes`;
+
     switch (page) {
       case "READABLE":
-        return BASE_LINK + `${quizId ? `/${quizId}` : ""}`;
+        return BASE_LINK + `${`/${quizId}`}`;
       case "MY":
-        return BASE_LINK + `${quizId ? `/${quizId}` : ""}/my`;
+        return BASE_LINK + `${`/${quizId}`}/my`;
       case "LIKED":
-        return BASE_LINK + `${quizId ? `/${quizId}` : ""}/like`;
+        return BASE_LINK + `${`/${quizId}`}/like`;
     }
   };
 
   const onButtonClick = () => {
     const quizListLength = quizzes.length;
-    if (pagination < quizListLength - 1) {
+
+    if (pagination < quizListLength) {
       setPagination((prevPagination) => prevPagination + offset);
-      setButtonName("더보기");
-    } else if (pagination >= quizListLength - 1) {
+      setButtonName(ButtonNames.SEEMORE);
+    } else if (pagination >= quizListLength) {
       setPagination((prevPagination) => prevPagination - offset);
-      setButtonName("접기");
+      setButtonName(ButtonNames.CLOSE);
     }
   };
+
+  useEffect(() => {
+    const quizListLength = quizzes.length;
+
+    if (pagination < quizListLength) {
+      setButtonName(ButtonNames.SEEMORE);
+    } else if (pagination >= quizListLength) {
+      setButtonName(ButtonNames.CLOSE);
+    }
+  }, [ButtonNames.CLOSE, ButtonNames.SEEMORE, pagination, quizzes.length]);
 
   return (
     <Container>
