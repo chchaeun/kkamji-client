@@ -9,7 +9,7 @@ function ThreeDotsSkeleton() {
         height="80"
         width="80"
         radius="9"
-        color="#A5B4FC"
+        color="#adadad"
         ariaLabel="three-dots-loading"
         visible={true}
       />
