@@ -6,7 +6,7 @@ import QuizListSkeleton from "../../../../components/skeletons/QuizListSkeleton"
 import DeferredComponent from "../../../../components/skeletons/DeferredComponent";
 import HeadTitle from "../../../../components/common/HeadTitle";
 import { useChallengeDetailQuery } from "../../../../api/challenges/hooks";
-import QuizListPageTemplate from "../../../../components/quizzes";
+import QuizListPageTemplate from "../../../../components/quiz-list";
 
 function LikedQuizListPage() {
   const router = useRouter();
