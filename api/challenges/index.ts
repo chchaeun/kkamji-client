@@ -1,22 +1,24 @@
 import { api } from "../myApi";
 import { ChallengeProps } from "./types";
-import { openDB } from "idb";
+// import { openDB } from "idb";
 import { authorizationHeader } from "../authHeader";
 
 const fetchMyChallenge = async () => {
   const { data } = await api.get(`/my/challenges`, authorizationHeader);
 
-  if (data) {
-    return data;
-  } else {
-    if ("indexedDB" in window) {
-      const idbPromise = await openDB("test-store", 1);
-      const store = idbPromise.transaction("test").objectStore("test");
-      const values = await store.getAll();
-      const challenges = values.map((value) => value);
-      return challenges;
-    }
-  }
+  // if (data) {
+  //   return data;
+  // } else {
+  //   if ("indexedDB" in window) {
+  //     const idbPromise = await openDB("test-store", 1);
+  //     const store = idbPromise.transaction("test").objectStore("test");
+  //     const values = await store.getAll();
+  //     const challenges = values.map((value) => value);
+  //     return challenges;
+  //   }
+  // }
+
+  return data;
 };
 
 const fetchChallengeDetail = async ({ challengeId }: ChallengeProps) => {
