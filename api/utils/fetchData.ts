@@ -47,7 +47,7 @@ const fetchData = async ({
         .get(storeUrl)
         .then((value) => value.value)
         .catch((err) => {
-          throw err;
+          throw new Error("No Data");
         });
 
       return data;
