@@ -1,18 +1,19 @@
 import { useQuery } from "@tanstack/react-query";
 import { AxiosError } from "axios";
-import {
-  fetchChallengeDetail,
-  fetchCurrentWeek,
-  fetchMyChallenge,
-  fetchOpenWeeks,
-} from ".";
+import { fetchData } from "../utils/fetchData";
 import {
   Challenge,
   CurrentWeek,
   OpenWeeks,
   OpenWeeksSelect,
 } from "../../types/Challenge";
-import { getJwtToken } from "../getJwtToken";
+import { getJwtToken } from "../utils/getJwtToken";
+import {
+  challengeDetailUrl,
+  currentWeekUrl,
+  MY_CHALLENGE,
+  openWeeksUrl,
+} from "./paths";
 
 interface Props {
   challengeId: string;
@@ -21,16 +22,16 @@ interface Props {
 
 function useChallengeDetailQuery({ challengeId, suspense = false }: Props) {
   return useQuery<Challenge, AxiosError>(
-    ["challenge", challengeId],
-    () => fetchChallengeDetail({ challengeId }),
+    [challengeDetailUrl({ challengeId })],
+    () => fetchData({ url: challengeDetailUrl({ challengeId }) }),
     { enabled: !!challengeId, suspense }
   );
 }
 
 function useCurrentWeekQuery({ challengeId }: Props) {
   return useQuery<CurrentWeek, AxiosError, number>(
-    ["currentWeek", challengeId],
-    () => fetchCurrentWeek({ challengeId }),
+    [currentWeekUrl({ challengeId })],
+    () => fetchData({ url: currentWeekUrl({ challengeId }) }),
     {
       select: (data) => data.week,
       enabled: !!challengeId,
@@ -40,8 +41,8 @@ function useCurrentWeekQuery({ challengeId }: Props) {
 
 function useOpenWeeksQuery({ challengeId }: Props) {
   return useQuery<OpenWeeks, AxiosError, OpenWeeksSelect>(
-    ["openWeeks", challengeId],
-    () => fetchOpenWeeks({ challengeId }),
+    [openWeeksUrl({ challengeId })],
+    () => fetchData({ url: openWeeksUrl({ challengeId }) }),
     {
       enabled: !!challengeId,
       select: (data) => {
@@ -57,10 +58,14 @@ function useOpenWeeksQuery({ challengeId }: Props) {
 }
 
 function useMyChallengeQuery() {
-  return useQuery<Challenge[]>(["myChallenge"], fetchMyChallenge, {
-    enabled: !!getJwtToken(),
-    suspense: true,
-  });
+  return useQuery<Challenge[]>(
+    [MY_CHALLENGE],
+    () => fetchData({ url: MY_CHALLENGE }),
+    {
+      enabled: !!getJwtToken(),
+      suspense: true,
+    }
+  );
 }
 
 export {

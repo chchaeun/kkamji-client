@@ -1,18 +1,13 @@
-import { initializeApp } from "firebase/app";
-import { getMessaging, getToken } from "firebase/messaging";
 import dynamic from "next/dynamic";
-import React, { Suspense, useEffect } from "react";
+import React, { Suspense } from "react";
 import styled from "styled-components";
-import { api } from "../../api/myApi";
 import { media } from "../../styles/media";
-import { firebaseConfig } from "../../utils/FirebaseConfig";
 import HeadTitle from "../common/HeadTitle";
 import ChallengeListSkeleton from "../skeletons/ChallengeListSkeleton";
 import DeferredComponent from "../skeletons/DeferredComponent";
 import MyPointBlock from "./blocks/MyPointBlock";
 import MissionStackedCountContainer from "./containers/MissionStackedCountContainer";
-import { authorizationHeader } from "../../api/authHeader";
-import { getJwtToken } from "../../api/getJwtToken";
+
 const ChallengeListContainer = dynamic(
   () => import("./containers/ChallengeListContainer"),
   {
@@ -31,29 +26,6 @@ const sentences = [
 const random_index = Math.floor(Math.random() * sentences.length);
 
 function DashboardPage() {
-  useEffect(() => {
-    const app = initializeApp(firebaseConfig);
-
-    const messaging = getMessaging();
-
-    getToken(messaging, {
-      vapidKey: process.env.NEXT_PUBLIC_FIREBASE_VAPID_KEY,
-    })
-      .then((currentToken) => {
-        api.post(
-          "/notification/register",
-          {
-            platform: navigator.platform,
-            fcmToken: currentToken,
-          },
-          authorizationHeader
-        );
-      })
-      .catch((err) => {
-        console.log(err);
-      });
-  }, []);
-
   return (
     <>
       <HeadTitle name="내 챌린지 : 깜지" />

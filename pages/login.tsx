@@ -5,7 +5,7 @@ import { useRouter } from "next/router";
 import React, { useEffect, useState } from "react";
 import { SubmitHandler, useForm } from "react-hook-form";
 import { postLogin } from "../api/auth";
-import { getJwtToken } from "../api/getJwtToken";
+import { getJwtToken } from "../api/utils/getJwtToken";
 import HeadTitle from "../components/common/HeadTitle";
 import { firebaseConfig } from "../utils/FirebaseConfig";
 

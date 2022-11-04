@@ -3,7 +3,7 @@ import { useMutation } from "@tanstack/react-query";
 import { useRouter } from "next/router";
 import React, { useState } from "react";
 import { SubmitHandler, useForm } from "react-hook-form";
-import { api } from "../api/myApi";
+import { apiV1 } from "../api/utils/myApi";
 import HeadTitle from "../components/common/HeadTitle";
 
 type PasswordValidForm = {
@@ -42,7 +42,7 @@ function PasswordNoticePage() {
 
   const { mutate: mutatePasswordChange } = useMutation(
     async (passwordChangeBody: PasswordValidForm) => {
-      return await api.patch("/users/password", passwordChangeBody);
+      return await apiV1.patch("/users/password", passwordChangeBody);
     },
     {
       onSuccess: () => {

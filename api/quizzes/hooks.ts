@@ -1,16 +1,28 @@
 import { useQuery } from "@tanstack/react-query";
-import { AxiosError } from "axios";
 import {
-  fetchLikedQuizzes,
-  fetchMyQuizzes,
-  fetchQuizDetail,
-  fetchQuizzes,
-  fetchSubmitCount,
-} from ".";
-import { QuizDetail, QuizSubmitCount, QuizSummary } from "../../types/Quiz";
+  MyQuizDetail,
+  MyQuizDetailSelect,
+  QuizDetail,
+  QuizSubmitCount,
+  QuizSummary,
+} from "../../types/Quiz";
+import { fetchData } from "../utils/fetchData";
+import { getJwtToken } from "../utils/getJwtToken";
+import {
+  myQuizDetailUrl,
+  quizDetailUrl,
+  quizListUrl,
+  submitCountUrl,
+  submitStackedCountUrl,
+} from "./paths";
 
 interface QuizProps {
   quizId: string;
+}
+
+interface MyQuizProps {
+  quizId: string;
+  successHandler?: Function;
 }
 
 interface QuizzesProps {
@@ -26,12 +38,28 @@ interface QuizSubmitCountProps {
 }
 
 function useQuizDetailQuery({ quizId }: QuizProps) {
-  return useQuery<QuizDetail, AxiosError>(
-    ["quizDetail", quizId],
-    () => fetchQuizDetail({ quizId }),
+  return useQuery<QuizDetail, Error>(
+    [quizDetailUrl({ quizId })],
+    () => fetchData({ url: quizDetailUrl({ quizId }) }),
     {
       enabled: !!quizId,
       onError: (err) => {},
+    }
+  );
+}
+
+function useMyQuizDetailQuery({ quizId, successHandler }: MyQuizProps) {
+  return useQuery<MyQuizDetail, Error, MyQuizDetailSelect>(
+    [myQuizDetailUrl({ quizId })],
+    () => fetchData({ url: myQuizDetailUrl({ quizId }) }),
+    {
+      select: (quizDetail) => {
+        return { ...quizDetail, quizRubric: JSON.parse(quizDetail.quizRubric) };
+      },
+      enabled: !!quizId,
+      onSuccess: (data) => {
+        successHandler(data);
+      },
     }
   );
 }
@@ -41,8 +69,8 @@ function useQuizzesQuery({
   page,
   suspense = false,
 }: QuizzesProps) {
-  const queryKey = ["quizzes", page, challengeId];
-  let queryFn;
+  const queryKey = [quizListUrl({ challengeId, page })];
+  let queryFn = () => fetchData({ url: quizListUrl({ challengeId, page }) });
   let queryOptions = {
     enabled: true,
     suspense,
@@ -54,36 +82,13 @@ function useQuizzesQuery({
     },
   };
 
-  switch (page) {
-    case "READABLE":
-      queryFn = () => fetchQuizzes({ challengeId });
-      queryOptions = {
-        ...queryOptions,
-        enabled: !!challengeId,
-      };
-      break;
-    case "MY":
-      queryFn = () => fetchMyQuizzes({ challengeId });
-      queryOptions = {
-        ...queryOptions,
-        enabled: !!challengeId,
-      };
-      break;
-    case "LIKED":
-      queryFn = () => fetchLikedQuizzes({ challengeId });
-      queryOptions = {
-        ...queryOptions,
-        enabled: !!challengeId,
-      };
-      break;
-  }
   return useQuery<QuizSummary[]>(queryKey, queryFn, queryOptions);
 }
 
 function useSubmitCountQuery({ challengeId, week }: QuizSubmitCountProps) {
-  return useQuery<QuizSubmitCount, AxiosError, number>(
-    ["quizSubmit", challengeId],
-    () => fetchSubmitCount({ challengeId, week }),
+  return useQuery<QuizSubmitCount, Error, number>(
+    [submitCountUrl({ challengeId })],
+    () => fetchData({ url: submitCountUrl({ challengeId }), params: { week } }),
     {
       select: (data) => data.count,
       enabled: !!(challengeId && week),
@@ -91,4 +96,22 @@ function useSubmitCountQuery({ challengeId, week }: QuizSubmitCountProps) {
   );
 }
 
-export { useQuizDetailQuery, useQuizzesQuery, useSubmitCountQuery };
+function useQuizSubmitStackedCount() {
+  return useQuery<{ week: number; count: number }[], Error, number[]>(
+    [submitStackedCountUrl],
+    () => fetchData({ url: submitStackedCountUrl }),
+    {
+      enabled: !!getJwtToken(),
+      suspense: true,
+      select: (data) => data.map((value) => value.count),
+    }
+  );
+}
+
+export {
+  useQuizDetailQuery,
+  useMyQuizDetailQuery,
+  useQuizzesQuery,
+  useSubmitCountQuery,
+  useQuizSubmitStackedCount,
+};

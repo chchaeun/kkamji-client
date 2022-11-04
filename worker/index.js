@@ -1,35 +1,34 @@
 self.importScripts("lib/idb.js");
 
-const idbPromise = idb.openDB("test-store", 1, {
+const idbPromise = idb.openDB("api-store", 1, {
   upgrade(db) {
-    if (!db.objectStoreNames.contains("test")) {
-      db.createObjectStore("test", { keyPath: "id" });
+    if (!db.objectStoreNames.contains("store")) {
+      db.createObjectStore("store", { keyPath: "id" });
     }
   },
 });
 
 self.addEventListener("fetch", (event) => {
-  const url = "https://dev.kkamjidot.com/v1/my/challenges";
+  const url = "https://dev.kkamjidot.com";
   const request = event?.request;
-
   let response;
 
-  if (request?.method === "GET" && request.url === url) {
+  if (request?.method === "GET" && String(request.url).includes(url)) {
+    const pathname = String(request.url).split(url)[1].slice(3);
+
     if (!event?.request) {
       return;
     }
+
     response = fetch(event?.request).then((res) => {
       const clonedRes = res.clone();
       clonedRes.json().then((data) => {
-        for (let key in data) {
-          idbPromise.then((db) => {
-            const tx = db.transaction("test", "readwrite");
-            const store = tx.objectStore("test");
-            store.put({ id: key, value: data[key] });
-
-            return tx;
-          });
-        }
+        idbPromise.then((db) => {
+          const tx = db.transaction("store", "readwrite");
+          const store = tx.objectStore("store");
+          store.put({ id: pathname, value: data });
+          return tx;
+        });
       });
       return res;
     });

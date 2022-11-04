@@ -1,4 +1,4 @@
-import { apiV2 } from "../myApi";
+import { apiV2 } from "../utils/myApi";
 import { LoginProps } from "./types";
 
 const postLogin = async (loginBody: LoginProps) => {

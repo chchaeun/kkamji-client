@@ -48,7 +48,6 @@ function QuizListContainer({ challengeId, week, page }: Props) {
     };
   }, []);
 
-  console.log(windowWidth);
   const quizListTitle = () => {
     switch (page) {
       case "MY":

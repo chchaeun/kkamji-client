@@ -17,18 +17,19 @@ import { ReactQueryDevtools } from "@tanstack/react-query-devtools";
 
 import { initializeApp } from "firebase/app";
 import { getPerformance } from "firebase/performance";
-import { getMessaging, getToken, onMessage } from "firebase/messaging";
+import { getMessaging, onMessage } from "firebase/messaging";
 import { firebaseConfig } from "../utils/FirebaseConfig";
 import Layout from "../components/layout/Layout";
 import HeadTitle from "../components/common/HeadTitle";
 
-import { getJwtToken } from "../api/getJwtToken";
+import { getJwtToken } from "../api/utils/getJwtToken";
 
 function MyApp({ Component, pageProps }: AppProps) {
   const queryClient = new QueryClient({
     defaultOptions: {
       queries: {
         retry: false,
+        networkMode: "always",
       },
     },
   });
