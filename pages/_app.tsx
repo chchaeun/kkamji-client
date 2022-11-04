@@ -15,7 +15,7 @@ import { pageview, GA_TRACKING_ID } from "../utils/gtag";
 
 import { ReactQueryDevtools } from "@tanstack/react-query-devtools";
 
-import { initializeApp } from "firebase/app";
+import { FirebaseApp, initializeApp } from "firebase/app";
 import { getPerformance } from "firebase/performance";
 import { getMessaging, onMessage } from "firebase/messaging";
 import { firebaseConfig } from "../utils/FirebaseConfig";
@@ -23,6 +23,7 @@ import Layout from "../components/layout/Layout";
 import HeadTitle from "../components/common/HeadTitle";
 
 import { getJwtToken } from "../api/utils/getJwtToken";
+import { deleteDB } from "idb";
 
 function MyApp({ Component, pageProps }: AppProps) {
   const queryClient = new QueryClient({
@@ -43,41 +44,63 @@ function MyApp({ Component, pageProps }: AppProps) {
   const router = useRouter();
 
   useEffect(() => {
-    if (
-      document.location.hostname.search("kkamjidot.com") !== -1 &&
-      document.location.hostname.search("test") === -1
-    ) {
-      const handleRouteChange = (url: URL) => {
-        pageview(url);
-      };
-      router.events.on("routeChangeComplete", handleRouteChange);
-      router.events.on("hashChangeComplete", handleRouteChange);
-      return () => {
-        router.events.off("routeChangeComplete", handleRouteChange);
-        router.events.off("hashChangeComplete", handleRouteChange);
-      };
-    }
-  }, [router.events]);
-
-  useEffect(() => {
     const app = initializeApp(firebaseConfig);
-    const performance = getPerformance(app);
 
-    const messaging = getMessaging(app);
-    onMessage(messaging, (payload) => {});
+    setPerformanceMonitoring(app);
+    setNotification(app);
+
+    setGoogleAnalytics();
+
+    const isUser = getJwtToken();
+
+    setIndexedDB(isUser);
+
+    checkAuth(isUser);
   }, []);
 
-  useEffect(() => {
-    if (
-      !getJwtToken() &&
-      !["/", "/login", "/manual", "/introduce", "/password-notice"].includes(
-        router.asPath
-      )
-    ) {
+  const setPerformanceMonitoring = (app: FirebaseApp) => {
+    const performance = getPerformance(app);
+  };
+
+  const setNotification = (app: FirebaseApp) => {
+    const messaging = getMessaging(app);
+    onMessage(messaging, (payload) => {});
+  };
+
+  const setGoogleAnalytics = () => {
+    const handleRouteChange = (url: URL) => {
+      pageview(url);
+    };
+
+    router.events.on("routeChangeComplete", handleRouteChange);
+    router.events.on("hashChangeComplete", handleRouteChange);
+
+    return () => {
+      router.events.off("routeChangeComplete", handleRouteChange);
+      router.events.off("hashChangeComplete", handleRouteChange);
+    };
+  };
+
+  const setIndexedDB = (isUser: string) => {
+    const dbName = "api-store";
+    if (!isUser) {
+      deleteDB(dbName);
+    }
+  };
+
+  const checkAuth = (isUser: string) => {
+    const publicPages = [
+      "/",
+      "/login",
+      "/manual",
+      "/introduce",
+      "/password-notice",
+    ];
+    if (!isUser && !publicPages.includes(router.asPath)) {
       alert("로그인이 필요합니다.");
       router.push("/");
     }
-  }, [router]);
+  };
 
   return (
     <RecoilRoot>

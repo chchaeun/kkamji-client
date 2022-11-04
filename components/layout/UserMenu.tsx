@@ -25,8 +25,6 @@ function UserMenu() {
     localStorage.removeItem("token");
     sessionStorage.removeItem("token");
 
-    deleteDB("api-store");
-
     window.location.replace("/");
   };
 
