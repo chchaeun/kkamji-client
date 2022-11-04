@@ -1,7 +1,7 @@
 import React from "react";
 import Link from "next/link";
 import { useRouter } from "next/router";
-import { getJwtToken } from "../../api/getJwtToken";
+import { getJwtToken } from "../../api/utils/getJwtToken";
 import styled from "styled-components";
 import { media } from "../../styles/media";
 import UserMenu from "./UserMenu";

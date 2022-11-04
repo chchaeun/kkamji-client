@@ -1,23 +1,14 @@
 import { Icon } from "@iconify/react";
-import { useQuery } from "@tanstack/react-query";
-import { AxiosError } from "axios";
 import React, { useState } from "react";
 import styled from "styled-components";
-import { fetchMyPoint } from "../../../api/point";
+import { useMyPointQuery } from "../../../api/point/hooks";
 import { media } from "../../../styles/media";
-import { MyPoint } from "../../../types/Point";
 
 function MyPointBlock() {
   const [isMouseOver, setIsMouseOver] = useState(false);
   const [isClicked, setIsClicked] = useState(false);
 
-  const { data: point } = useQuery<MyPoint, AxiosError, number>(
-    ["point"],
-    fetchMyPoint,
-    {
-      select: (data) => data.point,
-    }
-  );
+  const { data: point } = useMyPointQuery();
 
   return (
     <>

@@ -1,5 +1,5 @@
 import React from "react";
-import { getJwtToken } from "../api/getJwtToken";
+import { getJwtToken } from "../api/utils/getJwtToken";
 import DashboardPage from "../components/dashboard";
 import LandingPage from "../components/landing";
 function HomePage() {

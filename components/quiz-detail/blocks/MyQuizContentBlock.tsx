@@ -1,10 +1,6 @@
-import { useQuery } from "@tanstack/react-query";
-import { AxiosError } from "axios";
-import { useRouter } from "next/router";
 import React from "react";
 import styled from "styled-components";
-import { fetchMyQuizDetail } from "../../../api/quizzes";
-import { MyQuizDetail, MyQuizDetailSelect } from "../../../types/Quiz";
+import { useMyQuizDetailQuery } from "../../../api/quizzes/hooks";
 import ContentsFormat from "../../../utils/ContentsFormat";
 
 interface Props {
@@ -12,17 +8,7 @@ interface Props {
 }
 
 function MyQuizContentBlock({ quizId }: Props) {
-  const router = useRouter();
-  const { data: quizDetail, error } = useQuery<
-    MyQuizDetail,
-    AxiosError,
-    MyQuizDetailSelect
-  >(["myQuizDetail", quizId], () => fetchMyQuizDetail({ quizId }), {
-    select: (quizDetail) => {
-      return { ...quizDetail, quizRubric: JSON.parse(quizDetail.quizRubric) };
-    },
-    enabled: !!router.query.qid,
-  });
+  const { data: quizDetail } = useMyQuizDetailQuery({ quizId });
 
   return (
     <Container>

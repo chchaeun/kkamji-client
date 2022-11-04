@@ -1,9 +1,7 @@
 import { getJwtToken } from "./getJwtToken";
 
 const authorizationHeader = {
-  headers: {
-    Authorization: getJwtToken(),
-  },
+  Authorization: getJwtToken(),
 };
 
 export { authorizationHeader };

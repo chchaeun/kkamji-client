@@ -1,9 +1,6 @@
-import { useQuery } from "@tanstack/react-query";
-import { useRouter } from "next/router";
-import React, { useState } from "react";
+import React from "react";
 import styled from "styled-components";
-import { fetchComments } from "../../../api/comments";
-import { Comment } from "../../../types/Comment";
+import { useCommentsQuery } from "../../../api/comments/hooks";
 import QuizComment from "../blocks/QuizComment";
 import QuizCommentForm from "../blocks/QuizCommentForm";
 
@@ -12,15 +9,7 @@ interface Props {
 }
 
 function QuizCommentContainer({ quizId }: Props) {
-  const router = useRouter();
-
-  const { data: comments, error } = useQuery<Comment[]>(
-    ["comments", quizId],
-    () => fetchComments({ quizId }),
-    {
-      enabled: !!router.query.qid,
-    }
-  );
+  const { data: comments, error } = useCommentsQuery({ quizId });
 
   if (error) {
     return <></>;

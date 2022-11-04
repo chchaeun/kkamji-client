@@ -1,17 +1,12 @@
 import { Icon } from "@iconify/react";
-import { QueryClient, useMutation, useQuery } from "@tanstack/react-query";
-import { AxiosError } from "axios";
+import { QueryClient, useMutation } from "@tanstack/react-query";
 import { useRouter } from "next/router";
 import React, { useState } from "react";
 import { SubmitHandler, useFieldArray, useForm } from "react-hook-form";
 import styled from "styled-components";
-import { api } from "../../../api/myApi";
-import { fetchMyQuizDetail } from "../../../api/quizzes";
-import {
-  MyQuizDetail,
-  MyQuizDetailSelect,
-  QuizEdit,
-} from "../../../types/Quiz";
+import { apiV1 } from "../../../api/utils/myApi";
+import { QuizEdit } from "../../../types/Quiz";
+import { useMyQuizDetailQuery } from "../../../api/quizzes/hooks";
 
 interface Props {
   quizId: string;
@@ -26,7 +21,6 @@ type EditValidForm = {
   }[];
 };
 function MyQuizAnswerBlock({ quizId }: Props) {
-  const router = useRouter();
   const queryClient = new QueryClient();
 
   const [isAnswerFocus, setIsAnswerFocus] = useState(false);
@@ -103,28 +97,24 @@ function MyQuizAnswerBlock({ quizId }: Props) {
     name: "rubric",
   });
 
-  const { data: quizDetail, error } = useQuery<
-    MyQuizDetail,
-    AxiosError,
-    MyQuizDetailSelect
-  >(["myQuizDetail", quizId], () => fetchMyQuizDetail({ quizId }), {
-    select: (quizDetail) => {
-      return { ...quizDetail, quizRubric: JSON.parse(quizDetail.quizRubric) };
-    },
-    enabled: !!router.query.qid,
-    onSuccess: (data) => {
+  const { data: quizDetail, error } = useMyQuizDetailQuery({
+    quizId,
+    successHandler: (data: {
+      quizAnswer: any;
+      quizExplanation: any;
+      quizRubric: any;
+    }) => {
       reset({
         answer: data.quizAnswer,
         explanation: data.quizExplanation,
         rubric: data.quizRubric,
       });
     },
-    onError: (err) => {},
   });
 
   const { mutate: mutateAnswerEdit } = useMutation(
     async (editBody: QuizEdit) => {
-      return await api.patch(`/quizzes/${quizId}`, editBody);
+      return await apiV1.patch(`/quizzes/${quizId}`, editBody);
     },
     {
       onSuccess: () => {

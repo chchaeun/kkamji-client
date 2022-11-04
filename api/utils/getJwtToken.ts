@@ -8,9 +8,9 @@ export const getJwtToken = () => {
 
   if (token) {
     return getBearer(token);
-  } else {
-    return "";
   }
+
+  return "";
 };
 
 const getBearer = (token: string) => {
