@@ -1,9 +1,12 @@
 self.importScripts("lib/idb.js");
 
-const idbPromise = idb.openDB("api-store", 1, {
+const dbName = "api-store";
+const storeName = "store";
+
+const idbPromise = idb.openDB(dbName, 1, {
   upgrade(db) {
-    if (!db.objectStoreNames.contains("store")) {
-      db.createObjectStore("store", { keyPath: "id" });
+    if (!db.objectStoreNames.contains(storeName)) {
+      db.createObjectStore(storeName, { keyPath: "id" });
     }
   },
 });
@@ -24,8 +27,8 @@ self.addEventListener("fetch", (event) => {
       const clonedRes = res.clone();
       clonedRes.json().then((data) => {
         idbPromise.then((db) => {
-          const tx = db.transaction("store", "readwrite");
-          const store = tx.objectStore("store");
+          const tx = db.transaction(storeName, "readwrite");
+          const store = tx.objectStore(storeName);
           store.put({ id: pathname, value: data });
           return tx;
         });
