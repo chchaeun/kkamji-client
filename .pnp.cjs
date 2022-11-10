@@ -58,6 +58,7 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["babel-loader", "virtual:1ca3d45661282aa6e2c01a90bb2bde2c1af70673e4a578116428a2af70aff6d82b1728295f748f195ecea8e57b31ba96a8112edcc0dc7d20b416549af71a1795#npm:8.2.5"],\
             ["chart.js", "npm:3.9.1"],\
             ["chartjs-plugin-zoom", "virtual:1ca3d45661282aa6e2c01a90bb2bde2c1af70673e4a578116428a2af70aff6d82b1728295f748f195ecea8e57b31ba96a8112edcc0dc7d20b416549af71a1795#npm:1.2.1"],\
+            ["crypto-js", "npm:4.1.1"],\
             ["daisyui", "virtual:1ca3d45661282aa6e2c01a90bb2bde2c1af70673e4a578116428a2af70aff6d82b1728295f748f195ecea8e57b31ba96a8112edcc0dc7d20b416549af71a1795#npm:2.24.0"],\
             ["eslint", "npm:8.19.0"],\
             ["eslint-config-next", "virtual:1ca3d45661282aa6e2c01a90bb2bde2c1af70673e4a578116428a2af70aff6d82b1728295f748f195ecea8e57b31ba96a8112edcc0dc7d20b416549af71a1795#npm:12.2.2"],\
@@ -8786,6 +8787,15 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
           "linkType": "HARD"\
         }]\
       ]],\
+      ["crypto-js", [\
+        ["npm:4.1.1", {\
+          "packageLocation": "./.yarn/cache/crypto-js-npm-4.1.1-38a3b8c19d-b3747c12ee.zip/node_modules/crypto-js/",\
+          "packageDependencies": [\
+            ["crypto-js", "npm:4.1.1"]\
+          ],\
+          "linkType": "HARD"\
+        }]\
+      ]],\
       ["crypto-random-string", [\
         ["npm:1.0.0", {\
           "packageLocation": "./.yarn/cache/crypto-random-string-npm-1.0.0-e708c14263-6fc61a46c1.zip/node_modules/crypto-random-string/",\
@@ -14646,6 +14656,7 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["babel-loader", "virtual:1ca3d45661282aa6e2c01a90bb2bde2c1af70673e4a578116428a2af70aff6d82b1728295f748f195ecea8e57b31ba96a8112edcc0dc7d20b416549af71a1795#npm:8.2.5"],\
             ["chart.js", "npm:3.9.1"],\
             ["chartjs-plugin-zoom", "virtual:1ca3d45661282aa6e2c01a90bb2bde2c1af70673e4a578116428a2af70aff6d82b1728295f748f195ecea8e57b31ba96a8112edcc0dc7d20b416549af71a1795#npm:1.2.1"],\
+            ["crypto-js", "npm:4.1.1"],\
             ["daisyui", "virtual:1ca3d45661282aa6e2c01a90bb2bde2c1af70673e4a578116428a2af70aff6d82b1728295f748f195ecea8e57b31ba96a8112edcc0dc7d20b416549af71a1795#npm:2.24.0"],\
             ["eslint", "npm:8.19.0"],\
             ["eslint-config-next", "virtual:1ca3d45661282aa6e2c01a90bb2bde2c1af70673e4a578116428a2af70aff6d82b1728295f748f195ecea8e57b31ba96a8112edcc0dc7d20b416549af71a1795#npm:12.2.2"],\

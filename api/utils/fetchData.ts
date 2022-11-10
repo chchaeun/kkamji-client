@@ -3,12 +3,32 @@ import { AxiosRequestHeaders } from "axios";
 import { authorizationHeader } from "./authHeader";
 import { apiV1, apiV2 } from "./myApi";
 
+const CryptoJS = require("crypto-js");
+
 interface Props {
   url: string;
   headers?: AxiosRequestHeaders;
   params?: any;
   apiVersion?: 1 | 2;
 }
+
+const getStoreUrl = (url: string, params: any) => {
+  let storeUrl = url;
+
+  if (params) {
+    storeUrl += "?";
+  }
+
+  for (const key in params) {
+    storeUrl += `${key}=${String(params[key])}&`;
+  }
+
+  if (storeUrl.at(-1) === "&") {
+    storeUrl = storeUrl.slice(0, -1);
+  }
+
+  return storeUrl;
+};
 
 const fetchData = async ({
   url,
@@ -28,25 +48,23 @@ const fetchData = async ({
   } else {
     if (indexedDB in window) {
       const idbPromise = await openDB(name, version);
-
-      let storeUrl = url;
-
-      if (params) {
-        storeUrl += "?";
-      }
-      for (const key in params) {
-        storeUrl += `${key}=${String(params[key])}&`;
-      }
-
-      if (storeUrl.at(-1) === "&") {
-        storeUrl = storeUrl.slice(0, -1);
-      }
-
       const store = idbPromise.transaction("store").objectStore("store");
+
+      const storeUrl = getStoreUrl(url, params);
+      const encrypt_storeUrl = CryptoJS.SHA256(storeUrl).toString();
+
       const data = await store
-        .get(storeUrl)
-        .then((value) => value.value)
-        .catch((err) => {
+        .get(encrypt_storeUrl)
+        .then((value) => {
+          const bytes = CryptoJS.AES.decrypt(
+            value.value,
+            process.env.NEXT_PUBLIC_API_ENCRYPT_KEY
+          );
+          const decrypt_value = bytes.toString(CryptoJS.enc.Utf8);
+
+          return JSON.parse(decrypt_value);
+        })
+        .catch(() => {
           throw new Error("No Data");
         });
 

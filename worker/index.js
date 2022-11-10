@@ -1,4 +1,7 @@
 self.importScripts("lib/idb.js");
+self.importScripts(
+  "https://cdnjs.cloudflare.com/ajax/libs/crypto-js/4.1.1/crypto-js.min.js"
+);
 
 const dbName = "api-store";
 const storeName = "store";
@@ -12,7 +15,7 @@ const idbPromise = idb.openDB(dbName, 1, {
 });
 
 self.addEventListener("fetch", (event) => {
-  const url = "https://dev.kkamjidot.com";
+  const url = process.env.NEXT_PUBLIC_API_BASE_URL;
   const request = event?.request;
   let response;
 
@@ -29,7 +32,15 @@ self.addEventListener("fetch", (event) => {
         idbPromise.then((db) => {
           const tx = db.transaction(storeName, "readwrite");
           const store = tx.objectStore(storeName);
-          store.put({ id: pathname, value: data });
+
+          const encrypt_pathname = CryptoJS.SHA256(pathname).toString();
+
+          const encrypt_data = CryptoJS.AES.encrypt(
+            JSON.stringify(data),
+            process.env.NEXT_PUBLIC_API_ENCRYPT_KEY
+          ).toString();
+
+          store.put({ id: encrypt_pathname, value: encrypt_data });
           return tx;
         });
       });
