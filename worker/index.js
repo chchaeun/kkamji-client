@@ -23,7 +23,6 @@ self.addEventListener("fetch", (event) => {
     const pathname = String(request.url).split(url)[1].slice(3);
     const encrypt_pathname = CryptoJS.SHA256(pathname).toString();
 
-    console.log(encrypt_pathname);
     if (!event?.request) {
       return;
     }
