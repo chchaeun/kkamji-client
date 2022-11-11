@@ -16,6 +16,7 @@ const idbPromise = idb.openDB(dbName, 1, {
 
 self.addEventListener("fetch", (event) => {
   const url = process.env.NEXT_PUBLIC_API_BASE_URL;
+  console.log(url);
   const request = event?.request;
   let response;
 
@@ -39,6 +40,8 @@ self.addEventListener("fetch", (event) => {
             JSON.stringify(data),
             process.env.NEXT_PUBLIC_API_ENCRYPT_KEY
           ).toString();
+
+          console.log(encrypt_pathname);
 
           store.put({ id: encrypt_pathname, value: encrypt_data });
           return tx;
