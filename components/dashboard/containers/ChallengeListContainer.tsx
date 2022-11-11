@@ -1,21 +1,11 @@
-import { QueryClient, useQuery } from "@tanstack/react-query";
-import React, { useEffect } from "react";
+import React from "react";
 import styled from "styled-components";
-import { fetchMyChallenge } from "../../../api/challenges";
-import { getJwtToken } from "../../../api/getJwtToken";
 import { media } from "../../../styles/media";
-import { Challenge } from "../../../types/Challenge";
 import ChallengeListElement from "../blocks/ChallengeListElement";
+import { useMyChallengeQuery } from "../../../api/challenges/hooks";
 
 function ChallengeListContainer() {
-  const { data: challenges } = useQuery<Challenge[]>(
-    ["myChallenge"],
-    fetchMyChallenge,
-    {
-      enabled: !!getJwtToken(),
-      suspense: true,
-    }
-  );
+  const { data: challenges } = useMyChallengeQuery();
 
   return (
     <Container>

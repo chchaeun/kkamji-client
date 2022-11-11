@@ -1,7 +1,4 @@
-import { useQuery } from "@tanstack/react-query";
-import { AxiosError } from "axios";
 import React, { useEffect, useState } from "react";
-import { getJwtToken } from "../../../api/getJwtToken";
 import { Line } from "react-chartjs-2";
 import styled from "styled-components";
 import {
@@ -11,7 +8,7 @@ import {
   PointElement,
   LineElement,
 } from "chart.js";
-import { fetchQuizSubmitStackedCount } from "../../../api/quizzes";
+import { useQuizSubmitStackedCount } from "../../../api/quizzes/hooks";
 
 ChartJS.register(CategoryScale, LinearScale, PointElement, LineElement);
 
@@ -66,15 +63,7 @@ function MissionStackedCountChart() {
   const [data, setData] = useState<Data>();
   const [options, setOptions] = useState<Options>();
 
-  const { data: missionCount } = useQuery<
-    { week: number; count: number }[],
-    AxiosError,
-    number[]
-  >(["missionCount"], fetchQuizSubmitStackedCount, {
-    enabled: !!getJwtToken(),
-    suspense: true,
-    select: (data) => data.map((value) => value.count),
-  });
+  const { data: missionCount } = useQuizSubmitStackedCount();
 
   useEffect(() => {
     if (!missionCount) {

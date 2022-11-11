@@ -1,27 +1,20 @@
-import { authorizationHeader } from "../authHeader";
-import { api } from "../myApi";
-import { CommentDeleteProps, CommentProps, CommentUpdateProps } from "./types";
+import { authorizationHeader } from "../utils/authHeader";
+import { apiV1 } from "../utils/myApi";
 
-const fetchComments = async ({ quizId }: CommentProps) => {
-  const { data } = await api.get(
-    `/quizzes/${quizId}/comments`,
-    authorizationHeader
-  );
-  return data;
-};
+import { CommentDeleteProps, CommentUpdateProps } from "./types";
 
 const updateComment = async ({ requestData }: CommentUpdateProps) => {
   const { commentBody, quizId } = requestData;
 
-  return await api.post(
-    `/quizzes/${quizId}/comments`,
-    commentBody,
-    authorizationHeader
-  );
+  return await apiV1.post(`/quizzes/${quizId}/comments`, commentBody, {
+    headers: authorizationHeader,
+  });
 };
 
 const deleteComment = async ({ commentId }: CommentDeleteProps) => {
-  await api.delete(`/comments/${commentId}`, authorizationHeader);
+  await apiV1.delete(`/comments/${commentId}`, {
+    headers: authorizationHeader,
+  });
 };
 
-export { fetchComments, updateComment, deleteComment };
+export { updateComment, deleteComment };

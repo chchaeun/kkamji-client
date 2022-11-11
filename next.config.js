@@ -6,6 +6,7 @@ const nextConfig = {
   experimental: {
     reactMode: "concurrent",
   },
+  swcMinify: false,
 };
 
 module.exports = withPWA({

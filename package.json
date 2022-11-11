@@ -3,6 +3,7 @@
   "version": "0.1.0",
   "private": true,
   "scripts": {
+    "prebuild": "cra-append-sw --mode build --env ./.end.production",
     "dev": "next dev",
     "build": "next build && next export",
     "start": "next start",
@@ -25,6 +26,8 @@
     "babel-loader": "^8.2.5",
     "chart.js": "^3.9.1",
     "chartjs-plugin-zoom": "^1.2.1",
+    "cra-append-sw": "^2.7.0",
+    "crypto-js": "^4.1.1",
     "daisyui": "^2.24.0",
     "firebase": "^9.10.0",
     "idb": "^7.1.0",

@@ -12,20 +12,9 @@ interface QuizProps {
   quizId: string;
 }
 
-interface QuizSubmitCountProps {
-  challengeId: string;
-  week: number;
-}
-
 interface QuizRateProps {
   quizId: string;
   rate: "GOOD" | "BAD" | null;
 }
 
-export type {
-  QuizzesProps,
-  QuizSubmitProps,
-  QuizProps,
-  QuizSubmitCountProps,
-  QuizRateProps,
-};
+export type { QuizzesProps, QuizSubmitProps, QuizProps, QuizRateProps };

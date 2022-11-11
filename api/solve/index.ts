@@ -1,30 +1,19 @@
-import { authorizationHeader } from "../authHeader";
-import { api, apiV2 } from "../myApi";
-import { QuizAnswerProps, QuizGradeProps, QuizProps } from "./types";
+import { authorizationHeader } from "../utils/authHeader";
+import { apiV1, apiV2 } from "../utils/myApi";
+import { QuizAnswerProps, QuizGradeProps } from "./types";
 
 const updateQuizIsSolved = async ({ quizId, answer }: QuizAnswerProps) => {
-  return await api.post(
+  return await apiV1.post(
     `/quizzes/${quizId}/solve`,
     { answer },
-    authorizationHeader
+    { headers: authorizationHeader }
   );
 };
 
 const updateQuizGrade = async ({ quizId, scoreBody }: QuizGradeProps) => {
-  return await apiV2.post(
-    `/quizzes/${quizId}/grade`,
-    scoreBody,
-    authorizationHeader
-  );
+  return await apiV2.post(`/quizzes/${quizId}/grade`, scoreBody, {
+    headers: authorizationHeader,
+  });
 };
 
-const fetchQuizSolve = async ({ quizId }: QuizProps) => {
-  const { data } = await apiV2.get(
-    `/quizzes/${quizId}/solve`,
-    authorizationHeader
-  );
-
-  return data;
-};
-
-export { updateQuizIsSolved, updateQuizGrade, fetchQuizSolve };
+export { updateQuizIsSolved, updateQuizGrade };

@@ -1,4 +1,5 @@
 import { Icon } from "@iconify/react";
+import { deleteDB } from "idb";
 import { useRouter } from "next/router";
 import React, { useState } from "react";
 import styled from "styled-components";
@@ -18,10 +19,12 @@ function UserMenu() {
     router.push("/");
   };
 
-  const onLogoutClick = () => {
+  const onLogoutClick = async () => {
     setShowDropdown(false);
+
     localStorage.removeItem("token");
     sessionStorage.removeItem("token");
+
     window.location.replace("/");
   };
 

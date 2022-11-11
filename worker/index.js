@@ -1,35 +1,47 @@
 self.importScripts("lib/idb.js");
+self.importScripts(
+  "https://cdnjs.cloudflare.com/ajax/libs/crypto-js/4.1.1/crypto-js.min.js"
+);
 
-const idbPromise = idb.openDB("test-store", 1, {
+const dbName = "api-store";
+const storeName = "store";
+
+const idbPromise = idb.openDB(dbName, 1, {
   upgrade(db) {
-    if (!db.objectStoreNames.contains("test")) {
-      db.createObjectStore("test", { keyPath: "id" });
+    if (!db.objectStoreNames.contains(storeName)) {
+      db.createObjectStore(storeName, { keyPath: "id" });
     }
   },
 });
 
 self.addEventListener("fetch", (event) => {
-  const url = "https://dev.kkamjidot.com/v1/my/challenges";
+  const url = process.env.NEXT_PUBLIC_API_BASE_URL;
   const request = event?.request;
-
   let response;
 
-  if (request?.method === "GET" && request.url === url) {
+  if (request?.method === "GET" && String(request.url).includes(url)) {
+    const pathname = String(request.url).split(url)[1].slice(3);
+    const encrypt_pathname = CryptoJS.SHA256(pathname).toString();
+
     if (!event?.request) {
       return;
     }
+
     response = fetch(event?.request).then((res) => {
       const clonedRes = res.clone();
       clonedRes.json().then((data) => {
-        for (let key in data) {
-          idbPromise.then((db) => {
-            const tx = db.transaction("test", "readwrite");
-            const store = tx.objectStore("test");
-            store.put({ id: key, value: data[key] });
+        idbPromise.then((db) => {
+          const tx = db.transaction(storeName, "readwrite");
+          const store = tx.objectStore(storeName);
 
-            return tx;
-          });
-        }
+          const encrypt_data = CryptoJS.AES.encrypt(
+            JSON.stringify(data),
+            url
+          ).toString();
+
+          store.put({ id: encrypt_pathname, value: encrypt_data });
+          return tx;
+        });
       });
       return res;
     });

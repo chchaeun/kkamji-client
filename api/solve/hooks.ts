@@ -1,13 +1,14 @@
 import { useQuery } from "@tanstack/react-query";
 import { AxiosError } from "axios";
-import { fetchQuizSolve } from ".";
 import { QuizSolve, QuizSolveSelect } from "../../types/Quiz";
+import { fetchData } from "../utils/fetchData";
+import { quizSolveUrl } from "./paths";
 import { QuizProps } from "./types";
 
 function useQuizSolveQuery({ quizId }: QuizProps) {
   return useQuery<QuizSolve, AxiosError, QuizSolveSelect>(
-    ["quizSolve", quizId],
-    () => fetchQuizSolve({ quizId }),
+    [quizSolveUrl({ quizId })],
+    () => fetchData({ url: quizSolveUrl({ quizId }), apiVersion: 2 }),
     {
       enabled: !!quizId,
       select: (data) => {
