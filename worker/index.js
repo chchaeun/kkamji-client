@@ -17,12 +17,16 @@ const idbPromise = idb.openDB(dbName, 1, {
 self.addEventListener("fetch", (event) => {
   const url = process.env.NEXT_PUBLIC_API_BASE_URL;
   console.log(url);
+  const encrypt_key = process.env.NEXT_PUBLIC_API_ENCRYPT_KEY;
+  console.log(encrypt_key);
   const request = event?.request;
   let response;
 
   if (request?.method === "GET" && String(request.url).includes(url)) {
     const pathname = String(request.url).split(url)[1].slice(3);
+    const encrypt_pathname = CryptoJS.SHA256(pathname).toString();
 
+    console.log(encrypt_pathname);
     if (!event?.request) {
       return;
     }
@@ -34,14 +38,10 @@ self.addEventListener("fetch", (event) => {
           const tx = db.transaction(storeName, "readwrite");
           const store = tx.objectStore(storeName);
 
-          const encrypt_pathname = CryptoJS.SHA256(pathname).toString();
-
           const encrypt_data = CryptoJS.AES.encrypt(
             JSON.stringify(data),
-            process.env.NEXT_PUBLIC_API_ENCRYPT_KEY
+            encrypt_key
           ).toString();
-
-          console.log(encrypt_pathname);
 
           store.put({ id: encrypt_pathname, value: encrypt_data });
           return tx;
