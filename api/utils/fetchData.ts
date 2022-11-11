@@ -58,7 +58,7 @@ const fetchData = async ({
         .then((value) => {
           const bytes = CryptoJS.AES.decrypt(
             value.value,
-            process.env.NEXT_PUBLIC_API_ENCRYPT_KEY
+            process.env.NEXT_PUBLIC_API_BASE_URL
           );
           const decrypt_value = bytes.toString(CryptoJS.enc.Utf8);
 
