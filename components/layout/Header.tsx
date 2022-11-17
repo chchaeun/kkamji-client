@@ -47,7 +47,7 @@ function Header() {
 export default Header;
 
 const Container = styled.div<{ isLoginPage: boolean }>`
-  display: ${(p) => (p.isLoginPage ? "none" : "flex")};
+  display: flex;
   flex-direction: row;
   justify-content: space-between;
   align-items: center;
@@ -64,6 +64,8 @@ const Container = styled.div<{ isLoginPage: boolean }>`
   z-index: 20;
 
   ${media.medium`
+    display: ${(p: { isLoginPage: boolean }) =>
+      p.isLoginPage ? "none" : "flex"};
     padding: 10px 16px;
     height: 51px;
   `}
