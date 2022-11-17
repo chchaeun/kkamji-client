@@ -147,7 +147,10 @@ function Login() {
                   isError={Boolean(errors.password)}
                   placeholder={"비밀번호"}
                 />
-                <button onClick={() => setShowPassword((prev) => !prev)}>
+                <button
+                  type="button"
+                  onClick={() => setShowPassword((prev) => !prev)}
+                >
                   {showPassword ? (
                     <Icon icon="heroicons:eye" color="#9ca3af" />
                   ) : (
