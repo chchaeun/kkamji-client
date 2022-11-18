@@ -18,40 +18,35 @@ function Header() {
   };
 
   return (
-    <>
-      {!isSameRoute("/login") && (
-        <Container>
-          <Link href={"/"}>
-            <Logo className="logo" role="button">
-              깜지.
-            </Logo>
+    <Container isLoginPage={isSameRoute("/login")}>
+      <Link href={"/"}>
+        <Logo className="logo" role="button">
+          깜지.
+        </Logo>
+      </Link>
+      <Navigation>
+        <Ul>
+          <Li showInMedium={false}>
+            <Link href="/introduce">깜지 소개</Link>
+          </Li>
+          <Li showInMedium={true}>
+            <Link href="/manual">문제 매뉴얼</Link>
+          </Li>
+        </Ul>
+        {isUser && <UserMenu />}
+        {!isUser && !isSameRoute("/login") && (
+          <Link href={`/login`}>
+            <Button type="button">로그인</Button>
           </Link>
-          <Navigation>
-            <Ul>
-              <Li showInMedium={false}>
-                <Link href="/introduce">깜지 소개</Link>
-              </Li>
-              <Li showInMedium={true}>
-                <Link href="/manual">문제 매뉴얼</Link>
-              </Li>
-            </Ul>
-            {isUser ? (
-              <UserMenu />
-            ) : (
-              <Link href={`/login`}>
-                <Button type="button">로그인</Button>
-              </Link>
-            )}
-          </Navigation>
-        </Container>
-      )}
-    </>
+        )}
+      </Navigation>
+    </Container>
   );
 }
 
 export default Header;
 
-const Container = styled.div`
+const Container = styled.div<{ isLoginPage: boolean }>`
   display: flex;
   flex-direction: row;
   justify-content: space-between;
@@ -69,6 +64,8 @@ const Container = styled.div`
   z-index: 20;
 
   ${media.medium`
+    display: ${(p: { isLoginPage: boolean }) =>
+      p.isLoginPage ? "none" : "flex"};
     padding: 10px 16px;
     height: 51px;
   `}

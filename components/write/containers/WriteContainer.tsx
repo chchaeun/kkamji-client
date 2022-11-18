@@ -397,11 +397,13 @@ const Container = styled.div`
   background: #ffffff;
   border-radius: 8px;
 `;
+
 const Form = styled.form`
   display: flex;
   flex-direction: column;
   gap: 30px;
 `;
+
 const Block = styled.div`
   display: flex;
   flex-direction: column;
@@ -505,6 +507,7 @@ const Rubric = styled.div`
     padding: 0px 10px 20px 0px;
   }
 `;
+
 const RubricColDiv = styled.div`
   display: flex;
   flex-direction: column;
@@ -512,6 +515,7 @@ const RubricColDiv = styled.div`
 
   width: 100%;
 `;
+
 const InputBox = styled.div`
   display: flex;
   gap: 12px;
@@ -522,6 +526,7 @@ const InputBox = styled.div`
     width: 80px;
   }
 `;
+
 const RubricButton = styled.button`
   display: flex;
   flex-direction: row;
