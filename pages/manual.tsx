@@ -7,6 +7,7 @@ import WriteContainer from "../components/write/containers/WriteContainer";
 import { media } from "../styles/media";
 
 function Manual() {
+  const OPENCHAT_LINK = "https://open.kakao.com/o/sKmvifwe";
   return (
     <>
       <HeadTitle name="문제 제출 매뉴얼 : 깜지" />
@@ -23,11 +24,11 @@ function Manual() {
           <br />
           교수님의 퀴즈 양식에 맞게 문제 제출 방식을 추가할 수 있습니다.
         </Description>
-        <Link href="https://open.kakao.com/o/sKmvifwe" target="_black">
+        <Link href={OPENCHAT_LINK} target="_black">
           {"깜지 서포터즈 문의 >"}
         </Link>
         <Frame>
-          <HeaderContainer challengeId={"1"} />
+          <HeaderContainer challengeId={"1"} isManual={true} />
           <WriteContainer challengeId={"1"} isManual={true} />
         </Frame>
       </Background>
@@ -36,7 +37,7 @@ function Manual() {
         <Description>
           문제 제출 매뉴얼은 PC버전에서 확인할 수 있습니다.
         </Description>
-        <Link href="https://open.kakao.com/o/sKmvifwe" target="_black">
+        <Link href={OPENCHAT_LINK} target="_black">
           {"깜지 서포터즈 문의 >"}
         </Link>
       </Medium>
