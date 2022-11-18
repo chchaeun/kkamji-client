@@ -1,4 +1,3 @@
-import Link from "next/link";
 import { useRouter } from "next/router";
 import React from "react";
 import styled from "styled-components";
@@ -10,9 +9,16 @@ import { useSubmitCountQuery } from "../../../api/quizzes/hooks";
 
 interface Props {
   challengeId: string;
+  isManual?: boolean;
 }
 
-function HeaderContainer({ challengeId }: Props) {
+function HeaderContainer({ challengeId, isManual }: Props) {
+  const MANUAL = Object.freeze({
+    TITLE: "자료구조",
+    CURRENT_WEEK: 5,
+    SUBMIT_COUNT: 2,
+  });
+
   const { data: challenge } = useChallengeDetailQuery({ challengeId });
   const { data: currentWeek } = useCurrentWeekQuery({ challengeId });
   const { data: submitCount } = useSubmitCountQuery({
@@ -23,6 +29,10 @@ function HeaderContainer({ challengeId }: Props) {
   const router = useRouter();
 
   const onLinkClick = (link: string) => {
+    if (isManual) {
+      return;
+    }
+
     const pageLeaveConfirmMessage =
       "페이지를 떠나시겠습니까? 변경 사항이 저장되지 않을 수 있습니다.";
     const pageLeave = confirm(pageLeaveConfirmMessage);
@@ -42,7 +52,7 @@ function HeaderContainer({ challengeId }: Props) {
           type="button"
           onClick={() => onLinkClick(`/challenges/${challengeId}`)}
         >
-          {challenge?.title}
+          {isManual ? MANUAL.TITLE : challenge?.title}
         </BreadCrumpButton>
         <Dash aria-hidden>/</Dash>
         <BreadCrumpButton
@@ -55,10 +65,14 @@ function HeaderContainer({ challengeId }: Props) {
       <Horizontal />
       <TitleBlock>
         <Badges>
-          <Badge color={"BLACK"}>{currentWeek}주차</Badge>
-          <Badge color={"GREEN"}>문제 제출 현황 {submitCount}/2</Badge>
+          <Badge color={"BLACK"}>
+            {isManual ? MANUAL.CURRENT_WEEK : currentWeek}주차
+          </Badge>
+          <Badge color={"GREEN"}>
+            문제 제출 현황 {isManual ? MANUAL.SUBMIT_COUNT : submitCount}/2
+          </Badge>
         </Badges>
-        <Title>{challenge?.title}</Title>
+        <Title> {isManual ? MANUAL.TITLE : challenge?.title}</Title>
       </TitleBlock>
     </Container>
   );
