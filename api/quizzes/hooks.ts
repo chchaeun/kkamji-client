@@ -58,7 +58,9 @@ function useMyQuizDetailQuery({ quizId, successHandler }: MyQuizProps) {
       },
       enabled: !!quizId,
       onSuccess: (data) => {
-        successHandler(data);
+        if (successHandler) {
+          successHandler(data);
+        }
       },
     }
   );

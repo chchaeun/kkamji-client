@@ -26,10 +26,10 @@ function Header() {
       </Link>
       <Navigation>
         <Ul>
-          <Li showInMedium={false}>
+          <Li showInMedium={true}>
             <Link href="/introduce">깜지 소개</Link>
           </Li>
-          <Li showInMedium={true}>
+          <Li showInMedium={false}>
             <Link href="/manual">문제 매뉴얼</Link>
           </Li>
         </Ul>
