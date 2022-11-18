@@ -5,9 +5,11 @@ import { Icon } from "@iconify/react";
 import { SubmitHandler, useFieldArray, useForm } from "react-hook-form";
 import { QueryClient, useMutation } from "@tanstack/react-query";
 import { updateQuiz } from "../../../api/quizzes";
+import ManualBox from "../blocks/ManualBox";
 
 interface Props {
   challengeId: string;
+  isManual?: boolean;
 }
 
 type QuizWriteValidForm = {
@@ -21,7 +23,7 @@ type QuizWriteValidForm = {
   }[];
 };
 
-function WriteContainer({ challengeId }: Props) {
+function WriteContainer({ challengeId, isManual }: Props) {
   const queryClient = new QueryClient();
 
   const [contentImage, setContentImage] = useState<File | null>(null);
@@ -147,6 +149,11 @@ function WriteContainer({ challengeId }: Props) {
     if (contentImage) {
       quizSubmitFormData.append("quizFiles", contentImage);
     }
+
+    if (isManual) {
+      alert("매뉴얼은 실제로 제출되지 않습니다.");
+      return;
+    }
     mutateQuizSubmit(quizSubmitFormData);
   };
 
@@ -184,6 +191,7 @@ function WriteContainer({ challengeId }: Props) {
               {titleRef.current?.length || 0}/{MAX_LENGTH.title}
             </TextCount>
           </RowDiv>
+          {isManual && <ManualBox index={1} />}
         </Block>
         <Block>
           <Title>
@@ -217,12 +225,14 @@ function WriteContainer({ challengeId }: Props) {
               {contentRef.current?.length || 0}/{MAX_LENGTH.content}
             </TextCount>
           </RowDiv>
+          {isManual && <ManualBox index={2} />}
         </Block>
         <Block>
           <Title>문제 이미지 첨부</Title>
           <ImageInputBlock
             contentImageState={{ contentImage, setContentImage }}
           />
+          {isManual && <ManualBox index={3} isLeft={true} />}
         </Block>
         <Block>
           <Title>
@@ -256,6 +266,7 @@ function WriteContainer({ challengeId }: Props) {
               {answerRef.current?.length || 0}/{MAX_LENGTH.answer}
             </TextCount>
           </RowDiv>
+          {isManual && <ManualBox index={4} isLeft={true} />}
         </Block>
         <Block>
           <Title>
@@ -289,6 +300,7 @@ function WriteContainer({ challengeId }: Props) {
               {explanationRef.current?.length || 0}/{MAX_LENGTH.explanation}
             </TextCount>
           </RowDiv>
+          {isManual && <ManualBox index={5} />}
         </Block>
         <Block>
           <Title>
@@ -380,6 +392,7 @@ function WriteContainer({ challengeId }: Props) {
               </RubricButton>
             )}
           </RubricBox>
+          {isManual && <ManualBox index={6} />}
         </Block>
         <FormButton type="submit" isDisabled={isDisabled()}>
           문제 제출하기
@@ -408,6 +421,8 @@ const Block = styled.div`
   display: flex;
   flex-direction: column;
   gap: 8px;
+
+  position: relative;
 `;
 
 const Title = styled.h3`
