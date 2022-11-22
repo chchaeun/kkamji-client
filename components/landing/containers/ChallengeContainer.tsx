@@ -72,7 +72,7 @@ const Blocks = styled.div`
   display: flex;
   gap: 15px;
 
-  width: 100%;
+  margin-bottom: 15px;
 
   ${media.medium`
     flex-direction: column;
