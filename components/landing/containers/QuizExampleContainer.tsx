@@ -30,9 +30,9 @@ function QuizExampleContainer() {
         </SecondSpeech>
       </Speechs>
       <Images>
-        <img src="image/landing/quiz1.png" />
-        <img src="image/landing/quiz2.png" />
         <img src="image/landing/quiz3.png" />
+        <img src="image/landing/quiz2.png" />
+        <img src="image/landing/quiz1.png" />
         <img src="image/landing/quiz4.png" />
       </Images>
     </Container>
