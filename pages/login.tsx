@@ -35,13 +35,11 @@ function Login() {
   const [isAutoLogin, setIsAutoLogin] = useState(false);
   const [showPassword, setShowPassword] = useState(false);
 
-  useEffect(() => {
-    const isUser = getJwtToken();
+  const isUser = getJwtToken();
 
-    if (isUser) {
-      router.push("/");
-    }
-  });
+  if (isUser) {
+    router.push("/");
+  }
 
   const onAutoLoginClick = () => {
     setIsAutoLogin((prev) => !prev);
@@ -58,7 +56,7 @@ function Login() {
           sessionStorage.setItem("token", res.data.token);
           localStorage.removeItem("token");
         }
-        window.location.reload();
+        router.push("/");
       },
       onError: () => {
         alert("로그인에 실패했습니다.");

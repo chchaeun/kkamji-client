@@ -2,6 +2,7 @@ import { openDB } from "idb";
 import { AxiosRequestHeaders } from "axios";
 import { authorizationHeader } from "./authHeader";
 import { apiV1, apiV2 } from "./myApi";
+import { getJwtToken } from "./getJwtToken";
 
 const CryptoJS = require("crypto-js");
 
@@ -32,7 +33,7 @@ const getStoreUrl = (url: string, params: any) => {
 
 const fetchData = async ({
   url,
-  headers = authorizationHeader,
+  headers = authorizationHeader(getJwtToken()),
   params,
   apiVersion = 1,
 }: Props) => {

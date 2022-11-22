@@ -1,6 +1,6 @@
 export const getJwtToken = () => {
   if (typeof window === "undefined") {
-    return "";
+    return null;
   }
 
   const token =
@@ -10,7 +10,7 @@ export const getJwtToken = () => {
     return getBearer(token);
   }
 
-  return "";
+  return null;
 };
 
 const getBearer = (token: string) => {
