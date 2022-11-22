@@ -76,4 +76,12 @@ const SecondSpeech = styled.div`
   `}
 `;
 
-export { Title, Description, Speechs, FirstSpeech, SecondSpeech };
+const Br = styled.br`
+  display: none;
+
+  ${media.medium`
+    display: block;
+  `}
+`;
+
+export { Title, Description, Speechs, FirstSpeech, SecondSpeech, Br };

@@ -2,6 +2,7 @@ import styled from "styled-components";
 import ChallengeContainer from "./containers/ChallengeContainer";
 import ProfessorContainer from "./containers/ProfessorContainer";
 import QuizExampleContainer from "./containers/QuizExampleContainer";
+import SupportContainer from "./containers/SupportContainer";
 import TitleContainer from "./containers/TitleContainer";
 
 function LandingPage() {
@@ -11,6 +12,7 @@ function LandingPage() {
       <ProfessorContainer />
       <ChallengeContainer />
       <QuizExampleContainer />
+      <SupportContainer />
     </Frame>
   );
 }

@@ -2,6 +2,7 @@ import React from "react";
 import styled from "styled-components";
 import { media } from "../../../styles/media";
 import {
+  Br,
   Description,
   FirstSpeech,
   SecondSpeech,
@@ -52,14 +53,6 @@ const Container = styled.div`
 
   ${media.medium`
     padding: 54px 20px;
-  `}
-`;
-
-const Br = styled.br`
-  display: none;
-
-  ${media.medium`
-    display: block;
   `}
 `;
 
