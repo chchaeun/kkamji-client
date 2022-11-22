@@ -34,4 +34,46 @@ const Description = styled.p<{ color: string }>`
   `}
 `;
 
-export { Title, Description };
+const Speechs = styled.div`
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+
+  padding: 30px 0px;
+`;
+
+const FirstSpeech = styled.div`
+  display: flex;
+  justify-content: flex-end;
+
+  img {
+    width: 260px;
+  }
+
+  ${media.medium`
+    justify-content: center;
+
+    img{
+        width: 236px;
+    }
+  `}
+`;
+
+const SecondSpeech = styled.div`
+  display: flex;
+  justify-content: flex-start;
+
+  img {
+    width: 443px;
+  }
+
+  ${media.medium`
+    justify-content: center;
+
+    img{
+        width: 326px;
+    }
+  `}
+`;
+
+export { Title, Description, Speechs, FirstSpeech, SecondSpeech };
