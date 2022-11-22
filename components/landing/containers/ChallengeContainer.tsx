@@ -1,7 +1,13 @@
 import React from "react";
 import styled from "styled-components";
 import { media } from "../../../styles/media";
-import { Description, Title } from "../styles";
+import {
+  Description,
+  FirstSpeech,
+  SecondSpeech,
+  Speechs,
+  Title,
+} from "../styles";
 
 function ChallengeContainer() {
   return (
@@ -59,47 +65,6 @@ const Container = styled.div`
 
   ${media.medium`
     padding: 54px 20px;
-  `}
-`;
-
-const Speechs = styled.div`
-  display: flex;
-  flex-direction: column;
-  gap: 20px;
-
-  padding: 30px 0px;
-`;
-
-const FirstSpeech = styled.div`
-  display: flex;
-  justify-content: flex-end;
-
-  img {
-    width: 260px;
-  }
-
-  ${media.medium`
-    justify-content: center;
-
-    img{
-        width: 236px;
-    }
-  `}
-`;
-const SecondSpeech = styled.div`
-  display: flex;
-  justify-content: flex-start;
-
-  img {
-    width: 443px;
-  }
-
-  ${media.medium`
-    justify-content: center;
-
-    img{
-        width: 326px;
-    }
   `}
 `;
 
