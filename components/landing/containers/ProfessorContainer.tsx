@@ -1,16 +1,17 @@
 import React from "react";
 import styled from "styled-components";
 import { media } from "../../../styles/media";
+import { Description, Title } from "../styles";
 
 function ProfessorContainer() {
   return (
     <Container>
-      <Title>
+      <Title color="white">
         교수님이 말씀하신 A+의 지름길,
         <br />
         바로 문제 만들기입니다.
       </Title>
-      <Description>
+      <Description color="white">
         {`"심화 지식을 요구하는 전공 이론 과목의 경우, 직접 문제를 만들며 공부했을 때 더욱 높은 학습 효과를 거둘 수 있습니다."`}
       </Description>
       <Profile>
@@ -35,39 +36,6 @@ const Container = styled.div`
 
   ${media.medium`
     padding: 54px 40px;
-  `}
-`;
-
-const Title = styled.h2`
-  font-family: "GongGothicMedium";
-  font-style: normal;
-  font-weight: 500;
-  font-size: 24px;
-  line-height: 150%;
-
-  text-align: center;
-
-  color: #ffffff;
-
-  ${media.medium`
-    font-size: 20px;
-  `}
-`;
-
-const Description = styled.p`
-  font-style: normal;
-  font-weight: 500;
-  font-size: 16px;
-  line-height: 150%;
-
-  text-align: center;
-
-  color: #ffffff;
-
-  opacity: 0.8;
-
-  ${media.medium`
-    font-size: 14px;
   `}
 `;
 

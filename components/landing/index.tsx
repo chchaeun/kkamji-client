@@ -1,4 +1,5 @@
 import styled from "styled-components";
+import ChallengeContainer from "./containers/ChallengeContainer";
 import ProfessorContainer from "./containers/ProfessorContainer";
 import TitleContainer from "./containers/TitleContainer";
 
@@ -7,6 +8,7 @@ function LandingPage() {
     <Frame>
       <TitleContainer />
       <ProfessorContainer />
+      <ChallengeContainer />
     </Frame>
   );
 }
