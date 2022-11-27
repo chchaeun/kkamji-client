@@ -1,6 +1,7 @@
 # 깜지
 
-- 퀴즈 공유 기반 스터디 챌린지 플랫폼
+퀴즈 공유 기반 스터디 챌린지 플랫폼
+
   ![kkamji](https://s3.us-west-2.amazonaws.com/secure.notion-static.com/74d93bec-d183-4edb-bd32-6845c1b60a5f/slide_1.jpg?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Content-Sha256=UNSIGNED-PAYLOAD&X-Amz-Credential=AKIAT73L2G45EIPT3X45%2F20221127%2Fus-west-2%2Fs3%2Faws4_request&X-Amz-Date=20221127T082643Z&X-Amz-Expires=86400&X-Amz-Signature=b0740180625019de8d090c9e9209d9c01a712f54d7c38f603cc8d529c0cb2c59&X-Amz-SignedHeaders=host&response-content-disposition=filename%3D%22slide%25201.jpg%22&x-id=GetObject)
 
 ## 링크
