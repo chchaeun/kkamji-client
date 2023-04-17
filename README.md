@@ -1,8 +1,10 @@
 # 깜지
 
 퀴즈 공유 기반 스터디 챌린지 플랫폼
-- [깜지 사이트](www.kkamjidot.com)
+- [데모](www.kkamjidot.com)
 - [기술 블로그](https://velog.io/@chchaeun/series/%EC%9C%A0%EC%A0%80%EC%97%90-%EC%9D%98%ED%95%9C-%EC%9C%A0%EC%A0%80%EB%A5%BC-%EC%9C%84%ED%95%9C-%EA%B9%9C%EC%A7%80-%EA%B0%9C%EB%B0%9C%EA%B8%B0)
+![image](https://user-images.githubusercontent.com/85024598/232419676-2d72eef2-9ec1-4b47-b968-186aa3087dbd.png)
+
 
 ## 목적과 필요성
 
@@ -22,13 +24,7 @@
 - 퀴즈에 의견을 남기고 평가한다.
 
 ## 프론트엔드 기술 스택
-
-- Next.js
-- TypeScript
-- PWA, Service Worker
-- React Query
-- Recoil
-- Chart.js
+![넥스트js, 타입스크립트, pwa, 리액트 쿼리, 리코일, 차트js](https://user-images.githubusercontent.com/85024598/232423697-2745e06f-572c-4fc0-b184-1b7742ee9420.png)
 
 ## TEAM 배워서 남주는 개발자들
 ### Vision
@@ -40,11 +36,11 @@
 |Front End|Back End|Infra / PO|
 
 ### Sprint
+- [회고록](./docs)
 - 에픽
 ![image](https://user-images.githubusercontent.com/85024598/232418244-9843234a-ae9b-4134-97d3-c6d3bc4ad81d.png)
 - 2022/06 ~ 2022/11 진행
 ![image](https://user-images.githubusercontent.com/85024598/232417541-5d749f3c-b8c3-4da5-97d2-f0c2a5e31437.png)
-- [회고록](https://github.com/chchaeun/kkamji-client/wiki/Sprint-Review-%F0%9F%8F%83%E2%80%8D%E2%99%80%EF%B8%8F)
 
 ### KPI
 - 주차별 평균 미션 달성률
