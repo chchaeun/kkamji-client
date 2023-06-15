@@ -385,7 +385,7 @@ function WriteContainer({ challengeId, isManual }: Props) {
               <RubricButton
                 type="button"
                 onClick={() => {
-                  append({});
+                  append({ score: 0, content: "" });
                 }}
               >
                 채점 기준 추가하기 +
