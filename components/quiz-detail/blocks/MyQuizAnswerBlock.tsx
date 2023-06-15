@@ -246,7 +246,7 @@ function MyQuizAnswerBlock({ quizId }: Props) {
                   <button
                     type="button"
                     onClick={() => {
-                      append({});
+                      append({ score: 0, content: "" });
                     }}
                   >
                     <Icon
