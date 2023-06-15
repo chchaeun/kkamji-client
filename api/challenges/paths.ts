@@ -5,11 +5,11 @@ const challengeDetailUrl = ({ challengeId }: Props) => {
   return `/challenges/${challengeId}`;
 };
 const currentWeekUrl = ({ challengeId }: Props) => {
-  return `/challenges/${challengeId}/now`;
+  return `${challengeDetailUrl({ challengeId })}/now`;
 };
 
 const openWeeksUrl = ({ challengeId }: Props) => {
-  return `/challenges/${challengeId}/weeks`;
+  return `${challengeDetailUrl({ challengeId })}/weeks`;
 };
 
 const MY_CHALLENGE = "/my/challenges";

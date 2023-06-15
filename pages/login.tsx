@@ -58,7 +58,7 @@ function Login() {
         }
         router.push("/");
       },
-      onError: () => {
+      onError: (err) => {
         alert("로그인에 실패했습니다.");
       },
     }
@@ -70,6 +70,12 @@ function Login() {
     formState: { errors },
     resetField,
   } = useForm<LoginValidForm>();
+
+  useEffect(() => {
+    alert(
+      "데모 버전 사이트입니다. 임시 등록된 아이디로 접속 가능하며, 모든 기능이 원활하게 동작하지 않을 수 있습니다."
+    );
+  }, []);
 
   useEffect(() => {
     const app = initializeApp(firebaseConfig);
@@ -125,6 +131,7 @@ function Login() {
                   })}
                   isError={Boolean(errors.email)}
                   placeholder={"이메일 주소"}
+                  defaultValue={"kkamjidot@gmail.com"}
                 />
                 <button type="button" onClick={() => resetField("email")}>
                   <Icon icon="heroicons:x-mark-20-solid" color="#9ca3af" />
@@ -144,6 +151,7 @@ function Login() {
                   })}
                   isError={Boolean(errors.password)}
                   placeholder={"비밀번호"}
+                  defaultValue={"kkamjidot123"}
                 />
                 <button
                   type="button"
