@@ -43,7 +43,7 @@ function WriteContainer({ challengeId, isManual }: Props) {
       defaultValues: {
         rubric: [
           {
-            score: "10",
+            score: 10,
             content: "",
           },
         ],
