@@ -18,7 +18,7 @@ type QuizWriteValidForm = {
   answer: string;
   explanation: string;
   rubric: {
-    score: string;
+    score: number;
     content: string;
   }[];
 };
