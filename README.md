@@ -1,13 +1,10 @@
 # 깜지
 
 퀴즈 공유 기반 스터디 챌린지 플랫폼
-
-  ![kkamji](https://s3.us-west-2.amazonaws.com/secure.notion-static.com/74d93bec-d183-4edb-bd32-6845c1b60a5f/slide_1.jpg?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Content-Sha256=UNSIGNED-PAYLOAD&X-Amz-Credential=AKIAT73L2G45EIPT3X45%2F20221127%2Fus-west-2%2Fs3%2Faws4_request&X-Amz-Date=20221127T082643Z&X-Amz-Expires=86400&X-Amz-Signature=b0740180625019de8d090c9e9209d9c01a712f54d7c38f603cc8d529c0cb2c59&X-Amz-SignedHeaders=host&response-content-disposition=filename%3D%22slide%25201.jpg%22&x-id=GetObject)
-
-## 링크
-
-- [깜지 사이트](www.kkamjidot.com)
+- [데모](www.kkamjidot.com)
 - [기술 블로그](https://velog.io/@chchaeun/series/%EC%9C%A0%EC%A0%80%EC%97%90-%EC%9D%98%ED%95%9C-%EC%9C%A0%EC%A0%80%EB%A5%BC-%EC%9C%84%ED%95%9C-%EA%B9%9C%EC%A7%80-%EA%B0%9C%EB%B0%9C%EA%B8%B0)
+![image](https://user-images.githubusercontent.com/85024598/232419676-2d72eef2-9ec1-4b47-b968-186aa3087dbd.png)
+
 
 ## 목적과 필요성
 
@@ -27,10 +24,26 @@
 - 퀴즈에 의견을 남기고 평가한다.
 
 ## 프론트엔드 기술 스택
+![넥스트js, 타입스크립트, pwa, 리액트 쿼리, 리코일, 차트js](https://user-images.githubusercontent.com/85024598/232423697-2745e06f-572c-4fc0-b184-1b7742ee9420.png)
 
-- Next.js
-- TypeScript
-- PWA, Service Worker
-- React Query
-- Recoil
-- Chart.js
+## TEAM 배워서 남주는 개발자들
+### Vision
+지식의 선순환 생태계를 구축한다.
+## Members
+|![image](https://user-images.githubusercontent.com/85024598/161661535-974fd170-5cb4-45d6-b878-13f2588827b9.png)|![image](https://user-images.githubusercontent.com/85024598/232415757-9d30bfbe-9149-4d70-9cea-c797aa7872b0.png)|![image](https://user-images.githubusercontent.com/85024598/232415830-b7db32fd-fa23-4089-828d-286ddabc3c9e.png)|
+|---|---|---|
+|김채은([@chchaeun](https://github.com/chchaeun))|김승규([@seung-gyu-kim](https://github.com/seung-gyu-kim))|최민길([@Choimingil](https://github.com/Choimingil))|
+|Front End|Back End|Infra / PO|
+
+### Sprint
+- [회고록](./docs)
+- 에픽
+![image](https://user-images.githubusercontent.com/85024598/232418244-9843234a-ae9b-4134-97d3-c6d3bc4ad81d.png)
+- 2022/06 ~ 2022/11 진행
+![image](https://user-images.githubusercontent.com/85024598/232417541-5d749f3c-b8c3-4da5-97d2-f0c2a5e31437.png)
+
+### KPI
+- 주차별 평균 미션 달성률
+- 깜지 기출 문제 적중율
+- 인당 평균 푼 문제 수
+- 인당 편균 연속 미션 제출 기간
